@@ -18,7 +18,7 @@ static const char *TAG = "rlcd_panel";
 static spi_device_handle_t device;
 static uint8_t *framebuffer;
 
-static esp_err_t transmit(const void *data, size_t length)
+static esp_err_t transmit(const void *data, size_t length, bool queued)
 {
     spi_transaction_t transaction = {.length = length * 8};
     if (length <= sizeof(transaction.tx_data)) {
@@ -27,18 +27,29 @@ static esp_err_t transmit(const void *data, size_t length)
     } else {
         transaction.tx_buffer = data;
     }
-    return spi_device_polling_transmit(device, &transaction);
+    if (!queued) {
+        return spi_device_polling_transmit(device, &transaction);
+    }
+    ESP_RETURN_ON_ERROR(spi_device_queue_trans(device, &transaction, portMAX_DELAY),
+                        TAG, "queue transfer");
+    spi_transaction_t *completed;
+    return spi_device_get_trans_result(device, &completed, portMAX_DELAY);
+}
+
+static esp_err_t command_mode(uint8_t cmd, const void *parameters, size_t length, bool queued)
+{
+    ESP_RETURN_ON_ERROR(gpio_set_level(PIN_DC, 0), TAG, "command GPIO");
+    ESP_RETURN_ON_ERROR(transmit(&cmd, 1, false), TAG, "command transfer");
+    if (length) {
+        ESP_RETURN_ON_ERROR(gpio_set_level(PIN_DC, 1), TAG, "data GPIO");
+        ESP_RETURN_ON_ERROR(transmit(parameters, length, queued), TAG, "data transfer");
+    }
+    return ESP_OK;
 }
 
 static esp_err_t command(uint8_t cmd, const void *parameters, size_t length)
 {
-    ESP_RETURN_ON_ERROR(gpio_set_level(PIN_DC, 0), TAG, "command GPIO");
-    ESP_RETURN_ON_ERROR(transmit(&cmd, 1), TAG, "command transfer");
-    if (length) {
-        ESP_RETURN_ON_ERROR(gpio_set_level(PIN_DC, 1), TAG, "data GPIO");
-        ESP_RETURN_ON_ERROR(transmit(parameters, length), TAG, "data transfer");
-    }
-    return ESP_OK;
+    return command_mode(cmd, parameters, length, false);
 }
 
 typedef struct {
@@ -116,12 +127,22 @@ uint8_t *rlcd_panel_framebuffer(void)
     return framebuffer;
 }
 
-esp_err_t rlcd_panel_present(void)
+static esp_err_t present(bool queued)
 {
     ESP_RETURN_ON_FALSE(framebuffer != NULL, ESP_ERR_INVALID_STATE, TAG, "not initialized");
     const uint8_t columns[] = {0x12, 0x2a};
     const uint8_t rows[] = {0x00, 0xc7};
     ESP_RETURN_ON_ERROR(command(0x2a, columns, sizeof(columns)), TAG, "column window");
     ESP_RETURN_ON_ERROR(command(0x2b, rows, sizeof(rows)), TAG, "row window");
-    return command(0x2c, framebuffer, RLCD_FRAME_BYTES);
+    return command_mode(0x2c, framebuffer, RLCD_FRAME_BYTES, queued);
+}
+
+esp_err_t rlcd_panel_present(void)
+{
+    return present(false);
+}
+
+esp_err_t rlcd_panel_present_queued(void)
+{
+    return present(true);
 }

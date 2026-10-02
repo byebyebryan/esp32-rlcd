@@ -14,3 +14,7 @@ Changes: plain C implementation, synchronous SPI transactions, a 15,000-byte
 internal DMA buffer instead of asynchronous LVGL transfers and PSRAM lookup
 tables, and a standalone diagnostic pattern. The conservative 10 MHz SPI
 clock and controller register values match the LVGL example.
+
+The performance example also provides queued SPI DMA with a blocking completion
+wait for the full framebuffer, allowing the owner task to sleep during transfer.
+The original polling presentation remains the root bring-up app's default.

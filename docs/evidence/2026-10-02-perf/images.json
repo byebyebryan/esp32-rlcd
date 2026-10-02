@@ -1,0 +1,26 @@
+{
+  "base_commit": "6bd7054e7120093ec686f809210bc43355be2b4d",
+  "worktree": "uncommitted benchmark changes",
+  "source_inputs": {
+    "CMakeLists.txt": "eb84cd20e51862ba3686078eaa6083109defc58a146e4d7f12621608f69f0c2b",
+    "sdkconfig.defaults": "9ae2973d38b5ce537cbe4f1696cae68d94264ea261babc3266192050c4b92a35",
+    "components/display_rlcd/CMakeLists.txt": "17aa7d981b70d7faeb8316a5cc5ea63daa7a824a87f6d3b0fcfc661863d869a9",
+    "components/display_rlcd/include/rlcd_frame.h": "96ca04c42f8983a44b8c362bbedbd05f85e400ce617f4daebe80ba25ce4a155a",
+    "components/display_rlcd/include/rlcd_panel.h": "638c1f9c89c7abda86e0e5c369db32125ff198986c205b4ee7733627f921fbfb",
+    "components/display_rlcd/rlcd_frame.c": "ddd85b4833a7b7db34dca0d8759838ff7b88ed9860d30d0aab4ac834b83d4c35",
+    "components/display_rlcd/rlcd_panel.c": "4a7db99a19cb68d3e3340b083e18ec5646daea1b8d86a2cbfe17a3b70135d45c",
+    "examples/rlcd-perf/CMakeLists.txt": "bd29222e82cbd9ec26fbc4a66fe65814fcf7c451c8339f7f21fb3e6495b06c77",
+    "examples/rlcd-perf/sdkconfig.defaults": "92c9b7e41858a7ce2620ce6d685c71d08701a0a1f6aff64a8896a8497fc8aa96",
+    "examples/rlcd-perf/main/CMakeLists.txt": "166ea51cfcbcc806efa5fcbc102b86c65598e8aa6072765a0816c477467911f8",
+    "examples/rlcd-perf/main/main.c": "56bd04289188a45f66329c49a021d19c33b7f3abb0011fcd9e2d383d62ba05ed",
+    "scripts/capture-perf.py": "b68271b0b5b660062376612b18d3db5d1554c46de0183b72442aafb207274f6d"
+  },
+  "images": {
+    "rlcd-perf.bin": "cb89dc95fcb7596b2681c9db67798a86bf48f31bfeff1c3bbf8183ffcd899569",
+    "rlcd-perf.elf": "7a2681fc5037825132f58d3c9e5847bf3d7fcda2fcd4ebc7ec515a585a1e4c99",
+    "bootloader/bootloader.bin": "18e0cf0eeeffff0b6452f14f6baa394349240fad53652ab7453a5b67cbf735f4",
+    "partition_table/partition-table.bin": "7f00b6c042a89b15b0cac534f82ed988caf29278ff5700b0c511eb1b5bb7c820"
+  },
+  "sdkconfig_sha256": "4d99c964bf7bd31e0c282ea9f01c17abce2d51290ef211314ccb86218f55ecd8",
+  "firmware_bytes": 238448
+}

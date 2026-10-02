@@ -89,6 +89,9 @@ clipping and pattern bounds. This verifies buffer packing, not the physical pane
 
 ## Scope
 
+For faster animation and drawing/transfer measurements, use the separate
+[RLCD performance example](examples/rlcd-perf/README.md).
+
 Board notes and upstream references are in [docs/board.md](docs/board.md).
 Recovered shared-workspace setup notes are in
 [docs/workspace-origin.md](docs/workspace-origin.md).

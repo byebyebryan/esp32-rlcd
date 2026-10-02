@@ -1,0 +1,131 @@
+ESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0x15 (USB_UART_CHIP_RESET),boot:0x8 (SPI_FAST_FLASH_BOOT)
+Saved PC:0x40045878
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fce2820,len:0x152c
+load:0x403c8700,len:0xce4
+load:0x403cb700,len:0x2efc
+entry 0x403c8920
+I (24) boot: ESP-IDF v5.5.3 2nd stage bootloader
+I (24) boot: compile time Oct  2 2026 12:03:16
+I (25) boot: Multicore bootloader
+I (25) boot: chip revision: v0.2
+I (25) boot: efuse block revision: v1.4
+I (25) boot.esp32s3: Boot SPI Speed : 80MHz
+I (25) boot.esp32s3: SPI Mode       : DIO
+I (26) boot.esp32s3: SPI Flash Size : 16MB
+I (26) boot: Enabling RNG early entropy source...
+I (26) boot: Partition Table:
+I (26) boot: ## Label            Usage          Type ST Offset   Length
+I (26) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (27) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (27) boot:  2 factory          factory app      00 00 00010000 00100000
+I (28) boot: End of partition table
+I (28) esp_image: segment 0: paddr=00010020 vaddr=3c020020 size=0c338h ( 49976) map
+I (37) esp_image: segment 1: paddr=0001c360 vaddr=3fc95200 size=03554h ( 13652) load
+I (40) esp_image: segment 2: paddr=0001f8bc vaddr=40374000 size=0075ch (  1884) load
+I (41) esp_image: segment 3: paddr=00020020 vaddr=42000020 size=19954h (104788) map
+I (60) esp_image: segment 4: paddr=0003997c vaddr=4037475c size=109a0h ( 68000) load
+I (75) esp_image: segment 5: paddr=0004a324 vaddr=50000000 size=00020h (    32) load
+I (82) boot: Loaded app from partition at offset 0x10000
+I (82) boot: Disabling RNG early entropy source...
+I (83) octal_psram: vendor id    : 0x0d (AP)
+I (84) octal_psram: dev id       : 0x02 (generation 3)
+I (84) octal_psram: density      : 0x03 (64 Mbit)
+I (84) octal_psram: good-die     : 0x01 (Pass)
+I (84) octal_psram: Latency      : 0x01 (Fixed)
+I (84) octal_psram: VCC          : 0x01 (3V)
+I (85) octal_psram: SRF          : 0x01 (Fast Refresh)
+I (85) octal_psram: BurstType    : 0x01 (Hybrid Wrap)
+I (85) octal_psram: BurstLen     : 0x01 (32 Byte)
+I (85) octal_psram: Readlatency  : 0x02 (10 cycles@Fixed)
+I (85) octal_psram: DriveStrength: 0x00 (1/1)
+I (86) MSPI Timing: Enter psram timing tuning
+I (86) esp_psram: Found 8MB PSRAM device
+I (87) esp_psram: Speed: 80MHz
+I (87) cpu_start: Multicore app
+I (500) esp_psram: SPI SRAM memory test OK
+I (509) cpu_start: Pro cpu start user code
+I (509) cpu_start: cpu freq: 240000000 Hz
+I (509) app_init: Application information:
+I (509) app_init: Project name:     rlcd-perf
+I (509) app_init: App version:      6bd7054-dirty
+I (510) app_init: Compile time:     Oct  2 2026 12:03:13
+I (510) app_init: ELF file SHA256:  7a2681fc5...
+I (510) app_init: ESP-IDF:          v5.5.3
+I (510) efuse_init: Min chip rev:     v0.0
+I (510) efuse_init: Max chip rev:     v0.99
+I (510) efuse_init: Chip rev:         v0.2
+I (510) heap_init: Initializing. RAM available for dynamic allocation:
+I (511) heap_init: At 3FC9CB70 len 0004CBA0 (306 KiB): RAM
+I (511) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM
+I (511) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM
+I (511) heap_init: At 600FE000 len 00001FE8 (7 KiB): RTCRAM
+I (511) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator
+I (512) spi_flash: detected chip: generic
+I (512) spi_flash: flash io: dio
+I (513) sleep_gpio: Configure to isolate all GPIO pins in sleep state
+I (513) sleep_gpio: Enable automatic switching of GPIO sleep configuration
+I (514) main_task: Started on CPU0
+I (515) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations
+I (516) main_task: Calling app_main()
+I (516) rlcd_perf: RLCD drawing benchmark; SPI=10MHz; packed=15000B; CPU=240MHz; -O3; tick=1ms
+I (516) rlcd_perf: Counts are completed SPI writes, not measured panel scan refresh.
+I (837) rlcd_panel: Initialized: SPI3 10 MHz, 400x300, 15000-byte framebuffer
+I (1818) rlcd_perf: TIMING phase=draw_full kind=draw n=256 mean_us=3757 min_us=3747 max_us=3768 p95_upper_us=4000
+I (1882) rlcd_perf: TIMING phase=draw_cached kind=draw n=256 mean_us=205 min_us=204 max_us=217 p95_upper_us=500
+I (7885) rlcd_perf: RESULT phase=full_poll frames=377 elapsed_us=6003544 writes_per_s_x100=6279 cpu0_busy_pct=100 cpu1_busy_pct=0 missed=0 internal_before=342899 internal_after=342899 psram_free=8386192
+I (7886) rlcd_perf: TIMING phase=full_poll kind=draw n=377 mean_us=3757 min_us=3745 max_us=3774 p95_upper_us=4000
+I (7886) rlcd_perf: TIMING phase=full_poll kind=transfer n=377 mean_us=12116 min_us=12115 max_us=12137 p95_upper_us=12500
+I (7886) rlcd_perf: TIMING phase=full_poll kind=total n=377 mean_us=15874 min_us=15863 max_us=15905 p95_upper_us=16000
+I (13888) rlcd_perf: RESULT phase=cached_poll frames=485 elapsed_us=6001145 writes_per_s_x100=8081 cpu0_busy_pct=100 cpu1_busy_pct=0 missed=0 internal_before=342899 internal_after=342899 psram_free=8386192
+I (13889) rlcd_perf: TIMING phase=cached_poll kind=draw n=485 mean_us=205 min_us=204 max_us=211 p95_upper_us=500
+I (13889) rlcd_perf: TIMING phase=cached_poll kind=transfer n=485 mean_us=12115 min_us=12115 max_us=12122 p95_upper_us=12500
+I (13889) rlcd_perf: TIMING phase=cached_poll kind=total n=485 mean_us=12321 min_us=12319 max_us=12326 p95_upper_us=12500
+I (19891) rlcd_perf: RESULT phase=cached_queue frames=485 elapsed_us=6001574 writes_per_s_x100=8081 cpu0_busy_pct=3 cpu1_busy_pct=0 missed=0 internal_before=342899 internal_after=342899 psram_free=8386192
+I (19892) rlcd_perf: TIMING phase=cached_queue kind=draw n=485 mean_us=204 min_us=204 max_us=210 p95_upper_us=500
+I (19892) rlcd_perf: TIMING phase=cached_queue kind=transfer n=485 mean_us=12133 min_us=12132 max_us=12148 p95_upper_us=12500
+I (19892) rlcd_perf: TIMING phase=cached_queue kind=total n=485 mean_us=12338 min_us=12336 max_us=12352 p95_upper_us=12500
+I (29913) rlcd_perf: RESULT phase=paced_50 frames=501 elapsed_us=10019821 writes_per_s_x100=5000 cpu0_busy_pct=2 cpu1_busy_pct=0 missed=0 internal_before=342899 internal_after=342899 psram_free=8386192
+I (29913) rlcd_perf: TIMING phase=paced_50 kind=draw n=501 mean_us=204 min_us=204 max_us=206 p95_upper_us=500
+I (29913) rlcd_perf: TIMING phase=paced_50 kind=transfer n=501 mean_us=12132 min_us=12132 max_us=12133 p95_upper_us=12500
+I (29914) rlcd_perf: TIMING phase=paced_50 kind=total n=501 mean_us=12336 min_us=12336 max_us=12339 p95_upper_us=12500
+I (39930) rlcd_perf: RESULT phase=paced_62_5 frames=626 elapsed_us=10015557 writes_per_s_x100=6250 cpu0_busy_pct=3 cpu1_busy_pct=0 missed=0 internal_before=342899 internal_after=342899 psram_free=8386192
+I (39930) rlcd_perf: TIMING phase=paced_62_5 kind=draw n=626 mean_us=204 min_us=204 max_us=204 p95_upper_us=500
+I (39930) rlcd_perf: TIMING phase=paced_62_5 kind=transfer n=626 mean_us=12132 min_us=12132 max_us=12134 p95_upper_us=12500
+I (39931) rlcd_perf: TIMING phase=paced_62_5 kind=total n=626 mean_us=12336 min_us=12336 max_us=12338 p95_upper_us=12500
+I (39931) rlcd_perf: SUITE_COMPLETE; continuing the cached animation at 50 writes/s.
+I (49951) rlcd_perf: RESULT phase=soak_50 frames=501 elapsed_us=10019360 writes_per_s_x100=5000 cpu0_busy_pct=2 cpu1_busy_pct=1 missed=0 internal_before=342899 internal_after=342899 psram_free=8386192
+I (49951) rlcd_perf: TIMING phase=soak_50 kind=draw n=501 mean_us=204 min_us=204 max_us=206 p95_upper_us=500
+I (49951) rlcd_perf: TIMING phase=soak_50 kind=transfer n=501 mean_us=12132 min_us=12132 max_us=12133 p95_upper_us=12500
+I (49952) rlcd_perf: TIMING phase=soak_50 kind=total n=501 mean_us=12336 min_us=12336 max_us=12339 p95_upper_us=12500
+I (59972) rlcd_perf: RESULT phase=soak_50 frames=501 elapsed_us=10019500 writes_per_s_x100=5000 cpu0_busy_pct=2 cpu1_busy_pct=1 missed=0 internal_before=342899 internal_after=342899 psram_free=8386192
+I (59972) rlcd_perf: TIMING phase=soak_50 kind=draw n=501 mean_us=204 min_us=204 max_us=204 p95_upper_us=500
+I (59972) rlcd_perf: TIMING phase=soak_50 kind=transfer n=501 mean_us=12132 min_us=12132 max_us=12134 p95_upper_us=12500
+I (59972) rlcd_perf: TIMING phase=soak_50 kind=total n=501 mean_us=12336 min_us=12336 max_us=12338 p95_upper_us=12500
+I (69993) rlcd_perf: RESULT phase=soak_50 frames=501 elapsed_us=10019559 writes_per_s_x100=5000 cpu0_busy_pct=2 cpu1_busy_pct=0 missed=0 internal_before=342899 internal_after=342899 psram_free=8386192
+I (69993) rlcd_perf: TIMING phase=soak_50 kind=draw n=501 mean_us=204 min_us=204 max_us=206 p95_upper_us=500
+I (69993) rlcd_perf: TIMING phase=soak_50 kind=transfer n=501 mean_us=12132 min_us=12132 max_us=12133 p95_upper_us=12500
+I (69994) rlcd_perf: TIMING phase=soak_50 kind=total n=501 mean_us=12336 min_us=12336 max_us=12339 p95_upper_us=12500
+I (80014) rlcd_perf: RESULT phase=soak_50 frames=501 elapsed_us=10019564 writes_per_s_x100=5000 cpu0_busy_pct=2 cpu1_busy_pct=0 missed=0 internal_before=342899 internal_after=342899 psram_free=8386192
+I (80014) rlcd_perf: TIMING phase=soak_50 kind=draw n=501 mean_us=204 min_us=204 max_us=204 p95_upper_us=500
+I (80014) rlcd_perf: TIMING phase=soak_50 kind=transfer n=501 mean_us=12132 min_us=12132 max_us=12134 p95_upper_us=12500
+I (80014) rlcd_perf: TIMING phase=soak_50 kind=total n=501 mean_us=12336 min_us=12336 max_us=12338 p95_upper_us=12500
+I (90035) rlcd_perf: RESULT phase=soak_50 frames=501 elapsed_us=10019561 writes_per_s_x100=5000 cpu0_busy_pct=2 cpu1_busy_pct=0 missed=0 internal_before=342899 internal_after=342899 psram_free=8386192
+I (90035) rlcd_perf: TIMING phase=soak_50 kind=draw n=501 mean_us=204 min_us=204 max_us=207 p95_upper_us=500
+I (90035) rlcd_perf: TIMING phase=soak_50 kind=transfer n=501 mean_us=12132 min_us=12132 max_us=12132 p95_upper_us=12500
+I (90036) rlcd_perf: TIMING phase=soak_50 kind=total n=501 mean_us=12336 min_us=12336 max_us=12339 p95_upper_us=12500
+I (100056) rlcd_perf: RESULT phase=soak_50 frames=501 elapsed_us=10019509 writes_per_s_x100=5000 cpu0_busy_pct=2 cpu1_busy_pct=0 missed=0 internal_before=342899 internal_after=342899 psram_free=8386192
+I (100056) rlcd_perf: TIMING phase=soak_50 kind=draw n=501 mean_us=204 min_us=204 max_us=204 p95_upper_us=500
+I (100056) rlcd_perf: TIMING phase=soak_50 kind=transfer n=501 mean_us=12132 min_us=12132 max_us=12134 p95_upper_us=12500
+I (100057) rlcd_perf: TIMING phase=soak_50 kind=total n=501 mean_us=12336 min_us=12336 max_us=12338 p95_upper_us=12500
+I (110077) rlcd_perf: RESULT phase=soak_50 frames=501 elapsed_us=10019561 writes_per_s_x100=5000 cpu0_busy_pct=2 cpu1_busy_pct=0 missed=0 internal_before=342899 internal_after=342899 psram_free=8386192
+I (110077) rlcd_perf: TIMING phase=soak_50 kind=draw n=501 mean_us=204 min_us=204 max_us=206 p95_upper_us=500
+I (110077) rlcd_perf: TIMING phase=soak_50 kind=transfer n=501 mean_us=12132 min_us=12132 max_us=12133 p95_upper_us=12500
+I (110078) rlcd_perf: TIMING phase=soak_50 kind=total n=501 mean_us=12336 min_us=12336 max_us=12339 p95_upper_us=12500
+I (120098) rlcd_perf: RESULT phase=soak_50 frames=501 elapsed_us=10019549 writes_per_s_x100=5000 cpu0_busy_pct=2 cpu1_busy_pct=0 missed=0 internal_before=342899 internal_after=342899 psram_free=8386192
+I (120098) rlcd_perf: TIMING phase=soak_50 kind=draw n=501 mean_us=204 min_us=204 max_us=204 p95_upper_us=500
+I (120098) rlcd_perf: TIMING phase=soak_50 kind=transfer n=501 mean_us=12132 min_us=12132 max_us=12134 p95_upper_us=12500
+I (120098) rlcd_perf: TIMING phase=soak_50 kind=total n=501 mean_us=12336 min_us=12336 max_us=12338 p95_upper_us=12500
