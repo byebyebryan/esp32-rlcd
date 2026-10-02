@@ -1,0 +1,8 @@
+idf_versions = ["v5.5.3"]
+target = ["esp32s3"]
+cleanup = true
+# These are ESP-IDF's dependencies, independent of this repo's vendor references.
+recurse_submodules = true
+non_interactive = true
+# This app has no registry-managed dependencies; skip EIM's optional prefetch.
+skip_components_download = true

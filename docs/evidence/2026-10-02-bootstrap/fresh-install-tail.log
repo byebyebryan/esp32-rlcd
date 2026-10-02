@@ -1,0 +1,40 @@
+2026-10-02 11:26:22 - 11 - 10 - INFO - Downloaded constraints file to /tmp/rlcd-bootstrap-fdp1f8h5/isolated/tools/espidf.constraints.v5.5.txt
+2026-10-02 11:26:22 - 11 - 10 - INFO - Downloaded constraints file to /tmp/rlcd-bootstrap-fdp1f8h5/isolated/tools/espidf.constraints.v5.5.txt
+2026-10-02 11:26:22 - 11 - 10 - INFO - Downloaded constraints file: /tmp/rlcd-bootstrap-fdp1f8h5/isolated/tools/espidf.constraints.v5.5.txt
+2026-10-02 11:26:22 - 11 - 10 - INFO - Creating Python virtual environment at: /tmp/rlcd-bootstrap-fdp1f8h5/isolated/tools/python/v5.5.3/venv
+2026-10-02 11:26:31 - 11 - 10 - INFO - Python environment installed successfully
+2026-10-02 11:26:31 - 11 - 10 - INFO - Python environment installed
+2026-10-02 11:26:31 - 11 - 10 - INFO - ELF ROM directory found: /tmp/rlcd-bootstrap-fdp1f8h5/isolated/tools/esp-rom-elfs/20241011
+2026-10-02 11:26:31 - 11 - 10 - INFO - Bash activation script created successfully
+2026-10-02 11:26:31 - 11 - 10 - INFO - Bash deactivation script created successfully
+2026-10-02 11:26:31 - 11 - 10 - INFO - Fish shell activation script created successfully
+2026-10-02 11:26:31 - 11 - 10 - INFO - Fish deactivation script created successfully
+2026-10-02 11:26:31 - 11 - 10 - INFO - OpenOCD rules copied successfully
+Configuration saved successfully to config.toml
+You have successfully installed ESP-IDF
+for using the ESP-IDF tools inside the terminal, you will find activation scripts inside the base install folder
+sourcing the activation script will setup environment in the current terminal session
+============================================
+to activate the environment, run the following command in your terminal:
+       source "/tmp/rlcd-bootstrap-fdp1f8h5/isolated/tools/activate_idf_v5.5.3.sh"
+============================================
+2026-10-02 11:26:31 - 11 - 10 - INFO - Wizard result: Ok
+2026-10-02 11:26:31 - 11 - 10 - INFO - Successfully installed IDF
+2026-10-02 11:26:31 - 11 - 10 - INFO - Now you can start using IDF tools
+Added environment variable ESP_IDF_VERSION = 5.5
+Added environment variable IDF_VERSION = 5.5.3
+Added environment variable IDF_TOOLS_PATH = /tmp/rlcd-bootstrap-fdp1f8h5/isolated/tools
+Added environment variable IDF_COMPONENT_LOCAL_STORAGE_URL = file:///tmp/rlcd-bootstrap-fdp1f8h5/isolated/tools
+Added environment variable IDF_PATH = /tmp/rlcd-bootstrap-fdp1f8h5/isolated/v5.5.3/esp-idf
+Added environment variable ESP_ROM_ELF_DIR = /tmp/rlcd-bootstrap-fdp1f8h5/isolated/tools/esp-rom-elfs/20241011/
+Added environment variable OPENOCD_SCRIPTS = /tmp/rlcd-bootstrap-fdp1f8h5/isolated/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/share/openocd/scripts
+Added environment variable IDF_PYTHON_ENV_PATH = /tmp/rlcd-bootstrap-fdp1f8h5/isolated/tools/python/v5.5.3/venv
+Added proper directory to PATH
+Activated virtual environment at /tmp/rlcd-bootstrap-fdp1f8h5/isolated/tools/python/v5.5.3/venv
+Environment setup complete for the current shell session.
+These changes will be lost when you close this terminal.
+You are now using IDF version 5.5.3.
+eim select v5.5.3
+ESP-IDF v5.5.3 activated for esp32-rlcd.
+ESP-IDF v5.5.3
+Ready. Build with ./scripts/idf.sh build or source scripts/env.sh.

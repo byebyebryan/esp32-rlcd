@@ -1,0 +1,6 @@
+{
+  "rlcd-bringup.bin": "dbad4e318e2ee82b1731388061f7a942ef0e6f317aa185f0b90f601a10723aff",
+  "rlcd-bringup.elf": "eec7bb07618d94ca230bac0ee7294ae9249c21080233d47221cedbb56ce0f5ff",
+  "bootloader/bootloader.bin": "77674073e63fd209de316dd89eaa94e5051967b12c027166d57fc5d6bee36e8c",
+  "partition_table/partition-table.bin": "7f00b6c042a89b15b0cac534f82ed988caf29278ff5700b0c511eb1b5bb7c820"
+}

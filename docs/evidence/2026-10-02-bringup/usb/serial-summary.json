@@ -1,0 +1,34 @@
+{
+  "boot-stability": {
+    "observation_seconds": 67.1,
+    "heartbeat_samples": 14,
+    "last_uptime_seconds": 65,
+    "internal_free_range": [
+      383403,
+      383403
+    ],
+    "psram_free_range": [
+      8386192,
+      8386192
+    ],
+    "log_sha256": "35563478a4c028cecdd48bc38c7c3369a8a28b00628f46fd6857beb1ed1c34f0",
+    "passed": true,
+    "raw_log_sha256": "358cda77a7a38cb7c4ed5df6f70090db84ddf207d53ef2c55925b0a25675c8a6"
+  },
+  "usb-reset-recovery": {
+    "observation_seconds": 17.0,
+    "heartbeat_samples": 4,
+    "last_uptime_seconds": 15,
+    "internal_free_range": [
+      383403,
+      383403
+    ],
+    "psram_free_range": [
+      8386192,
+      8386192
+    ],
+    "log_sha256": "0944e7289d875fbdfd92b4f2655893c75c0a4044c33e072942064dc0a5f3c309",
+    "passed": true,
+    "raw_log_sha256": "3785128452768ec3e759fdce2e5e71e7256f94c1e1ade53eb7729b6adb1c44e5"
+  }
+}

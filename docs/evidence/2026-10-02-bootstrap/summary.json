@@ -1,0 +1,63 @@
+{
+  "checked_utc": "2026-10-02T18:34:16.363013+00:00",
+  "host": "starship",
+  "installer_version": "eim 0.19.0",
+  "official_cli_archive_version_verified": true,
+  "idf_version": "v5.5.3",
+  "idf_commit": "2c211b236707889e8400c4dc5644dd5c4ee071e0",
+  "host_prerequisites": "Already installed; package instructions checked against Espressif documentation",
+  "fresh_install": {
+    "exit_code": 0,
+    "fresh_sdk_source": true,
+    "fresh_tools_and_python_environment": true,
+    "root": "/tmp/rlcd-bootstrap-fdp1f8h5/isolated",
+    "explicit_paths_verified": true
+  },
+  "clean_build": {
+    "exit_code": 0,
+    "initial_sdkconfig_present": false,
+    "initial_build_directory_present": false,
+    "source": "Copy of the local uncommitted checkout, excluding generated files",
+    "target": "esp32s3",
+    "firmware_bytes": 245456,
+    "firmware_sha256": "aab7404f28f3ce8d9b6f1d5dda16600834351e46614538ebc363a3350db5c331",
+    "flashed": false
+  },
+  "generated_config": {
+    "CONFIG_IDF_TARGET": "\"esp32s3\"",
+    "CONFIG_ESPTOOLPY_FLASHSIZE_16MB": "y",
+    "CONFIG_SPIRAM_MODE_OCT": "y",
+    "CONFIG_SPIRAM_SPEED_80M": "y",
+    "CONFIG_SPIRAM_MEMTEST": "y",
+    "CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG": "y",
+    "CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ_240": "y"
+  },
+  "reuse_setup_exit_code": 0,
+  "native_pixel_packing_exit_code": 0,
+  "simulated_failures_checked": [
+    "missing EIM",
+    "incomplete activation environment",
+    "wrong IDF version",
+    "installer nonzero exit"
+  ],
+  "existing_host_activation_and_registry_unchanged_by_revised_install": true,
+  "build_inputs": {
+    "CMakeLists.txt": "eb84cd20e51862ba3686078eaa6083109defc58a146e4d7f12621608f69f0c2b",
+    "components/display_rlcd/CMakeLists.txt": "17aa7d981b70d7faeb8316a5cc5ea63daa7a824a87f6d3b0fcfc661863d869a9",
+    "components/display_rlcd/LICENSE.waveshare": "bb01037d243b2614f6c0bcf65671eff4a004b65ef687a4fd4925a9ab068bd613",
+    "components/display_rlcd/UPSTREAM.md": "3b5acaf1945c43c5537679aa4414fe04ac88ce0a7df519f9d399b5141967a50d",
+    "components/display_rlcd/include/rlcd_frame.h": "96ca04c42f8983a44b8c362bbedbd05f85e400ce617f4daebe80ba25ce4a155a",
+    "components/display_rlcd/include/rlcd_panel.h": "e641e9adc4944b3f5bcd66e65296d6b916b36acf2d82f470a7bd2dfbf5923bbd",
+    "components/display_rlcd/rlcd_frame.c": "ddd85b4833a7b7db34dca0d8759838ff7b88ed9860d30d0aab4ac834b83d4c35",
+    "components/display_rlcd/rlcd_panel.c": "7430422b8a4cd93e412ba494d0f5f1c55b17e251b30d5c6ee485ce4c43bfc29c",
+    "main/CMakeLists.txt": "afe6222d83e562d5c4811965b7bc49ee40813318994c3838f6d12dfa9c9cb5b8",
+    "main/main.c": "219295cbc2770f574a5e87ff699771e11e9fb69dc34484a065de16f31780683c",
+    "scripts/check-frame.sh": "efdfe573a382c22f46e9e8596489b2617961592d921f3dbb8508df5728788ed4",
+    "scripts/eim-config.toml": "c63a7e7114027610f5f648511c8b056ee6f2985db233b649a08053f15555a053",
+    "scripts/env.sh": "e8ca85587b1144dac4c65e2430cf51e2cf5a797f17e03f2f88f8496c7a19f812",
+    "scripts/idf.sh": "7c119f0fd1818f9d84afcf2cdff24a3e4b941046682db1bf7189bd40af5cb0e1",
+    "scripts/setup.sh": "4d6d930a59328e8f116865e3bd6fd3a44f53219623cf5f7f3a1f6d363559dc3a",
+    "sdkconfig.defaults": "9ae2973d38b5ce537cbe4f1696cae68d94264ea261babc3266192050c4b92a35",
+    "tests/test_frame.c": "3a2ee46c75e2a30f11bb0c5bf02ed83f1fbaaaf2548a4ac015c41b389313ee26"
+  }
+}

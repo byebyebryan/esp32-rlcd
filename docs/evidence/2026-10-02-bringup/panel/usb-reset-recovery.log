@@ -1,0 +1,83 @@
+ESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0x15 (USB_UART_CHIP_RESET),boot:0x8 (SPI_FAST_FLASH_BOOT)
+Saved PC:0x4037927e
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fce2820,len:0x152c
+load:0x403c8700,len:0xce4
+load:0x403cb700,len:0x2efc
+entry 0x403c8920
+I (24) boot: ESP-IDF v5.5.3 2nd stage bootloader
+I (24) boot: compile time Oct  2 2026 10:19:52
+I (25) boot: Multicore bootloader
+I (25) boot: chip revision: v0.2
+I (25) boot: efuse block revision: v1.4
+I (25) boot.esp32s3: Boot SPI Speed : 80MHz
+I (25) boot.esp32s3: SPI Mode       : DIO
+I (26) boot.esp32s3: SPI Flash Size : 16MB
+I (26) boot: Enabling RNG early entropy source...
+I (26) boot: Partition Table:
+I (26) boot: ## Label            Usage          Type ST Offset   Length
+I (26) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (27) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (27) boot:  2 factory          factory app      00 00 00010000 00100000
+I (28) boot: End of partition table
+I (28) esp_image: segment 0: paddr=00010020 vaddr=3c020020 size=0c3e4h ( 50148) map
+I (37) esp_image: segment 1: paddr=0001c40c vaddr=3fc96200 size=0368ch ( 13964) load
+I (40) esp_image: segment 2: paddr=0001faa0 vaddr=40374000 size=00578h (  1400) load
+I (41) esp_image: segment 3: paddr=00020020 vaddr=42000020 size=1a2bch (107196) map
+I (60) esp_image: segment 4: paddr=0003a2e4 vaddr=40374578 size=11ba0h ( 72608) load
+I (77) esp_image: segment 5: paddr=0004be8c vaddr=50000000 size=00020h (    32) load
+I (84) boot: Loaded app from partition at offset 0x10000
+I (84) boot: Disabling RNG early entropy source...
+I (85) octal_psram: vendor id    : 0x0d (AP)
+I (85) octal_psram: dev id       : 0x02 (generation 3)
+I (85) octal_psram: density      : 0x03 (64 Mbit)
+I (86) octal_psram: good-die     : 0x01 (Pass)
+I (86) octal_psram: Latency      : 0x01 (Fixed)
+I (86) octal_psram: VCC          : 0x01 (3V)
+I (86) octal_psram: SRF          : 0x01 (Fast Refresh)
+I (86) octal_psram: BurstType    : 0x01 (Hybrid Wrap)
+I (87) octal_psram: BurstLen     : 0x01 (32 Byte)
+I (87) octal_psram: Readlatency  : 0x02 (10 cycles@Fixed)
+I (87) octal_psram: DriveStrength: 0x00 (1/1)
+I (87) MSPI Timing: Enter psram timing tuning
+I (88) esp_psram: Found 8MB PSRAM device
+I (88) esp_psram: Speed: 80MHz
+I (89) cpu_start: Multicore app
+I (521) esp_psram: SPI SRAM memory test OK
+I (530) cpu_start: Pro cpu start user code
+I (530) cpu_start: cpu freq: 240000000 Hz
+I (531) app_init: Application information:
+I (531) app_init: Project name:     rlcd-bringup
+I (531) app_init: App version:      1
+I (531) app_init: Compile time:     Oct  2 2026 10:19:50
+I (531) app_init: ELF file SHA256:  eec7bb076...
+I (531) app_init: ESP-IDF:          v5.5.3
+I (531) efuse_init: Min chip rev:     v0.0
+I (531) efuse_init: Max chip rev:     v0.99
+I (532) efuse_init: Chip rev:         v0.2
+I (532) heap_init: Initializing. RAM available for dynamic allocation:
+I (532) heap_init: At 3FC9A200 len 0004F510 (317 KiB): RAM
+I (532) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM
+I (532) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM
+I (533) heap_init: At 600FE000 len 00001FE8 (7 KiB): RTCRAM
+I (533) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator
+I (534) spi_flash: detected chip: generic
+I (534) spi_flash: flash io: dio
+I (534) sleep_gpio: Configure to isolate all GPIO pins in sleep state
+I (535) sleep_gpio: Enable automatic switching of GPIO sleep configuration
+I (535) main_task: Started on CPU0
+I (545) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations
+I (545) main_task: Calling app_main()
+I (545) rlcd: esp32-rlcd: panel bring-up
+I (545) rlcd: Target: esp32s3; ESP-IDF: v5.5.3
+I (545) rlcd: Cores: 2; revision: 0.2; reset reason: 11
+I (545) rlcd: Flash: 16 MiB; PSRAM: 8 MiB
+I (865) rlcd_panel: Initialized: SPI3 10 MHz, 400x300, 15000-byte framebuffer
+I (865) rlcd: Panel test ready: RLCD READY, stripes, checkers and moving square.
+I (885) rlcd: frame=0 sent; uptime=0s internal_free=353643 psram_free=8386192
+I (5895) rlcd: frame=1 sent; uptime=5s internal_free=353643 psram_free=8386192
+I (10905) rlcd: frame=2 sent; uptime=10s internal_free=353643 psram_free=8386192
+I (15915) rlcd: frame=3 sent; uptime=15s internal_free=353643 psram_free=8386192
