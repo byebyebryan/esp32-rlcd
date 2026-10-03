@@ -1,0 +1,11 @@
+./scripts/test-dashboard-motion.sh
+PASS: ordering, identity, atomic input, motion bounds, clipping, source loss, polarity; sizeof(controller)=11480
+./scripts/preview-dashboard.sh
+PASS: 42 synthetic frames; bounds and stale/unavailable attention suppression
+Preserved static PBM comparison: 42/42 byte-identical
+./scripts/check-frame.sh
+PASS: corners, 120000 distinct pixels, colors, clipping and pattern bounds
+ESP-IDF v5.5.3 motion build: pass
+ESP-IDF v5.5.3 static fallback build in separate build/config: pass
+Flash: failed before writing, explicit RLCD by-id port absent
+On-board timing and physical animation acceptance: not run/pending

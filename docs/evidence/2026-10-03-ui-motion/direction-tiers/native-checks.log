@@ -1,0 +1,6 @@
+PASS: 4488 packed rectangles equal pixel reference; edge masks, colors, clipping and guards
+PASS: ordering, identity, atomic input, shared progress, direction layers, motion bounds, clipping, source loss, polarity; sizeof(controller)=11728
+PASS: 16/16 initial and settled demo PBMs equal preserved V1 endpoints.
+PASS: default motion and static fallback ESP-IDF v5.5.3 builds; verified flash to MAC 94:a9:90:f3:43:74.
+PASS: source/config/image hashes match current files after successful capture; serial log hash matches summary.
+PASS: 42/42 static study PBM hashes equal the preserved baseline.

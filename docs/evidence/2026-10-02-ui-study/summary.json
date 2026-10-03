@@ -1,0 +1,78 @@
+{
+  "started_utc": "2026-10-03T02:46:30.815151+00:00",
+  "port": "/dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_94:A9:90:F3:43:74-if00",
+  "usb_rts_reset": true,
+  "elapsed_seconds": 100.16093065700261,
+  "log_sha256": "ea7b3fec6ce78158a1b077d119c0656158df1b381ca40502b7b61b17094db0da",
+  "raw_sha256": "87e884a9c778ccbbe37681d543f6b990144c93c0baded91a3a9dd0b2ba55dc78",
+  "application_start_count": 1,
+  "synthetic_data": true,
+  "physical_readability": "pending",
+  "expected_cases": [
+    "empty",
+    "identity",
+    "offline",
+    "overflow",
+    "roster",
+    "stale",
+    "uncertainty"
+  ],
+  "missing_cases": [],
+  "errors": [],
+  "records": [
+    {
+      "case": "roster",
+      "draw_us": 5681,
+      "transfer_us": 12203,
+      "internal_free": 353747
+    },
+    {
+      "case": "overflow",
+      "draw_us": 5379,
+      "transfer_us": 12161,
+      "internal_free": 353747
+    },
+    {
+      "case": "stale",
+      "draw_us": 5148,
+      "transfer_us": 12154,
+      "internal_free": 353747
+    },
+    {
+      "case": "offline",
+      "draw_us": 5422,
+      "transfer_us": 12158,
+      "internal_free": 353747
+    },
+    {
+      "case": "empty",
+      "draw_us": 1473,
+      "transfer_us": 12154,
+      "internal_free": 353747
+    },
+    {
+      "case": "uncertainty",
+      "draw_us": 5132,
+      "transfer_us": 12159,
+      "internal_free": 353747
+    },
+    {
+      "case": "identity",
+      "draw_us": 6655,
+      "transfer_us": 12157,
+      "internal_free": 353747
+    },
+    {
+      "case": "roster",
+      "draw_us": 5438,
+      "transfer_us": 12159,
+      "internal_free": 353747
+    },
+    {
+      "case": "overflow",
+      "draw_us": 5373,
+      "transfer_us": 12159,
+      "internal_free": 353747
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "baseline_commit": "a8e6384404008912824cc38d9dc3512c69948bab",
+  "uncommitted_study": true,
+  "board_mac": "94:a9:90:f3:43:74",
+  "layout": "attention",
+  "provider_labels": "CX/CC",
+  "status_icon_polarity": "fixed",
+  "pulse_implemented": false,
+  "sha256": {
+    "components/agent_dashboard/agent_dashboard.c": "9b6957ceae127614a2c82ab025cbc07eceedc2689c87b51f5d96cde610d0b36a",
+    "components/agent_dashboard/include/agent_dashboard.h": "bbbb47414d5f319c0f6a57217f9b71b234e44b7384c8134933d854ad67c2bb68",
+    "examples/rlcd-dashboard/demo.c": "9506e76bfafc31a744cd410cded7f14fc072a9b29d2154f234bde99d49359462",
+    "examples/rlcd-dashboard/demo.h": "b62a13887a61ddf5cd14bf0c8d645f9f5e5ab277c4676111e759c9ea014e36fc",
+    "examples/rlcd-dashboard/main/main.c": "974c1233380f40cd2e2ba85787731802f68195967e6d568d0ee84d87a1204ba4",
+    "components/display_rlcd/rlcd_frame.c": "ddd85b4833a7b7db34dca0d8759838ff7b88ed9860d30d0aab4ac834b83d4c35",
+    "components/display_rlcd/rlcd_panel.c": "4a7db99a19cb68d3e3340b083e18ec5646daea1b8d86a2cbfe17a3b70135d45c",
+    "sdkconfig.defaults": "9ae2973d38b5ce537cbe4f1696cae68d94264ea261babc3266192050c4b92a35",
+    "examples/rlcd-dashboard/sdkconfig": "6c02460ade5e0b4f4fd28517f47d2ac0ed2cfbca95470658f57f1710f5ec1d71",
+    "examples/rlcd-dashboard/build/rlcd-dashboard.bin": "84814305e8ef3746eb90a267cb51b6cc27fb759f343f2b6238a848aa66dbd08a",
+    "examples/rlcd-dashboard/build/bootloader/bootloader.bin": "e8d05e98a897f8ecd55d2f64365e648b608cde40501c873764f627edbd89d16e",
+    "examples/rlcd-dashboard/build/partition_table/partition-table.bin": "7f00b6c042a89b15b0cac534f82ed988caf29278ff5700b0c511eb1b5bb7c820"
+  }
+}

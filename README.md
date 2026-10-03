@@ -92,6 +92,22 @@ clipping and pattern bounds. This verifies buffer packing, not the physical pane
 For faster animation and drawing/transfer measurements, use the separate
 [RLCD performance example](examples/rlcd-perf/README.md).
 
+For a compact coding-agent roster using invented session data, see the
+[dashboard UI study](examples/rlcd-dashboard/README.md) and
+[layout notes](docs/ui-study.md). Native previews and the separate firmware
+example share a renderer. The eight-row symbol layout and directional row
+animations have been accepted on the panel; live integration remains pending.
+The [ordering and motion proof](docs/ui-motion.md) extends that layout with
+synthetic state transitions; its validation is recorded separately.
+
+Shared coding-agent discovery and session-state observation now live in
+[Agent Observer](https://github.com/byebyebryan/agent-observer). Its
+[source study](https://github.com/byebyebryan/agent-observer/blob/main/docs/agent-session-study.md)
+and [spike plan](https://github.com/byebyebryan/agent-observer/blob/main/docs/agent-session-spike-plan.md)
+cover Codex and Claude Code, including foreground and daemon-backed runtimes.
+The RLCD is an initial consumer target; live data-source proof and host-to-board
+integration remain pending.
+
 Board notes and upstream references are in [docs/board.md](docs/board.md).
 Recovered shared-workspace setup notes are in
 [docs/workspace-origin.md](docs/workspace-origin.md).

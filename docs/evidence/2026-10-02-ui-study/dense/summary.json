@@ -1,0 +1,87 @@
+{
+  "started_utc": "2026-10-03T02:53:17.231985+00:00",
+  "port": "/dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_94:A9:90:F3:43:74-if00",
+  "usb_rts_reset": true,
+  "elapsed_seconds": 100.16197819700028,
+  "log_sha256": "b589d4c531aee6c1934d1132c45ee8d622d1ba62ce53627bf820175d6613f7bc",
+  "raw_sha256": "272dc962d7ed92fb6e943a19e7713474f3bd8548ec3eb2dcdeded60e188a18d0",
+  "application_start_count": 1,
+  "synthetic_data": true,
+  "physical_readability": "pending",
+  "expected_cases": [
+    "empty",
+    "identity",
+    "offline",
+    "overflow",
+    "roster",
+    "stale",
+    "uncertainty"
+  ],
+  "missing_cases": [],
+  "errors": [],
+  "records": [
+    {
+      "layout": "dense",
+      "case": "roster",
+      "draw_us": 6428,
+      "transfer_us": 12193,
+      "internal_free": 353747
+    },
+    {
+      "layout": "dense",
+      "case": "overflow",
+      "draw_us": 6050,
+      "transfer_us": 12153,
+      "internal_free": 353747
+    },
+    {
+      "layout": "dense",
+      "case": "stale",
+      "draw_us": 5058,
+      "transfer_us": 12149,
+      "internal_free": 353747
+    },
+    {
+      "layout": "dense",
+      "case": "offline",
+      "draw_us": 5081,
+      "transfer_us": 12150,
+      "internal_free": 353747
+    },
+    {
+      "layout": "dense",
+      "case": "empty",
+      "draw_us": 1667,
+      "transfer_us": 12149,
+      "internal_free": 353747
+    },
+    {
+      "layout": "dense",
+      "case": "uncertainty",
+      "draw_us": 3527,
+      "transfer_us": 12151,
+      "internal_free": 353747
+    },
+    {
+      "layout": "dense",
+      "case": "identity",
+      "draw_us": 4847,
+      "transfer_us": 12150,
+      "internal_free": 353747
+    },
+    {
+      "layout": "dense",
+      "case": "roster",
+      "draw_us": 6162,
+      "transfer_us": 12150,
+      "internal_free": 353747
+    },
+    {
+      "layout": "dense",
+      "case": "overflow",
+      "draw_us": 6044,
+      "transfer_us": 12150,
+      "internal_free": 353747
+    }
+  ]
+}

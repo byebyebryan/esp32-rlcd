@@ -1,0 +1,14 @@
+{
+  "started_utc": "2026-10-03T04:11:04.139295+00:00",
+  "capture_seconds": 14,
+  "complete_cycle": false,
+  "usb_rts_reset": true,
+  "application_start_count": 1,
+  "records": [
+    "I (886) rlcd_dashboard: DEMO layout=attention case=roster draw_us=9566 transfer_us=12193 internal_free=353747",
+    "I (12906) rlcd_dashboard: DEMO layout=attention case=overflow draw_us=9293 transfer_us=12155 internal_free=353747"
+  ],
+  "errors": [],
+  "log_sha256": "4d980dcb8a7dcd740b9b9b172682c5d1b6cf4caa8e1d107558f7bb09d35bdde3",
+  "physical_readability": "pending"
+}

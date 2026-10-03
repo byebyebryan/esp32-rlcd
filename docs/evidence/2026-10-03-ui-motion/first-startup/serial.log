@@ -1,0 +1,108 @@
+ESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0x15 (USB_UART_CHIP_RESET),boot:0x8 (SPI_FAST_FLASH_BOOT)
+Saved PC:0x4004a69c
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fce2820,len:0x152c
+load:0x403c8700,len:0xce4
+load:0x403cb700,len:0x2efc
+entry 0x403c8920
+I (24) boot: ESP-IDF v5.5.3 2nd stage bootloader
+I (24) boot: compile time Oct  2 2026 19:41:54
+I (25) boot: Multicore bootloader
+I (25) boot: chip revision: v0.2
+I (25) boot: efuse block revision: v1.4
+I (25) boot.esp32s3: Boot SPI Speed : 80MHz
+I (25) boot.esp32s3: SPI Mode       : DIO
+I (26) boot.esp32s3: SPI Flash Size : 16MB
+I (26) boot: Enabling RNG early entropy source...
+I (26) boot: Partition Table:
+I (26) boot: ## Label            Usage          Type ST Offset   Length
+I (26) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (27) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (27) boot:  2 factory          factory app      00 00 00010000 00100000
+I (28) boot: End of partition table
+I (28) esp_image: segment 0: paddr=00010020 vaddr=3c020020 size=0ca84h ( 51844) map
+I (37) esp_image: segment 1: paddr=0001caac vaddr=3fc96300 size=0356ch ( 13676) load
+I (41) esp_image: segment 2: paddr=00020020 vaddr=42000020 size=1c658h (116312) map
+I (62) esp_image: segment 3: paddr=0003c680 vaddr=3fc9986c size=000c0h (   192) load
+I (62) esp_image: segment 4: paddr=0003c748 vaddr=40374000 size=12280h ( 74368) load
+I (78) esp_image: segment 5: paddr=0004e9d0 vaddr=50000000 size=00020h (    32) load
+I (86) boot: Loaded app from partition at offset 0x10000
+I (86) boot: Disabling RNG early entropy source...
+I (87) octal_psram: vendor id    : 0x0d (AP)
+I (87) octal_psram: dev id       : 0x02 (generation 3)
+I (87) octal_psram: density      : 0x03 (64 Mbit)
+I (88) octal_psram: good-die     : 0x01 (Pass)
+I (88) octal_psram: Latency      : 0x01 (Fixed)
+I (88) octal_psram: VCC          : 0x01 (3V)
+I (88) octal_psram: SRF          : 0x01 (Fast Refresh)
+I (89) octal_psram: BurstType    : 0x01 (Hybrid Wrap)
+I (89) octal_psram: BurstLen     : 0x01 (32 Byte)
+I (89) octal_psram: Readlatency  : 0x02 (10 cycles@Fixed)
+I (89) octal_psram: DriveStrength: 0x00 (1/1)
+I (89) MSPI Timing: Enter psram timing tuning
+I (90) esp_psram: Found 8MB PSRAM device
+I (90) esp_psram: Speed: 80MHz
+I (91) cpu_start: Multicore app
+I (524) esp_psram: SPI SRAM memory test OK
+I (532) cpu_start: Pro cpu start user code
+I (532) cpu_start: cpu freq: 240000000 Hz
+I (533) app_init: Application information:
+I (533) app_init: Project name:     rlcd-dashboard
+I (533) app_init: App version:      a8e6384-dirty
+I (533) app_init: Compile time:     Oct  2 2026 19:41:52
+I (533) app_init: ELF file SHA256:  fc1b83865...
+I (533) app_init: ESP-IDF:          v5.5.3
+I (533) efuse_init: Min chip rev:     v0.0
+I (534) efuse_init: Max chip rev:     v0.99
+I (534) efuse_init: Chip rev:         v0.2
+I (534) heap_init: Initializing. RAM available for dynamic allocation:
+I (534) heap_init: At 3FC9CAB0 len 0004CC60 (307 KiB): RAM
+I (534) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM
+I (534) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM
+I (535) heap_init: At 600FE000 len 00001FE8 (7 KiB): RTCRAM
+I (535) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator
+I (536) spi_flash: detected chip: generic
+I (536) spi_flash: flash io: dio
+I (536) sleep_gpio: Configure to isolate all GPIO pins in sleep state
+I (537) sleep_gpio: Enable automatic switching of GPIO sleep configuration
+I (537) main_task: Started on CPU0
+I (547) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations
+I (547) main_task: Calling app_main()
+I (867) rlcd_panel: Initialized: SPI3 10 MHz, 400x300, 15000-byte framebuffer
+I (867) rlcd_dashboard: MOTION event=config phases=15 cycle_ms=60000 fps=25 duration_ms=360 frame_budget_us=40000 capacity=16 model_bytes=10248
+I (907) rlcd_dashboard: MOTION event=frame case=initial-order tick_ms=0 moving=0 draw_us=28484 transfer_us=12222 frame_us=41121 interval_us=0 deadline_miss=1 internal_free=343227 stack_watermark=1856
+I (907) rlcd_dashboard: MOTION event=phase phase=0 case=initial-order tick_ms=0 count=8 feed_health=0
+I (1947) rlcd_dashboard: MOTION event=frame case=initial-order tick_ms=1039 moving=0 draw_us=28209 transfer_us=12175 frame_us=40389 interval_us=0 deadline_miss=1 internal_free=343227 stack_watermark=1856
+I (2947) rlcd_dashboard: MOTION event=frame case=initial-order tick_ms=2039 moving=0 draw_us=28201 transfer_us=12171 frame_us=40377 interval_us=0 deadline_miss=1 internal_free=343227 stack_watermark=1856
+I (3947) rlcd_dashboard: MOTION event=frame case=initial-order tick_ms=3039 moving=0 draw_us=28219 transfer_us=12171 frame_us=40395 interval_us=0 deadline_miss=1 internal_free=343227 stack_watermark=1856
+I (4937) rlcd_dashboard: MOTION event=frame case=answered-wait-to-run tick_ms=4039 moving=1 draw_us=26184 transfer_us=12215 frame_us=38719 interval_us=0 deadline_miss=0 internal_free=343227 stack_watermark=1856
+I (4937) rlcd_dashboard: MOTION event=phase phase=1 case=answered-wait-to-run tick_ms=4039 count=8 feed_health=0
+I (4977) rlcd_dashboard: MOTION event=frame case=answered-wait-to-run tick_ms=4079 moving=1 draw_us=26098 transfer_us=12175 frame_us=38319 interval_us=40003 deadline_miss=0 internal_free=343227 stack_watermark=1856
+I (5017) rlcd_dashboard: MOTION event=frame case=answered-wait-to-run tick_ms=4119 moving=1 draw_us=26085 transfer_us=12172 frame_us=38300 interval_us=39998 deadline_miss=0 internal_free=343227 stack_watermark=1856
+I (5057) rlcd_dashboard: MOTION event=frame case=answered-wait-to-run tick_ms=4159 moving=1 draw_us=26090 transfer_us=12171 frame_us=38302 interval_us=40000 deadline_miss=0 internal_free=343227 stack_watermark=1856
+I (5097) rlcd_dashboard: MOTION event=frame case=answered-wait-to-run tick_ms=4199 moving=1 draw_us=26083 transfer_us=12173 frame_us=38298 interval_us=40000 deadline_miss=0 internal_free=343227 stack_watermark=1856
+I (5137) rlcd_dashboard: MOTION event=frame case=answered-wait-to-run tick_ms=4239 moving=1 draw_us=26089 transfer_us=12172 frame_us=38305 interval_us=40000 deadline_miss=0 internal_free=343227 stack_watermark=1856
+I (5177) rlcd_dashboard: MOTION event=frame case=answered-wait-to-run tick_ms=4279 moving=1 draw_us=26086 transfer_us=12170 frame_us=38297 interval_us=40000 deadline_miss=0 internal_free=343227 stack_watermark=1856
+I (5217) rlcd_dashboard: MOTION event=frame case=answered-wait-to-run tick_ms=4319 moving=1 draw_us=26087 transfer_us=12172 frame_us=38302 interval_us=40000 deadline_miss=0 internal_free=343227 stack_watermark=1856
+I (5257) rlcd_dashboard: MOTION event=frame case=answered-wait-to-run tick_ms=4359 moving=1 draw_us=26085 transfer_us=12172 frame_us=38300 interval_us=40000 deadline_miss=0 internal_free=343227 stack_watermark=1856
+I (5297) rlcd_dashboard: MOTION event=frame case=answered-wait-to-run tick_ms=4399 moving=0 draw_us=26084 transfer_us=12172 frame_us=38295 interval_us=0 deadline_miss=0 internal_free=343227 stack_watermark=1856
+I (5937) rlcd_dashboard: MOTION event=frame case=answered-wait-to-run tick_ms=5039 moving=0 draw_us=26065 transfer_us=12172 frame_us=38242 interval_us=0 deadline_miss=0 internal_free=343227 stack_watermark=1856
+I (6937) rlcd_dashboard: MOTION event=frame case=answered-wait-to-run tick_ms=6039 moving=0 draw_us=26066 transfer_us=12172 frame_us=38243 interval_us=0 deadline_miss=0 internal_free=343227 stack_watermark=1856
+I (7937) rlcd_dashboard: MOTION event=frame case=answered-wait-to-run tick_ms=7039 moving=0 draw_us=26066 transfer_us=12171 frame_us=38242 interval_us=0 deadline_miss=0 internal_free=343227 stack_watermark=1856
+I (8937) rlcd_dashboard: MOTION event=frame case=idle-to-run tick_ms=8039 moving=1 draw_us=26184 transfer_us=12218 frame_us=38722 interval_us=0 deadline_miss=0 internal_free=343227 stack_watermark=1856
+I (8937) rlcd_dashboard: MOTION event=phase phase=2 case=idle-to-run tick_ms=8039 count=8 feed_health=0
+I (8977) rlcd_dashboard: MOTION event=frame case=idle-to-run tick_ms=8079 moving=1 draw_us=26100 transfer_us=12176 frame_us=38321 interval_us=40003 deadline_miss=0 internal_free=343227 stack_watermark=1856
+I (9017) rlcd_dashboard: MOTION event=frame case=idle-to-run tick_ms=8119 moving=1 draw_us=26083 transfer_us=12171 frame_us=38297 interval_us=39998 deadline_miss=0 internal_free=343227 stack_watermark=1856
+I (9057) rlcd_dashboard: MOTION event=frame case=idle-to-run tick_ms=8159 moving=1 draw_us=26091 transfer_us=12174 frame_us=38308 interval_us=40000 deadline_miss=0 internal_free=343227 stack_watermark=1856
+I (9097) rlcd_dashboard: MOTION event=frame case=idle-to-run tick_ms=8199 moving=1 draw_us=26083 transfer_us=12171 frame_us=38297 interval_us=40000 deadline_miss=0 internal_free=343227 stack_watermark=1856
+I (9137) rlcd_dashboard: MOTION event=frame case=idle-to-run tick_ms=8239 moving=1 draw_us=26088 transfer_us=12174 frame_us=38305 interval_us=40000 deadline_miss=0 internal_free=343227 stack_watermark=1856
+I (9177) rlcd_dashboard: MOTION event=frame case=idle-to-run tick_ms=8279 moving=1 draw_us=26085 transfer_us=12171 frame_us=38299 interval_us=40000 deadline_miss=0 internal_free=343227 stack_watermark=1856
+I (9217) rlcd_dashboard: MOTION event=frame case=idle-to-run tick_ms=8319 moving=1 draw_us=26088 transfer_us=12174 frame_us=38305 interval_us=40000 deadline_miss=0 internal_free=343227 stack_watermark=1856
+I (9257) rlcd_dashboard: MOTION event=frame case=idle-to-run tick_ms=8359 moving=1 draw_us=26083 transfer_us=12171 frame_us=38297 interval_us=40000 deadline_miss=0 internal_free=343227 stack_watermark=1856
+I (9297) rlcd_dashboard: MOTION event=frame case=idle-to-run tick_ms=8399 moving=0 draw_us=26085 transfer_us=12176 frame_us=38301 interval_us=0 deadline_miss=0 internal_free=343227 stack_watermark=1856
+I (9937) rlcd_dashboard: MOTION event=frame case=idle-to-run tick_ms=9039 moving=0 draw_us=26058 transfer_us=12171 frame_us=38234 interval_us=0 deadline_miss=0 internal_free=343227 stack_watermark=1856
+I (10937) rlcd_dashboard: MOTION event=frame case=idle-to-run tick_ms=10039 moving=0 draw_us=26067 transfer_us=12171 frame_us=38243 interval_us=0 deadline_miss=0 internal_free=343227 stack_watermark=1856
+I (11937) rlcd_dashboard: MOTION event=frame case=idle-to-run tick_ms=11039 moving=0 draw_us=26060 transfer_us=12170 frame_us=38235 interval_us=0 deadline_miss=0 internal_free=343227 stack_watermark=1856

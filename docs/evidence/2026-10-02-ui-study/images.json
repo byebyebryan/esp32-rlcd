@@ -1,0 +1,29 @@
+{
+  "baseline_commit": "a8e6384404008912824cc38d9dc3512c69948bab",
+  "uncommitted_study": true,
+  "board_mac": "94:a9:90:f3:43:74",
+  "panel": {
+    "width": 400,
+    "height": 300,
+    "bits_per_pixel": 1,
+    "spi_hz": 10000000
+  },
+  "sha256": {
+    "components/agent_dashboard/agent_dashboard.c": "8a660f2d43856ef2bd8ae79802722f0c5b6b716930f7585b252857ed29107bc6",
+    "components/agent_dashboard/include/agent_dashboard.h": "cbf46639ff61a54b1f17c8c9fec60f2db04a8f57b4e582440b856fbe8e446000",
+    "components/agent_dashboard/CMakeLists.txt": "baebb43d01cea5fe23b60d9e089755335c13bbdc0a08827f93fb290fd30b251e",
+    "examples/rlcd-dashboard/CMakeLists.txt": "8bcf37cc029f61d2c730e7b2de9056e1276a2e1ffef2db0644b0d22943019f7f",
+    "examples/rlcd-dashboard/demo.c": "a897bd8409c119c8bf0a54250625ad32d7b8513a29e0e817536ac6bdcef35bda",
+    "examples/rlcd-dashboard/demo.h": "722b7555a3c9b31c4fabab8cc0737b95ea22bbb8ae60dc6aa9591557ceaff941",
+    "examples/rlcd-dashboard/main/main.c": "cc032a3a368e3595acc6ec4ed49117ad8a1966186be0998e698c5b8330548b0d",
+    "examples/rlcd-dashboard/main/CMakeLists.txt": "8da602307176e9437b29314174a2c6f6e1b215618723fdaa2e88dc78130cd7a3",
+    "components/display_rlcd/rlcd_frame.c": "ddd85b4833a7b7db34dca0d8759838ff7b88ed9860d30d0aab4ac834b83d4c35",
+    "components/display_rlcd/rlcd_panel.c": "4a7db99a19cb68d3e3340b083e18ec5646daea1b8d86a2cbfe17a3b70135d45c",
+    "sdkconfig.defaults": "9ae2973d38b5ce537cbe4f1696cae68d94264ea261babc3266192050c4b92a35",
+    "examples/rlcd-dashboard/sdkconfig": "6c02460ade5e0b4f4fd28517f47d2ac0ed2cfbca95470658f57f1710f5ec1d71",
+    "examples/rlcd-dashboard/build/rlcd-dashboard.bin": "f320d92cd54f35e7e7c22b4315b400eef7f9867fef22b1e0bc375421eb258da9",
+    "examples/rlcd-dashboard/build/bootloader/bootloader.bin": "e8d05e98a897f8ecd55d2f64365e648b608cde40501c873764f627edbd89d16e",
+    "examples/rlcd-dashboard/build/partition_table/partition-table.bin": "7f00b6c042a89b15b0cac534f82ed988caf29278ff5700b0c511eb1b5bb7c820",
+    "examples/rlcd-perf/build/rlcd-perf.bin": "cb89dc95fcb7596b2681c9db67798a86bf48f31bfeff1c3bbf8183ffcd899569"
+  }
+}

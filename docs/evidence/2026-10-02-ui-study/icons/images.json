@@ -1,0 +1,30 @@
+{
+  "baseline_commit": "a8e6384404008912824cc38d9dc3512c69948bab",
+  "uncommitted_study": true,
+  "layout": "icons",
+  "board_mac": "94:a9:90:f3:43:74",
+  "panel": {
+    "width": 400,
+    "height": 300,
+    "bits_per_pixel": 1,
+    "spi_hz": 10000000
+  },
+  "sha256": {
+    "components/agent_dashboard/agent_dashboard.c": "c1d203044b81b6828b736e6f164eb113f32ff12e371a1a585354c2e15fbee64c",
+    "components/agent_dashboard/include/agent_dashboard.h": "383196ffb992a0817aae882cc9923c77c8d7b55703da4945ae96118a8742f4df",
+    "components/agent_dashboard/CMakeLists.txt": "baebb43d01cea5fe23b60d9e089755335c13bbdc0a08827f93fb290fd30b251e",
+    "examples/rlcd-dashboard/CMakeLists.txt": "8bcf37cc029f61d2c730e7b2de9056e1276a2e1ffef2db0644b0d22943019f7f",
+    "examples/rlcd-dashboard/demo.c": "9506e76bfafc31a744cd410cded7f14fc072a9b29d2154f234bde99d49359462",
+    "examples/rlcd-dashboard/demo.h": "b62a13887a61ddf5cd14bf0c8d645f9f5e5ab277c4676111e759c9ea014e36fc",
+    "examples/rlcd-dashboard/main/main.c": "d3cf8db7d85e9b13b3e44f1914f0e809ac1be46460e520d2e9d5a254c8569822",
+    "examples/rlcd-dashboard/main/CMakeLists.txt": "8da602307176e9437b29314174a2c6f6e1b215618723fdaa2e88dc78130cd7a3",
+    "components/display_rlcd/rlcd_frame.c": "ddd85b4833a7b7db34dca0d8759838ff7b88ed9860d30d0aab4ac834b83d4c35",
+    "components/display_rlcd/rlcd_panel.c": "4a7db99a19cb68d3e3340b083e18ec5646daea1b8d86a2cbfe17a3b70135d45c",
+    "sdkconfig.defaults": "9ae2973d38b5ce537cbe4f1696cae68d94264ea261babc3266192050c4b92a35",
+    "examples/rlcd-dashboard/sdkconfig": "6c02460ade5e0b4f4fd28517f47d2ac0ed2cfbca95470658f57f1710f5ec1d71",
+    "examples/rlcd-dashboard/build/rlcd-dashboard.bin": "b0fadf79949857a9c9bd0c9aaf3db875d7019223904b483dc9194f0205c8427a",
+    "examples/rlcd-dashboard/build/bootloader/bootloader.bin": "e8d05e98a897f8ecd55d2f64365e648b608cde40501c873764f627edbd89d16e",
+    "examples/rlcd-dashboard/build/partition_table/partition-table.bin": "7f00b6c042a89b15b0cac534f82ed988caf29278ff5700b0c511eb1b5bb7c820",
+    "examples/rlcd-perf/build/rlcd-perf.bin": "cb89dc95fcb7596b2681c9db67798a86bf48f31bfeff1c3bbf8183ffcd899569"
+  }
+}

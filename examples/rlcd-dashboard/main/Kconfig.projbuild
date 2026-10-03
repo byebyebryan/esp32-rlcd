@@ -1,0 +1,10 @@
+menu "RLCD dashboard study"
+
+config RLCD_DASHBOARD_STATIC
+    bool "Use the earlier seven-screen static layout study"
+    default n
+    help
+        Show the fixed-order CX/CC roster and diagnostic screens every
+        twelve seconds instead of the synthetic urgency/age motion demo.
+
+endmenu

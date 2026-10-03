@@ -1,0 +1,40 @@
+{
+  "created_utc": "2026-10-03T22:53:39.291600+00:00",
+  "source_head": "a8e6384404008912824cc38d9dc3512c69948bab",
+  "source_worktree_dirty": true,
+  "esp_idf": "v5.5.3",
+  "board_mac": "94:a9:90:f3:43:74",
+  "port": "/dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_94:A9:90:F3:43:74-if00",
+  "synthetic_data": true,
+  "sources": {
+    "components/agent_dashboard/agent_dashboard.c": "ac43588a3b15404a5909b39e9b3508e6bf759359096c6f10098e9ad9ee2a3e5f",
+    "components/agent_dashboard/agent_dashboard_motion.c": "7209588bc30affbd6bd7b289a59da086fca99ee6240d32cb2bad2727a1aa6a31",
+    "components/agent_dashboard/include/agent_dashboard.h": "bbbb47414d5f319c0f6a57217f9b71b234e44b7384c8134933d854ad67c2bb68",
+    "components/agent_dashboard/include/dashboard_motion.h": "6d33e66ff200392b2249a7c25ee8beab73aa9144ac2a929c3b60f9c4a045f9bf",
+    "components/display_rlcd/include/rlcd_frame.h": "96ca04c42f8983a44b8c362bbedbd05f85e400ce617f4daebe80ba25ce4a155a",
+    "components/display_rlcd/include/rlcd_panel.h": "638c1f9c89c7abda86e0e5c369db32125ff198986c205b4ee7733627f921fbfb",
+    "components/display_rlcd/rlcd_frame.c": "ddd85b4833a7b7db34dca0d8759838ff7b88ed9860d30d0aab4ac834b83d4c35",
+    "components/display_rlcd/rlcd_panel.c": "4a7db99a19cb68d3e3340b083e18ec5646daea1b8d86a2cbfe17a3b70135d45c",
+    "examples/rlcd-dashboard/demo.c": "9506e76bfafc31a744cd410cded7f14fc072a9b29d2154f234bde99d49359462",
+    "examples/rlcd-dashboard/demo.h": "b62a13887a61ddf5cd14bf0c8d645f9f5e5ab277c4676111e759c9ea014e36fc",
+    "examples/rlcd-dashboard/main/main.c": "9032d70a579e613d5bc7068a178823c7ff98f828fa20febbc92e9353803e682d",
+    "examples/rlcd-dashboard/motion_demo.c": "66431f764aecb0dc66907ff7a3cc1e568a63ac72973f88e9f0b894bf2aa9d214",
+    "sdkconfig.defaults": "9ae2973d38b5ce537cbe4f1696cae68d94264ea261babc3266192050c4b92a35",
+    "examples/rlcd-dashboard/sdkconfig": "50023b8cd6dab810ba3d87af563ef81e97e9c57ae9522489fecad9dca63df317",
+    "examples/rlcd-dashboard/CMakeLists.txt": "8bcf37cc029f61d2c730e7b2de9056e1276a2e1ffef2db0644b0d22943019f7f",
+    "examples/rlcd-dashboard/main/CMakeLists.txt": "d74136a49cadd82ec8616f0a644d9973832576575b6807c5d5e5b42166be9f81",
+    "examples/rlcd-dashboard/main/Kconfig.projbuild": "fd79ea0e509f9d90cc8be995ea928b6bdc70988d0373132f92c56c3d15b78759",
+    "components/agent_dashboard/CMakeLists.txt": "6ba87b75adfe3627379683ffd4a8ecba70b8ca987a8c7ef163b39f8ce6e87d35",
+    "components/display_rlcd/CMakeLists.txt": "17aa7d981b70d7faeb8316a5cc5ea63daa7a824a87f6d3b0fcfc661863d869a9",
+    "tests/rect_dashboard.c": "66415dae8089caf9f08e2d46b74bdb593fd3ea95bffa7aabd3df7efa08c915b8",
+    "tests/motion_dashboard.c": "39b1ebde1132b6c3b8d8643abc9935cbc0f98540d7c5f6754a0328deab868185",
+    "scripts/test-dashboard-motion.sh": "634c9bb1c40657ed06af1536a04ffc934bccf5ee12c0f2300304c6a613c68929",
+    "scripts/capture-dashboard-motion.py": "203cda0b24c5c75468c1c1cb7a4ac71956f9ede2cce6254e28afe70a5bb8ce3a"
+  },
+  "images": {
+    "examples/rlcd-dashboard/build/rlcd-dashboard.bin": "cb2dbae19636a56e019579a8831ce756dd61ce6c528c6ae67747b5a169e3fe70",
+    "examples/rlcd-dashboard/build/rlcd-dashboard.elf": "489443b31665c68eeadc29cf63f4beb607558d04f4a2dcf428822ca8abe29eb6",
+    "examples/rlcd-dashboard/build/bootloader/bootloader.bin": "e8d05e98a897f8ecd55d2f64365e648b608cde40501c873764f627edbd89d16e",
+    "examples/rlcd-dashboard/build/partition_table/partition-table.bin": "7f00b6c042a89b15b0cac534f82ed988caf29278ff5700b0c511eb1b5bb7c820"
+  }
+}

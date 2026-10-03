@@ -1,0 +1,36 @@
+{
+  "created_utc": "2026-10-03T17:36:46.587588+00:00",
+  "synthetic_data": true,
+  "native_checks": {
+    "motion_asan_ubsan": "pass",
+    "static_previews": 42,
+    "static_previews_byte_identical": 42,
+    "pixel_packing_distinct_pixels": 120000,
+    "demo_pbms": 26,
+    "native_controller_bytes": 11480
+  },
+  "firmware_builds": {
+    "motion": "pass",
+    "static": "pass",
+    "embedded_controller_bss_bytes": 10248
+  },
+  "flash_attempt": "failed_before_write_port_absent",
+  "usb_by_id_entries_at_flash": [],
+  "on_board_timing": "not_run",
+  "physical_animation_acceptance": "pending",
+  "preview_hashes": {
+    "demo-initial-order.png": "8316830aa5f4524b5a23481aa7d7af067614b5c13371f6b489dfa37dc07095be",
+    "demo-answered-wait-04.png": "aacded725d658cb8b9a3629943c0993a835a39d7a642d2342aa7c5ae22916c1b",
+    "demo-settled-01-answered-wait-to-run.png": "59762ccfdebd8d4163934e44d8ad67b7df514acec0a738bf6e3700fed89b4015",
+    "demo-settled-07-overflow-admission.png": "6d703712bb358449eee04b893cd92930c817f44083b9877fcec18fb51145cd43",
+    "demo-settled-09-feed-stale-during-motion.png": "da100858be761f3ac0bc081b239adb69ae4fbee503c41ac34f34047c57e6e23a",
+    "demo-settled-13-attention-overflow.png": "96fd6b73bc0d4e091e1cd262f6297596d7b878f21f8908ebffb3f469c8693617",
+    "demo-settled-14-uncertainty-section.png": "99b124effd8353fcff091b40336c7e8b9e3428548ddd36581f02dffa7bd4b4a2",
+    "answered-wait.gif": "dd90729f6001661560017ae3c736c066676f796b5d8fac39485e7aa3cbdb4469"
+  },
+  "limitations": [
+    "Continuous-from-zero synthetic timeline; skipped phases are not replayed",
+    "No live provider/host transport integration",
+    "No motion timing or visual acceptance without connected RLCD"
+  ]
+}

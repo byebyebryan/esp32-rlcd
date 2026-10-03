@@ -1,0 +1,12 @@
+{
+  "provenance": "Normalized tool stdout fragment before host capture terminated",
+  "capture_exit_code": 143,
+  "cause": "not established",
+  "complete_cycle": false,
+  "received_cases": [
+    "roster",
+    "overflow"
+  ],
+  "physical_readability": "pending",
+  "fragment_sha256": "756e7356ec73ee84fb6931684d70661dc7db26c54a19d48481ee55fd6d44856e"
+}

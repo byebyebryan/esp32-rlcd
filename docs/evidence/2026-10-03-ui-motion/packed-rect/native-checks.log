@@ -1,0 +1,8 @@
+./scripts/test-dashboard-motion.sh
+PASS: 4488 packed rectangles equal pixel reference; edge masks, colors, clipping and guards
+PASS: ordering, identity, atomic input, motion bounds, clipping, source loss, polarity; sizeof(controller)=11480
+./scripts/preview-dashboard.sh
+PASS: 42 synthetic frames; bounds and stale/unavailable attention suppression
+Optimization comparison: 32/32 motion PBMs and 42/42 static PBMs byte-identical
+ESP-IDF v5.5.3 motion build: pass
+ESP-IDF v5.5.3 static fallback build after rectangle optimization: pass
