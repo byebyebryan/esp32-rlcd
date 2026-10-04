@@ -8,7 +8,7 @@ before they were committed.
 
 ## Configuration and results
 
-The [separate benchmark app](../examples/rlcd-perf/README.md) uses ESP-IDF
+The [separate benchmark app](../README.md) uses ESP-IDF
 v5.5.3, 240 MHz CPU, performance optimization (`-O3`), 1 ms scheduler ticks,
 the accepted panel initialization and 10 MHz SPI3. Each full-frame write
 sends the panel's packed 15,000-byte monochrome buffer from internal DMA RAM.
@@ -60,19 +60,23 @@ future LVGL/UI workloads. CPU percentages are integer estimates from per-core
 idle runtime counters, not a cycle-accurate CPU profile.
 
 USB RTS reset checks establish software restart recovery. Cold boot after
-physical power removal remains pending from [bring-up](bringup.md).
+physical power removal remains pending from [bring-up](../../../docs/bringup.md).
 The accepted slow bring-up binaries and factory flash backup remain preserved
 locally; the benchmark stays running for observation.
 
 ## Evidence and reproduction
 
-- [Benchmark instructions and workload definitions](../examples/rlcd-perf/README.md)
-- [First capture summary](evidence/2026-10-02-perf/run-1-summary.json)
-- [First boot, timing and soak log](evidence/2026-10-02-perf/run-1-serial.log)
-- [Reset-repeat summary](evidence/2026-10-02-perf/reset-repeat-summary.json)
-- [Reset-repeat log](evidence/2026-10-02-perf/reset-repeat-serial.log)
-- [Flash log](evidence/2026-10-02-perf/flash.log)
-- [Exact source, configuration and image hashes](evidence/2026-10-02-perf/images.json)
+The linked records are retained unchanged in the root evidence archive. Source
+and image paths recorded inside those files describe the workspace layout at
+capture time.
+
+- [Benchmark instructions and workload definitions](../README.md)
+- [First capture summary](../../../docs/evidence/2026-10-02-perf/run-1-summary.json)
+- [First boot, timing and soak log](../../../docs/evidence/2026-10-02-perf/run-1-serial.log)
+- [Reset-repeat summary](../../../docs/evidence/2026-10-02-perf/reset-repeat-summary.json)
+- [Reset-repeat log](../../../docs/evidence/2026-10-02-perf/reset-repeat-serial.log)
+- [Flash log](../../../docs/evidence/2026-10-02-perf/flash.log)
+- [Exact source, configuration and image hashes](../../../docs/evidence/2026-10-02-perf/images.json)
 
 The summary records SHA256 digests of normalized and raw captures. Archived
 logs normalize line endings and trailing whitespace. Image hashes identify the

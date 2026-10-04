@@ -90,19 +90,20 @@ same continuous timeline, and firmware polls every forty milliseconds.
 Build and flash only the confirmed RLCD USB identity:
 
 ```sh
-./scripts/idf.sh -C examples/rlcd-dashboard build
-./scripts/idf.sh -C examples/rlcd-dashboard -p "$RLCD_PORT" flash monitor
+./scripts/idf.sh -C projects/agent-dashboard build
+./scripts/idf.sh -C projects/agent-dashboard -p "$RLCD_PORT" flash monitor
 ```
 
 The static seven-screen study remains selectable through `menuconfig` under
 **RLCD dashboard study → Use the earlier seven-screen static layout study**.
-Its original capture is `scripts/capture-dashboard.py`; motion has a separate
+Its original capture is `projects/agent-dashboard/scripts/capture-dashboard.py`; motion has a separate
 capture command:
 
 ```sh
 . scripts/env.sh
-python scripts/capture-dashboard-motion.py --port "$RLCD_PORT" --seconds 95 \
-    --reset --output build/evidence/dashboard-motion-local
+python3 projects/agent-dashboard/scripts/capture-dashboard-motion.py \
+    --port "$RLCD_PORT" --seconds 95 \
+    --reset --output projects/agent-dashboard/build/evidence/dashboard-motion-local
 ```
 
 Use a new output directory and close any monitor first. The capture preserves
@@ -122,16 +123,20 @@ fixture and native harness. The primary reviewed ordering/identity/motion
 invariants, integrated the firmware scheduler and static fallback, added the
 capture, and completed the firmware build and final checks.
 
-- `./scripts/test-dashboard-motion.sh` passes with ASan/UBSan and warnings as
+- `./projects/agent-dashboard/scripts/test-dashboard-motion.sh` passes with ASan/UBSan and warnings as
   errors. It checks urgency/age order, stable ties and identity, atomic rejection,
   resets, repeated snapshots during motion, direction-layer compositing, shared
   progress across different distances, continuous retargeting, newest-target
   behavior, the burst bound, overflow, clipping, fixed icon polarity and feed loss.
   A twenty-four-track current/departing stress frame is rendered under sanitizers.
 - The harness outputs twenty-six actual demo PBMs: initial, fifteen phase-settled
-  frames and ten frames of an answered-wait slide. Run
-  `python3 scripts/dashboard-preview.py build/dashboard-motion` to regenerate
-  PNGs and a local comparison page after the native test.
+  frames and ten frames of an answered-wait slide. Regenerate PNGs and a local
+  comparison page after the native test with:
+
+  ```sh
+  python3 projects/agent-dashboard/scripts/dashboard-preview.py \
+      projects/agent-dashboard/build/native-motion
+  ```
 - All forty-two existing static PBMs remain byte-identical to the preserved
   baseline. The independent pixel-packing check passes for all 120,000 pixels.
 - ESP-IDF v5.5.3 builds both the default motion mode and the static fallback.
@@ -187,30 +192,34 @@ stack watermark stayed at 1,856. This is measured write timing for synthetic
 scenarios. The user then confirmed on-device that the refined crossings make
 moving rows easier to follow and accepted the current design.
 
-The initial [native/build summary](evidence/2026-10-03-ui-motion/summary.json),
-[check record](evidence/2026-10-03-ui-motion/checks.log),
-[source/configuration/image hashes](evidence/2026-10-03-ui-motion/images.json)
-and [failed flash attempt](evidence/2026-10-03-ui-motion/flash-attempt.log)
+The linked records are retained unchanged in the root evidence archive. Source
+and image paths recorded inside those files describe the workspace layout at
+capture time.
+
+The initial [native/build summary](../../../docs/evidence/2026-10-03-ui-motion/summary.json),
+[check record](../../../docs/evidence/2026-10-03-ui-motion/checks.log),
+[source/configuration/image hashes](../../../docs/evidence/2026-10-03-ui-motion/images.json)
+and [failed flash attempt](../../../docs/evidence/2026-10-03-ui-motion/flash-attempt.log)
 record the initial disconnected-board boundary. The separate
-[first startup](evidence/2026-10-03-ui-motion/first-startup/summary.json) records
+[first startup](../../../docs/evidence/2026-10-03-ui-motion/first-startup/summary.json) records
 the overruns. The optimized prototype's
-[complete cycle](evidence/2026-10-03-ui-motion/packed-rect/summary.json),
-[serial trace](evidence/2026-10-03-ui-motion/packed-rect/serial.log),
-[verified flash](evidence/2026-10-03-ui-motion/packed-rect/flash.log),
-[native checks](evidence/2026-10-03-ui-motion/packed-rect/native-checks.log) and
-[source/configuration/image hashes](evidence/2026-10-03-ui-motion/packed-rect/images.json)
+[complete cycle](../../../docs/evidence/2026-10-03-ui-motion/packed-rect/summary.json),
+[serial trace](../../../docs/evidence/2026-10-03-ui-motion/packed-rect/serial.log),
+[verified flash](../../../docs/evidence/2026-10-03-ui-motion/packed-rect/flash.log),
+[native checks](../../../docs/evidence/2026-10-03-ui-motion/packed-rect/native-checks.log) and
+[source/configuration/image hashes](../../../docs/evidence/2026-10-03-ui-motion/packed-rect/images.json)
 record the first measured deployment. The refined deployment has its own
-[complete cycle](evidence/2026-10-03-ui-motion/direction-tiers/summary.json),
-[serial trace](evidence/2026-10-03-ui-motion/direction-tiers/serial.log),
-[verified flash](evidence/2026-10-03-ui-motion/direction-tiers/flash.log),
-[native checks](evidence/2026-10-03-ui-motion/direction-tiers/native-checks.log) and
-[source/configuration/image hashes](evidence/2026-10-03-ui-motion/direction-tiers/images.json).
+[complete cycle](../../../docs/evidence/2026-10-03-ui-motion/direction-tiers/summary.json),
+[serial trace](../../../docs/evidence/2026-10-03-ui-motion/direction-tiers/serial.log),
+[verified flash](../../../docs/evidence/2026-10-03-ui-motion/direction-tiers/flash.log),
+[native checks](../../../docs/evidence/2026-10-03-ui-motion/direction-tiers/native-checks.log) and
+[source/configuration/image hashes](../../../docs/evidence/2026-10-03-ui-motion/direction-tiers/images.json).
 Firmware images and the prior-image rollback copy remain in ignored build
 directories; no commit or push has been made.
 
-![Initial native eight-row roster](evidence/2026-10-03-ui-motion/direction-tiers/demo-initial-order.png)
+![Initial native eight-row roster](../../../docs/evidence/2026-10-03-ui-motion/direction-tiers/demo-initial-order.png)
 
-![Refined native answered-wait slide](evidence/2026-10-03-ui-motion/direction-tiers/answered-wait.gif)
+![Refined native answered-wait slide](../../../docs/evidence/2026-10-03-ui-motion/direction-tiers/answered-wait.gif)
 
 Opaque rows prevent superimposed text, but they temporarily cover fragments of
 other rows during crossings. The native frames show this tradeoff; physical

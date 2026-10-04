@@ -1,7 +1,8 @@
-# RLCD drawing and transfer benchmark
+# RLCD render bench
 
 On-device drawing, SPI and CPU tests for the Waveshare ESP32-S3-RLCD-4.2.
-This separate app shares the panel component with the root bring-up app.
+This independent workspace app shares the panel component and board defaults
+with the bring-up app.
 The working panel initialization, 10 MHz SPI clock and full-frame packing
 are retained. No LVGL or other managed component is required.
 
@@ -10,12 +11,13 @@ are retained. No LVGL or other managed component is required.
 Complete [the repository setup](../../docs/setup.md), then run from its root:
 
 ```sh
-./scripts/idf.sh -C examples/rlcd-perf build
+./scripts/idf.sh -C projects/render-bench build
 RLCD_PORT='/dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_YOUR_BOARD-if00'
-./scripts/idf.sh -C examples/rlcd-perf -p "$RLCD_PORT" flash
+./scripts/idf.sh -C projects/render-bench -p "$RLCD_PORT" flash
 . scripts/env.sh
-python scripts/capture-perf.py --port "$RLCD_PORT" --seconds 120 --reset \
-    --output build/evidence/perf-local
+python3 projects/render-bench/scripts/capture-perf.py \
+    --port "$RLCD_PORT" --seconds 120 --reset \
+    --output projects/render-bench/build/evidence/perf-local
 ```
 
 Use a new output directory for every capture. The capture uses IDF's pyserial
@@ -26,12 +28,13 @@ not a cold power-cycle check. Close other monitors using that port first.
 To return to the original slow diagnostic screen:
 
 ```sh
-./scripts/idf.sh -p "$RLCD_PORT" flash
+./scripts/idf.sh -C projects/bringup -p "$RLCD_PORT" flash
 ```
 
-The example inherits the root board defaults and additionally enables compiler
-performance optimization (`-O3` in IDF v5.5.3), 1 ms FreeRTOS ticks and task
-runtime statistics using `esp_timer`. The root bring-up configuration is separate.
+The app inherits the root board defaults and its project override enables
+compiler performance optimization (`-O3` in IDF v5.5.3), 1 ms FreeRTOS ticks
+and task runtime statistics using `esp_timer`. Each project keeps its own
+generated configuration.
 
 ## Workloads and sequence
 
@@ -81,4 +84,4 @@ of 83.3 writes/s before commands and software overhead. A completed SPI write
 does not establish panel scan rate or visible frame rate. TE is not sampled;
 smoothness and tearing require physical observation.
 
-Recorded local results: [drawing performance](../../docs/performance.md).
+Recorded local results: [drawing performance](docs/performance.md).

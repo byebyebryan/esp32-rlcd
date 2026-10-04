@@ -34,9 +34,12 @@ this repository's build and setup use ESP-IDF.
 
 ## Bootstrap changes for this repository
 
-The fresh-machine guide includes prerequisites and EIM installation before
-SDK setup. It uses an ordinary repository clone and builds from the root,
-replacing the shared workspace's `projects/` and vendor-submodule layout.
+The initial standalone bootstrap guide included prerequisites and EIM
+installation before SDK setup. At that time it used an ordinary repository
+clone and a single application at the root, replacing the shared workspace's
+`projects/` and vendor-submodule layout. The current hardware workspace has
+three peer applications under `projects/`, with shared panel code and board
+defaults at the root.
 
 EIM's `recurse_submodules` setting controls ESP-IDF's own dependencies.
 It is enabled for a complete fresh SDK installation even though this app

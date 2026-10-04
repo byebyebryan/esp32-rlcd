@@ -29,4 +29,4 @@ if ! "$RLCD_REPO_ROOT/scripts/idf.sh" --version; then
     exit 1
 fi
 
-echo "Ready. Build with ./scripts/idf.sh build or source scripts/env.sh."
+echo "Ready. Select an app with ./scripts/idf.sh -C projects/<name> build; source scripts/env.sh for interactive use."

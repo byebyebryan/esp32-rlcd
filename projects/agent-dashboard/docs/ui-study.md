@@ -26,7 +26,7 @@ Current provider research and the data-source proof live in
 
 ## Five-row baseline
 
-The [dashboard example](../examples/rlcd-dashboard/README.md) uses the existing
+The [dashboard app](../README.md) uses the existing
 400 × 300 panel packing and queued full-frame transport. Its small C renderer
 also produces native previews, avoiding a browser-only approximation of the
 font, clipping or pixel geometry.
@@ -177,30 +177,34 @@ and without highlighting. Physical acceptance of this refinement is pending.
 These 1-bit PNGs were generated from the same packed framebuffer renderer used
 by the firmware. They are desktop previews, not photographs of the RLCD.
 
-![Five-session roster](evidence/2026-10-02-ui-study/roster.png)
+![Five-session roster](../../../docs/evidence/2026-10-02-ui-study/roster.png)
 
-![Independent uncertainty states](evidence/2026-10-02-ui-study/uncertainty.png)
+![Independent uncertainty states](../../../docs/evidence/2026-10-02-ui-study/uncertainty.png)
 
-![Same-project sessions and long names](evidence/2026-10-02-ui-study/identity.png)
+![Same-project sessions and long names](../../../docs/evidence/2026-10-02-ui-study/identity.png)
 
-![Eight-session table](evidence/2026-10-02-ui-study/dense/roster.png)
+![Eight-session table](../../../docs/evidence/2026-10-02-ui-study/dense/roster.png)
 
-![Dense uncertainty states](evidence/2026-10-02-ui-study/dense/uncertainty.png)
+![Dense uncertainty states](../../../docs/evidence/2026-10-02-ui-study/dense/uncertainty.png)
 
-![Eight rows with state symbols and wider names](evidence/2026-10-02-ui-study/icons/roster.png)
+![Eight rows with state symbols and wider names](../../../docs/evidence/2026-10-02-ui-study/icons/roster.png)
 
-![Distinct same-project display names](evidence/2026-10-02-ui-study/icons/identity.png)
+![Distinct same-project display names](../../../docs/evidence/2026-10-02-ui-study/icons/identity.png)
 
-![CX/CC labels with attention rows highlighted](evidence/2026-10-02-ui-study/attention-proposal/attention-roster.png)
+![CX/CC labels with attention rows highlighted](../../../docs/evidence/2026-10-02-ui-study/attention-proposal/attention-roster.png)
 
-![Provider field omitted](evidence/2026-10-02-ui-study/attention-proposal/no-agent-roster.png)
+![Provider field omitted](../../../docs/evidence/2026-10-02-ui-study/attention-proposal/no-agent-roster.png)
 
-![Attention rows with fixed status-icon polarity](evidence/2026-10-02-ui-study/attention-fixed-icons/roster.png)
+![Attention rows with fixed status-icon polarity](../../../docs/evidence/2026-10-02-ui-study/attention-fixed-icons/roster.png)
 
 The generated local comparison page also includes overflow, whole-feed stale,
-offline and empty cases. Regenerate with `./scripts/preview-dashboard.sh`.
+offline and empty cases. Regenerate with `./projects/agent-dashboard/scripts/preview-dashboard.sh`.
 
 ## Evidence and limits
+
+The linked records are retained unchanged in the root evidence archive. Source
+and image paths recorded inside those files describe the workspace layout at
+capture time.
 
 - Native C compilation with warnings as errors and ASan/UBSan passed for 42
   frames, including the new provider/attention comparisons; framebuffer guard
@@ -229,43 +233,43 @@ offline and empty cases. Regenerate with `./scripts/preview-dashboard.sh`.
   internal memory stayed at 353,747 bytes. Physical feedback on name space and
   symbol readability remains pending.
 
-The five-row [serial log](evidence/2026-10-02-ui-study/serial.log),
-[summary](evidence/2026-10-02-ui-study/summary.json),
-[flash log](evidence/2026-10-02-ui-study/flash.log) and
-[source/configuration/image hashes](evidence/2026-10-02-ui-study/images.json)
+The five-row [serial log](../../../docs/evidence/2026-10-02-ui-study/serial.log),
+[summary](../../../docs/evidence/2026-10-02-ui-study/summary.json),
+[flash log](../../../docs/evidence/2026-10-02-ui-study/flash.log) and
+[source/configuration/image hashes](../../../docs/evidence/2026-10-02-ui-study/images.json)
 record the first deployment. The summary's physical-readability field records
 its status at capture time; the subsequent user observation is documented here.
 
-The eight-row [serial log](evidence/2026-10-02-ui-study/dense/serial.log),
-[summary](evidence/2026-10-02-ui-study/dense/summary.json),
-[flash log](evidence/2026-10-02-ui-study/dense/flash.log) and
-[source/configuration/image hashes](evidence/2026-10-02-ui-study/dense/images.json)
+The eight-row [serial log](../../../docs/evidence/2026-10-02-ui-study/dense/serial.log),
+[summary](../../../docs/evidence/2026-10-02-ui-study/dense/summary.json),
+[flash log](../../../docs/evidence/2026-10-02-ui-study/dense/flash.log) and
+[source/configuration/image hashes](../../../docs/evidence/2026-10-02-ui-study/dense/images.json)
 record the second deployment. Both traces use synthetic session data.
 
-The symbol layout's [serial log](evidence/2026-10-02-ui-study/icons/serial.log),
-[summary](evidence/2026-10-02-ui-study/icons/summary.json),
-[flash log](evidence/2026-10-02-ui-study/icons/flash.log) and
-[source/configuration/image hashes](evidence/2026-10-02-ui-study/icons/images.json)
+The symbol layout's [serial log](../../../docs/evidence/2026-10-02-ui-study/icons/serial.log),
+[summary](../../../docs/evidence/2026-10-02-ui-study/icons/summary.json),
+[flash log](../../../docs/evidence/2026-10-02-ui-study/icons/flash.log) and
+[source/configuration/image hashes](../../../docs/evidence/2026-10-02-ui-study/icons/images.json)
 record the current deployment. Its first capture process terminated with host
 exit code 143 before producing a complete artifact; the complete repeat is
 the evidence above. The interruption's cause was not established and is not
 treated as a passing run or as an established device fault.
 
 The latest attention deployment has a
-[verified flash log](evidence/2026-10-02-ui-study/attention/flash.log),
-[source/configuration/image hashes](evidence/2026-10-02-ui-study/attention/images.json),
-[startup stdout fragment](evidence/2026-10-02-ui-study/attention/startup-fragment.log)
-and [partial-capture metadata](evidence/2026-10-02-ui-study/attention/startup.json).
+[verified flash log](../../../docs/evidence/2026-10-02-ui-study/attention/flash.log),
+[source/configuration/image hashes](../../../docs/evidence/2026-10-02-ui-study/attention/images.json),
+[startup stdout fragment](../../../docs/evidence/2026-10-02-ui-study/attention/startup-fragment.log)
+and [partial-capture metadata](../../../docs/evidence/2026-10-02-ui-study/attention/startup.json).
 Those startup records identify the selected attention layout; they do not
 replace a full cycle or human readability acceptance.
 
 The fixed-icon refinement has its own
-[flash log](evidence/2026-10-02-ui-study/attention-fixed-icons/flash.log),
-[startup trace](evidence/2026-10-02-ui-study/attention-fixed-icons/startup.log),
-[startup summary](evidence/2026-10-02-ui-study/attention-fixed-icons/startup.json)
-and [source/configuration/image hashes](evidence/2026-10-02-ui-study/attention-fixed-icons/images.json).
+[flash log](../../../docs/evidence/2026-10-02-ui-study/attention-fixed-icons/flash.log),
+[startup trace](../../../docs/evidence/2026-10-02-ui-study/attention-fixed-icons/startup.log),
+[startup summary](../../../docs/evidence/2026-10-02-ui-study/attention-fixed-icons/startup.json)
+and [source/configuration/image hashes](../../../docs/evidence/2026-10-02-ui-study/attention-fixed-icons/images.json).
 
-The earlier [drawing benchmark](performance.md) establishes headroom for that
+The earlier [drawing benchmark](../../render-bench/docs/performance.md) establishes headroom for that
 workload; it is not a timing measurement of this UI. The static example logs
 actual draw/transfer times when deployed and redraws only when changing synthetic
 cases. The separate motion proof has its own scheduler, capture and complete

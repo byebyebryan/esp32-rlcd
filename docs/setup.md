@@ -1,8 +1,8 @@
 # Development setup from a fresh machine
 
-This repository contains a complete ESP-IDF app and panel component. Start
-with a Linux machine, Bash, a USB-C data cable and the Waveshare
-ESP32-S3-RLCD-4.2. The wrapper runs from Bash; interactive activation supports
+This repository contains three independent ESP-IDF applications and a shared
+panel component. Start with a Linux machine, Bash, a USB-C data cable and the
+Waveshare ESP32-S3-RLCD-4.2. The wrapper runs from Bash; interactive activation supports
 Bash and Zsh. No other board project, preinstalled ESP-IDF, vendor checkout,
 Arduino installation or editor extension is required.
 
@@ -72,7 +72,7 @@ git clone https://github.com/byebyebryan/esp32-rlcd.git
 cd esp32-rlcd
 ./scripts/setup.sh
 ./scripts/idf.sh --version
-./scripts/idf.sh build
+./scripts/idf.sh -C projects/bringup build
 ./scripts/check-frame.sh
 ```
 
@@ -82,8 +82,8 @@ has no submodules and needs an ordinary clone.
 
 `scripts/eim-config.toml` pins the SDK release and `esp32s3` target. It enables
 ESP-IDF dependency checkout and disables EIM's optional component-registry
-prefetch; this app has no registry-managed dependencies. `setup.sh` passes
-explicit SDK, tools, archive, activation and registry paths and checks the
+prefetch; these applications have no registry-managed dependencies. `setup.sh`
+passes explicit SDK, tools, archive, activation and registry paths and checks the
 resulting environment. An activation file alone does not prove a complete
 installation.
 
@@ -102,7 +102,7 @@ running setup and build commands:
 ```sh
 export EIM_ROOT="$HOME/.local/share/esp32-rlcd-idf"
 ./scripts/setup.sh
-./scripts/idf.sh build
+./scripts/idf.sh -C projects/bringup build
 ```
 
 The wrapper activates the selected toolchain on every invocation, so a fresh
@@ -112,7 +112,7 @@ For interactive `idf.py` in Bash or Zsh:
 ```sh
 . scripts/env.sh
 idf.py --version
-idf.py menuconfig
+idf.py -C projects/bringup menuconfig
 ```
 
 ## 4. Configure USB access and select the board
@@ -155,7 +155,7 @@ Linux serial driver; an external UART adapter is not needed for this board.
 Close any serial monitor or other process holding this specific port, then:
 
 ```sh
-./scripts/idf.sh -p "$RLCD_PORT" flash monitor
+./scripts/idf.sh -C projects/bringup -p "$RLCD_PORT" flash monitor
 ```
 
 Flashing replaces the selected board's firmware. Exit the monitor with
@@ -164,7 +164,15 @@ No Wi-Fi credentials are needed for the panel test.
 
 ## Board configuration and generated files
 
-`sdkconfig.defaults` is the shared board configuration:
+The root `sdkconfig.defaults` is the shared board configuration used by all
+three applications. Each application owns its generated `sdkconfig` and
+`build/` directory. The benchmark also applies
+`projects/render-bench/sdkconfig.defaults` for its workload-specific settings.
+Existing ignored root or former example output files are historical local
+artifacts; selecting a project with `-C` keeps current builds in that project's
+directory.
+
+The shared board configuration is:
 
 | Setting | Value |
 | --- | --- |
@@ -180,23 +188,22 @@ configuration. The default IDF partition table has a single 1 MiB app partition;
 the initial panel test fits it. Additional flash capacity is available for
 future partition changes.
 
-ESP-IDF generates local `sdkconfig` and `build/`; both are ignored by Git.
-`menuconfig` changes the local configuration. To make a setting reproducible,
-review and put the intended option in `sdkconfig.defaults`.
-
-Defaults seed a fresh config; they do not overwrite existing local choices.
-To rebuild from the shared defaults while preserving the old config:
+`menuconfig` changes the selected application's local configuration. To make a
+setting reproducible, review and put the intended option in the root
+`sdkconfig.defaults` or the benchmark's project override. Defaults seed a fresh
+config; they do not overwrite existing local choices. To rebuild the bring-up
+app from its defaults while preserving the old config:
 
 ```sh
-mv sdkconfig sdkconfig.old
-./scripts/idf.sh fullclean
-./scripts/idf.sh build
+mv projects/bringup/sdkconfig projects/bringup/sdkconfig.old
+./scripts/idf.sh -C projects/bringup fullclean
+./scripts/idf.sh -C projects/bringup build
 ```
 
-Run the `mv` only when a local `sdkconfig` exists. Preserve any local evidence
-under `build/` before `fullclean`. A new clone already starts from defaults;
-an additional `set-target` command is unnecessary because the defaults select
-`esp32s3`.
+Run the `mv` only when that project has a local `sdkconfig`. Preserve any local
+evidence under `projects/bringup/build/` before `fullclean`. A new clone already
+starts from defaults; an additional `set-target` command is unnecessary
+because the defaults select `esp32s3`.
 
 ## Troubleshooting
 
