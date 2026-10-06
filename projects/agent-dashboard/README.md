@@ -2,28 +2,32 @@
 
 Independent ESP-IDF application for exploring a compact session roster on the
 400 × 300 RLCD. The motion view shows a state symbol, name, provider (CX/CC)
-and a state-age example. Blocked sessions use white text on black 24-pixel rows;
-sessions waiting for a prompt use black text on white 24-pixel rows. Healthy
-working sessions use 12-pixel rows. Fusion Pixel's native 12-pixel font is
-doubled for full rows and drawn at native scale in working rows. Basic Latin
-capital heights are 16 and 8 pixels. Mixed case and supported Unicode labels
-retain their supplied characters.
-The 264-pixel list admits eleven full rows or twenty-two working rows, with mixed
-rosters between those limits and explicit hidden blocked counts. The local
-model holds up to thirty-two sessions. The earlier five-row layout and fixed
+and a state-age example. Blocked rows alternate white-on-black and black-on-white
+at 1Hz until resolved. Waiting rows stay white on black; working rows stay
+black on white. All rows and their text are 24 pixels high, using Fusion Pixel's
+native 12-pixel font at scale two. Basic Latin capital height is 16 pixels.
+Mixed case and supported Unicode labels retain their supplied characters.
+The 264-pixel list admits eleven complete rows with no row/group gaps and
+explicit hidden blocked counts. The local model holds up to thirty-two
+sessions. The earlier five-row layout and fixed
 eight-row studies remain in the renderer and native previews.
 The motion footer identifies the source as **SIMULATED**; the earlier static
 screens retain their **DEMO** label.
 
-Motion-view status icons follow the row text: black marks on white rows and white marks
-on black blocked rows, drawn directly on the row background.
+Motion-view status icons use the earlier shapes and x=8 placement, following
+the row text colour directly on its background. Blocked rows share a clock:
+500ms in each polarity. Repeated updates retain the phase. Resolution,
+inactivity and unavailable evidence stop flashing. On-device feedback accepted
+this scheme for roughly one to three blocked requests that clear quickly.
 
-A 24-pixel header shows blocked, waiting and working totals for the
-whole active roster, including hidden rows, with a thin divider below it.
-Uncertain rows add an explicit native 12-pixel unknown count on the same line.
+A 24-pixel AGENTS title anchors the header, with native 12-pixel blocked,
+waiting and working totals right-aligned for the whole active roster,
+including hidden rows. A thin divider leaves two white scanlines before
+the first row, within the existing 24-pixel header band. Uncertain rows
+add an explicit unknown count beside the source label in the footer.
 The 12-pixel footer reports overflow and hidden blocked rows,
 or the last successful fixture update's age while the source is unavailable.
-Column labels and the generic title are omitted. Duplicate project names
+Column labels are omitted. Duplicate project names
 gain their supplied short session ID; labels never become identity keys.
 
 There is no live session discovery, host protocol, hook, network connection or
@@ -78,8 +82,10 @@ inactivity/readmission, empty groups and feed loss/recovery. See
 [the motion proof](docs/ui-motion.md) for its sequence and validation status.
 The [urgency-band contract](docs/urgency-bands.md) records the variable-height
 refinement and its separate acceptance gates.
-The [larger header refinement](docs/header-24-study.md) records the current
-chrome and geometry. The [UI polish](docs/ui-polish.md) records the footer and
+The [accepted state layout](docs/flashing-rows-study.md) records the current state
+styles and slow flashing. The [uniform-row trial](docs/uniform-rows-study.md)
+records the preceding marker/icon-cue comparison. The [title and count refinement](docs/header-title-study.md)
+records the retained chrome. The [UI polish](docs/ui-polish.md) records the footer and
 feed-loss behavior. The [12px Fusion trial](docs/fusion-12-font-study.md)
 records the selected font and earlier device acceptance.
 The [earlier 8px Fusion trial](docs/fusion-font-study.md)
@@ -88,7 +94,7 @@ records the denser layout rejected during physical review. The earlier
 bitmaps and preceding 14-pixel baseline.
 Rows share eased progress over a 360 ms transition, each along its own start-to-target
 path. Downward rows draw behind stationary rows; upward rows draw in front. State
-symbols, highlights and row heights update immediately, before the slide finishes.
+symbols and highlights update immediately, before the slide finishes.
 Whole-feed loss settles the last accepted packed layout, retains row heights
 and replaces cached work claims with health indicators. Known inactive sessions leave the selected
 roster; missing or stale work evidence does not imply inactivity.

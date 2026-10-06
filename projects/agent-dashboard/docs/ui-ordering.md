@@ -17,8 +17,10 @@ working rows and height-based admission. It records current geometry, motion
 and acceptance requirements for that pass; the eight-row experiment below is earlier history.
 The selected [12px Fusion trial](fusion-12-font-study.md) supersedes the earlier
 8px trial while preserving these ordering and identity rules. The current
-[header refinement](header-24-study.md) records 24/12-pixel rows and a 264px
-body; [UI polish](ui-polish.md) records packed feed-loss targets.
+[flashing-row trial](flashing-rows-study.md) uses 24px rows for every state,
+1Hz blocked-row flashing, inverse waiting rows and normal working rows in
+the 264px body;
+[UI polish](ui-polish.md) records packed feed-loss targets.
 
 ## Agreed ordering
 

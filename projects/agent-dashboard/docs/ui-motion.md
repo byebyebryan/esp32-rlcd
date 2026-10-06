@@ -14,8 +14,9 @@ loop is 92 seconds. The sequence and measurements below remain the historical
 2026-10-03 evidence for the earlier fixed-height motion prototype.
 The earlier [8px Fusion study](fusion-font-study.md) was superseded by the
 selected [12px Fusion trial](fusion-12-font-study.md). The current
-[header refinement](header-24-study.md) uses 24px summary text, 24/12-pixel
-rows and a 264px body. [UI polish](ui-polish.md) records packed feed-loss targets.
+[flashing-row trial](flashing-rows-study.md) retains the 24px title and 264px
+body with 24px rows for every state, 1Hz blocked-row flashing, inverse waiting
+rows and normal working rows. [UI polish](ui-polish.md) records packed feed-loss targets.
 
 ## Prototype boundary
 

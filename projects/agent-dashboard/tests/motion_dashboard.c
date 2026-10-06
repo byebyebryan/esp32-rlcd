@@ -178,8 +178,8 @@ static void test_priority_age_and_identity(void)
     assert(dashboard_motion_position_y(&motion, expected[0]) == DASHBOARD_MOTION_BODY_TOP);
     assert(dashboard_motion_position_y(&motion, expected[2]) == DASHBOARD_MOTION_BODY_TOP + 48);
     assert(dashboard_motion_position_y(&motion, expected[4]) == DASHBOARD_MOTION_BODY_TOP + 96);
-    assert(dashboard_motion_position_y(&motion, expected[7]) == DASHBOARD_MOTION_BODY_TOP + 132);
-    assert(dashboard_motion_position_y(&motion, expected[8]) == DASHBOARD_MOTION_BODY_TOP + 156);
+    assert(dashboard_motion_position_y(&motion, expected[7]) == DASHBOARD_MOTION_BODY_TOP + 168);
+    assert(dashboard_motion_position_y(&motion, expected[8]) == DASHBOARD_MOTION_BODY_TOP + 192);
 
     // Full logical IDs distinguish same-project entries; project/short ID do not.
     dashboard_motion_sample_t same_project[] = {
@@ -338,27 +338,26 @@ static void test_row_icon_polarity(void)
     const struct {
         dashboard_work_t work;
         dashboard_health_t row_health, feed_health;
-        bool compact, inverse;
+        bool inverse;
         int ink_col, ink_row;
     } cases[] = {
-        {DASH_WORKING, DASH_CURRENT, DASH_CURRENT, true, false, 1, 1},
-        {DASH_SETTLED, DASH_CURRENT, DASH_CURRENT, false, false, 4, 2},
-        {DASH_INTERRUPTED, DASH_CURRENT, DASH_CURRENT, false, false, 4, 2},
-        {DASH_UNKNOWN, DASH_CURRENT, DASH_CURRENT, false, false, 2, 1},
-        {DASH_NEEDS_INPUT, DASH_CURRENT, DASH_CURRENT, false, true, 2, 1},
-        {DASH_ERROR, DASH_CURRENT, DASH_CURRENT, false, true, 1, 1},
-        {DASH_NEEDS_INPUT, DASH_STALE, DASH_CURRENT, false, false, 2, 1},
-        {DASH_NEEDS_INPUT, DASH_CURRENT, DASH_STALE, false, false, 2, 1},
-        {DASH_WORKING, DASH_CURRENT, DASH_UNAVAILABLE, true, false, 2, 1},
+        {DASH_WORKING, DASH_CURRENT, DASH_CURRENT, false, 1, 1},
+        {DASH_SETTLED, DASH_CURRENT, DASH_CURRENT, true, 4, 2},
+        {DASH_INTERRUPTED, DASH_CURRENT, DASH_CURRENT, true, 4, 2},
+        {DASH_UNKNOWN, DASH_CURRENT, DASH_CURRENT, false, 2, 1},
+        {DASH_NEEDS_INPUT, DASH_CURRENT, DASH_CURRENT, true, 2, 1},
+        {DASH_ERROR, DASH_CURRENT, DASH_CURRENT, true, 1, 1},
+        {DASH_NEEDS_INPUT, DASH_STALE, DASH_CURRENT, false, 2, 1},
+        {DASH_NEEDS_INPUT, DASH_CURRENT, DASH_STALE, false, 2, 1},
+        {DASH_WORKING, DASH_CURRENT, DASH_UNAVAILABLE, false, 2, 1},
     };
     for (size_t i = 0; i < sizeof(cases) / sizeof(cases[0]); ++i) {
         const dashboard_session_t session = {
             .project = "", .provider = "CODEX", .detail = "?",
             .work = cases[i].work, .health = cases[i].row_health,
         };
-        const int scale = cases[i].compact ? 1 : 2;
-        const int height = cases[i].compact ? DASHBOARD_MOTION_WORKING_ROW_HEIGHT
-                                            : DASHBOARD_MOTION_ROW_HEIGHT;
+        const int scale = 2;
+        const int height = DASHBOARD_MOTION_ROW_HEIGHT;
         const int top = 100 + (height - 6 * scale) / 2;
         const dashboard_motion_render_row_t row = {
             .session = &session, .y = 100, .height = height,
@@ -379,6 +378,66 @@ static void test_row_icon_polarity(void)
         assert(pixel(expected_frame, 8 + 6 * scale - 1,
                      top + 6 * scale - 1) == !cases[i].inverse);
     }
+}
+
+static void test_state_polarity_and_slow_flash(const char *directory)
+{
+    static dashboard_motion_t motion;
+    dashboard_motion_init(&motion);
+    dashboard_motion_sample_t items[] = {
+        sample("codex@host/question", "question", "CODEX", "ASK1", DASH_NEEDS_INPUT,
+               DASH_CURRENT, false, 0, 1),
+        sample("claude@host/error", "error", "CLAUDE", "ERR1", DASH_ERROR,
+               DASH_CURRENT, false, 0, 1),
+        sample("codex@host/wait", "waiting", "CODEX", "WAIT", DASH_SETTLED,
+               DASH_CURRENT, false, 0, 1),
+        sample("claude@host/work", "working", "CLAUDE", "WORK", DASH_WORKING,
+               DASH_CURRENT, false, 0, 1),
+    };
+    apply_ok(&motion, items, 4, 1000);
+    assert(dashboard_motion_flashing(&motion)); // Existing blocked rows also flash.
+    assert(!dashboard_motion_active(&motion)); // No movement is needed to flash.
+    render_at(&motion, 1000, frame_initial);
+    save_pbm(directory, "blocked-flash-black", frame_initial);
+    render_at(&motion, 1499, frame_endpoint);
+    assert(memcmp(frame_initial, frame_endpoint, RLCD_FRAME_BYTES) == 0);
+    render_at(&motion, 1500, frame_halfway);
+    save_pbm(directory, "blocked-flash-white", frame_halfway);
+    // Only the two blocked rows invert, including their text and icons.
+    // Waiting stays inverse and working stays normal in both halves.
+    for (int y = 0; y < RLCD_HEIGHT; ++y)
+        for (int x = 0; x < RLCD_WIDTH; ++x) {
+            const bool blocked_tile = x >= 8 && x < 392 && y >= 24 && y < 72;
+            assert(pixel(frame_initial, x, y) ==
+                   (pixel(frame_halfway, x, y) != blocked_tile));
+        }
+    assert(!pixel(frame_halfway, 22, 74)); // Waiting background remains black.
+    assert(pixel(frame_halfway, 22, 98)); // Working background remains white.
+    apply_ok(&motion, items, 4, 1600); // Repeated snapshots retain the shared phase.
+    render_at(&motion, 1600, frame_endpoint);
+    assert(memcmp(frame_halfway, frame_endpoint, RLCD_FRAME_BYTES) == 0);
+    render_at(&motion, 1999, frame_endpoint);
+    assert(memcmp(frame_halfway, frame_endpoint, RLCD_FRAME_BYTES) == 0);
+    render_at(&motion, 2000, frame_endpoint);
+    assert(memcmp(frame_initial, frame_endpoint, RLCD_FRAME_BYTES) == 0);
+    assert(dashboard_motion_feed_lost(&motion, DASH_STALE, 2100) == DASHBOARD_MOTION_APPLIED);
+    assert(!dashboard_motion_flashing(&motion));
+    render_at(&motion, 2100, frame_initial);
+    render_at(&motion, 2600, frame_halfway);
+    assert_band_equal(frame_initial, frame_halfway, 8, 392, 24, 288);
+    assert(pixel(frame_halfway, 22, 74)); // Cached waiting claims lose inverse styling.
+    apply_ok(&motion, items, 4, 2700);
+    assert(dashboard_motion_flashing(&motion));
+    items[0].work = DASH_SETTLED;
+    items[1].work = DASH_WORKING;
+    ++items[0].state_episode;
+    ++items[1].state_episode;
+    apply_ok(&motion, items, 4, 2800);
+    assert(!dashboard_motion_flashing(&motion)); // Resolution stops further flash frames.
+    for (size_t i = 0; i < 4; ++i) items[i].health = DASH_STALE;
+    items[0].work = DASH_NEEDS_INPUT;
+    apply_ok(&motion, items, 4, 2900);
+    assert(!dashboard_motion_flashing(&motion)); // Stale evidence cannot flash.
 }
 
 static void test_direction_tier_compositing(void)
@@ -652,7 +711,7 @@ static void test_clipping_ghosts_and_feed_loss(void)
     only_b[0].state_entered_ms = 1500;
     apply_ok(&motion, only_b, 1, 1500);
     assert(dashboard_motion_feed_health(&motion) == DASH_CURRENT);
-    assert(dashboard_motion_active(&motion));
+    assert(!dashboard_motion_active(&motion));
     assert(motion.tracks[b_track].row_height == DASHBOARD_MOTION_ROW_HEIGHT);
 }
 
@@ -668,20 +727,20 @@ static void test_urgency_geometry_and_admission(void)
                           DASH_WORKING, DASH_CURRENT, true, i, 1);
     }
     apply_ok(&motion, items, DASHBOARD_MOTION_CAPACITY, 1000);
-    assert(dashboard_motion_visible_count(&motion) == 22);
-    assert(dashboard_motion_overflow_count(&motion) == 10);
-    assert(dashboard_motion_position_y(&motion, ids[21]) == 276);
+    assert(dashboard_motion_visible_count(&motion) == 11);
+    assert(dashboard_motion_overflow_count(&motion) == 21);
+    assert(dashboard_motion_position_y(&motion, ids[10]) == 264);
 
-    // Increasing the final worker to a full blocked row admits it first and
-    // pushes the last workers out of the complete highest-priority prefix.
+    // Promoting the final worker admits it first and displaces the last
+    // visible worker, while every row retains the same height.
     items[31].work = DASH_NEEDS_INPUT;
     items[31].state_entered_ms = 1000;
     ++items[31].state_episode;
     apply_ok(&motion, items, 32, 1000);
     assert(strcmp(dashboard_motion_identity_at(&motion, 0), ids[31]) == 0);
-    assert(dashboard_motion_visible_count(&motion) == 21);
-    assert(dashboard_motion_overflow_count(&motion) == 11);
-    const int displaced = track_index(&motion, ids[20]);
+    assert(dashboard_motion_visible_count(&motion) == 11);
+    assert(dashboard_motion_overflow_count(&motion) == 21);
+    const int displaced = track_index(&motion, ids[10]);
     assert(!motion.tracks[displaced].admitted);
     assert(motion.tracks[displaced].y_q8 == 264 * 256);
     assert(motion.tracks[displaced].target_y_q8 == DASHBOARD_MOTION_BODY_BOTTOM * 256);
@@ -689,18 +748,18 @@ static void test_urgency_geometry_and_admission(void)
     dashboard_motion_tick(&motion, 1360);
     assert(motion.tracks[displaced].y_q8 == DASHBOARD_MOTION_BODY_BOTTOM * 256);
 
-    // Two blocked, four waiting, and twenty-six workers fit sixteen rows.
+    // Mixed states still admit eleven complete rows in urgency order.
     dashboard_motion_init(&motion);
     for (size_t i = 0; i < 32; ++i)
         items[i].work = i < 2 ? DASH_NEEDS_INPUT : i < 6 ? DASH_SETTLED : DASH_WORKING;
     apply_ok(&motion, items, 32, 2000);
-    assert(dashboard_motion_visible_count(&motion) == 16);
-    assert(dashboard_motion_overflow_count(&motion) == 16);
+    assert(dashboard_motion_visible_count(&motion) == 11);
+    assert(dashboard_motion_overflow_count(&motion) == 21);
     assert(dashboard_motion_hidden_blocked_count(&motion) == 0);
     assert(dashboard_motion_position_y(&motion, ids[0]) == DASHBOARD_MOTION_BODY_TOP);
     assert(dashboard_motion_position_y(&motion, ids[2]) == DASHBOARD_MOTION_BODY_TOP + 48);
     assert(dashboard_motion_position_y(&motion, ids[6]) == DASHBOARD_MOTION_BODY_TOP + 144);
-    assert(dashboard_motion_position_y(&motion, ids[15]) == 276);
+    assert(dashboard_motion_position_y(&motion, ids[10]) == 264);
 
     dashboard_motion_init(&motion);
     for (size_t i = 0; i < 32; ++i) items[i].work = DASH_SETTLED;
@@ -725,11 +784,11 @@ static void test_urgency_geometry_and_admission(void)
     items[3].work = DASH_UNKNOWN;
     items[3].state_age_known = false;
     apply_ok(&motion, items, 4, 2000);
-    assert(dashboard_motion_position_y(&motion, ids[3]) == DASHBOARD_MOTION_BODY_TOP + 60);
+    assert(dashboard_motion_position_y(&motion, ids[3]) == DASHBOARD_MOTION_BODY_TOP + 72);
     assert(motion.tracks[track_index(&motion, ids[3])].row_height == 24);
 }
 
-static void test_height_only_changes_and_retarget(void)
+static void test_uniform_height_changes_and_retarget(void)
 {
     static dashboard_motion_t single;
     dashboard_motion_init(&single);
@@ -737,31 +796,21 @@ static void test_height_only_changes_and_retarget(void)
                                            DASH_WORKING, DASH_CURRENT, true, 0, 1);
     apply_ok(&single, &one, 1, 1000);
     const int one_track = track_index(&single, one.logical_id);
-    assert(one_track >= 0);
-    assert(single.tracks[one_track].row_height == DASHBOARD_MOTION_WORKING_ROW_HEIGHT);
-    one.work = DASH_UNKNOWN;
-    one.state_age_known = false;
-    ++one.state_episode;
-    apply_ok(&single, &one, 1, 1000);
-    assert(single.tracks[one_track].row_height == DASHBOARD_MOTION_ROW_HEIGHT);
-    assert(single.tracks[one_track].start_y_q8 == DASHBOARD_MOTION_BODY_TOP * 256);
-    assert(single.tracks[one_track].target_y_q8 == DASHBOARD_MOTION_BODY_TOP * 256);
-    assert(dashboard_motion_active(&single));
-    assert(dashboard_motion_feed_lost(&single, DASH_STALE, 1000) ==
+    const dashboard_work_t states[] = {DASH_UNKNOWN, DASH_NEEDS_INPUT, DASH_SETTLED,
+                                       DASH_WORKING};
+    for (size_t i = 0; i < sizeof(states) / sizeof(states[0]); ++i) {
+        one.work = states[i];
+        one.state_age_known = states[i] != DASH_UNKNOWN;
+        ++one.state_episode;
+        apply_ok(&single, &one, 1, 1000 + i * 100);
+        assert(single.tracks[one_track].row_height == 24);
+        assert(single.tracks[one_track].y_q8 == DASHBOARD_MOTION_BODY_TOP * 256);
+        assert(!dashboard_motion_active(&single)); // Style changes need no reflow.
+    }
+    assert(dashboard_motion_feed_lost(&single, DASH_STALE, 1400) ==
            DASHBOARD_MOTION_APPLIED);
-    assert(single.tracks[one_track].row_height == DASHBOARD_MOTION_ROW_HEIGHT);
-    assert(single.tracks[one_track].y_q8 == DASHBOARD_MOTION_BODY_TOP * 256);
-    dashboard_motion_tick(&single, 1400);
-    assert(single.tracks[one_track].row_height == DASHBOARD_MOTION_ROW_HEIGHT);
-    one.work = DASH_WORKING;
-    one.health = DASH_CURRENT;
-    one.state_age_known = true;
-    one.state_entered_ms = 1400;
-    ++one.state_episode;
-    apply_ok(&single, &one, 1, 1400);
-    assert(single.tracks[one_track].row_height == DASHBOARD_MOTION_WORKING_ROW_HEIGHT);
-    assert(single.tracks[one_track].y_q8 == DASHBOARD_MOTION_BODY_TOP * 256);
-    assert(dashboard_motion_active(&single));
+    assert(single.tracks[one_track].row_height == 24);
+    assert(!dashboard_motion_flashing(&single));
 
     static dashboard_motion_t retarget;
     dashboard_motion_init(&retarget);
@@ -934,19 +983,22 @@ static void test_motion_chrome_states(void)
     dashboard_draw_motion(known_frame, &known_view);
     dashboard_draw_motion(frame_partial_header, &partial_view);
     dashboard_draw_motion(empty_frame, &empty_view);
-    int known_end = 7;
-    for (int x = 8; x < RLCD_WIDTH; ++x)
-        for (int y = 0; y < DASHBOARD_MOTION_BODY_TOP - 1; ++y)
-            if (!pixel(known_frame, x, y) && x > known_end) known_end = x;
-    assert(known_end >= 8);
-    assert_band_equal(known_frame, frame_partial_header, 0, known_end + 1,
-                      0, DASHBOARD_MOTION_BODY_TOP - 1);
-    assert(band_has_ink(frame_partial_header, known_end + 1, RLCD_WIDTH,
-                        0, DASHBOARD_MOTION_BODY_TOP - 1));
+    // Unknown counts are explicit in the footer; they leave the title and
+    // known-state summary unchanged, including its right alignment.
+    assert_band_equal(known_frame, frame_partial_header,
+                      0, RLCD_WIDTH, 0, DASHBOARD_MOTION_BODY_TOP);
+    assert(band_differs(known_frame, frame_partial_header,
+                        8, 136, DASHBOARD_MOTION_BODY_BOTTOM, RLCD_HEIGHT));
+    assert(band_has_ink(frame_partial_header, 74, 136,
+                        DASHBOARD_MOTION_BODY_BOTTOM, RLCD_HEIGHT));
     assert_band_white(frame_partial_header, 0, 8, 0, DASHBOARD_MOTION_BODY_TOP);
     for (int x = 8; x < 392; ++x)
-        assert(!pixel(known_frame, x, DASHBOARD_MOTION_BODY_TOP - 1));
-    assert(band_has_ink(known_frame, 8, 392, 12, DASHBOARD_MOTION_BODY_TOP - 1));
+        assert(!pixel(known_frame, x, DASHBOARD_MOTION_BODY_TOP - 3));
+    assert_band_white(known_frame, 0, RLCD_WIDTH,
+                      DASHBOARD_MOTION_BODY_TOP - 2, DASHBOARD_MOTION_BODY_TOP);
+    assert(band_has_ink(known_frame, 8, 80, 12, DASHBOARD_MOTION_BODY_TOP - 3));
+    assert_band_white(known_frame, 200, RLCD_WIDTH, 16,
+                      DASHBOARD_MOTION_BODY_TOP - 3);
     assert_band_white(empty_frame, 0, RLCD_WIDTH, DASHBOARD_MOTION_BODY_TOP,
                       DASHBOARD_MOTION_BODY_TOP + DASHBOARD_MOTION_ROW_HEIGHT);
     assert_band_white(empty_frame, 0, RLCD_WIDTH,
@@ -1052,13 +1104,13 @@ static void test_duplicate_project_labels(void)
     // row byte-identical. All suffix pixels remain inside the name column.
     const int top = DASHBOARD_MOTION_BODY_TOP;
     assert(band_differs(frame_duplicate_names, expected_frame,
-                        24, 312, top, top + 12));
+                        24, 312, top, top + 24));
     assert(band_differs(frame_duplicate_names, expected_frame,
-                        24, 312, top + 12, top + 24));
+                        24, 312, top + 24, top + 48));
     assert_band_equal(frame_duplicate_names, expected_frame,
-                      8, 392, top + 24, top + 36);
+                      8, 392, top + 48, top + 72);
     assert_band_equal(frame_duplicate_names, expected_frame,
-                      312, 360, top, top + 36);
+                      312, 360, top, top + 72);
 
     static dashboard_motion_t full_ids;
     static dashboard_motion_t full_no_ids;
@@ -1083,7 +1135,7 @@ static void test_duplicate_project_labels(void)
     assert(band_differs(full_with_ids, full_without_ids,
                         24, 312, top + 24, top + 48));
     assert_band_equal(full_with_ids, full_without_ids,
-                      8, 392, top + 48, top + 60);
+                      8, 392, top + 48, top + 72);
     assert_band_equal(full_with_ids, full_without_ids, 312, 360, top, top + 48);
     memcpy(frame_duplicate_names, full_with_ids, sizeof(frame_duplicate_names));
 }
@@ -1159,7 +1211,7 @@ static void test_feed_loss_settles_retargeted_layouts(void)
     }
     apply_ok(&motion, items, 4, 1000);
 
-    // Promotion and growth: the accepted blocked target is packed above the
+    // Promotion: the accepted blocked target is packed above the
     // workers even when loss arrives before their animation finishes.
     items[1].work = DASH_NEEDS_INPUT;
     items[1].state_episode++;
@@ -1180,8 +1232,8 @@ static void test_feed_loss_settles_retargeted_layouts(void)
     assert_loss_snapped(&motion);
     assert(motion.last_healthy_update_ms == promoted_update);
 
-    // Healthy recovery establishes a new provenance point. Shrinking the
-    // promoted row then commits its newest compact layout on a second loss.
+    // Healthy recovery establishes a new provenance point. Demoting the
+    // blocked row then commits its newest packed layout on a second loss.
     apply_ok(&motion, items, 4, 1300);
     assert(motion.last_healthy_update_ms == 1300);
     items[1].work = DASH_WORKING;
@@ -1236,7 +1288,7 @@ static void test_native_row_font_sizes(void)
         {.session = &working, .y = 150, .height = DASHBOARD_MOTION_WORKING_ROW_HEIGHT},
     };
     render_rows(rows, 2, expected_frame);
-    // Exact BDF F, a, and 中 pixels at native size and scale two. These golden
+    // Exact BDF F, a, and 中 pixels at scale two in both polarities. These golden
     // rows were copied from the pinned BDF, independent of the generator.
     const uint16_t f[12] = {0,0,0xf800,0x8000,0x8000,0xf000,0x8000,0x8000,0x8000,0x8000,0,0};
     const uint16_t a[12] = {0,0,0,0,0x7000,0x0800,0x7800,0x8800,0x8800,0x7800,0,0};
@@ -1248,18 +1300,21 @@ static void test_native_row_font_sizes(void)
         for (int y = 0; y < 12; ++y)
             for (int x = 0; x < advances[g]; ++x) {
                 const bool ink = (glyphs[g][y] & (0x8000u >> x)) != 0;
-                assert(pixel(expected_frame, 24 + offsets[g] + x, 150 + y) == !ink);
+                for (int dy = 0; dy < 2; ++dy)
+                    for (int dx = 0; dx < 2; ++dx)
+                        assert(pixel(expected_frame, 24 + (offsets[g] + x) * 2 + dx,
+                                     150 + y * 2 + dy) == !ink);
                 for (int dy = 0; dy < 2; ++dy)
                     for (int dx = 0; dx < 2; ++dx)
                         assert(pixel(expected_frame, 24 + (offsets[g] + x) * 2 + dx,
                                      100 + y * 2 + dy) == ink);
             }
-    // Neither row spills outside its own twelve/twenty-four-pixel tile.
+    // Neither row spills outside its own twenty-four-pixel tile.
     for (int x = 24; x < 72; ++x) {
         assert(pixel(expected_frame, x, 99));
         assert(pixel(expected_frame, x, 124));
         assert(pixel(expected_frame, x, 149));
-        assert(pixel(expected_frame, x, 162));
+        assert(pixel(expected_frame, x, 174));
     }
     for (int y = DASHBOARD_MOTION_BODY_TOP; y < DASHBOARD_MOTION_BODY_BOTTOM; ++y)
         for (int x = 392; x < RLCD_WIDTH; ++x) assert(pixel(expected_frame, x, y));
@@ -1304,9 +1359,9 @@ static void test_newest_target_and_burst_bound(void)
     items[2].state_entered_ms = 1120;
     apply_ok(&motion, items, 3, 1120);
     assert(motion.burst_start_ms == original_start);
-    items[1].work = DASH_NEEDS_INPUT;
-    items[1].state_episode++;
-    items[1].state_entered_ms = 1200;
+    items[0].work = DASH_NEEDS_INPUT;
+    items[0].state_episode++;
+    items[0].state_entered_ms = 1200;
     apply_ok(&motion, items, 3, 1200);
     assert(motion.burst_start_ms == original_start);
     items[2].work = DASH_SETTLED;
@@ -1320,10 +1375,10 @@ static void test_newest_target_and_burst_bound(void)
         apply_ok(&motion, items, 3, now);
     dashboard_motion_tick(&motion, 1720);
     assert(!dashboard_motion_active(&motion));
-    assert(dashboard_motion_position_y(&motion, "claude@host/run") == DASHBOARD_MOTION_BODY_TOP);
+    assert(dashboard_motion_position_y(&motion, "codex@host/wait") == DASHBOARD_MOTION_BODY_TOP);
     assert(dashboard_motion_position_y(&motion, "codex@host/idle") ==
            DASHBOARD_MOTION_BODY_TOP + DASHBOARD_MOTION_ROW_HEIGHT);
-    assert(dashboard_motion_position_y(&motion, "codex@host/wait") ==
+    assert(dashboard_motion_position_y(&motion, "claude@host/run") ==
            DASHBOARD_MOTION_BODY_TOP + DASHBOARD_MOTION_ROW_HEIGHT * 2);
     for (size_t i = 0; i < DASHBOARD_MOTION_TRACK_CAPACITY; ++i)
         if (motion.tracks[i].used)
@@ -1331,9 +1386,9 @@ static void test_newest_target_and_burst_bound(void)
     render_at(&motion, 1720, frame_endpoint);
 
     // A quiet interval rearms a new independent transition after the burst cap.
-    items[1].work = DASH_WORKING;
-    items[1].state_episode++;
-    items[1].state_entered_ms = 2120;
+    items[0].work = DASH_WORKING;
+    items[0].state_episode++;
+    items[0].state_entered_ms = 2120;
     apply_ok(&motion, items, 3, 2120);
     assert(motion.burst_start_ms == 2120);
     assert(!motion.burst_exhausted);
@@ -1406,10 +1461,10 @@ static void test_overflow_priority_and_ghost_reservation(void)
             exiting_tracks += stress.tracks[i].exiting ? 1u : 0u;
         }
     assert(used_tracks > DASHBOARD_MOTION_CAPACITY);
-    assert(exiting_tracks == 22);
+    assert(exiting_tracks == 11);
     // Exercise every active row and exit ghost through the packed renderer;
-    // the twenty-two ghosts plus thirty-two current rows exceed the former
-    // scratch capacity and remain within the expanded bounded storage.
+    // eleven exit ghosts plus thirty-two current rows remain within bounded
+    // scratch storage even with a complete identity turnover.
     render_at(&stress, 2200, frame_endpoint);
     assert(stress.render_poses[used_tracks - 1].session != NULL);
     assert(stress.render_rows[used_tracks - 1].detail != NULL);
@@ -1460,8 +1515,8 @@ static void test_demo_driver(void)
                 const char *prefix = strcmp(entry->provider, "CODEX") == 0 ? "codex@" : "claude@";
                 assert(strncmp(entry->logical_id, prefix, strlen(prefix)) == 0);
             }
-            assert(dashboard_motion_visible_count(&motion) == 22);
-            assert(dashboard_motion_overflow_count(&motion) == 10);
+            assert(dashboard_motion_visible_count(&motion) == 11);
+            assert(dashboard_motion_overflow_count(&motion) == 21);
             assert(dashboard_motion_hidden_blocked_count(&motion) == 0);
         }
         if (elapsed == 72000) {
@@ -1569,6 +1624,7 @@ int main(int argc, char **argv)
     test_transitions_and_stationary_chrome();
     test_overlap_priority_and_icon_polarity();
     test_row_icon_polarity();
+    test_state_polarity_and_slow_flash(argv[1]);
     test_direction_tier_compositing();
     test_shared_progress_directions_and_endpoints();
     test_retarget_preserves_current_pose();
@@ -1584,7 +1640,7 @@ int main(int argc, char **argv)
     save_pbm(argv[1], "attention-overflow", frame_overflow);
     capture_demo_previews(argv[1]);
     test_urgency_geometry_and_admission();
-    test_height_only_changes_and_retarget();
+    test_uniform_height_changes_and_retarget();
     test_inactive_removal_and_readmission();
     test_motion_chrome_states();
     test_duplicate_project_labels();

@@ -102,12 +102,6 @@ static void sort_roster(dashboard_motion_t *motion)
         motion->tracks[motion->order[rank]].prior_rank = (uint16_t)rank;
 }
 
-static uint8_t row_height_for(const dashboard_motion_track_t *track)
-{
-    return track->health == DASH_CURRENT && track->work == DASH_WORKING
-         ? DASHBOARD_MOTION_WORKING_ROW_HEIGHT : DASHBOARD_MOTION_ROW_HEIGHT;
-}
-
 static void layout_roster(dashboard_motion_t *motion, bool *layout_changed)
 {
     int32_t cursor_q8 = DASHBOARD_MOTION_BODY_TOP * Q8_ONE;
@@ -271,7 +265,7 @@ static bool copy_sample(dashboard_motion_track_t *track,
         track->state_entered_ms = sample->state_entered_ms;
     }
     track->state_episode = sample->state_episode;
-    track->row_height = row_height_for(track);
+    track->row_height = DASHBOARD_MOTION_ROW_HEIGHT;
     return true;
 }
 
@@ -577,6 +571,17 @@ void dashboard_motion_render(dashboard_motion_t *motion, uint8_t *frame)
 bool dashboard_motion_active(const dashboard_motion_t *motion)
 {
     return motion && motion->animating;
+}
+
+bool dashboard_motion_flashing(const dashboard_motion_t *motion)
+{
+    if (!motion || motion->feed_health != DASH_CURRENT) return false;
+    for (size_t i = 0; i < DASHBOARD_MOTION_TRACK_CAPACITY; ++i)
+        if (motion->tracks[i].active && motion->tracks[i].admitted &&
+            motion->tracks[i].health == DASH_CURRENT &&
+            (motion->tracks[i].work == DASH_NEEDS_INPUT ||
+             motion->tracks[i].work == DASH_ERROR)) return true;
+    return false;
 }
 
 dashboard_health_t dashboard_motion_feed_health(const dashboard_motion_t *motion)

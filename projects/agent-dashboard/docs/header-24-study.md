@@ -1,5 +1,9 @@
 # Larger summary header
 
+The following trial is preserved as history. The subsequent
+[title and count refinement](header-title-study.md) restores AGENTS with
+smaller right-aligned counts and separates the divider from the first row.
+
 2026-10-06. The summary keeps the existing `x BLOCKED y WAIT z WORK` format
 and uses the same doubled Fusion Pixel 12px font as blocked and waiting rows.
 The generic AGENTS title and column labels remain omitted.

@@ -1,0 +1,788 @@
+diff --git a/projects/agent-dashboard/README.md b/projects/agent-dashboard/README.md
+index 0dd605f..62f1554 100644
+--- a/projects/agent-dashboard/README.md
++++ b/projects/agent-dashboard/README.md
+@@ -2,28 +2,32 @@
+ 
+ Independent ESP-IDF application for exploring a compact session roster on the
+ 400 × 300 RLCD. The motion view shows a state symbol, name, provider (CX/CC)
+-and a state-age example. Blocked sessions use white text on black 24-pixel rows;
+-sessions waiting for a prompt use black text on white 24-pixel rows. Healthy
+-working sessions use 12-pixel rows. Fusion Pixel's native 12-pixel font is
+-doubled for full rows and drawn at native scale in working rows. Basic Latin
+-capital heights are 16 and 8 pixels. Mixed case and supported Unicode labels
++and a state-age example. Blocked rows alternate white-on-black and black-on-white
++at 1Hz until resolved. Waiting rows stay white on black; working rows stay
++black on white. All rows
++and their text are 24 pixels high, using Fusion Pixel's native 12-pixel font
++at scale two. Basic Latin capital height is 16 pixels. Mixed case and supported Unicode labels
+ retain their supplied characters.
+-The 264-pixel list admits eleven full rows or twenty-two working rows, with mixed
+-rosters between those limits and explicit hidden blocked counts. The local
++The 264-pixel list admits eleven complete rows with no row/group gaps and
++explicit hidden blocked counts. The local
+ model holds up to thirty-two sessions. The earlier five-row layout and fixed
+ eight-row studies remain in the renderer and native previews.
+ The motion footer identifies the source as **SIMULATED**; the earlier static
+ screens retain their **DEMO** label.
+ 
+-Motion-view status icons follow the row text: black marks on white rows and white marks
+-on black blocked rows, drawn directly on the row background.
++Motion-view status icons use the earlier shapes and x=8 placement, following
++the row text colour directly on its background. Blocked rows share a clock:
++500ms in each polarity. Repeated updates retain the phase. Resolution,
++inactivity and unavailable evidence stop flashing. The waiting bar is removed.
+ 
+-A 24-pixel header shows blocked, waiting and working totals for the
+-whole active roster, including hidden rows, with a thin divider below it.
+-Uncertain rows add an explicit native 12-pixel unknown count on the same line.
++A 24-pixel AGENTS title anchors the header, with native 12-pixel blocked,
++waiting and working totals right-aligned for the whole active roster,
++including hidden rows. A thin divider leaves two white scanlines before
++the first row, within the existing 24-pixel header band. Uncertain rows
++add an explicit unknown count beside the source label in the footer.
+ The 12-pixel footer reports overflow and hidden blocked rows,
+ or the last successful fixture update's age while the source is unavailable.
+-Column labels and the generic title are omitted. Duplicate project names
++Column labels are omitted. Duplicate project names
+ gain their supplied short session ID; labels never become identity keys.
+ 
+ There is no live session discovery, host protocol, hook, network connection or
+@@ -78,8 +82,10 @@ inactivity/readmission, empty groups and feed loss/recovery. See
+ [the motion proof](docs/ui-motion.md) for its sequence and validation status.
+ The [urgency-band contract](docs/urgency-bands.md) records the variable-height
+ refinement and its separate acceptance gates.
+-The [larger header refinement](docs/header-24-study.md) records the current
+-chrome and geometry. The [UI polish](docs/ui-polish.md) records the footer and
++The [flashing-row trial](docs/flashing-rows-study.md) records the current state
++styles and slow flashing. The [uniform-row trial](docs/uniform-rows-study.md)
++records the preceding marker/icon-cue comparison. The [title and count refinement](docs/header-title-study.md)
++records the retained chrome. The [UI polish](docs/ui-polish.md) records the footer and
+ feed-loss behavior. The [12px Fusion trial](docs/fusion-12-font-study.md)
+ records the selected font and earlier device acceptance.
+ The [earlier 8px Fusion trial](docs/fusion-font-study.md)
+@@ -88,7 +94,7 @@ records the denser layout rejected during physical review. The earlier
+ bitmaps and preceding 14-pixel baseline.
+ Rows share eased progress over a 360 ms transition, each along its own start-to-target
+ path. Downward rows draw behind stationary rows; upward rows draw in front. State
+-symbols, highlights and row heights update immediately, before the slide finishes.
++symbols and highlights update immediately, before the slide finishes.
+ Whole-feed loss settles the last accepted packed layout, retains row heights
+ and replaces cached work claims with health indicators. Known inactive sessions leave the selected
+ roster; missing or stale work evidence does not imply inactivity.
+diff --git a/projects/agent-dashboard/components/agent_dashboard/agent_dashboard.c b/projects/agent-dashboard/components/agent_dashboard/agent_dashboard.c
+index 5da3224..bc8ed1d 100644
+--- a/projects/agent-dashboard/components/agent_dashboard/agent_dashboard.c
++++ b/projects/agent-dashboard/components/agent_dashboard/agent_dashboard.c
+@@ -612,15 +612,19 @@ static void draw_motion_row(uint8_t *frame, const dashboard_motion_render_row_t
+     const int y = row->y;
+     const dashboard_health_t health = view->roster.feed_health == DASH_CURRENT
+                                     ? s->health : view->roster.feed_health;
+-    const bool highlighted = health == DASH_CURRENT &&
+-                             (s->work == DASH_NEEDS_INPUT || s->work == DASH_ERROR);
++    const bool blocked = health == DASH_CURRENT &&
++                         (s->work == DASH_NEEDS_INPUT || s->work == DASH_ERROR);
++    const bool waiting = health == DASH_CURRENT &&
++                         (s->work == DASH_SETTLED || s->work == DASH_INTERRUPTED);
++    // One complete cycle per second, shared by all blocked rows.
++    const bool highlighted = waiting || (blocked &&
++        (view->now_ms / DASHBOARD_MOTION_FLASH_HALF_PERIOD_MS) % 2 == 0);
+     motion_clip_enabled = true;
+     motion_clip_top = DASHBOARD_MOTION_BODY_TOP;
+     motion_clip_bottom = DASHBOARD_MOTION_BODY_BOTTOM;
+     rect(frame, 8, y, 384, height, !highlighted);
+-    // Feed loss freezes typography with the cached compact/full geometry.
+-    const bool compact = height == DASHBOARD_MOTION_WORKING_ROW_HEIGHT;
+-    motion_state_symbol(frame, 8, y + (height - (compact ? 6 : 12)) / 2,
++    const bool compact = false;
++    motion_state_symbol(frame, 8, y + (height - 12) / 2,
+                         s->work, health, compact, highlighted);
+     motion_project_name(frame, 24, y, view, s, compact, 288, highlighted);
+     const char *agent = "??";
+@@ -643,6 +647,7 @@ static void draw_motion_chrome(uint8_t *frame,
+     size_t unknown = 0;
+     if (roster->feed_health != DASH_CURRENT) {
+         snprintf(summary, sizeof(summary), "FEED %s", health_label(roster->feed_health));
++        motion_text(frame, 8, 0, summary, false, 384, false);
+     } else {
+         size_t blocked = 0, waiting = 0, working = 0;
+         for (size_t i = 0; i < roster->count; ++i) {
+@@ -657,17 +662,16 @@ static void draw_motion_chrome(uint8_t *frame,
+         }
+         snprintf(summary, sizeof(summary), "%zu BLOCKED %zu WAIT %zu WORK",
+                  blocked, waiting, working);
+-    }
+-    const int summary_width = motion_text(frame, 8, 0, summary, false, 384, false);
+-    if (unknown) {
+-        // Secondary uncertainty still fits beside the full-size known totals.
+-        char extra[32];
+-        snprintf(extra, sizeof(extra), "%zu UNKNOWN", unknown);
+-        motion_text(frame, 8 + summary_width + 12, 6, extra, true,
+-                    384 - summary_width - 12, false);
+-    }
+-    rect(frame, 8, DASHBOARD_MOTION_BODY_TOP - 1, 384, 1, false);
+-    motion_text(frame, 8, 288, "SIMULATED", true, 128, false);
++        motion_text(frame, 8, 0, "AGENTS", false, 128, false);
++        motion_text(frame, 392 - motion_text_width(summary, true), 6,
++                    summary, true, 280, false);
++    }
++    // Keep two white scanlines between the divider and the first packed row.
++    rect(frame, 8, DASHBOARD_MOTION_BODY_TOP - 3, 384, 1, false);
++    char source[48];
++    if (unknown) snprintf(source, sizeof(source), "SIMULATED  %zu unknown", unknown);
++    else snprintf(source, sizeof(source), "SIMULATED");
++    motion_text(frame, 8, 288, source, true, 128, false);
+     char footer[64];
+     if (roster->feed_health != DASH_CURRENT) {
+         char age[8];
+diff --git a/projects/agent-dashboard/components/agent_dashboard/agent_dashboard_motion.c b/projects/agent-dashboard/components/agent_dashboard/agent_dashboard_motion.c
+index 99c335e..a323f46 100644
+--- a/projects/agent-dashboard/components/agent_dashboard/agent_dashboard_motion.c
++++ b/projects/agent-dashboard/components/agent_dashboard/agent_dashboard_motion.c
+@@ -102,12 +102,6 @@ static void sort_roster(dashboard_motion_t *motion)
+         motion->tracks[motion->order[rank]].prior_rank = (uint16_t)rank;
+ }
+ 
+-static uint8_t row_height_for(const dashboard_motion_track_t *track)
+-{
+-    return track->health == DASH_CURRENT && track->work == DASH_WORKING
+-         ? DASHBOARD_MOTION_WORKING_ROW_HEIGHT : DASHBOARD_MOTION_ROW_HEIGHT;
+-}
+-
+ static void layout_roster(dashboard_motion_t *motion, bool *layout_changed)
+ {
+     int32_t cursor_q8 = DASHBOARD_MOTION_BODY_TOP * Q8_ONE;
+@@ -271,7 +265,7 @@ static bool copy_sample(dashboard_motion_track_t *track,
+         track->state_entered_ms = sample->state_entered_ms;
+     }
+     track->state_episode = sample->state_episode;
+-    track->row_height = row_height_for(track);
++    track->row_height = DASHBOARD_MOTION_ROW_HEIGHT;
+     return true;
+ }
+ 
+@@ -579,6 +573,17 @@ bool dashboard_motion_active(const dashboard_motion_t *motion)
+     return motion && motion->animating;
+ }
+ 
++bool dashboard_motion_flashing(const dashboard_motion_t *motion)
++{
++    if (!motion || motion->feed_health != DASH_CURRENT) return false;
++    for (size_t i = 0; i < DASHBOARD_MOTION_TRACK_CAPACITY; ++i)
++        if (motion->tracks[i].active && motion->tracks[i].admitted &&
++            motion->tracks[i].health == DASH_CURRENT &&
++            (motion->tracks[i].work == DASH_NEEDS_INPUT ||
++             motion->tracks[i].work == DASH_ERROR)) return true;
++    return false;
++}
++
+ dashboard_health_t dashboard_motion_feed_health(const dashboard_motion_t *motion)
+ {
+     return motion ? motion->feed_health : DASH_UNAVAILABLE;
+diff --git a/projects/agent-dashboard/components/agent_dashboard/include/dashboard_motion.h b/projects/agent-dashboard/components/agent_dashboard/include/dashboard_motion.h
+index 180b164..eb3f179 100644
+--- a/projects/agent-dashboard/components/agent_dashboard/include/dashboard_motion.h
++++ b/projects/agent-dashboard/components/agent_dashboard/include/dashboard_motion.h
+@@ -16,9 +16,10 @@ enum {
+     DASHBOARD_MOTION_DURATION_MS = 360,
+     DASHBOARD_MOTION_BURST_LIMIT_MS = 720,
+     DASHBOARD_MOTION_ROW_HEIGHT = 24,
+-    DASHBOARD_MOTION_WORKING_ROW_HEIGHT = 12,
++    DASHBOARD_MOTION_WORKING_ROW_HEIGHT = 24,
+     DASHBOARD_MOTION_TEXT_HEIGHT = 24,
+-    DASHBOARD_MOTION_WORKING_TEXT_HEIGHT = 12,
++    DASHBOARD_MOTION_WORKING_TEXT_HEIGHT = 24,
++    DASHBOARD_MOTION_FLASH_HALF_PERIOD_MS = 500,
+     DASHBOARD_MOTION_BODY_TOP = 24,
+     DASHBOARD_MOTION_BODY_BOTTOM = 288,
+     DASHBOARD_MOTION_RENDER_AGE_CAPACITY = DASHBOARD_MOTION_TRACK_CAPACITY + DASHBOARD_MOTION_CAPACITY,
+@@ -153,6 +154,7 @@ dashboard_motion_result_t dashboard_motion_feed_lost(
+ void dashboard_motion_tick(dashboard_motion_t *motion, uint64_t now_ms);
+ void dashboard_motion_render(dashboard_motion_t *motion, uint8_t *frame);
+ bool dashboard_motion_active(const dashboard_motion_t *motion);
++bool dashboard_motion_flashing(const dashboard_motion_t *motion);
+ dashboard_health_t dashboard_motion_feed_health(const dashboard_motion_t *motion);
+ size_t dashboard_motion_count(const dashboard_motion_t *motion);
+ const char *dashboard_motion_identity_at(const dashboard_motion_t *motion,
+diff --git a/projects/agent-dashboard/docs/fusion-12-font-study.md b/projects/agent-dashboard/docs/fusion-12-font-study.md
+index 9e405ff..e9394a9 100644
+--- a/projects/agent-dashboard/docs/fusion-12-font-study.md
++++ b/projects/agent-dashboard/docs/fusion-12-font-study.md
+@@ -1,7 +1,8 @@
+ # Fusion Pixel 12px device trial
+ 
+-The [2026-10-06 header refinement](header-24-study.md) now uses a larger
+-summary-only header and 264px body, admitting 22 working or 11 full rows. Measurements below preserve
++The [2026-10-06 flashing-row trial](flashing-rows-study.md) now uses 24px rows
++for every state and retains the title/count header with a 264px body, admitting
++eleven complete rows. Measurements below preserve
+ the original font trial and subsequent icon refinement.
+ 
+ 2026-10-05. The user found the native 8px working text too small and selected
+diff --git a/projects/agent-dashboard/docs/header-24-study.md b/projects/agent-dashboard/docs/header-24-study.md
+index 32774bb..70c53c9 100644
+--- a/projects/agent-dashboard/docs/header-24-study.md
++++ b/projects/agent-dashboard/docs/header-24-study.md
+@@ -1,5 +1,9 @@
+ # Larger summary header
+ 
++The following trial is preserved as history. The subsequent
++[title and count refinement](header-title-study.md) restores AGENTS with
++smaller right-aligned counts and separates the divider from the first row.
++
+ 2026-10-06. The summary keeps the existing `x BLOCKED y WAIT z WORK` format
+ and uses the same doubled Fusion Pixel 12px font as blocked and waiting rows.
+ The generic AGENTS title and column labels remain omitted.
+diff --git a/projects/agent-dashboard/docs/ui-motion.md b/projects/agent-dashboard/docs/ui-motion.md
+index 5944016..ba7c740 100644
+--- a/projects/agent-dashboard/docs/ui-motion.md
++++ b/projects/agent-dashboard/docs/ui-motion.md
+@@ -14,8 +14,9 @@ loop is 92 seconds. The sequence and measurements below remain the historical
+ 2026-10-03 evidence for the earlier fixed-height motion prototype.
+ The earlier [8px Fusion study](fusion-font-study.md) was superseded by the
+ selected [12px Fusion trial](fusion-12-font-study.md). The current
+-[header refinement](header-24-study.md) uses 24px summary text, 24/12-pixel
+-rows and a 264px body. [UI polish](ui-polish.md) records packed feed-loss targets.
++[flashing-row trial](flashing-rows-study.md) retains the 24px title and 264px
++body with 24px rows for every state, 1Hz blocked-row flashing, inverse waiting
++rows and normal working rows. [UI polish](ui-polish.md) records packed feed-loss targets.
+ 
+ ## Prototype boundary
+ 
+diff --git a/projects/agent-dashboard/docs/ui-ordering.md b/projects/agent-dashboard/docs/ui-ordering.md
+index ede60c8..b642f4c 100644
+--- a/projects/agent-dashboard/docs/ui-ordering.md
++++ b/projects/agent-dashboard/docs/ui-ordering.md
+@@ -17,8 +17,10 @@ working rows and height-based admission. It records current geometry, motion
+ and acceptance requirements for that pass; the eight-row experiment below is earlier history.
+ The selected [12px Fusion trial](fusion-12-font-study.md) supersedes the earlier
+ 8px trial while preserving these ordering and identity rules. The current
+-[header refinement](header-24-study.md) records 24/12-pixel rows and a 264px
+-body; [UI polish](ui-polish.md) records packed feed-loss targets.
++[flashing-row trial](flashing-rows-study.md) uses 24px rows for every state,
++1Hz blocked-row flashing, inverse waiting rows and normal working rows in
++the 264px body;
++[UI polish](ui-polish.md) records packed feed-loss targets.
+ 
+ ## Agreed ordering
+ 
+diff --git a/projects/agent-dashboard/docs/ui-study.md b/projects/agent-dashboard/docs/ui-study.md
+index 55cf263..8869c35 100644
+--- a/projects/agent-dashboard/docs/ui-study.md
++++ b/projects/agent-dashboard/docs/ui-study.md
+@@ -17,9 +17,10 @@ to the motion view while retaining these static previews as a regression baselin
+ Its physical readability and row-resizing acceptance are separate from the
+ earlier observations below.
+ The selected [12px Fusion trial](fusion-12-font-study.md) supersedes the earlier
+-8px trial. The current [header refinement](header-24-study.md) uses a larger
+-summary, 24/12-pixel rows and a 264px body. Its layout acceptance remains a
+-separate physical observation.
++8px trial. The current [flashing-row trial](flashing-rows-study.md) retains the
++larger title and smaller counts, using 24px rows for every state, 1Hz
++blocked-row flashing, inverse waiting rows and normal working rows. Layout acceptance remains a separate
++physical observation.
+ 
+ ## Why this view
+ 
+diff --git a/projects/agent-dashboard/main/main.c b/projects/agent-dashboard/main/main.c
+index 36e16bf..e7ad6ab 100644
+--- a/projects/agent-dashboard/main/main.c
++++ b/projects/agent-dashboard/main/main.c
+@@ -45,14 +45,18 @@ static void run_motion_demo(void)
+     uint64_t previous_second = UINT64_MAX;
+     int64_t previous_render_us = 0;
+     bool previous_moving = false;
++    uint64_t previous_flash_step = UINT64_MAX;
+     TickType_t wake_tick = xTaskGetTickCount();
+     ESP_LOGI("rlcd_dashboard", "MOTION event=config phases=%zu cycle_ms=%" PRIu64
+              " fps=25 duration_ms=%d frame_budget_us=%d capacity=%d model_bytes=%zu"
+              " visible_policy=height_prefix full_row_px=%d working_row_px=%d"
+              " normal_text_px=%d working_text_px=%d body_top=%d body_bottom=%d"
+              " font=fusion_pixel_12_zh_hans font_release=2026.09.25"
+-             " normal_scale=2 working_scale=1 normal_cap_px=16 working_cap_px=8"
+-             " header_px=24 footer_px=12 chrome=summary source=simulated feed_loss=settle_target",
++             " normal_scale=2 working_scale=2 normal_cap_px=16 working_cap_px=16"
++             " header_px=24 summary_px=12 footer_px=12 divider_y=21 header_gap_px=2"
++             " chrome=title_counts source=simulated feed_loss=settle_target"
++             " waiting_marker_px=0 blocked_flash_hz=1 blocked_flash_half_ms=500"
++             " waiting_polarity=inverse working_polarity=normal",
+              dashboard_motion_demo_phase_count(), cycle_ms,
+              DASHBOARD_MOTION_DURATION_MS, FRAME_BUDGET_US,
+              DASHBOARD_MOTION_CAPACITY, sizeof(motion),
+@@ -65,10 +69,14 @@ static void run_motion_demo(void)
+         const bool changed = dashboard_motion_demo_update(&motion, elapsed_ms);
+         dashboard_motion_tick(&motion, dashboard_motion_demo_now_ms(elapsed_ms));
+         const bool moving = dashboard_motion_active(&motion);
++        const bool flashing = dashboard_motion_flashing(&motion);
++        const uint64_t flash_step = motion.now_ms / DASHBOARD_MOTION_FLASH_HALF_PERIOD_MS;
++        const bool flash_changed = flashing && flash_step != previous_flash_step;
+         const size_t phase = dashboard_motion_demo_phase_index(elapsed_ms);
+         const uint64_t cycle = elapsed_ms / cycle_ms;
+         const uint64_t second = elapsed_ms / 1000;
+-        if (changed || moving || previous_moving || second != previous_second) {
++        if (changed || moving || previous_moving || flash_changed ||
++            second != previous_second) {
+             const int64_t draw_start_us = esp_timer_get_time();
+             dashboard_motion_render(&motion, rlcd_panel_framebuffer());
+             const int64_t drawn_us = esp_timer_get_time();
+@@ -78,17 +86,19 @@ static void run_motion_demo(void)
+             const int64_t interval_us = moving && previous_moving
+                 ? frame_start_us - previous_render_us : 0;
+             ESP_LOGI("rlcd_dashboard", "MOTION event=frame case=%s tick_ms=%" PRIu64
+-                     " moving=%d draw_us=%" PRId64 " transfer_us=%" PRId64
++                     " moving=%d flashing=%d blocked_flash_white=%d draw_us=%" PRId64 " transfer_us=%" PRId64
+                      " frame_us=%" PRId64 " interval_us=%" PRId64
+                      " deadline_miss=%d internal_free=%zu stack_watermark=%u",
+                      dashboard_motion_demo_phase_name(phase), elapsed_ms,
+-                     moving, drawn_us - draw_start_us, done_us - drawn_us,
++                     moving, flashing, flashing && flash_step % 2 == 1,
++                     drawn_us - draw_start_us, done_us - drawn_us,
+                      done_us - frame_start_us, interval_us,
+                      done_us - frame_start_us > FRAME_BUDGET_US,
+                      heap_caps_get_free_size(MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT),
+                      (unsigned)uxTaskGetStackHighWaterMark(NULL));
+             previous_render_us = frame_start_us;
+             previous_second = second;
++            previous_flash_step = flash_step;
+         }
+         if (cycle != previous_cycle) {
+             ESP_LOGI("rlcd_dashboard", "MOTION event=cycle cycle=%" PRIu64,
+diff --git a/projects/agent-dashboard/tests/motion_dashboard.c b/projects/agent-dashboard/tests/motion_dashboard.c
+index 3bc3684..63a0cec 100644
+--- a/projects/agent-dashboard/tests/motion_dashboard.c
++++ b/projects/agent-dashboard/tests/motion_dashboard.c
+@@ -178,8 +178,8 @@ static void test_priority_age_and_identity(void)
+     assert(dashboard_motion_position_y(&motion, expected[0]) == DASHBOARD_MOTION_BODY_TOP);
+     assert(dashboard_motion_position_y(&motion, expected[2]) == DASHBOARD_MOTION_BODY_TOP + 48);
+     assert(dashboard_motion_position_y(&motion, expected[4]) == DASHBOARD_MOTION_BODY_TOP + 96);
+-    assert(dashboard_motion_position_y(&motion, expected[7]) == DASHBOARD_MOTION_BODY_TOP + 132);
+-    assert(dashboard_motion_position_y(&motion, expected[8]) == DASHBOARD_MOTION_BODY_TOP + 156);
++    assert(dashboard_motion_position_y(&motion, expected[7]) == DASHBOARD_MOTION_BODY_TOP + 168);
++    assert(dashboard_motion_position_y(&motion, expected[8]) == DASHBOARD_MOTION_BODY_TOP + 192);
+ 
+     // Full logical IDs distinguish same-project entries; project/short ID do not.
+     dashboard_motion_sample_t same_project[] = {
+@@ -338,27 +338,26 @@ static void test_row_icon_polarity(void)
+     const struct {
+         dashboard_work_t work;
+         dashboard_health_t row_health, feed_health;
+-        bool compact, inverse;
++        bool inverse;
+         int ink_col, ink_row;
+     } cases[] = {
+-        {DASH_WORKING, DASH_CURRENT, DASH_CURRENT, true, false, 1, 1},
+-        {DASH_SETTLED, DASH_CURRENT, DASH_CURRENT, false, false, 4, 2},
+-        {DASH_INTERRUPTED, DASH_CURRENT, DASH_CURRENT, false, false, 4, 2},
+-        {DASH_UNKNOWN, DASH_CURRENT, DASH_CURRENT, false, false, 2, 1},
+-        {DASH_NEEDS_INPUT, DASH_CURRENT, DASH_CURRENT, false, true, 2, 1},
+-        {DASH_ERROR, DASH_CURRENT, DASH_CURRENT, false, true, 1, 1},
+-        {DASH_NEEDS_INPUT, DASH_STALE, DASH_CURRENT, false, false, 2, 1},
+-        {DASH_NEEDS_INPUT, DASH_CURRENT, DASH_STALE, false, false, 2, 1},
+-        {DASH_WORKING, DASH_CURRENT, DASH_UNAVAILABLE, true, false, 2, 1},
++        {DASH_WORKING, DASH_CURRENT, DASH_CURRENT, false, 1, 1},
++        {DASH_SETTLED, DASH_CURRENT, DASH_CURRENT, true, 4, 2},
++        {DASH_INTERRUPTED, DASH_CURRENT, DASH_CURRENT, true, 4, 2},
++        {DASH_UNKNOWN, DASH_CURRENT, DASH_CURRENT, false, 2, 1},
++        {DASH_NEEDS_INPUT, DASH_CURRENT, DASH_CURRENT, true, 2, 1},
++        {DASH_ERROR, DASH_CURRENT, DASH_CURRENT, true, 1, 1},
++        {DASH_NEEDS_INPUT, DASH_STALE, DASH_CURRENT, false, 2, 1},
++        {DASH_NEEDS_INPUT, DASH_CURRENT, DASH_STALE, false, 2, 1},
++        {DASH_WORKING, DASH_CURRENT, DASH_UNAVAILABLE, false, 2, 1},
+     };
+     for (size_t i = 0; i < sizeof(cases) / sizeof(cases[0]); ++i) {
+         const dashboard_session_t session = {
+             .project = "", .provider = "CODEX", .detail = "?",
+             .work = cases[i].work, .health = cases[i].row_health,
+         };
+-        const int scale = cases[i].compact ? 1 : 2;
+-        const int height = cases[i].compact ? DASHBOARD_MOTION_WORKING_ROW_HEIGHT
+-                                            : DASHBOARD_MOTION_ROW_HEIGHT;
++        const int scale = 2;
++        const int height = DASHBOARD_MOTION_ROW_HEIGHT;
+         const int top = 100 + (height - 6 * scale) / 2;
+         const dashboard_motion_render_row_t row = {
+             .session = &session, .y = 100, .height = height,
+@@ -381,6 +380,66 @@ static void test_row_icon_polarity(void)
+     }
+ }
+ 
++static void test_state_polarity_and_slow_flash(const char *directory)
++{
++    static dashboard_motion_t motion;
++    dashboard_motion_init(&motion);
++    dashboard_motion_sample_t items[] = {
++        sample("codex@host/question", "question", "CODEX", "ASK1", DASH_NEEDS_INPUT,
++               DASH_CURRENT, false, 0, 1),
++        sample("claude@host/error", "error", "CLAUDE", "ERR1", DASH_ERROR,
++               DASH_CURRENT, false, 0, 1),
++        sample("codex@host/wait", "waiting", "CODEX", "WAIT", DASH_SETTLED,
++               DASH_CURRENT, false, 0, 1),
++        sample("claude@host/work", "working", "CLAUDE", "WORK", DASH_WORKING,
++               DASH_CURRENT, false, 0, 1),
++    };
++    apply_ok(&motion, items, 4, 1000);
++    assert(dashboard_motion_flashing(&motion)); // Existing blocked rows also flash.
++    assert(!dashboard_motion_active(&motion)); // No movement is needed to flash.
++    render_at(&motion, 1000, frame_initial);
++    save_pbm(directory, "blocked-flash-black", frame_initial);
++    render_at(&motion, 1499, frame_endpoint);
++    assert(memcmp(frame_initial, frame_endpoint, RLCD_FRAME_BYTES) == 0);
++    render_at(&motion, 1500, frame_halfway);
++    save_pbm(directory, "blocked-flash-white", frame_halfway);
++    // Only the two blocked rows invert, including their text and icons.
++    // Waiting stays inverse and working stays normal in both halves.
++    for (int y = 0; y < RLCD_HEIGHT; ++y)
++        for (int x = 0; x < RLCD_WIDTH; ++x) {
++            const bool blocked_tile = x >= 8 && x < 392 && y >= 24 && y < 72;
++            assert(pixel(frame_initial, x, y) ==
++                   (pixel(frame_halfway, x, y) != blocked_tile));
++        }
++    assert(!pixel(frame_halfway, 22, 74)); // Waiting background remains black.
++    assert(pixel(frame_halfway, 22, 98)); // Working background remains white.
++    apply_ok(&motion, items, 4, 1600); // Repeated snapshots retain the shared phase.
++    render_at(&motion, 1600, frame_endpoint);
++    assert(memcmp(frame_halfway, frame_endpoint, RLCD_FRAME_BYTES) == 0);
++    render_at(&motion, 1999, frame_endpoint);
++    assert(memcmp(frame_halfway, frame_endpoint, RLCD_FRAME_BYTES) == 0);
++    render_at(&motion, 2000, frame_endpoint);
++    assert(memcmp(frame_initial, frame_endpoint, RLCD_FRAME_BYTES) == 0);
++    assert(dashboard_motion_feed_lost(&motion, DASH_STALE, 2100) == DASHBOARD_MOTION_APPLIED);
++    assert(!dashboard_motion_flashing(&motion));
++    render_at(&motion, 2100, frame_initial);
++    render_at(&motion, 2600, frame_halfway);
++    assert_band_equal(frame_initial, frame_halfway, 8, 392, 24, 288);
++    assert(pixel(frame_halfway, 22, 74)); // Cached waiting claims lose inverse styling.
++    apply_ok(&motion, items, 4, 2700);
++    assert(dashboard_motion_flashing(&motion));
++    items[0].work = DASH_SETTLED;
++    items[1].work = DASH_WORKING;
++    ++items[0].state_episode;
++    ++items[1].state_episode;
++    apply_ok(&motion, items, 4, 2800);
++    assert(!dashboard_motion_flashing(&motion)); // Resolution stops further flash frames.
++    for (size_t i = 0; i < 4; ++i) items[i].health = DASH_STALE;
++    items[0].work = DASH_NEEDS_INPUT;
++    apply_ok(&motion, items, 4, 2900);
++    assert(!dashboard_motion_flashing(&motion)); // Stale evidence cannot flash.
++}
++
+ static void test_direction_tier_compositing(void)
+ {
+     const dashboard_session_t down = {
+@@ -652,7 +711,7 @@ static void test_clipping_ghosts_and_feed_loss(void)
+     only_b[0].state_entered_ms = 1500;
+     apply_ok(&motion, only_b, 1, 1500);
+     assert(dashboard_motion_feed_health(&motion) == DASH_CURRENT);
+-    assert(dashboard_motion_active(&motion));
++    assert(!dashboard_motion_active(&motion));
+     assert(motion.tracks[b_track].row_height == DASHBOARD_MOTION_ROW_HEIGHT);
+ }
+ 
+@@ -668,20 +727,20 @@ static void test_urgency_geometry_and_admission(void)
+                           DASH_WORKING, DASH_CURRENT, true, i, 1);
+     }
+     apply_ok(&motion, items, DASHBOARD_MOTION_CAPACITY, 1000);
+-    assert(dashboard_motion_visible_count(&motion) == 22);
+-    assert(dashboard_motion_overflow_count(&motion) == 10);
+-    assert(dashboard_motion_position_y(&motion, ids[21]) == 276);
++    assert(dashboard_motion_visible_count(&motion) == 11);
++    assert(dashboard_motion_overflow_count(&motion) == 21);
++    assert(dashboard_motion_position_y(&motion, ids[10]) == 264);
+ 
+-    // Increasing the final worker to a full blocked row admits it first and
+-    // pushes the last workers out of the complete highest-priority prefix.
++    // Promoting the final worker admits it first and displaces the last
++    // visible worker, while every row retains the same height.
+     items[31].work = DASH_NEEDS_INPUT;
+     items[31].state_entered_ms = 1000;
+     ++items[31].state_episode;
+     apply_ok(&motion, items, 32, 1000);
+     assert(strcmp(dashboard_motion_identity_at(&motion, 0), ids[31]) == 0);
+-    assert(dashboard_motion_visible_count(&motion) == 21);
+-    assert(dashboard_motion_overflow_count(&motion) == 11);
+-    const int displaced = track_index(&motion, ids[20]);
++    assert(dashboard_motion_visible_count(&motion) == 11);
++    assert(dashboard_motion_overflow_count(&motion) == 21);
++    const int displaced = track_index(&motion, ids[10]);
+     assert(!motion.tracks[displaced].admitted);
+     assert(motion.tracks[displaced].y_q8 == 264 * 256);
+     assert(motion.tracks[displaced].target_y_q8 == DASHBOARD_MOTION_BODY_BOTTOM * 256);
+@@ -689,18 +748,18 @@ static void test_urgency_geometry_and_admission(void)
+     dashboard_motion_tick(&motion, 1360);
+     assert(motion.tracks[displaced].y_q8 == DASHBOARD_MOTION_BODY_BOTTOM * 256);
+ 
+-    // Two blocked, four waiting, and twenty-six workers fit sixteen rows.
++    // Mixed states still admit eleven complete rows in urgency order.
+     dashboard_motion_init(&motion);
+     for (size_t i = 0; i < 32; ++i)
+         items[i].work = i < 2 ? DASH_NEEDS_INPUT : i < 6 ? DASH_SETTLED : DASH_WORKING;
+     apply_ok(&motion, items, 32, 2000);
+-    assert(dashboard_motion_visible_count(&motion) == 16);
+-    assert(dashboard_motion_overflow_count(&motion) == 16);
++    assert(dashboard_motion_visible_count(&motion) == 11);
++    assert(dashboard_motion_overflow_count(&motion) == 21);
+     assert(dashboard_motion_hidden_blocked_count(&motion) == 0);
+     assert(dashboard_motion_position_y(&motion, ids[0]) == DASHBOARD_MOTION_BODY_TOP);
+     assert(dashboard_motion_position_y(&motion, ids[2]) == DASHBOARD_MOTION_BODY_TOP + 48);
+     assert(dashboard_motion_position_y(&motion, ids[6]) == DASHBOARD_MOTION_BODY_TOP + 144);
+-    assert(dashboard_motion_position_y(&motion, ids[15]) == 276);
++    assert(dashboard_motion_position_y(&motion, ids[10]) == 264);
+ 
+     dashboard_motion_init(&motion);
+     for (size_t i = 0; i < 32; ++i) items[i].work = DASH_SETTLED;
+@@ -725,11 +784,11 @@ static void test_urgency_geometry_and_admission(void)
+     items[3].work = DASH_UNKNOWN;
+     items[3].state_age_known = false;
+     apply_ok(&motion, items, 4, 2000);
+-    assert(dashboard_motion_position_y(&motion, ids[3]) == DASHBOARD_MOTION_BODY_TOP + 60);
++    assert(dashboard_motion_position_y(&motion, ids[3]) == DASHBOARD_MOTION_BODY_TOP + 72);
+     assert(motion.tracks[track_index(&motion, ids[3])].row_height == 24);
+ }
+ 
+-static void test_height_only_changes_and_retarget(void)
++static void test_uniform_height_changes_and_retarget(void)
+ {
+     static dashboard_motion_t single;
+     dashboard_motion_init(&single);
+@@ -737,31 +796,21 @@ static void test_height_only_changes_and_retarget(void)
+                                            DASH_WORKING, DASH_CURRENT, true, 0, 1);
+     apply_ok(&single, &one, 1, 1000);
+     const int one_track = track_index(&single, one.logical_id);
+-    assert(one_track >= 0);
+-    assert(single.tracks[one_track].row_height == DASHBOARD_MOTION_WORKING_ROW_HEIGHT);
+-    one.work = DASH_UNKNOWN;
+-    one.state_age_known = false;
+-    ++one.state_episode;
+-    apply_ok(&single, &one, 1, 1000);
+-    assert(single.tracks[one_track].row_height == DASHBOARD_MOTION_ROW_HEIGHT);
+-    assert(single.tracks[one_track].start_y_q8 == DASHBOARD_MOTION_BODY_TOP * 256);
+-    assert(single.tracks[one_track].target_y_q8 == DASHBOARD_MOTION_BODY_TOP * 256);
+-    assert(dashboard_motion_active(&single));
+-    assert(dashboard_motion_feed_lost(&single, DASH_STALE, 1000) ==
++    const dashboard_work_t states[] = {DASH_UNKNOWN, DASH_NEEDS_INPUT, DASH_SETTLED,
++                                       DASH_WORKING};
++    for (size_t i = 0; i < sizeof(states) / sizeof(states[0]); ++i) {
++        one.work = states[i];
++        one.state_age_known = states[i] != DASH_UNKNOWN;
++        ++one.state_episode;
++        apply_ok(&single, &one, 1, 1000 + i * 100);
++        assert(single.tracks[one_track].row_height == 24);
++        assert(single.tracks[one_track].y_q8 == DASHBOARD_MOTION_BODY_TOP * 256);
++        assert(!dashboard_motion_active(&single)); // Style changes need no reflow.
++    }
++    assert(dashboard_motion_feed_lost(&single, DASH_STALE, 1400) ==
+            DASHBOARD_MOTION_APPLIED);
+-    assert(single.tracks[one_track].row_height == DASHBOARD_MOTION_ROW_HEIGHT);
+-    assert(single.tracks[one_track].y_q8 == DASHBOARD_MOTION_BODY_TOP * 256);
+-    dashboard_motion_tick(&single, 1400);
+-    assert(single.tracks[one_track].row_height == DASHBOARD_MOTION_ROW_HEIGHT);
+-    one.work = DASH_WORKING;
+-    one.health = DASH_CURRENT;
+-    one.state_age_known = true;
+-    one.state_entered_ms = 1400;
+-    ++one.state_episode;
+-    apply_ok(&single, &one, 1, 1400);
+-    assert(single.tracks[one_track].row_height == DASHBOARD_MOTION_WORKING_ROW_HEIGHT);
+-    assert(single.tracks[one_track].y_q8 == DASHBOARD_MOTION_BODY_TOP * 256);
+-    assert(dashboard_motion_active(&single));
++    assert(single.tracks[one_track].row_height == 24);
++    assert(!dashboard_motion_flashing(&single));
+ 
+     static dashboard_motion_t retarget;
+     dashboard_motion_init(&retarget);
+@@ -934,19 +983,22 @@ static void test_motion_chrome_states(void)
+     dashboard_draw_motion(known_frame, &known_view);
+     dashboard_draw_motion(frame_partial_header, &partial_view);
+     dashboard_draw_motion(empty_frame, &empty_view);
+-    int known_end = 7;
+-    for (int x = 8; x < RLCD_WIDTH; ++x)
+-        for (int y = 0; y < DASHBOARD_MOTION_BODY_TOP - 1; ++y)
+-            if (!pixel(known_frame, x, y) && x > known_end) known_end = x;
+-    assert(known_end >= 8);
+-    assert_band_equal(known_frame, frame_partial_header, 0, known_end + 1,
+-                      0, DASHBOARD_MOTION_BODY_TOP - 1);
+-    assert(band_has_ink(frame_partial_header, known_end + 1, RLCD_WIDTH,
+-                        0, DASHBOARD_MOTION_BODY_TOP - 1));
++    // Unknown counts are explicit in the footer; they leave the title and
++    // known-state summary unchanged, including its right alignment.
++    assert_band_equal(known_frame, frame_partial_header,
++                      0, RLCD_WIDTH, 0, DASHBOARD_MOTION_BODY_TOP);
++    assert(band_differs(known_frame, frame_partial_header,
++                        8, 136, DASHBOARD_MOTION_BODY_BOTTOM, RLCD_HEIGHT));
++    assert(band_has_ink(frame_partial_header, 74, 136,
++                        DASHBOARD_MOTION_BODY_BOTTOM, RLCD_HEIGHT));
+     assert_band_white(frame_partial_header, 0, 8, 0, DASHBOARD_MOTION_BODY_TOP);
+     for (int x = 8; x < 392; ++x)
+-        assert(!pixel(known_frame, x, DASHBOARD_MOTION_BODY_TOP - 1));
+-    assert(band_has_ink(known_frame, 8, 392, 12, DASHBOARD_MOTION_BODY_TOP - 1));
++        assert(!pixel(known_frame, x, DASHBOARD_MOTION_BODY_TOP - 3));
++    assert_band_white(known_frame, 0, RLCD_WIDTH,
++                      DASHBOARD_MOTION_BODY_TOP - 2, DASHBOARD_MOTION_BODY_TOP);
++    assert(band_has_ink(known_frame, 8, 80, 12, DASHBOARD_MOTION_BODY_TOP - 3));
++    assert_band_white(known_frame, 200, RLCD_WIDTH, 16,
++                      DASHBOARD_MOTION_BODY_TOP - 3);
+     assert_band_white(empty_frame, 0, RLCD_WIDTH, DASHBOARD_MOTION_BODY_TOP,
+                       DASHBOARD_MOTION_BODY_TOP + DASHBOARD_MOTION_ROW_HEIGHT);
+     assert_band_white(empty_frame, 0, RLCD_WIDTH,
+@@ -1052,13 +1104,13 @@ static void test_duplicate_project_labels(void)
+     // row byte-identical. All suffix pixels remain inside the name column.
+     const int top = DASHBOARD_MOTION_BODY_TOP;
+     assert(band_differs(frame_duplicate_names, expected_frame,
+-                        24, 312, top, top + 12));
++                        24, 312, top, top + 24));
+     assert(band_differs(frame_duplicate_names, expected_frame,
+-                        24, 312, top + 12, top + 24));
++                        24, 312, top + 24, top + 48));
+     assert_band_equal(frame_duplicate_names, expected_frame,
+-                      8, 392, top + 24, top + 36);
++                      8, 392, top + 48, top + 72);
+     assert_band_equal(frame_duplicate_names, expected_frame,
+-                      312, 360, top, top + 36);
++                      312, 360, top, top + 72);
+ 
+     static dashboard_motion_t full_ids;
+     static dashboard_motion_t full_no_ids;
+@@ -1083,7 +1135,7 @@ static void test_duplicate_project_labels(void)
+     assert(band_differs(full_with_ids, full_without_ids,
+                         24, 312, top + 24, top + 48));
+     assert_band_equal(full_with_ids, full_without_ids,
+-                      8, 392, top + 48, top + 60);
++                      8, 392, top + 48, top + 72);
+     assert_band_equal(full_with_ids, full_without_ids, 312, 360, top, top + 48);
+     memcpy(frame_duplicate_names, full_with_ids, sizeof(frame_duplicate_names));
+ }
+@@ -1159,7 +1211,7 @@ static void test_feed_loss_settles_retargeted_layouts(void)
+     }
+     apply_ok(&motion, items, 4, 1000);
+ 
+-    // Promotion and growth: the accepted blocked target is packed above the
++    // Promotion: the accepted blocked target is packed above the
+     // workers even when loss arrives before their animation finishes.
+     items[1].work = DASH_NEEDS_INPUT;
+     items[1].state_episode++;
+@@ -1180,8 +1232,8 @@ static void test_feed_loss_settles_retargeted_layouts(void)
+     assert_loss_snapped(&motion);
+     assert(motion.last_healthy_update_ms == promoted_update);
+ 
+-    // Healthy recovery establishes a new provenance point. Shrinking the
+-    // promoted row then commits its newest compact layout on a second loss.
++    // Healthy recovery establishes a new provenance point. Demoting the
++    // blocked row then commits its newest packed layout on a second loss.
+     apply_ok(&motion, items, 4, 1300);
+     assert(motion.last_healthy_update_ms == 1300);
+     items[1].work = DASH_WORKING;
+@@ -1236,7 +1288,7 @@ static void test_native_row_font_sizes(void)
+         {.session = &working, .y = 150, .height = DASHBOARD_MOTION_WORKING_ROW_HEIGHT},
+     };
+     render_rows(rows, 2, expected_frame);
+-    // Exact BDF F, a, and 中 pixels at native size and scale two. These golden
++    // Exact BDF F, a, and 中 pixels at scale two in both polarities. These golden
+     // rows were copied from the pinned BDF, independent of the generator.
+     const uint16_t f[12] = {0,0,0xf800,0x8000,0x8000,0xf000,0x8000,0x8000,0x8000,0x8000,0,0};
+     const uint16_t a[12] = {0,0,0,0,0x7000,0x0800,0x7800,0x8800,0x8800,0x7800,0,0};
+@@ -1248,18 +1300,21 @@ static void test_native_row_font_sizes(void)
+         for (int y = 0; y < 12; ++y)
+             for (int x = 0; x < advances[g]; ++x) {
+                 const bool ink = (glyphs[g][y] & (0x8000u >> x)) != 0;
+-                assert(pixel(expected_frame, 24 + offsets[g] + x, 150 + y) == !ink);
++                for (int dy = 0; dy < 2; ++dy)
++                    for (int dx = 0; dx < 2; ++dx)
++                        assert(pixel(expected_frame, 24 + (offsets[g] + x) * 2 + dx,
++                                     150 + y * 2 + dy) == !ink);
+                 for (int dy = 0; dy < 2; ++dy)
+                     for (int dx = 0; dx < 2; ++dx)
+                         assert(pixel(expected_frame, 24 + (offsets[g] + x) * 2 + dx,
+                                      100 + y * 2 + dy) == ink);
+             }
+-    // Neither row spills outside its own twelve/twenty-four-pixel tile.
++    // Neither row spills outside its own twenty-four-pixel tile.
+     for (int x = 24; x < 72; ++x) {
+         assert(pixel(expected_frame, x, 99));
+         assert(pixel(expected_frame, x, 124));
+         assert(pixel(expected_frame, x, 149));
+-        assert(pixel(expected_frame, x, 162));
++        assert(pixel(expected_frame, x, 174));
+     }
+     for (int y = DASHBOARD_MOTION_BODY_TOP; y < DASHBOARD_MOTION_BODY_BOTTOM; ++y)
+         for (int x = 392; x < RLCD_WIDTH; ++x) assert(pixel(expected_frame, x, y));
+@@ -1304,9 +1359,9 @@ static void test_newest_target_and_burst_bound(void)
+     items[2].state_entered_ms = 1120;
+     apply_ok(&motion, items, 3, 1120);
+     assert(motion.burst_start_ms == original_start);
+-    items[1].work = DASH_NEEDS_INPUT;
+-    items[1].state_episode++;
+-    items[1].state_entered_ms = 1200;
++    items[0].work = DASH_NEEDS_INPUT;
++    items[0].state_episode++;
++    items[0].state_entered_ms = 1200;
+     apply_ok(&motion, items, 3, 1200);
+     assert(motion.burst_start_ms == original_start);
+     items[2].work = DASH_SETTLED;
+@@ -1320,10 +1375,10 @@ static void test_newest_target_and_burst_bound(void)
+         apply_ok(&motion, items, 3, now);
+     dashboard_motion_tick(&motion, 1720);
+     assert(!dashboard_motion_active(&motion));
+-    assert(dashboard_motion_position_y(&motion, "claude@host/run") == DASHBOARD_MOTION_BODY_TOP);
++    assert(dashboard_motion_position_y(&motion, "codex@host/wait") == DASHBOARD_MOTION_BODY_TOP);
+     assert(dashboard_motion_position_y(&motion, "codex@host/idle") ==
+            DASHBOARD_MOTION_BODY_TOP + DASHBOARD_MOTION_ROW_HEIGHT);
+-    assert(dashboard_motion_position_y(&motion, "codex@host/wait") ==
++    assert(dashboard_motion_position_y(&motion, "claude@host/run") ==
+            DASHBOARD_MOTION_BODY_TOP + DASHBOARD_MOTION_ROW_HEIGHT * 2);
+     for (size_t i = 0; i < DASHBOARD_MOTION_TRACK_CAPACITY; ++i)
+         if (motion.tracks[i].used)
+@@ -1331,9 +1386,9 @@ static void test_newest_target_and_burst_bound(void)
+     render_at(&motion, 1720, frame_endpoint);
+ 
+     // A quiet interval rearms a new independent transition after the burst cap.
+-    items[1].work = DASH_WORKING;
+-    items[1].state_episode++;
+-    items[1].state_entered_ms = 2120;
++    items[0].work = DASH_WORKING;
++    items[0].state_episode++;
++    items[0].state_entered_ms = 2120;
+     apply_ok(&motion, items, 3, 2120);
+     assert(motion.burst_start_ms == 2120);
+     assert(!motion.burst_exhausted);
+@@ -1406,10 +1461,10 @@ static void test_overflow_priority_and_ghost_reservation(void)
+             exiting_tracks += stress.tracks[i].exiting ? 1u : 0u;
+         }
+     assert(used_tracks > DASHBOARD_MOTION_CAPACITY);
+-    assert(exiting_tracks == 22);
++    assert(exiting_tracks == 11);
+     // Exercise every active row and exit ghost through the packed renderer;
+-    // the twenty-two ghosts plus thirty-two current rows exceed the former
+-    // scratch capacity and remain within the expanded bounded storage.
++    // eleven exit ghosts plus thirty-two current rows remain within bounded
++    // scratch storage even with a complete identity turnover.
+     render_at(&stress, 2200, frame_endpoint);
+     assert(stress.render_poses[used_tracks - 1].session != NULL);
+     assert(stress.render_rows[used_tracks - 1].detail != NULL);
+@@ -1460,8 +1515,8 @@ static void test_demo_driver(void)
+                 const char *prefix = strcmp(entry->provider, "CODEX") == 0 ? "codex@" : "claude@";
+                 assert(strncmp(entry->logical_id, prefix, strlen(prefix)) == 0);
+             }
+-            assert(dashboard_motion_visible_count(&motion) == 22);
+-            assert(dashboard_motion_overflow_count(&motion) == 10);
++            assert(dashboard_motion_visible_count(&motion) == 11);
++            assert(dashboard_motion_overflow_count(&motion) == 21);
+             assert(dashboard_motion_hidden_blocked_count(&motion) == 0);
+         }
+         if (elapsed == 72000) {
+@@ -1569,6 +1624,7 @@ int main(int argc, char **argv)
+     test_transitions_and_stationary_chrome();
+     test_overlap_priority_and_icon_polarity();
+     test_row_icon_polarity();
++    test_state_polarity_and_slow_flash(argv[1]);
+     test_direction_tier_compositing();
+     test_shared_progress_directions_and_endpoints();
+     test_retarget_preserves_current_pose();
+@@ -1584,7 +1640,7 @@ int main(int argc, char **argv)
+     save_pbm(argv[1], "attention-overflow", frame_overflow);
+     capture_demo_previews(argv[1]);
+     test_urgency_geometry_and_admission();
+-    test_height_only_changes_and_retarget();
++    test_uniform_height_changes_and_retarget();
+     test_inactive_removal_and_readmission();
+     test_motion_chrome_states();
+     test_duplicate_project_labels();

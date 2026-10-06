@@ -16,9 +16,10 @@ enum {
     DASHBOARD_MOTION_DURATION_MS = 360,
     DASHBOARD_MOTION_BURST_LIMIT_MS = 720,
     DASHBOARD_MOTION_ROW_HEIGHT = 24,
-    DASHBOARD_MOTION_WORKING_ROW_HEIGHT = 12,
+    DASHBOARD_MOTION_WORKING_ROW_HEIGHT = 24,
     DASHBOARD_MOTION_TEXT_HEIGHT = 24,
-    DASHBOARD_MOTION_WORKING_TEXT_HEIGHT = 12,
+    DASHBOARD_MOTION_WORKING_TEXT_HEIGHT = 24,
+    DASHBOARD_MOTION_FLASH_HALF_PERIOD_MS = 500,
     DASHBOARD_MOTION_BODY_TOP = 24,
     DASHBOARD_MOTION_BODY_BOTTOM = 288,
     DASHBOARD_MOTION_RENDER_AGE_CAPACITY = DASHBOARD_MOTION_TRACK_CAPACITY + DASHBOARD_MOTION_CAPACITY,
@@ -153,6 +154,7 @@ dashboard_motion_result_t dashboard_motion_feed_lost(
 void dashboard_motion_tick(dashboard_motion_t *motion, uint64_t now_ms);
 void dashboard_motion_render(dashboard_motion_t *motion, uint8_t *frame);
 bool dashboard_motion_active(const dashboard_motion_t *motion);
+bool dashboard_motion_flashing(const dashboard_motion_t *motion);
 dashboard_health_t dashboard_motion_feed_health(const dashboard_motion_t *motion);
 size_t dashboard_motion_count(const dashboard_motion_t *motion);
 const char *dashboard_motion_identity_at(const dashboard_motion_t *motion,

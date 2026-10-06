@@ -1,0 +1,445 @@
+I (210) esp_image: segment 1: paddr=0010affc vaddr=3fc96300 sizeESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0x15 (USB_UART_CHIP_RESET),boot:0x8 (SPI_FAST_FLASH_BOOT)
+Saved PC:0x42006a6b
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fce2820,len:0x152c
+load:0x403c8700,len:0xce4
+load:0x403cb700,len:0x2efc
+entry 0x403c8920
+I (24) boot: ESP-IDF v5.5.3 2nd stage bootloader
+I (24) boot: compile time Oct  5 2026 15:44:22
+I (25) boot: Multicore bootloader
+I (25) boot: chip revision: v0.2
+I (25) boot: efuse block revision: v1.4
+I (25) boot.esp32s3: Boot SPI Speed : 80MHz
+I (25) boot.esp32s3: SPI Mode       : DIO
+I (26) boot.esp32s3: SPI Flash Size : 16MB
+I (26) boot: Enabling RNG early entropy source...
+I (26) boot: Partition Table:
+I (26) boot: ## Label            Usage          Type ST Offset   Length
+I (26) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (27) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (27) boot:  2 factory          factory app      00 00 00010000 00200000
+I (28) boot: End of partition table
+I (28) esp_image: segment 0: paddr=00010020 vaddr=3c020020 size=fafd4h (1028052) map
+I (209) esp_image: segment 1: paddr=0010affc vaddr=3fc96300 size=0362ch ( 13868) load
+I (213) esp_image: segment 2: paddr=0010e630 vaddr=40374000 size=019e8h (  6632) load
+I (215) esp_image: segment 3: paddr=00110020 vaddr=42000020 size=1cb9ch (117660) map
+I (236) esp_image: segment 4: paddr=0012cbc4 vaddr=403759e8 size=10898h ( 67736) load
+I (251) esp_image: segment 5: paddr=0013d464 vaddr=50000000 size=00020h (    32) load
+I (258) boot: Loaded app from partition at offset 0x10000
+I (258) boot: Disabling RNG early entropy source...
+I (259) octal_psram: vendor id    : 0x0d (AP)
+I (260) octal_psram: dev id       : 0x02 (generation 3)
+I (260) octal_psram: density      : 0x03 (64 Mbit)
+I (260) octal_psram: good-die     : 0x01 (Pass)
+I (260) octal_psram: Latency      : 0x01 (Fixed)
+I (260) octal_psram: VCC          : 0x01 (3V)
+I (261) octal_psram: SRF          : 0x01 (Fast Refresh)
+I (261) octal_psram: BurstType    : 0x01 (Hybrid Wrap)
+I (261) octal_psram: BurstLen     : 0x01 (32 Byte)
+I (261) octal_psram: Readlatency  : 0x02 (10 cycles@Fixed)
+I (262) octal_psram: DriveStrength: 0x00 (1/1)
+I (262) MSPI Timing: Enter psram timing tuning
+I (263) esp_psram: Found 8MB PSRAM device
+I (263) esp_psram: Speed: 80MHz
+I (263) cpu_start: Multicore app
+I (689) esp_psram: SPI SRAM memory test OK
+I (698) cpu_start: Pro cpu start user code
+I (698) cpu_start: cpu freq: 240000000 Hz
+I (698) app_init: Application information:
+I (699) app_init: Project name:     rlcd-dashboard
+I (699) app_init: App version:      01fc948-dirty
+I (699) app_init: Compile time:     Oct  6 2026 12:57:32
+I (699) app_init: ELF file SHA256:  fb1ea6692...
+I (699) app_init: ESP-IDF:          v5.5.3
+I (699) efuse_init: Min chip rev:     v0.0
+I (700) efuse_init: Max chip rev:     v0.99 
+I (700) efuse_init: Chip rev:         v0.2
+I (700) heap_init: Initializing. RAM available for dynamic allocation:
+I (700) heap_init: At 3FC9F6F0 len 0004A020 (296 KiB): RAM
+I (700) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM
+I (700) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM
+I (701) heap_init: At 600FE000 len 00001FE8 (7 KiB): RTCRAM
+I (701) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator
+I (702) spi_flash: detected chip: generic
+I (702) spi_flash: flash io: dio
+I (702) sleep_gpio: Configure to isolate all GPIO pins in sleep state
+I (703) sleep_gpio: Enable automatic switching of GPIO sleep configuration
+I (703) main_task: Started on CPU0
+I (713) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations
+I (713) main_task: Calling app_main()
+I (1033) rlcd_panel: Initialized: SPI3 10 MHz, 400x300, 15000-byte framebuffer
+I (1033) rlcd_dashboard: MOTION event=config phases=23 cycle_ms=92000 fps=25 duration_ms=360 frame_budget_us=40000 capacity=32 model_bytes=21576 visible_policy=height_prefix full_row_px=24 working_row_px=12 normal_text_px=24 working_text_px=12 body_top=24 body_bottom=288 font=fusion_pixel_12_zh_hans font_release=2026.09.25 normal_scale=2 working_scale=1 normal_cap_px=16 working_cap_px=8 header_px=24 summary_px=12 footer_px=12 divider_y=21 header_gap_px=2 chrome=title_counts source=simulated feed_loss=settle_target
+I (1053) rlcd_dashboard: MOTION event=frame case=initial-order tick_ms=1 moving=0 draw_us=5176 transfer_us=12224 frame_us=17863 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (1053) rlcd_dashboard: MOTION event=phase phase=0 case=initial-order tick_ms=1 count=8 feed_health=0 visible=8 overflow=0 hidden_blocked=0
+I (2083) rlcd_dashboard: MOTION event=frame case=initial-order tick_ms=1038 moving=0 draw_us=4814 transfer_us=12195 frame_us=17013 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (3083) rlcd_dashboard: MOTION event=frame case=initial-order tick_ms=2038 moving=0 draw_us=4821 transfer_us=12196 frame_us=17021 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (4083) rlcd_dashboard: MOTION event=frame case=initial-order tick_ms=3038 moving=0 draw_us=4812 transfer_us=12193 frame_us=17009 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (5083) rlcd_dashboard: MOTION event=frame case=answered-wait-to-run tick_ms=4038 moving=1 draw_us=4905 transfer_us=12210 frame_us=17413 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (5083) rlcd_dashboard: MOTION event=phase phase=1 case=answered-wait-to-run tick_ms=4038 count=8 feed_health=0 visible=8 overflow=0 hidden_blocked=0
+I (5123) rlcd_dashboard: MOTION event=frame case=answered-wait-to-run tick_ms=4078 moving=1 draw_us=4975 transfer_us=12197 frame_us=17220 interval_us=40003 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (5163) rlcd_dashboard: MOTION event=frame case=answered-wait-to-run tick_ms=4118 moving=1 draw_us=4988 transfer_us=12196 frame_us=17224 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (5203) rlcd_dashboard: MOTION event=frame case=answered-wait-to-run tick_ms=4158 moving=1 draw_us=4968 transfer_us=12194 frame_us=17210 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (5243) rlcd_dashboard: MOTION event=frame case=answered-wait-to-run tick_ms=4198 moving=1 draw_us=4993 transfer_us=12196 frame_us=17233 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (5283) rlcd_dashboard: MOTION event=frame case=answered-wait-to-run tick_ms=4238 moving=1 draw_us=4949 transfer_us=12196 frame_us=17193 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (5323) rlcd_dashboard: MOTION event=frame case=answered-wait-to-run tick_ms=4278 moving=1 draw_us=4993 transfer_us=12196 frame_us=17229 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (5363) rlcd_dashboard: MOTION event=frame case=answered-wait-to-run tick_ms=4318 moving=1 draw_us=4953 transfer_us=12194 frame_us=17199 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (5403) rlcd_dashboard: MOTION event=frame case=answered-wait-to-run tick_ms=4358 moving=1 draw_us=4839 transfer_us=12196 frame_us=17075 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (5443) rlcd_dashboard: MOTION event=frame case=answered-wait-to-run tick_ms=4398 moving=0 draw_us=4815 transfer_us=12195 frame_us=17067 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (6083) rlcd_dashboard: MOTION event=frame case=answered-wait-to-run tick_ms=5038 moving=0 draw_us=4806 transfer_us=12196 frame_us=17006 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (7083) rlcd_dashboard: MOTION event=frame case=answered-wait-to-run tick_ms=6038 moving=0 draw_us=4778 transfer_us=12195 frame_us=16977 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (8083) rlcd_dashboard: MOTION event=frame case=answered-wait-to-run tick_ms=7038 moving=0 draw_us=4806 transfer_us=12196 frame_us=17006 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (9083) rlcd_dashboard: MOTION event=frame case=idle-to-run tick_ms=8038 moving=1 draw_us=4907 transfer_us=12220 frame_us=17422 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (9083) rlcd_dashboard: MOTION event=phase phase=2 case=idle-to-run tick_ms=8038 count=8 feed_health=0 visible=8 overflow=0 hidden_blocked=0
+I (9123) rlcd_dashboard: MOTION event=frame case=idle-to-run tick_ms=8078 moving=1 draw_us=4895 transfer_us=12200 frame_us=17143 interval_us=40003 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (9163) rlcd_dashboard: MOTION event=frame case=idle-to-run tick_ms=8118 moving=1 draw_us=4881 transfer_us=12200 frame_us=17131 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (9203) rlcd_dashboard: MOTION event=frame case=idle-to-run tick_ms=8158 moving=1 draw_us=4888 transfer_us=12200 frame_us=17130 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (9243) rlcd_dashboard: MOTION event=frame case=idle-to-run tick_ms=8198 moving=1 draw_us=4880 transfer_us=12200 frame_us=17126 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (9283) rlcd_dashboard: MOTION event=frame case=idle-to-run tick_ms=8238 moving=1 draw_us=4885 transfer_us=12200 frame_us=17131 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (9323) rlcd_dashboard: MOTION event=frame case=idle-to-run tick_ms=8278 moving=1 draw_us=4878 transfer_us=12200 frame_us=17124 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (9363) rlcd_dashboard: MOTION event=frame case=idle-to-run tick_ms=8318 moving=1 draw_us=4883 transfer_us=12201 frame_us=17126 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (9403) rlcd_dashboard: MOTION event=frame case=idle-to-run tick_ms=8358 moving=1 draw_us=4804 transfer_us=12200 frame_us=17054 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (9443) rlcd_dashboard: MOTION event=frame case=idle-to-run tick_ms=8398 moving=0 draw_us=4809 transfer_us=12200 frame_us=17058 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (10083) rlcd_dashboard: MOTION event=frame case=idle-to-run tick_ms=9038 moving=0 draw_us=4792 transfer_us=12199 frame_us=16995 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (11083) rlcd_dashboard: MOTION event=frame case=idle-to-run tick_ms=10038 moving=0 draw_us=4805 transfer_us=12200 frame_us=17009 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (12083) rlcd_dashboard: MOTION event=frame case=idle-to-run tick_ms=11038 moving=0 draw_us=4788 transfer_us=12200 frame_us=16992 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (13083) rlcd_dashboard: MOTION event=frame case=run-to-wait tick_ms=12038 moving=1 draw_us=4913 transfer_us=12218 frame_us=17427 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (13083) rlcd_dashboard: MOTION event=phase phase=3 case=run-to-wait tick_ms=12038 count=8 feed_health=0 visible=8 overflow=0 hidden_blocked=0
+I (13123) rlcd_dashboard: MOTION event=frame case=run-to-wait tick_ms=12078 moving=1 draw_us=4874 transfer_us=12201 frame_us=17130 interval_us=40003 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (13163) rlcd_dashboard: MOTION event=frame case=run-to-wait tick_ms=12118 moving=1 draw_us=4903 transfer_us=12200 frame_us=17145 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (13203) rlcd_dashboard: MOTION event=frame case=run-to-wait tick_ms=12158 moving=1 draw_us=4896 transfer_us=12200 frame_us=17142 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (13243) rlcd_dashboard: MOTION event=frame case=run-to-wait tick_ms=12198 moving=1 draw_us=4906 transfer_us=12204 frame_us=17156 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (13283) rlcd_dashboard: MOTION event=frame case=run-to-wait tick_ms=12238 moving=1 draw_us=4900 transfer_us=12204 frame_us=17150 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (13323) rlcd_dashboard: MOTION event=frame case=run-to-wait tick_ms=12278 moving=1 draw_us=4906 transfer_us=12202 frame_us=17150 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (13363) rlcd_dashboard: MOTION event=frame case=run-to-wait tick_ms=12318 moving=1 draw_us=4878 transfer_us=12200 frame_us=17128 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (13403) rlcd_dashboard: MOTION event=frame case=run-to-wait tick_ms=12358 moving=1 draw_us=4832 transfer_us=12200 frame_us=17074 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (13443) rlcd_dashboard: MOTION event=frame case=run-to-wait tick_ms=12398 moving=0 draw_us=4799 transfer_us=12202 frame_us=17053 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (14083) rlcd_dashboard: MOTION event=frame case=run-to-wait tick_ms=13038 moving=0 draw_us=4809 transfer_us=12200 frame_us=17013 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (15083) rlcd_dashboard: MOTION event=frame case=run-to-wait tick_ms=14038 moving=0 draw_us=4825 transfer_us=12200 frame_us=17029 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (16083) rlcd_dashboard: MOTION event=frame case=run-to-wait tick_ms=15038 moving=0 draw_us=4822 transfer_us=12200 frame_us=17026 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (17083) rlcd_dashboard: MOTION event=frame case=run-to-idle tick_ms=16038 moving=1 draw_us=4914 transfer_us=12222 frame_us=17436 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (17083) rlcd_dashboard: MOTION event=phase phase=4 case=run-to-idle tick_ms=16038 count=8 feed_health=0 visible=8 overflow=0 hidden_blocked=0
+I (17123) rlcd_dashboard: MOTION event=frame case=run-to-idle tick_ms=16078 moving=1 draw_us=4839 transfer_us=12202 frame_us=17091 interval_us=40003 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (17163) rlcd_dashboard: MOTION event=frame case=run-to-idle tick_ms=16118 moving=1 draw_us=4843 transfer_us=12202 frame_us=17095 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (17203) rlcd_dashboard: MOTION event=frame case=run-to-idle tick_ms=16158 moving=1 draw_us=4836 transfer_us=12203 frame_us=17083 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (17243) rlcd_dashboard: MOTION event=frame case=run-to-idle tick_ms=16198 moving=1 draw_us=4803 transfer_us=12205 frame_us=17054 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (17283) rlcd_dashboard: MOTION event=frame case=run-to-idle tick_ms=16238 moving=1 draw_us=4810 transfer_us=12202 frame_us=17060 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (17323) rlcd_dashboard: MOTION event=frame case=run-to-idle tick_ms=16278 moving=1 draw_us=4834 transfer_us=12202 frame_us=17082 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (17363) rlcd_dashboard: MOTION event=frame case=run-to-idle tick_ms=16318 moving=1 draw_us=4838 transfer_us=12202 frame_us=17084 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (17403) rlcd_dashboard: MOTION event=frame case=run-to-idle tick_ms=16358 moving=1 draw_us=4804 transfer_us=12203 frame_us=17057 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (17443) rlcd_dashboard: MOTION event=frame case=run-to-idle tick_ms=16398 moving=0 draw_us=4802 transfer_us=12204 frame_us=17057 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (18083) rlcd_dashboard: MOTION event=frame case=run-to-idle tick_ms=17038 moving=0 draw_us=4798 transfer_us=12200 frame_us=17002 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (19083) rlcd_dashboard: MOTION event=frame case=run-to-idle tick_ms=18038 moving=0 draw_us=4825 transfer_us=12202 frame_us=17031 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (20083) rlcd_dashboard: MOTION event=frame case=run-to-idle tick_ms=19038 moving=0 draw_us=4817 transfer_us=12200 frame_us=17021 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (21083) rlcd_dashboard: MOTION event=frame case=simultaneous-changes tick_ms=20038 moving=1 draw_us=4908 transfer_us=12219 frame_us=17423 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (21083) rlcd_dashboard: MOTION event=phase phase=5 case=simultaneous-changes tick_ms=20038 count=8 feed_health=0 visible=8 overflow=0 hidden_blocked=0
+I (21123) rlcd_dashboard: MOTION event=frame case=simultaneous-changes tick_ms=20078 moving=1 draw_us=4887 transfer_us=12201 frame_us=17143 interval_us=40003 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (21163) rlcd_dashboard: MOTION event=frame case=simultaneous-changes tick_ms=20118 moving=1 draw_us=4911 transfer_us=12202 frame_us=17157 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (21203) rlcd_dashboard: MOTION event=frame case=simultaneous-changes tick_ms=20158 moving=1 draw_us=4912 transfer_us=12202 frame_us=17160 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (21243) rlcd_dashboard: MOTION event=frame case=simultaneous-changes tick_ms=20198 moving=1 draw_us=4920 transfer_us=12202 frame_us=17170 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (21283) rlcd_dashboard: MOTION event=frame case=simultaneous-changes tick_ms=20238 moving=1 draw_us=4903 transfer_us=12206 frame_us=17155 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (21323) rlcd_dashboard: MOTION event=frame case=simultaneous-changes tick_ms=20278 moving=1 draw_us=4913 transfer_us=12203 frame_us=17160 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (21363) rlcd_dashboard: MOTION event=frame case=simultaneous-changes tick_ms=20318 moving=1 draw_us=4877 transfer_us=12200 frame_us=17127 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (21403) rlcd_dashboard: MOTION event=frame case=simultaneous-changes tick_ms=20358 moving=1 draw_us=4835 transfer_us=12204 frame_us=17083 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (21443) rlcd_dashboard: MOTION event=frame case=simultaneous-changes tick_ms=20398 moving=0 draw_us=4800 transfer_us=12203 frame_us=17055 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (22083) rlcd_dashboard: MOTION event=frame case=simultaneous-changes tick_ms=21038 moving=0 draw_us=4785 transfer_us=12200 frame_us=16989 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (23083) rlcd_dashboard: MOTION event=frame case=simultaneous-changes tick_ms=22038 moving=0 draw_us=4810 transfer_us=12202 frame_us=17016 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (24083) rlcd_dashboard: MOTION event=frame case=simultaneous-changes tick_ms=23038 moving=0 draw_us=4809 transfer_us=12200 frame_us=17013 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (25083) rlcd_dashboard: MOTION event=frame case=mid-motion-retarget tick_ms=24038 moving=1 draw_us=4944 transfer_us=12222 frame_us=17471 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (25083) rlcd_dashboard: MOTION event=phase phase=6 case=mid-motion-retarget tick_ms=24038 count=8 feed_health=0 visible=8 overflow=0 hidden_blocked=0
+I (25123) rlcd_dashboard: MOTION event=frame case=mid-motion-retarget tick_ms=24078 moving=1 draw_us=4906 transfer_us=12206 frame_us=17164 interval_us=40003 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (25163) rlcd_dashboard: MOTION event=frame case=mid-motion-retarget tick_ms=24118 moving=1 draw_us=4904 transfer_us=12202 frame_us=17158 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (25203) rlcd_dashboard: MOTION event=frame case=mid-motion-retarget tick_ms=24158 moving=1 draw_us=4902 transfer_us=12204 frame_us=17152 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (25243) rlcd_dashboard: MOTION event=frame case=mid-motion-retarget tick_ms=24198 moving=1 draw_us=4986 transfer_us=12220 frame_us=17539 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (25243) rlcd_dashboard: MOTION event=phase phase=6 case=mid-motion-retarget tick_ms=24198 count=8 feed_health=0 visible=8 overflow=0 hidden_blocked=0
+I (25283) rlcd_dashboard: MOTION event=frame case=mid-motion-retarget tick_ms=24238 moving=1 draw_us=4852 transfer_us=12202 frame_us=17108 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (25323) rlcd_dashboard: MOTION event=frame case=mid-motion-retarget tick_ms=24278 moving=1 draw_us=4850 transfer_us=12202 frame_us=17098 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (25363) rlcd_dashboard: MOTION event=frame case=mid-motion-retarget tick_ms=24318 moving=1 draw_us=4930 transfer_us=12204 frame_us=17178 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (25403) rlcd_dashboard: MOTION event=frame case=mid-motion-retarget tick_ms=24358 moving=1 draw_us=4803 transfer_us=12204 frame_us=17057 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (25443) rlcd_dashboard: MOTION event=frame case=mid-motion-retarget tick_ms=24398 moving=1 draw_us=4883 transfer_us=12201 frame_us=17128 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (25483) rlcd_dashboard: MOTION event=frame case=mid-motion-retarget tick_ms=24438 moving=1 draw_us=4925 transfer_us=12204 frame_us=17175 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (25523) rlcd_dashboard: MOTION event=frame case=mid-motion-retarget tick_ms=24478 moving=1 draw_us=4849 transfer_us=12202 frame_us=17099 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (25563) rlcd_dashboard: MOTION event=frame case=mid-motion-retarget tick_ms=24518 moving=1 draw_us=4797 transfer_us=12203 frame_us=17046 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (25603) rlcd_dashboard: MOTION event=frame case=mid-motion-retarget tick_ms=24558 moving=0 draw_us=4800 transfer_us=12203 frame_us=17057 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (26083) rlcd_dashboard: MOTION event=frame case=mid-motion-retarget tick_ms=25038 moving=0 draw_us=4790 transfer_us=12200 frame_us=16994 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (27083) rlcd_dashboard: MOTION event=frame case=mid-motion-retarget tick_ms=26038 moving=0 draw_us=4785 transfer_us=12202 frame_us=16991 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (28083) rlcd_dashboard: MOTION event=frame case=mid-motion-retarget tick_ms=27038 moving=0 draw_us=4782 transfer_us=12200 frame_us=16986 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (29083) rlcd_dashboard: MOTION event=frame case=overflow-admission tick_ms=28038 moving=1 draw_us=5903 transfer_us=12222 frame_us=19626 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (29093) rlcd_dashboard: MOTION event=phase phase=7 case=overflow-admission tick_ms=28038 count=32 feed_health=0 visible=16 overflow=16 hidden_blocked=0
+I (29133) rlcd_dashboard: MOTION event=frame case=overflow-admission tick_ms=28078 moving=1 draw_us=11111 transfer_us=12202 frame_us=23368 interval_us=40003 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (29173) rlcd_dashboard: MOTION event=frame case=overflow-admission tick_ms=28118 moving=1 draw_us=11005 transfer_us=12201 frame_us=23258 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (29213) rlcd_dashboard: MOTION event=frame case=overflow-admission tick_ms=28158 moving=1 draw_us=9062 transfer_us=12202 frame_us=21314 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (29253) rlcd_dashboard: MOTION event=frame case=overflow-admission tick_ms=28198 moving=1 draw_us=9094 transfer_us=12202 frame_us=21344 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (29293) rlcd_dashboard: MOTION event=frame case=overflow-admission tick_ms=28238 moving=1 draw_us=9104 transfer_us=12201 frame_us=21359 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (29333) rlcd_dashboard: MOTION event=frame case=overflow-admission tick_ms=28278 moving=1 draw_us=9115 transfer_us=12202 frame_us=21365 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (29373) rlcd_dashboard: MOTION event=frame case=overflow-admission tick_ms=28318 moving=1 draw_us=9045 transfer_us=12202 frame_us=21297 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (29413) rlcd_dashboard: MOTION event=frame case=overflow-admission tick_ms=28358 moving=1 draw_us=9110 transfer_us=12202 frame_us=21364 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (29453) rlcd_dashboard: MOTION event=frame case=overflow-admission tick_ms=28398 moving=0 draw_us=8975 transfer_us=12201 frame_us=21234 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (30093) rlcd_dashboard: MOTION event=frame case=overflow-admission tick_ms=29038 moving=0 draw_us=8967 transfer_us=12202 frame_us=21173 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (31093) rlcd_dashboard: MOTION event=frame case=overflow-admission tick_ms=30038 moving=0 draw_us=8981 transfer_us=12201 frame_us=21186 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (32093) rlcd_dashboard: MOTION event=frame case=overflow-admission tick_ms=31038 moving=0 draw_us=8974 transfer_us=12202 frame_us=21180 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (33093) rlcd_dashboard: MOTION event=frame case=same-project-identities tick_ms=32038 moving=1 draw_us=9103 transfer_us=12222 frame_us=22939 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (33093) rlcd_dashboard: MOTION event=phase phase=8 case=same-project-identities tick_ms=32038 count=32 feed_health=0 visible=17 overflow=15 hidden_blocked=0
+I (33133) rlcd_dashboard: MOTION event=frame case=same-project-identities tick_ms=32078 moving=1 draw_us=9430 transfer_us=12200 frame_us=21688 interval_us=40003 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (33173) rlcd_dashboard: MOTION event=frame case=same-project-identities tick_ms=32118 moving=1 draw_us=9439 transfer_us=12202 frame_us=21691 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (33213) rlcd_dashboard: MOTION event=frame case=same-project-identities tick_ms=32158 moving=1 draw_us=9190 transfer_us=12200 frame_us=21438 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (33253) rlcd_dashboard: MOTION event=frame case=same-project-identities tick_ms=32198 moving=1 draw_us=9238 transfer_us=12201 frame_us=21493 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (33293) rlcd_dashboard: MOTION event=frame case=same-project-identities tick_ms=32238 moving=1 draw_us=9263 transfer_us=12199 frame_us=21510 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (33333) rlcd_dashboard: MOTION event=frame case=same-project-identities tick_ms=32278 moving=1 draw_us=9289 transfer_us=12201 frame_us=21540 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (33373) rlcd_dashboard: MOTION event=frame case=same-project-identities tick_ms=32318 moving=1 draw_us=9311 transfer_us=12200 frame_us=21563 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (33413) rlcd_dashboard: MOTION event=frame case=same-project-identities tick_ms=32358 moving=1 draw_us=9253 transfer_us=12201 frame_us=21504 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (33453) rlcd_dashboard: MOTION event=frame case=same-project-identities tick_ms=32398 moving=0 draw_us=9264 transfer_us=12199 frame_us=21519 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (34093) rlcd_dashboard: MOTION event=frame case=same-project-identities tick_ms=33038 moving=0 draw_us=9251 transfer_us=12201 frame_us=21456 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (35093) rlcd_dashboard: MOTION event=frame case=same-project-identities tick_ms=34038 moving=0 draw_us=9284 transfer_us=12199 frame_us=21487 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (36093) rlcd_dashboard: MOTION event=frame case=same-project-identities tick_ms=35038 moving=0 draw_us=9292 transfer_us=12202 frame_us=21498 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (37093) rlcd_dashboard: MOTION event=frame case=feed-stale-during-motion tick_ms=36038 moving=1 draw_us=9441 transfer_us=12224 frame_us=23272 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (37093) rlcd_dashboard: MOTION event=phase phase=9 case=feed-stale-during-motion tick_ms=36038 count=32 feed_health=0 visible=16 overflow=16 hidden_blocked=0
+I (37133) rlcd_dashboard: MOTION event=frame case=feed-stale-during-motion tick_ms=36078 moving=1 draw_us=9355 transfer_us=12202 frame_us=21614 interval_us=40003 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (37173) rlcd_dashboard: MOTION event=frame case=feed-stale-during-motion tick_ms=36118 moving=1 draw_us=9661 transfer_us=12202 frame_us=21918 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (37213) rlcd_dashboard: MOTION event=frame case=feed-stale-during-motion tick_ms=36158 moving=1 draw_us=9396 transfer_us=12202 frame_us=21650 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (37243) rlcd_dashboard: MOTION event=frame case=feed-stale-during-motion tick_ms=36198 moving=0 draw_us=7643 transfer_us=12190 frame_us=19915 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (37253) rlcd_dashboard: MOTION event=phase phase=9 case=feed-stale-during-motion tick_ms=36198 count=32 feed_health=1 visible=16 overflow=0 hidden_blocked=0
+I (38083) rlcd_dashboard: MOTION event=frame case=feed-stale-during-motion tick_ms=37038 moving=0 draw_us=7601 transfer_us=12186 frame_us=19791 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (39083) rlcd_dashboard: MOTION event=frame case=feed-stale-during-motion tick_ms=38038 moving=0 draw_us=7596 transfer_us=12186 frame_us=19786 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (40083) rlcd_dashboard: MOTION event=frame case=feed-stale-during-motion tick_ms=39038 moving=0 draw_us=7595 transfer_us=12187 frame_us=19786 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (41093) rlcd_dashboard: MOTION event=frame case=feed-recovery tick_ms=40038 moving=1 draw_us=9005 transfer_us=12223 frame_us=22830 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (41093) rlcd_dashboard: MOTION event=phase phase=10 case=feed-recovery tick_ms=40038 count=32 feed_health=0 visible=15 overflow=17 hidden_blocked=0
+I (41133) rlcd_dashboard: MOTION event=frame case=feed-recovery tick_ms=40078 moving=1 draw_us=8852 transfer_us=12201 frame_us=21108 interval_us=40003 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (41173) rlcd_dashboard: MOTION event=frame case=feed-recovery tick_ms=40118 moving=1 draw_us=8735 transfer_us=12202 frame_us=20992 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (41213) rlcd_dashboard: MOTION event=frame case=feed-recovery tick_ms=40158 moving=1 draw_us=8848 transfer_us=12202 frame_us=21100 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (41253) rlcd_dashboard: MOTION event=frame case=feed-recovery tick_ms=40198 moving=1 draw_us=8853 transfer_us=12202 frame_us=21103 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (41293) rlcd_dashboard: MOTION event=frame case=feed-recovery tick_ms=40238 moving=1 draw_us=8868 transfer_us=12202 frame_us=21124 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (41333) rlcd_dashboard: MOTION event=frame case=feed-recovery tick_ms=40278 moving=1 draw_us=8794 transfer_us=12202 frame_us=21044 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (41373) rlcd_dashboard: MOTION event=frame case=feed-recovery tick_ms=40318 moving=1 draw_us=8739 transfer_us=12202 frame_us=20991 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (41413) rlcd_dashboard: MOTION event=frame case=feed-recovery tick_ms=40358 moving=1 draw_us=8518 transfer_us=12202 frame_us=20773 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (41453) rlcd_dashboard: MOTION event=frame case=feed-recovery tick_ms=40398 moving=0 draw_us=8475 transfer_us=12202 frame_us=20735 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (42093) rlcd_dashboard: MOTION event=frame case=feed-recovery tick_ms=41038 moving=0 draw_us=8467 transfer_us=12202 frame_us=20673 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (43093) rlcd_dashboard: MOTION event=frame case=feed-recovery tick_ms=42038 moving=0 draw_us=8476 transfer_us=12201 frame_us=20681 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (44093) rlcd_dashboard: MOTION event=frame case=feed-recovery tick_ms=43038 moving=0 draw_us=8468 transfer_us=12202 frame_us=20674 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (45093) rlcd_dashboard: MOTION event=frame case=feed-offline-during-motion tick_ms=44038 moving=1 draw_us=8575 transfer_us=12224 frame_us=22400 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (45093) rlcd_dashboard: MOTION event=phase phase=11 case=feed-offline-during-motion tick_ms=44038 count=32 feed_health=0 visible=16 overflow=16 hidden_blocked=0
+I (45133) rlcd_dashboard: MOTION event=frame case=feed-offline-during-motion tick_ms=44078 moving=1 draw_us=9001 transfer_us=12201 frame_us=21262 interval_us=40003 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (45173) rlcd_dashboard: MOTION event=frame case=feed-offline-during-motion tick_ms=44118 moving=1 draw_us=9032 transfer_us=12202 frame_us=21286 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (45213) rlcd_dashboard: MOTION event=frame case=feed-offline-during-motion tick_ms=44158 moving=1 draw_us=9316 transfer_us=12202 frame_us=21568 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (45253) rlcd_dashboard: MOTION event=frame case=feed-offline-during-motion tick_ms=44198 moving=0 draw_us=7712 transfer_us=12196 frame_us=19994 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (45253) rlcd_dashboard: MOTION event=phase phase=11 case=feed-offline-during-motion tick_ms=44198 count=32 feed_health=2 visible=16 overflow=0 hidden_blocked=0
+I (46083) rlcd_dashboard: MOTION event=frame case=feed-offline-during-motion tick_ms=45038 moving=0 draw_us=7678 transfer_us=12186 frame_us=19868 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (47083) rlcd_dashboard: MOTION event=frame case=feed-offline-during-motion tick_ms=46038 moving=0 draw_us=7678 transfer_us=12186 frame_us=19868 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (48083) rlcd_dashboard: MOTION event=frame case=feed-offline-during-motion tick_ms=47038 moving=0 draw_us=7674 transfer_us=12186 frame_us=19864 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (49093) rlcd_dashboard: MOTION event=frame case=feed-recovery-again tick_ms=48038 moving=1 draw_us=9046 transfer_us=12222 frame_us=22867 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (49093) rlcd_dashboard: MOTION event=phase phase=12 case=feed-recovery-again tick_ms=48038 count=32 feed_health=0 visible=15 overflow=17 hidden_blocked=0
+I (49133) rlcd_dashboard: MOTION event=frame case=feed-recovery-again tick_ms=48078 moving=1 draw_us=8890 transfer_us=12200 frame_us=21145 interval_us=40003 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (49173) rlcd_dashboard: MOTION event=frame case=feed-recovery-again tick_ms=48118 moving=1 draw_us=8776 transfer_us=12202 frame_us=21031 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (49213) rlcd_dashboard: MOTION event=frame case=feed-recovery-again tick_ms=48158 moving=1 draw_us=8446 transfer_us=12202 frame_us=20698 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (49253) rlcd_dashboard: MOTION event=frame case=feed-recovery-again tick_ms=48198 moving=1 draw_us=8894 transfer_us=12202 frame_us=21144 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (49293) rlcd_dashboard: MOTION event=frame case=feed-recovery-again tick_ms=48238 moving=1 draw_us=8874 transfer_us=12202 frame_us=21130 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (49333) rlcd_dashboard: MOTION event=frame case=feed-recovery-again tick_ms=48278 moving=1 draw_us=8797 transfer_us=12202 frame_us=21047 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (49373) rlcd_dashboard: MOTION event=frame case=feed-recovery-again tick_ms=48318 moving=1 draw_us=8783 transfer_us=12202 frame_us=21035 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (49413) rlcd_dashboard: MOTION event=frame case=feed-recovery-again tick_ms=48358 moving=1 draw_us=8491 transfer_us=12201 frame_us=20745 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (49453) rlcd_dashboard: MOTION event=frame case=feed-recovery-again tick_ms=48398 moving=0 draw_us=8483 transfer_us=12202 frame_us=20740 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (50093) rlcd_dashboard: MOTION event=frame case=feed-recovery-again tick_ms=49038 moving=0 draw_us=8472 transfer_us=12201 frame_us=20677 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (51093) rlcd_dashboard: MOTION event=frame case=feed-recovery-again tick_ms=50038 moving=0 draw_us=8504 transfer_us=12202 frame_us=20710 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (52093) rlcd_dashboard: MOTION event=frame case=feed-recovery-again tick_ms=51038 moving=0 draw_us=8501 transfer_us=12201 frame_us=20706 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (53093) rlcd_dashboard: MOTION event=frame case=attention-overflow tick_ms=52038 moving=1 draw_us=8470 transfer_us=12222 frame_us=22301 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (53093) rlcd_dashboard: MOTION event=phase phase=13 case=attention-overflow tick_ms=52038 count=32 feed_health=0 visible=11 overflow=21 hidden_blocked=21
+I (53133) rlcd_dashboard: MOTION event=frame case=attention-overflow tick_ms=52078 moving=1 draw_us=7989 transfer_us=12199 frame_us=20246 interval_us=40003 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (53163) rlcd_dashboard: MOTION event=frame case=attention-overflow tick_ms=52118 moving=1 draw_us=7566 transfer_us=12199 frame_us=19813 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (53203) rlcd_dashboard: MOTION event=frame case=attention-overflow tick_ms=52158 moving=1 draw_us=7466 transfer_us=12200 frame_us=19714 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (53243) rlcd_dashboard: MOTION event=frame case=attention-overflow tick_ms=52198 moving=1 draw_us=7140 transfer_us=12200 frame_us=19393 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1856
+I (53283) rlcd_dashboard: MOTION event=frame case=attention-overflow tick_ms=52238 moving=1 draw_us=7098 transfer_us=12199 frame_us=19345 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (53323) rlcd_dashboard: MOTION event=frame case=attention-overflow tick_ms=52278 moving=1 draw_us=7067 transfer_us=12200 frame_us=19315 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (53363) rlcd_dashboard: MOTION event=frame case=attention-overflow tick_ms=52318 moving=1 draw_us=7007 transfer_us=12200 frame_us=19260 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (53403) rlcd_dashboard: MOTION event=frame case=attention-overflow tick_ms=52358 moving=1 draw_us=6932 transfer_us=12200 frame_us=19180 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (53443) rlcd_dashboard: MOTION event=frame case=attention-overflow tick_ms=52398 moving=0 draw_us=6657 transfer_us=12200 frame_us=18911 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (54083) rlcd_dashboard: MOTION event=frame case=attention-overflow tick_ms=53038 moving=0 draw_us=6589 transfer_us=12199 frame_us=18792 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (55083) rlcd_dashboard: MOTION event=frame case=attention-overflow tick_ms=54038 moving=0 draw_us=6596 transfer_us=12200 frame_us=18800 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (56083) rlcd_dashboard: MOTION event=frame case=attention-overflow tick_ms=55038 moving=0 draw_us=6598 transfer_us=12200 frame_us=18802 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (57083) rlcd_dashboard: MOTION event=frame case=uncertainty-section tick_ms=56038 moving=1 draw_us=5723 transfer_us=12222 frame_us=18266 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (57083) rlcd_dashboard: MOTION event=phase phase=14 case=uncertainty-section tick_ms=56038 count=8 feed_health=0 visible=8 overflow=0 hidden_blocked=0
+I (57123) rlcd_dashboard: MOTION event=frame case=uncertainty-section tick_ms=56078 moving=1 draw_us=5716 transfer_us=12201 frame_us=17967 interval_us=40003 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (57163) rlcd_dashboard: MOTION event=frame case=uncertainty-section tick_ms=56118 moving=1 draw_us=5729 transfer_us=12200 frame_us=17981 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (57203) rlcd_dashboard: MOTION event=frame case=uncertainty-section tick_ms=56158 moving=1 draw_us=5742 transfer_us=12200 frame_us=17989 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (57243) rlcd_dashboard: MOTION event=frame case=uncertainty-section tick_ms=56198 moving=1 draw_us=5896 transfer_us=12200 frame_us=18142 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (57283) rlcd_dashboard: MOTION event=frame case=uncertainty-section tick_ms=56238 moving=1 draw_us=7306 transfer_us=12200 frame_us=19559 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (57323) rlcd_dashboard: MOTION event=frame case=uncertainty-section tick_ms=56278 moving=1 draw_us=7718 transfer_us=12201 frame_us=19965 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (57363) rlcd_dashboard: MOTION event=frame case=uncertainty-section tick_ms=56318 moving=1 draw_us=7273 transfer_us=12200 frame_us=19520 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (57403) rlcd_dashboard: MOTION event=frame case=uncertainty-section tick_ms=56358 moving=1 draw_us=6586 transfer_us=12201 frame_us=18839 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (57443) rlcd_dashboard: MOTION event=frame case=uncertainty-section tick_ms=56398 moving=0 draw_us=4853 transfer_us=12199 frame_us=17111 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (58083) rlcd_dashboard: MOTION event=frame case=uncertainty-section tick_ms=57038 moving=0 draw_us=4846 transfer_us=12200 frame_us=17050 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (59083) rlcd_dashboard: MOTION event=frame case=uncertainty-section tick_ms=58038 moving=0 draw_us=4850 transfer_us=12200 frame_us=17054 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (60083) rlcd_dashboard: MOTION event=frame case=uncertainty-section tick_ms=59038 moving=0 draw_us=4821 transfer_us=12197 frame_us=17022 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (61083) rlcd_dashboard: MOTION event=frame case=working-to-blocked tick_ms=60038 moving=1 draw_us=4983 transfer_us=12221 frame_us=17510 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (61083) rlcd_dashboard: MOTION event=phase phase=15 case=working-to-blocked tick_ms=60038 count=8 feed_health=0 visible=8 overflow=0 hidden_blocked=0
+I (61123) rlcd_dashboard: MOTION event=frame case=working-to-blocked tick_ms=60078 moving=1 draw_us=4963 transfer_us=12199 frame_us=17211 interval_us=40003 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (61163) rlcd_dashboard: MOTION event=frame case=working-to-blocked tick_ms=60118 moving=1 draw_us=4942 transfer_us=12203 frame_us=17189 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (61203) rlcd_dashboard: MOTION event=frame case=working-to-blocked tick_ms=60158 moving=1 draw_us=4961 transfer_us=12199 frame_us=17204 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (61243) rlcd_dashboard: MOTION event=frame case=working-to-blocked tick_ms=60198 moving=1 draw_us=4875 transfer_us=12197 frame_us=17120 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (61283) rlcd_dashboard: MOTION event=frame case=working-to-blocked tick_ms=60238 moving=1 draw_us=4875 transfer_us=12196 frame_us=17115 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (61323) rlcd_dashboard: MOTION event=frame case=working-to-blocked tick_ms=60278 moving=1 draw_us=4959 transfer_us=12198 frame_us=17201 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (61363) rlcd_dashboard: MOTION event=frame case=working-to-blocked tick_ms=60318 moving=1 draw_us=4962 transfer_us=12199 frame_us=17209 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (61403) rlcd_dashboard: MOTION event=frame case=working-to-blocked tick_ms=60358 moving=1 draw_us=4871 transfer_us=12197 frame_us=17112 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (61443) rlcd_dashboard: MOTION event=frame case=working-to-blocked tick_ms=60398 moving=0 draw_us=4875 transfer_us=12200 frame_us=17126 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (62083) rlcd_dashboard: MOTION event=frame case=working-to-blocked tick_ms=61038 moving=0 draw_us=4858 transfer_us=12199 frame_us=17061 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (63083) rlcd_dashboard: MOTION event=frame case=working-to-blocked tick_ms=62038 moving=0 draw_us=5017 transfer_us=12198 frame_us=17219 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (64083) rlcd_dashboard: MOTION event=frame case=working-to-blocked tick_ms=63038 moving=0 draw_us=4971 transfer_us=12198 frame_us=17173 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (65083) rlcd_dashboard: MOTION event=frame case=blocked-to-working tick_ms=64038 moving=1 draw_us=5070 transfer_us=12218 frame_us=17590 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (65083) rlcd_dashboard: MOTION event=phase phase=16 case=blocked-to-working tick_ms=64038 count=8 feed_health=0 visible=8 overflow=0 hidden_blocked=0
+I (65123) rlcd_dashboard: MOTION event=frame case=blocked-to-working tick_ms=64078 moving=1 draw_us=5046 transfer_us=12198 frame_us=17289 interval_us=40003 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (65163) rlcd_dashboard: MOTION event=frame case=blocked-to-working tick_ms=64118 moving=1 draw_us=5061 transfer_us=12199 frame_us=17308 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (65203) rlcd_dashboard: MOTION event=frame case=blocked-to-working tick_ms=64158 moving=1 draw_us=5042 transfer_us=12199 frame_us=17285 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (65243) rlcd_dashboard: MOTION event=frame case=blocked-to-working tick_ms=64198 moving=1 draw_us=4975 transfer_us=12198 frame_us=17217 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (65283) rlcd_dashboard: MOTION event=frame case=blocked-to-working tick_ms=64238 moving=1 draw_us=4976 transfer_us=12199 frame_us=17223 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (65323) rlcd_dashboard: MOTION event=frame case=blocked-to-working tick_ms=64278 moving=1 draw_us=5044 transfer_us=12199 frame_us=17287 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (65363) rlcd_dashboard: MOTION event=frame case=blocked-to-working tick_ms=64318 moving=1 draw_us=5045 transfer_us=12198 frame_us=17287 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (65403) rlcd_dashboard: MOTION event=frame case=blocked-to-working tick_ms=64358 moving=1 draw_us=4976 transfer_us=12199 frame_us=17223 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (65443) rlcd_dashboard: MOTION event=frame case=blocked-to-working tick_ms=64398 moving=0 draw_us=4971 transfer_us=12198 frame_us=17220 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (66083) rlcd_dashboard: MOTION event=frame case=blocked-to-working tick_ms=65038 moving=0 draw_us=4967 transfer_us=12199 frame_us=17170 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (67083) rlcd_dashboard: MOTION event=frame case=blocked-to-working tick_ms=66038 moving=0 draw_us=4976 transfer_us=12202 frame_us=17182 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (68083) rlcd_dashboard: MOTION event=frame case=blocked-to-working tick_ms=67038 moving=0 draw_us=4977 transfer_us=12202 frame_us=17183 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (69083) rlcd_dashboard: MOTION event=frame case=compact-capacity tick_ms=68038 moving=1 draw_us=5838 transfer_us=12219 frame_us=19366 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (69093) rlcd_dashboard: MOTION event=phase phase=17 case=compact-capacity tick_ms=68038 count=32 feed_health=0 visible=22 overflow=10 hidden_blocked=0
+I (69133) rlcd_dashboard: MOTION event=frame case=compact-capacity tick_ms=68078 moving=1 draw_us=12176 transfer_us=12198 frame_us=24432 interval_us=40003 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (69173) rlcd_dashboard: MOTION event=frame case=compact-capacity tick_ms=68118 moving=1 draw_us=12046 transfer_us=12200 frame_us=24294 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (69213) rlcd_dashboard: MOTION event=frame case=compact-capacity tick_ms=68158 moving=1 draw_us=12104 transfer_us=12200 frame_us=24352 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (69253) rlcd_dashboard: MOTION event=frame case=compact-capacity tick_ms=68198 moving=1 draw_us=12122 transfer_us=12200 frame_us=24374 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (69293) rlcd_dashboard: MOTION event=frame case=compact-capacity tick_ms=68238 moving=1 draw_us=12149 transfer_us=12200 frame_us=24397 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (69333) rlcd_dashboard: MOTION event=frame case=compact-capacity tick_ms=68278 moving=1 draw_us=12151 transfer_us=12200 frame_us=24399 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (69373) rlcd_dashboard: MOTION event=frame case=compact-capacity tick_ms=68318 moving=1 draw_us=12156 transfer_us=12200 frame_us=24408 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (69413) rlcd_dashboard: MOTION event=frame case=compact-capacity tick_ms=68358 moving=1 draw_us=12156 transfer_us=12200 frame_us=24404 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (69453) rlcd_dashboard: MOTION event=frame case=compact-capacity tick_ms=68398 moving=0 draw_us=12143 transfer_us=12200 frame_us=24397 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (70093) rlcd_dashboard: MOTION event=frame case=compact-capacity tick_ms=69038 moving=0 draw_us=12006 transfer_us=12200 frame_us=24210 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (71093) rlcd_dashboard: MOTION event=frame case=compact-capacity tick_ms=70038 moving=0 draw_us=12022 transfer_us=12200 frame_us=24226 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (72093) rlcd_dashboard: MOTION event=frame case=compact-capacity tick_ms=71038 moving=0 draw_us=12028 transfer_us=12200 frame_us=24232 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (73093) rlcd_dashboard: MOTION event=frame case=waiting-only tick_ms=72038 moving=1 draw_us=12245 transfer_us=12222 frame_us=25922 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (73093) rlcd_dashboard: MOTION event=phase phase=18 case=waiting-only tick_ms=72038 count=32 feed_health=0 visible=11 overflow=21 hidden_blocked=0
+I (73133) rlcd_dashboard: MOTION event=frame case=waiting-only tick_ms=72078 moving=1 draw_us=10914 transfer_us=12200 frame_us=23168 interval_us=40003 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (73173) rlcd_dashboard: MOTION event=frame case=waiting-only tick_ms=72118 moving=1 draw_us=9579 transfer_us=12200 frame_us=21832 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (73213) rlcd_dashboard: MOTION event=frame case=waiting-only tick_ms=72158 moving=1 draw_us=8949 transfer_us=12200 frame_us=21197 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (73253) rlcd_dashboard: MOTION event=frame case=waiting-only tick_ms=72198 moving=1 draw_us=8131 transfer_us=12200 frame_us=20379 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (73293) rlcd_dashboard: MOTION event=frame case=waiting-only tick_ms=72238 moving=1 draw_us=7950 transfer_us=12199 frame_us=20202 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (73323) rlcd_dashboard: MOTION event=frame case=waiting-only tick_ms=72278 moving=1 draw_us=7681 transfer_us=12200 frame_us=19929 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (73363) rlcd_dashboard: MOTION event=frame case=waiting-only tick_ms=72318 moving=1 draw_us=7501 transfer_us=12200 frame_us=19749 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (73403) rlcd_dashboard: MOTION event=frame case=waiting-only tick_ms=72358 moving=1 draw_us=7525 transfer_us=12200 frame_us=19778 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (73443) rlcd_dashboard: MOTION event=frame case=waiting-only tick_ms=72398 moving=0 draw_us=6972 transfer_us=12200 frame_us=19226 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (74083) rlcd_dashboard: MOTION event=frame case=waiting-only tick_ms=73038 moving=0 draw_us=6908 transfer_us=12199 frame_us=19111 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (75083) rlcd_dashboard: MOTION event=frame case=waiting-only tick_ms=74038 moving=0 draw_us=6916 transfer_us=12200 frame_us=19120 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (76083) rlcd_dashboard: MOTION event=frame case=waiting-only tick_ms=75038 moving=0 draw_us=6916 transfer_us=12200 frame_us=19120 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (77093) rlcd_dashboard: MOTION event=frame case=blocked-only tick_ms=76038 moving=0 draw_us=7086 transfer_us=12222 frame_us=20737 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (77093) rlcd_dashboard: MOTION event=phase phase=19 case=blocked-only tick_ms=76038 count=32 feed_health=0 visible=11 overflow=21 hidden_blocked=21
+I (78083) rlcd_dashboard: MOTION event=frame case=blocked-only tick_ms=77038 moving=0 draw_us=6923 transfer_us=12202 frame_us=19129 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (79083) rlcd_dashboard: MOTION event=frame case=blocked-only tick_ms=78038 moving=0 draw_us=6928 transfer_us=12202 frame_us=19134 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (80083) rlcd_dashboard: MOTION event=frame case=blocked-only tick_ms=79038 moving=0 draw_us=6929 transfer_us=12202 frame_us=19135 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (81093) rlcd_dashboard: MOTION event=frame case=inactive-removal tick_ms=80038 moving=1 draw_us=7011 transfer_us=12216 frame_us=20725 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (81093) rlcd_dashboard: MOTION event=phase phase=20 case=inactive-removal tick_ms=80038 count=31 feed_health=0 visible=11 overflow=20 hidden_blocked=20
+I (81123) rlcd_dashboard: MOTION event=frame case=inactive-removal tick_ms=80078 moving=1 draw_us=7724 transfer_us=12199 frame_us=19971 interval_us=40003 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (81163) rlcd_dashboard: MOTION event=frame case=inactive-removal tick_ms=80118 moving=1 draw_us=7695 transfer_us=12198 frame_us=19945 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (81213) rlcd_dashboard: MOTION event=frame case=inactive-removal tick_ms=80158 moving=1 draw_us=7784 transfer_us=12198 frame_us=20030 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (81253) rlcd_dashboard: MOTION event=frame case=inactive-removal tick_ms=80198 moving=1 draw_us=7823 transfer_us=12198 frame_us=20069 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (81293) rlcd_dashboard: MOTION event=frame case=inactive-removal tick_ms=80238 moving=1 draw_us=7766 transfer_us=12199 frame_us=20017 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (81333) rlcd_dashboard: MOTION event=frame case=inactive-removal tick_ms=80278 moving=1 draw_us=7853 transfer_us=12199 frame_us=20100 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (81373) rlcd_dashboard: MOTION event=frame case=inactive-removal tick_ms=80318 moving=1 draw_us=7740 transfer_us=12199 frame_us=19987 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (81403) rlcd_dashboard: MOTION event=frame case=inactive-removal tick_ms=80358 moving=1 draw_us=7198 transfer_us=12198 frame_us=19448 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (81443) rlcd_dashboard: MOTION event=frame case=inactive-removal tick_ms=80398 moving=0 draw_us=6832 transfer_us=12200 frame_us=19088 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (82083) rlcd_dashboard: MOTION event=frame case=inactive-removal tick_ms=81038 moving=0 draw_us=6841 transfer_us=12199 frame_us=19044 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (83083) rlcd_dashboard: MOTION event=frame case=inactive-removal tick_ms=82038 moving=0 draw_us=6852 transfer_us=12200 frame_us=19056 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (84083) rlcd_dashboard: MOTION event=frame case=inactive-removal tick_ms=83038 moving=0 draw_us=6787 transfer_us=12200 frame_us=18991 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (85093) rlcd_dashboard: MOTION event=frame case=readmission tick_ms=84038 moving=1 draw_us=6956 transfer_us=12221 frame_us=20641 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (85093) rlcd_dashboard: MOTION event=phase phase=21 case=readmission tick_ms=84038 count=32 feed_health=0 visible=11 overflow=21 hidden_blocked=20
+I (85123) rlcd_dashboard: MOTION event=frame case=readmission tick_ms=84078 moving=1 draw_us=6867 transfer_us=12200 frame_us=19122 interval_us=40003 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (85163) rlcd_dashboard: MOTION event=frame case=readmission tick_ms=84118 moving=1 draw_us=6850 transfer_us=12200 frame_us=19098 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (85203) rlcd_dashboard: MOTION event=frame case=readmission tick_ms=84158 moving=1 draw_us=6850 transfer_us=12200 frame_us=19098 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (85243) rlcd_dashboard: MOTION event=frame case=readmission tick_ms=84198 moving=1 draw_us=6852 transfer_us=12200 frame_us=19105 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (85283) rlcd_dashboard: MOTION event=frame case=readmission tick_ms=84238 moving=1 draw_us=6848 transfer_us=12200 frame_us=19096 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (85323) rlcd_dashboard: MOTION event=frame case=readmission tick_ms=84278 moving=1 draw_us=6852 transfer_us=12200 frame_us=19100 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (85363) rlcd_dashboard: MOTION event=frame case=readmission tick_ms=84318 moving=1 draw_us=6851 transfer_us=12200 frame_us=19104 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (85403) rlcd_dashboard: MOTION event=frame case=readmission tick_ms=84358 moving=1 draw_us=6850 transfer_us=12200 frame_us=19098 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (85443) rlcd_dashboard: MOTION event=frame case=readmission tick_ms=84398 moving=0 draw_us=6850 transfer_us=12199 frame_us=19103 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (86083) rlcd_dashboard: MOTION event=frame case=readmission tick_ms=85038 moving=0 draw_us=6853 transfer_us=12200 frame_us=19057 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (87083) rlcd_dashboard: MOTION event=frame case=readmission tick_ms=86038 moving=0 draw_us=7198 transfer_us=12200 frame_us=19402 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (88083) rlcd_dashboard: MOTION event=frame case=readmission tick_ms=87038 moving=0 draw_us=7133 transfer_us=12200 frame_us=19337 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (89083) rlcd_dashboard: MOTION event=frame case=empty-roster tick_ms=88038 moving=1 draw_us=5001 transfer_us=12199 frame_us=17312 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (89083) rlcd_dashboard: MOTION event=phase phase=22 case=empty-roster tick_ms=88038 count=0 feed_health=0 visible=0 overflow=0 hidden_blocked=0
+I (89123) rlcd_dashboard: MOTION event=frame case=empty-roster tick_ms=88078 moving=1 draw_us=5107 transfer_us=12194 frame_us=17338 interval_us=40003 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (89163) rlcd_dashboard: MOTION event=frame case=empty-roster tick_ms=88118 moving=1 draw_us=5101 transfer_us=12191 frame_us=17339 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (89203) rlcd_dashboard: MOTION event=frame case=empty-roster tick_ms=88158 moving=1 draw_us=5089 transfer_us=12194 frame_us=17322 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (89243) rlcd_dashboard: MOTION event=frame case=empty-roster tick_ms=88198 moving=1 draw_us=4989 transfer_us=12191 frame_us=17221 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (89283) rlcd_dashboard: MOTION event=frame case=empty-roster tick_ms=88238 moving=1 draw_us=4866 transfer_us=12191 frame_us=17102 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (89323) rlcd_dashboard: MOTION event=frame case=empty-roster tick_ms=88278 moving=1 draw_us=4645 transfer_us=12187 frame_us=16873 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (89363) rlcd_dashboard: MOTION event=frame case=empty-roster tick_ms=88318 moving=1 draw_us=4012 transfer_us=12193 frame_us=16244 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (89403) rlcd_dashboard: MOTION event=frame case=empty-roster tick_ms=88358 moving=1 draw_us=3218 transfer_us=12187 frame_us=15452 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (89443) rlcd_dashboard: MOTION event=frame case=empty-roster tick_ms=88398 moving=0 draw_us=1286 transfer_us=12177 frame_us=13515 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (90083) rlcd_dashboard: MOTION event=frame case=empty-roster tick_ms=89038 moving=0 draw_us=1291 transfer_us=12174 frame_us=13469 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (91083) rlcd_dashboard: MOTION event=frame case=empty-roster tick_ms=90038 moving=0 draw_us=1283 transfer_us=12172 frame_us=13459 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (92083) rlcd_dashboard: MOTION event=frame case=empty-roster tick_ms=91038 moving=0 draw_us=1285 transfer_us=12174 frame_us=13463 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (93083) rlcd_dashboard: MOTION event=frame case=initial-order tick_ms=92038 moving=1 draw_us=1173 transfer_us=12217 frame_us=13769 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (93083) rlcd_dashboard: MOTION event=cycle cycle=1
+I (93083) rlcd_dashboard: MOTION event=phase phase=0 case=initial-order tick_ms=92038 count=8 feed_health=0 visible=8 overflow=0 hidden_blocked=0
+I (93123) rlcd_dashboard: MOTION event=frame case=initial-order tick_ms=92078 moving=1 draw_us=4954 transfer_us=12206 frame_us=17210 interval_us=40003 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (93163) rlcd_dashboard: MOTION event=frame case=initial-order tick_ms=92118 moving=1 draw_us=4905 transfer_us=12202 frame_us=17157 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (93203) rlcd_dashboard: MOTION event=frame case=initial-order tick_ms=92158 moving=1 draw_us=5001 transfer_us=12202 frame_us=17249 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (93243) rlcd_dashboard: MOTION event=frame case=initial-order tick_ms=92198 moving=1 draw_us=4956 transfer_us=12202 frame_us=17206 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (93283) rlcd_dashboard: MOTION event=frame case=initial-order tick_ms=92238 moving=1 draw_us=4927 transfer_us=12204 frame_us=17177 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (93323) rlcd_dashboard: MOTION event=frame case=initial-order tick_ms=92278 moving=1 draw_us=5007 transfer_us=12202 frame_us=17253 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (93363) rlcd_dashboard: MOTION event=frame case=initial-order tick_ms=92318 moving=1 draw_us=4944 transfer_us=12204 frame_us=17198 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (93403) rlcd_dashboard: MOTION event=frame case=initial-order tick_ms=92358 moving=1 draw_us=4965 transfer_us=12202 frame_us=17211 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (93443) rlcd_dashboard: MOTION event=frame case=initial-order tick_ms=92398 moving=0 draw_us=4832 transfer_us=12201 frame_us=17085 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (94083) rlcd_dashboard: MOTION event=frame case=initial-order tick_ms=93038 moving=0 draw_us=4840 transfer_us=12202 frame_us=17046 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (95083) rlcd_dashboard: MOTION event=frame case=initial-order tick_ms=94038 moving=0 draw_us=4822 transfer_us=12202 frame_us=17028 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (96083) rlcd_dashboard: MOTION event=frame case=initial-order tick_ms=95038 moving=0 draw_us=4840 transfer_us=12203 frame_us=17047 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (97083) rlcd_dashboard: MOTION event=frame case=answered-wait-to-run tick_ms=96038 moving=1 draw_us=4928 transfer_us=12222 frame_us=17454 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (97083) rlcd_dashboard: MOTION event=phase phase=1 case=answered-wait-to-run tick_ms=96038 count=8 feed_health=0 visible=8 overflow=0 hidden_blocked=0
+I (97123) rlcd_dashboard: MOTION event=frame case=answered-wait-to-run tick_ms=96078 moving=1 draw_us=5010 transfer_us=12202 frame_us=17257 interval_us=40003 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (97163) rlcd_dashboard: MOTION event=frame case=answered-wait-to-run tick_ms=96118 moving=1 draw_us=4994 transfer_us=12201 frame_us=17245 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (97203) rlcd_dashboard: MOTION event=frame case=answered-wait-to-run tick_ms=96158 moving=1 draw_us=4993 transfer_us=12202 frame_us=17239 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (97243) rlcd_dashboard: MOTION event=frame case=answered-wait-to-run tick_ms=96198 moving=1 draw_us=4988 transfer_us=12202 frame_us=17236 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (97283) rlcd_dashboard: MOTION event=frame case=answered-wait-to-run tick_ms=96238 moving=1 draw_us=4980 transfer_us=12202 frame_us=17230 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (97323) rlcd_dashboard: MOTION event=frame case=answered-wait-to-run tick_ms=96278 moving=1 draw_us=4988 transfer_us=12202 frame_us=17236 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (97363) rlcd_dashboard: MOTION event=frame case=answered-wait-to-run tick_ms=96318 moving=1 draw_us=4978 transfer_us=12202 frame_us=17224 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (97403) rlcd_dashboard: MOTION event=frame case=answered-wait-to-run tick_ms=96358 moving=1 draw_us=4839 transfer_us=12201 frame_us=17090 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (97443) rlcd_dashboard: MOTION event=frame case=answered-wait-to-run tick_ms=96398 moving=0 draw_us=4839 transfer_us=12202 frame_us=17092 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (98083) rlcd_dashboard: MOTION event=frame case=answered-wait-to-run tick_ms=97038 moving=0 draw_us=4802 transfer_us=12200 frame_us=17006 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (99083) rlcd_dashboard: MOTION event=frame case=answered-wait-to-run tick_ms=98038 moving=0 draw_us=4802 transfer_us=12202 frame_us=17008 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (100083) rlcd_dashboard: MOTION event=frame case=answered-wait-to-run tick_ms=99038 moving=0 draw_us=4801 transfer_us=12200 frame_us=17005 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (101083) rlcd_dashboard: MOTION event=frame case=idle-to-run tick_ms=100038 moving=1 draw_us=4895 transfer_us=12222 frame_us=17419 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (101083) rlcd_dashboard: MOTION event=phase phase=2 case=idle-to-run tick_ms=100038 count=8 feed_health=0 visible=8 overflow=0 hidden_blocked=0
+I (101123) rlcd_dashboard: MOTION event=frame case=idle-to-run tick_ms=100078 moving=1 draw_us=4903 transfer_us=12203 frame_us=17156 interval_us=40003 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (101163) rlcd_dashboard: MOTION event=frame case=idle-to-run tick_ms=100118 moving=1 draw_us=4894 transfer_us=12201 frame_us=17139 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (101203) rlcd_dashboard: MOTION event=frame case=idle-to-run tick_ms=100158 moving=1 draw_us=4887 transfer_us=12201 frame_us=17134 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (101243) rlcd_dashboard: MOTION event=frame case=idle-to-run tick_ms=100198 moving=1 draw_us=4893 transfer_us=12201 frame_us=17142 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (101283) rlcd_dashboard: MOTION event=frame case=idle-to-run tick_ms=100238 moving=1 draw_us=4878 transfer_us=12202 frame_us=17126 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (101323) rlcd_dashboard: MOTION event=frame case=idle-to-run tick_ms=100278 moving=1 draw_us=4891 transfer_us=12202 frame_us=17137 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (101363) rlcd_dashboard: MOTION event=frame case=idle-to-run tick_ms=100318 moving=1 draw_us=4881 transfer_us=12202 frame_us=17133 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (101403) rlcd_dashboard: MOTION event=frame case=idle-to-run tick_ms=100358 moving=1 draw_us=4812 transfer_us=12202 frame_us=17058 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (101443) rlcd_dashboard: MOTION event=frame case=idle-to-run tick_ms=100398 moving=0 draw_us=4808 transfer_us=12202 frame_us=17062 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (102083) rlcd_dashboard: MOTION event=frame case=idle-to-run tick_ms=101038 moving=0 draw_us=4804 transfer_us=12202 frame_us=17010 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (103083) rlcd_dashboard: MOTION event=frame case=idle-to-run tick_ms=102038 moving=0 draw_us=4799 transfer_us=12201 frame_us=17004 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (104083) rlcd_dashboard: MOTION event=frame case=idle-to-run tick_ms=103038 moving=0 draw_us=4801 transfer_us=12202 frame_us=17007 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (105083) rlcd_dashboard: MOTION event=frame case=run-to-wait tick_ms=104038 moving=1 draw_us=4898 transfer_us=12222 frame_us=17425 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (105083) rlcd_dashboard: MOTION event=phase phase=3 case=run-to-wait tick_ms=104038 count=8 feed_health=0 visible=8 overflow=0 hidden_blocked=0
+I (105123) rlcd_dashboard: MOTION event=frame case=run-to-wait tick_ms=104078 moving=1 draw_us=4895 transfer_us=12202 frame_us=17142 interval_us=40003 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (105163) rlcd_dashboard: MOTION event=frame case=run-to-wait tick_ms=104118 moving=1 draw_us=4908 transfer_us=12202 frame_us=17160 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (105203) rlcd_dashboard: MOTION event=frame case=run-to-wait tick_ms=104158 moving=1 draw_us=4905 transfer_us=12206 frame_us=17155 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (105243) rlcd_dashboard: MOTION event=frame case=run-to-wait tick_ms=104198 moving=1 draw_us=4901 transfer_us=12206 frame_us=17153 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (105283) rlcd_dashboard: MOTION event=frame case=run-to-wait tick_ms=104238 moving=1 draw_us=4915 transfer_us=12202 frame_us=17165 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (105323) rlcd_dashboard: MOTION event=frame case=run-to-wait tick_ms=104278 moving=1 draw_us=4900 transfer_us=12206 frame_us=17152 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (105363) rlcd_dashboard: MOTION event=frame case=run-to-wait tick_ms=104318 moving=1 draw_us=4887 transfer_us=12202 frame_us=17133 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (105403) rlcd_dashboard: MOTION event=frame case=run-to-wait tick_ms=104358 moving=1 draw_us=4832 transfer_us=12202 frame_us=17084 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (105443) rlcd_dashboard: MOTION event=frame case=run-to-wait tick_ms=104398 moving=0 draw_us=4807 transfer_us=12202 frame_us=17060 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (106083) rlcd_dashboard: MOTION event=frame case=run-to-wait tick_ms=105038 moving=0 draw_us=4804 transfer_us=12202 frame_us=17010 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (107083) rlcd_dashboard: MOTION event=frame case=run-to-wait tick_ms=106038 moving=0 draw_us=4839 transfer_us=12203 frame_us=17046 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (108083) rlcd_dashboard: MOTION event=frame case=run-to-wait tick_ms=107038 moving=0 draw_us=4817 transfer_us=12202 frame_us=17023 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (109083) rlcd_dashboard: MOTION event=frame case=run-to-idle tick_ms=108038 moving=1 draw_us=4897 transfer_us=12222 frame_us=17426 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (109083) rlcd_dashboard: MOTION event=phase phase=4 case=run-to-idle tick_ms=108038 count=8 feed_health=0 visible=8 overflow=0 hidden_blocked=0
+I (109123) rlcd_dashboard: MOTION event=frame case=run-to-idle tick_ms=108078 moving=1 draw_us=4850 transfer_us=12202 frame_us=17102 interval_us=40003 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (109163) rlcd_dashboard: MOTION event=frame case=run-to-idle tick_ms=108118 moving=1 draw_us=4848 transfer_us=12202 frame_us=17094 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (109203) rlcd_dashboard: MOTION event=frame case=run-to-idle tick_ms=108158 moving=1 draw_us=4835 transfer_us=12201 frame_us=17082 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (109243) rlcd_dashboard: MOTION event=frame case=run-to-idle tick_ms=108198 moving=1 draw_us=4809 transfer_us=12202 frame_us=17059 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (109283) rlcd_dashboard: MOTION event=frame case=run-to-idle tick_ms=108238 moving=1 draw_us=4803 transfer_us=12204 frame_us=17053 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (109323) rlcd_dashboard: MOTION event=frame case=run-to-idle tick_ms=108278 moving=1 draw_us=4840 transfer_us=12202 frame_us=17086 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (109363) rlcd_dashboard: MOTION event=frame case=run-to-idle tick_ms=108318 moving=1 draw_us=4836 transfer_us=12202 frame_us=17088 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (109403) rlcd_dashboard: MOTION event=frame case=run-to-idle tick_ms=108358 moving=1 draw_us=4804 transfer_us=12203 frame_us=17051 interval_us=40000 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (109443) rlcd_dashboard: MOTION event=frame case=run-to-idle tick_ms=108398 moving=0 draw_us=4802 transfer_us=12203 frame_us=17057 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840
+I (110083) rlcd_dashboard: MOTION event=frame case=run-to-idle tick_ms=109038 moving=0 draw_us=4803 transfer_us=12200 frame_us=17007 interval_us=0 deadline_miss=0 internal_free=331899 stack_watermark=1840

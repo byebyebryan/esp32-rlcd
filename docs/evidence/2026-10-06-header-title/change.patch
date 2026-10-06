@@ -1,0 +1,86 @@
+--- before/projects/agent-dashboard/components/agent_dashboard/agent_dashboard.c
++++ projects/agent-dashboard/components/agent_dashboard/agent_dashboard.c
+@@ -643,6 +643,7 @@
+     size_t unknown = 0;
+     if (roster->feed_health != DASH_CURRENT) {
+         snprintf(summary, sizeof(summary), "FEED %s", health_label(roster->feed_health));
++        motion_text(frame, 8, 0, summary, false, 384, false);
+     } else {
+         size_t blocked = 0, waiting = 0, working = 0;
+         for (size_t i = 0; i < roster->count; ++i) {
+@@ -657,17 +658,16 @@
+         }
+         snprintf(summary, sizeof(summary), "%zu BLOCKED %zu WAIT %zu WORK",
+                  blocked, waiting, working);
+-    }
+-    const int summary_width = motion_text(frame, 8, 0, summary, false, 384, false);
+-    if (unknown) {
+-        // Secondary uncertainty still fits beside the full-size known totals.
+-        char extra[32];
+-        snprintf(extra, sizeof(extra), "%zu UNKNOWN", unknown);
+-        motion_text(frame, 8 + summary_width + 12, 6, extra, true,
+-                    384 - summary_width - 12, false);
+-    }
+-    rect(frame, 8, DASHBOARD_MOTION_BODY_TOP - 1, 384, 1, false);
+-    motion_text(frame, 8, 288, "SIMULATED", true, 128, false);
++        motion_text(frame, 8, 0, "AGENTS", false, 128, false);
++        motion_text(frame, 392 - motion_text_width(summary, true), 6,
++                    summary, true, 280, false);
++    }
++    // Keep two white scanlines between the divider and the first packed row.
++    rect(frame, 8, DASHBOARD_MOTION_BODY_TOP - 3, 384, 1, false);
++    char source[48];
++    if (unknown) snprintf(source, sizeof(source), "SIMULATED  %zu unknown", unknown);
++    else snprintf(source, sizeof(source), "SIMULATED");
++    motion_text(frame, 8, 288, source, true, 128, false);
+     char footer[64];
+     if (roster->feed_health != DASH_CURRENT) {
+         char age[8];
+--- before/projects/agent-dashboard/tests/motion_dashboard.c
++++ projects/agent-dashboard/tests/motion_dashboard.c
+@@ -934,19 +934,22 @@
+     dashboard_draw_motion(known_frame, &known_view);
+     dashboard_draw_motion(frame_partial_header, &partial_view);
+     dashboard_draw_motion(empty_frame, &empty_view);
+-    int known_end = 7;
+-    for (int x = 8; x < RLCD_WIDTH; ++x)
+-        for (int y = 0; y < DASHBOARD_MOTION_BODY_TOP - 1; ++y)
+-            if (!pixel(known_frame, x, y) && x > known_end) known_end = x;
+-    assert(known_end >= 8);
+-    assert_band_equal(known_frame, frame_partial_header, 0, known_end + 1,
+-                      0, DASHBOARD_MOTION_BODY_TOP - 1);
+-    assert(band_has_ink(frame_partial_header, known_end + 1, RLCD_WIDTH,
+-                        0, DASHBOARD_MOTION_BODY_TOP - 1));
++    // Unknown counts are explicit in the footer; they leave the title and
++    // known-state summary unchanged, including its right alignment.
++    assert_band_equal(known_frame, frame_partial_header,
++                      0, RLCD_WIDTH, 0, DASHBOARD_MOTION_BODY_TOP);
++    assert(band_differs(known_frame, frame_partial_header,
++                        8, 136, DASHBOARD_MOTION_BODY_BOTTOM, RLCD_HEIGHT));
++    assert(band_has_ink(frame_partial_header, 74, 136,
++                        DASHBOARD_MOTION_BODY_BOTTOM, RLCD_HEIGHT));
+     assert_band_white(frame_partial_header, 0, 8, 0, DASHBOARD_MOTION_BODY_TOP);
+     for (int x = 8; x < 392; ++x)
+-        assert(!pixel(known_frame, x, DASHBOARD_MOTION_BODY_TOP - 1));
+-    assert(band_has_ink(known_frame, 8, 392, 12, DASHBOARD_MOTION_BODY_TOP - 1));
++        assert(!pixel(known_frame, x, DASHBOARD_MOTION_BODY_TOP - 3));
++    assert_band_white(known_frame, 0, RLCD_WIDTH,
++                      DASHBOARD_MOTION_BODY_TOP - 2, DASHBOARD_MOTION_BODY_TOP);
++    assert(band_has_ink(known_frame, 8, 80, 12, DASHBOARD_MOTION_BODY_TOP - 3));
++    assert_band_white(known_frame, 200, RLCD_WIDTH, 16,
++                      DASHBOARD_MOTION_BODY_TOP - 3);
+     assert_band_white(empty_frame, 0, RLCD_WIDTH, DASHBOARD_MOTION_BODY_TOP,
+                       DASHBOARD_MOTION_BODY_TOP + DASHBOARD_MOTION_ROW_HEIGHT);
+     assert_band_white(empty_frame, 0, RLCD_WIDTH,
+--- before/projects/agent-dashboard/main/main.c
++++ projects/agent-dashboard/main/main.c
+@@ -52,7 +52,8 @@
+              " normal_text_px=%d working_text_px=%d body_top=%d body_bottom=%d"
+              " font=fusion_pixel_12_zh_hans font_release=2026.09.25"
+              " normal_scale=2 working_scale=1 normal_cap_px=16 working_cap_px=8"
+-             " header_px=24 footer_px=12 chrome=summary source=simulated feed_loss=settle_target",
++             " header_px=24 summary_px=12 footer_px=12 divider_y=21 header_gap_px=2"
++             " chrome=title_counts source=simulated feed_loss=settle_target",
+              dashboard_motion_demo_phase_count(), cycle_ms,
+              DASHBOARD_MOTION_DURATION_MS, FRAME_BUDGET_US,
+              DASHBOARD_MOTION_CAPACITY, sizeof(motion),

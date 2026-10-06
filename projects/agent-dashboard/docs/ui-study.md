@@ -17,9 +17,10 @@ to the motion view while retaining these static previews as a regression baselin
 Its physical readability and row-resizing acceptance are separate from the
 earlier observations below.
 The selected [12px Fusion trial](fusion-12-font-study.md) supersedes the earlier
-8px trial. The current [header refinement](header-24-study.md) uses a larger
-summary, 24/12-pixel rows and a 264px body. Its layout acceptance remains a
-separate physical observation.
+8px trial. The current [flashing-row trial](flashing-rows-study.md) retains the
+larger title and smaller counts, using 24px rows for every state, 1Hz
+blocked-row flashing, inverse waiting rows and normal working rows. The user
+accepted the on-device design for one to three short-lived blocked requests.
 
 ## Why this view
 

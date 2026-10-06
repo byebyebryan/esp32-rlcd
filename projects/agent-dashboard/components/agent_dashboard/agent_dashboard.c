@@ -612,15 +612,19 @@ static void draw_motion_row(uint8_t *frame, const dashboard_motion_render_row_t 
     const int y = row->y;
     const dashboard_health_t health = view->roster.feed_health == DASH_CURRENT
                                     ? s->health : view->roster.feed_health;
-    const bool highlighted = health == DASH_CURRENT &&
-                             (s->work == DASH_NEEDS_INPUT || s->work == DASH_ERROR);
+    const bool blocked = health == DASH_CURRENT &&
+                         (s->work == DASH_NEEDS_INPUT || s->work == DASH_ERROR);
+    const bool waiting = health == DASH_CURRENT &&
+                         (s->work == DASH_SETTLED || s->work == DASH_INTERRUPTED);
+    // One complete cycle per second, shared by all blocked rows.
+    const bool highlighted = waiting || (blocked &&
+        (view->now_ms / DASHBOARD_MOTION_FLASH_HALF_PERIOD_MS) % 2 == 0);
     motion_clip_enabled = true;
     motion_clip_top = DASHBOARD_MOTION_BODY_TOP;
     motion_clip_bottom = DASHBOARD_MOTION_BODY_BOTTOM;
     rect(frame, 8, y, 384, height, !highlighted);
-    // Feed loss freezes typography with the cached compact/full geometry.
-    const bool compact = height == DASHBOARD_MOTION_WORKING_ROW_HEIGHT;
-    motion_state_symbol(frame, 8, y + (height - (compact ? 6 : 12)) / 2,
+    const bool compact = false;
+    motion_state_symbol(frame, 8, y + (height - 12) / 2,
                         s->work, health, compact, highlighted);
     motion_project_name(frame, 24, y, view, s, compact, 288, highlighted);
     const char *agent = "??";
@@ -643,6 +647,7 @@ static void draw_motion_chrome(uint8_t *frame,
     size_t unknown = 0;
     if (roster->feed_health != DASH_CURRENT) {
         snprintf(summary, sizeof(summary), "FEED %s", health_label(roster->feed_health));
+        motion_text(frame, 8, 0, summary, false, 384, false);
     } else {
         size_t blocked = 0, waiting = 0, working = 0;
         for (size_t i = 0; i < roster->count; ++i) {
@@ -657,17 +662,16 @@ static void draw_motion_chrome(uint8_t *frame,
         }
         snprintf(summary, sizeof(summary), "%zu BLOCKED %zu WAIT %zu WORK",
                  blocked, waiting, working);
+        motion_text(frame, 8, 0, "AGENTS", false, 128, false);
+        motion_text(frame, 392 - motion_text_width(summary, true), 6,
+                    summary, true, 280, false);
     }
-    const int summary_width = motion_text(frame, 8, 0, summary, false, 384, false);
-    if (unknown) {
-        // Secondary uncertainty still fits beside the full-size known totals.
-        char extra[32];
-        snprintf(extra, sizeof(extra), "%zu UNKNOWN", unknown);
-        motion_text(frame, 8 + summary_width + 12, 6, extra, true,
-                    384 - summary_width - 12, false);
-    }
-    rect(frame, 8, DASHBOARD_MOTION_BODY_TOP - 1, 384, 1, false);
-    motion_text(frame, 8, 288, "SIMULATED", true, 128, false);
+    // Keep two white scanlines between the divider and the first packed row.
+    rect(frame, 8, DASHBOARD_MOTION_BODY_TOP - 3, 384, 1, false);
+    char source[48];
+    if (unknown) snprintf(source, sizeof(source), "SIMULATED  %zu unknown", unknown);
+    else snprintf(source, sizeof(source), "SIMULATED");
+    motion_text(frame, 8, 288, source, true, 128, false);
     char footer[64];
     if (roster->feed_health != DASH_CURRENT) {
         char age[8];
