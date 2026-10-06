@@ -66,7 +66,7 @@ def summarize(raw: bytes, started: str, args, elapsed: float, interrupted: int):
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--port", required=True, help="Explicit RLCD by-id path")
-    parser.add_argument("--seconds", type=int, default=95)
+    parser.add_argument("--seconds", type=int, default=110)
     parser.add_argument("--output", type=Path, required=True, help="New capture directory")
     parser.add_argument("--reset", action="store_true", help="USB RTS reset before capture")
     args = parser.parse_args()

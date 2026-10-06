@@ -1,0 +1,49 @@
+{
+  "passed": true,
+  "before": {
+    "nvs": {
+      "type": 1,
+      "subtype": 2,
+      "offset": 36864,
+      "size": 24576,
+      "flags": 0
+    },
+    "phy_init": {
+      "type": 1,
+      "subtype": 1,
+      "offset": 61440,
+      "size": 4096,
+      "flags": 0
+    },
+    "factory": {
+      "type": 0,
+      "subtype": 0,
+      "offset": 65536,
+      "size": 1048576,
+      "flags": 0
+    }
+  },
+  "after": {
+    "nvs": {
+      "type": 1,
+      "subtype": 2,
+      "offset": 36864,
+      "size": 24576,
+      "flags": 0
+    },
+    "phy_init": {
+      "type": 1,
+      "subtype": 1,
+      "offset": 61440,
+      "size": 4096,
+      "flags": 0
+    },
+    "factory": {
+      "type": 0,
+      "subtype": 0,
+      "offset": 65536,
+      "size": 2097152,
+      "flags": 0
+    }
+  }
+}

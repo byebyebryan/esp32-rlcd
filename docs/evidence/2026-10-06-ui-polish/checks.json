@@ -1,0 +1,17 @@
+{
+  "native_sanitizers_and_warnings": true,
+  "rectangle_cases": 4488,
+  "static_frames_byte_identical": 42,
+  "settled_frames_audited": 2117,
+  "settled_phases_audited": 23,
+  "extra_gaps_and_priority_inversions": 0,
+  "physical_acceptance": "pending user observation",
+  "tests": [
+    "23 compact / 11 full row admission",
+    "known plus unknown totals and whole-feed suppression",
+    "duplicate long UTF8 suffix in compact/full rows; metadata bounds",
+    "compact ages and last healthy update provenance on tick/rejection/loss/recovery",
+    "packed loss layout after departure/growth/shrink/retarget/repeated loss/recovery",
+    "existing identity, age, atomic rejection, retargeting, burst, clipping and icon polarity"
+  ]
+}

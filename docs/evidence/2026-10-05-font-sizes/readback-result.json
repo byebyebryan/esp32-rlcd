@@ -1,0 +1,7 @@
+{
+  "pass": true,
+  "offset": "0x10000",
+  "size_bytes": 258960,
+  "byte_for_byte_match": true,
+  "sha256": "3afad8995da88384ed521efc23e199c675e0090f67399c8c71a822e162267707"
+}

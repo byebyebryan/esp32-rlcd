@@ -1,0 +1,61 @@
+{
+  "technical_pass": true,
+  "device_mac": "94:a9:90:de:d0:04",
+  "icon_policy": "black directly on white rows; white directly on black blocked rows",
+  "font_and_geometry": {
+    "phases": 23,
+    "cycle_ms": 92000,
+    "capacity": 32,
+    "full_row_px": 24,
+    "working_row_px": 12,
+    "normal_text_px": 24,
+    "working_text_px": 12,
+    "body_top": 36,
+    "body_bottom": 288,
+    "font": "fusion_pixel_12_zh_hans"
+  },
+  "native_polarity_cases": 9,
+  "unchanged_static_frames": 42,
+  "source_hashes_match": true,
+  "build_hashes_match": true,
+  "application_readback_match": true,
+  "boot_elf_prefix": "1ee2582b7",
+  "psram_and_panel_initialized": true,
+  "capture_seconds": 110.12284328899113,
+  "phases_observed": 23,
+  "cycles_observed": 1,
+  "frames": 338,
+  "moving_frames": 228,
+  "errors": [],
+  "frame_budget_misses": 0,
+  "timing": {
+    "draw_us": {
+      "min": 1605,
+      "max": 11569
+    },
+    "transfer_us": {
+      "min": 12158,
+      "max": 12215
+    },
+    "frame_us": {
+      "min": 13856,
+      "max": 25238
+    },
+    "internal_free": {
+      "min": 331907,
+      "max": 331907
+    },
+    "stack_watermark": {
+      "min": 1848,
+      "max": 1864
+    },
+    "consecutive_motion_interval_us": {
+      "min": 40000,
+      "max": 40003
+    }
+  },
+  "serial_recovery_pass": true,
+  "physical_icon_acceptance": "pending user observation",
+  "routing": "primary direct for small fix",
+  "changes": "uncommitted; no push"
+}

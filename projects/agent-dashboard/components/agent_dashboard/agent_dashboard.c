@@ -6,6 +6,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "fusion_font_12.h"
+
 // Hand-authored 5x7 uppercase study font. Two-pixel strokes give 14px text;
 // typography/Unicode remain design questions, not a production font choice.
 static const uint8_t letters[][5] = {
@@ -136,6 +138,98 @@ static void text(uint8_t *f, int x, int y, const char *s,
                     rect(f, x + (int)i * 6 * scale + col * scale,
                          y + row * scale, scale, scale, white);
     }
+}
+
+// Decode within a byte bound. Invalid or truncated UTF-8 consumes one byte
+// and draws the font's replacement glyph; identity strings are unaffected.
+static uint32_t motion_codepoint(const char **cursor, size_t *remaining)
+{
+    const unsigned char *s = (const unsigned char *)*cursor;
+    if (!*remaining || !s[0]) return 0;
+    uint32_t cp = s[0];
+    size_t count = 1;
+    if (cp >= 0xc2 && cp <= 0xdf) { cp &= 0x1f; count = 2; }
+    else if (cp >= 0xe0 && cp <= 0xef) { cp &= 0x0f; count = 3; }
+    else if (cp >= 0xf0 && cp <= 0xf4) { cp &= 7; count = 4; }
+    else if (cp >= 0x80) cp = 0xfffd;
+    if (count > *remaining) { cp = 0xfffd; count = 1; }
+    else if (count > 1) {
+        for (size_t i = 1; i < count; ++i) {
+            if (s[i] < 0x80 || s[i] > 0xbf) { cp = 0xfffd; count = 1; break; }
+            cp = (cp << 6) | (s[i] & 0x3f);
+        }
+        if ((count == 2 && cp < 0x80) || (count == 3 && cp < 0x800) ||
+            (count == 4 && cp < 0x10000) || (cp >= 0xd800 && cp <= 0xdfff) ||
+            cp > 0x10ffff) { cp = 0xfffd; count = 1; }
+    }
+    *cursor += count;
+    *remaining -= count;
+    return cp;
+}
+
+static const fusion_pixel_12_glyph_t *motion_glyph(uint32_t cp)
+{
+    const fusion_pixel_12_glyph_t *g = fusion_pixel_12_lookup(cp);
+    return g ? g : fusion_pixel_12_lookup(0xfffd);
+}
+
+static int motion_text_width(const char *s, bool compact)
+{
+    if (!s) s = "?";
+    size_t remaining = bounded_length(s, 128);
+    int width = 0;
+    while (remaining) {
+        const uint32_t cp = motion_codepoint(&s, &remaining);
+        width += fusion_pixel_12_advance(motion_glyph(cp)) * (compact ? 1 : 2);
+    }
+    return width;
+}
+
+static void motion_draw_glyph(uint8_t *frame, int x, int y,
+                              uint32_t cp, int scale, bool white)
+{
+    const fusion_pixel_12_glyph_t *g = motion_glyph(cp);
+    const int width = fusion_pixel_12_width(g), height = fusion_pixel_12_height(g);
+    const int left = x + fusion_pixel_12_x_offset(g) * scale;
+    const int top = y + (FUSION_PIXEL_12_ASCENT - fusion_pixel_12_y_offset(g) - height) * scale;
+    // Two vertical kana marks span two source lines; crop glyph ink to this
+    // native cell so their source coverage cannot overwrite neighboring rows.
+    for (int row = 0; row < height; ++row) {
+        const int pixel_y = top + row * scale;
+        if (pixel_y < y || pixel_y + scale > y + 12 * scale) continue;
+        for (int col = 0; col < width; ++col) {
+            const uint32_t bit = g->bitmap_bit_offset + row * width + col;
+            if (fusion_pixel_12_zh_hans_bitmap[bit / 8] & (0x80u >> (bit % 8)))
+                rect(frame, left + col * scale, pixel_y, scale, scale, white);
+        }
+    }
+}
+
+// Column limits are pixels, so wide CJK and narrow Latin glyphs share the
+// same boundaries. Ellipses replace only complete codepoints.
+static int motion_text(uint8_t *frame, int x, int y, const char *s,
+                       bool compact, int max_width, bool white)
+{
+    if (!s) s = "?";
+    const int scale = compact ? 1 : 2;
+    const bool clipped = motion_text_width(s, compact) > max_width;
+    const int dots_width = 3 * fusion_pixel_12_advance(motion_glyph('.')) * scale;
+    const int content_width = clipped ? max_width - dots_width : max_width;
+    size_t remaining = bounded_length(s, 128);
+    int used = 0;
+    while (remaining) {
+        const uint32_t cp = motion_codepoint(&s, &remaining);
+        const int advance = fusion_pixel_12_advance(motion_glyph(cp)) * scale;
+        if (used + advance > content_width) break;
+        motion_draw_glyph(frame, x + used, y, cp, scale, white);
+        used += advance;
+    }
+    if (clipped && dots_width <= max_width)
+        for (int i = 0; i < 3; ++i) {
+            motion_draw_glyph(frame, x + used, y, '.', scale, white);
+            used += dots_width / 3;
+        }
+    return used;
 }
 
 static const char *work_label(dashboard_work_t work)
@@ -447,62 +541,178 @@ void dashboard_draw_styled(uint8_t *f, const dashboard_view_t *view,
     }
 }
 
-static void draw_motion_row(uint8_t *frame, const dashboard_motion_render_row_t *row,
-                            dashboard_health_t feed_health)
+static void motion_state_symbol(uint8_t *frame, int x, int y,
+                                dashboard_work_t work, dashboard_health_t health,
+                                bool compact, bool white)
 {
+    // Draw only the mark on the opaque row's background, using its text colour.
+    // Full rows use the identical mark at integer scale two.
+    static const uint8_t working[6] = {0, 0x10, 0x08, 0x04, 0x08, 0x10};
+    static const uint8_t blocked[6] = {0, 0x08, 0x08, 0x08, 0, 0x08};
+    static const uint8_t waiting[6] = {0, 0, 0x02, 0x14, 0x08, 0};
+    static const uint8_t error[6] = {0, 0x12, 0x0c, 0x0c, 0x12, 0};
+    static const uint8_t unknown[6] = {0, 0x0c, 0x02, 0x04, 0, 0x04};
+    const uint8_t *bits = unknown;
+    if (health == DASH_CURRENT) {
+        if (work == DASH_WORKING) bits = working;
+        else if (work == DASH_NEEDS_INPUT) bits = blocked;
+        else if (work == DASH_ERROR) bits = error;
+        else if (work == DASH_SETTLED || work == DASH_INTERRUPTED) bits = waiting;
+    }
+    const int scale = compact ? 1 : 2;
+    for (int row = 0; row < 6; ++row)
+        for (int col = 0; col < 6; ++col)
+            if (bits[row] & (0x20u >> col))
+                rect(frame, x + col * scale, y + row * scale, scale, scale, white);
+}
+
+static bool duplicate_project(const dashboard_view_t *roster,
+                              const char *project)
+{
+    if (!roster || !roster->sessions || !project) return false;
+    size_t matches = 0;
+    for (size_t i = 0; i < roster->count; ++i) {
+        const char *candidate = roster->sessions[i].project;
+        if (candidate && strcmp(candidate, project) == 0 && ++matches > 1)
+            return true;
+    }
+    return false;
+}
+
+static void motion_project_name(uint8_t *frame, int x, int y,
+                                const dashboard_motion_render_t *view,
+                                const dashboard_session_t *session,
+                                bool compact, int max_width, bool white)
+{
+    if (!session->short_id || !session->short_id[0] ||
+        !duplicate_project(&view->roster, session->project)) {
+        motion_text(frame, x, y, session->project, compact, max_width, white);
+        return;
+    }
+
+    char suffix[DASHBOARD_MOTION_SHORT_ID_MAX + 4];
+    snprintf(suffix, sizeof(suffix), " #%s", session->short_id);
+    const int suffix_width = motion_text_width(suffix, compact);
+    if (suffix_width >= max_width) {
+        motion_text(frame, x, y, suffix, compact, max_width, white);
+        return;
+    }
+    const int prefix_width = motion_text(frame, x, y, session->project,
+                                         compact, max_width - suffix_width, white);
+    motion_text(frame, x + prefix_width, y, suffix, compact, suffix_width, white);
+}
+
+static void draw_motion_row(uint8_t *frame, const dashboard_motion_render_row_t *row,
+                            const dashboard_motion_render_t *view)
+{
+    const int height = row->height ? row->height : DASHBOARD_MOTION_ROW_HEIGHT;
     if (row->y >= DASHBOARD_MOTION_BODY_BOTTOM ||
-        row->y + DASHBOARD_MOTION_ROW_HEIGHT <= DASHBOARD_MOTION_BODY_TOP) return;
+        row->y + height <= DASHBOARD_MOTION_BODY_TOP) return;
     const dashboard_session_t *s = row->session;
     const int y = row->y;
-    const dashboard_health_t health = feed_health == DASH_CURRENT
-                                    ? s->health : feed_health;
+    const dashboard_health_t health = view->roster.feed_health == DASH_CURRENT
+                                    ? s->health : view->roster.feed_health;
     const bool highlighted = health == DASH_CURRENT &&
                              (s->work == DASH_NEEDS_INPUT || s->work == DASH_ERROR);
     motion_clip_enabled = true;
     motion_clip_top = DASHBOARD_MOTION_BODY_TOP;
     motion_clip_bottom = DASHBOARD_MOTION_BODY_BOTTOM;
-    rect(frame, 12, y, 376, DASHBOARD_MOTION_ROW_HEIGHT, true);
-    if (highlighted) rect(frame, 12, y + 1, 376, 23, false);
-    // Status symbols retain white marks on black tiles, including inverse rows.
-    state_symbol(frame, 21, y + 12, s->work, health, false);
-    text(frame, 38, y + 5, s->project, 2, 23, highlighted);
+    rect(frame, 8, y, 384, height, !highlighted);
+    // Feed loss freezes typography with the cached compact/full geometry.
+    const bool compact = height == DASHBOARD_MOTION_WORKING_ROW_HEIGHT;
+    motion_state_symbol(frame, 8, y + (height - (compact ? 6 : 12)) / 2,
+                        s->work, health, compact, highlighted);
+    motion_project_name(frame, 24, y, view, s, compact, 288, highlighted);
     const char *agent = "??";
     if (s->provider && strcmp(s->provider, "CODEX") == 0) agent = "CX";
     else if (s->provider && strcmp(s->provider, "CLAUDE") == 0) agent = "CC";
-    text(frame, 320, y + 5, agent, 2, 2, highlighted);
+    motion_text(frame, 320, y, agent, compact, 24, highlighted);
     const char *age = health == DASH_CURRENT ? s->detail : "?";
-    text(frame, 388 - (int)bounded_length(age, 3) * 12,
-         y + 5, age, 2, 3, highlighted);
+    const int age_width = motion_text_width(age, compact);
+    motion_text(frame, 392 - (age_width < 40 ? age_width : 40), y,
+                age, compact, 40, highlighted);
     motion_clip_enabled = false;
+}
+
+static void draw_motion_chrome(uint8_t *frame,
+                               const dashboard_motion_render_t *view)
+{
+    const dashboard_view_t *roster = &view->roster;
+    rlcd_frame_clear(frame, true);
+    char summary[96];
+    size_t unknown = 0;
+    if (roster->feed_health != DASH_CURRENT) {
+        snprintf(summary, sizeof(summary), "FEED %s", health_label(roster->feed_health));
+    } else {
+        size_t blocked = 0, waiting = 0, working = 0;
+        for (size_t i = 0; i < roster->count; ++i) {
+            const dashboard_session_t *session = &roster->sessions[i];
+            if (session->health != DASH_CURRENT || session->work == DASH_UNKNOWN) {
+                ++unknown;
+                continue;
+            }
+            if (session->work == DASH_NEEDS_INPUT || session->work == DASH_ERROR) ++blocked;
+            else if (session->work == DASH_SETTLED || session->work == DASH_INTERRUPTED) ++waiting;
+            else if (session->work == DASH_WORKING) ++working;
+        }
+        snprintf(summary, sizeof(summary), "%zu BLOCKED %zu WAIT %zu WORK",
+                 blocked, waiting, working);
+    }
+    const int summary_width = motion_text(frame, 8, 0, summary, false, 384, false);
+    if (unknown) {
+        // Secondary uncertainty still fits beside the full-size known totals.
+        char extra[32];
+        snprintf(extra, sizeof(extra), "%zu UNKNOWN", unknown);
+        motion_text(frame, 8 + summary_width + 12, 6, extra, true,
+                    384 - summary_width - 12, false);
+    }
+    rect(frame, 8, DASHBOARD_MOTION_BODY_TOP - 1, 384, 1, false);
+    motion_text(frame, 8, 288, "SIMULATED", true, 128, false);
+    char footer[64];
+    if (roster->feed_health != DASH_CURRENT) {
+        char age[8];
+        if (!view->last_healthy_update_known ||
+            view->now_ms < view->last_healthy_update_ms) {
+            snprintf(age, sizeof(age), "?");
+        } else {
+            const uint64_t seconds =
+                (view->now_ms - view->last_healthy_update_ms) / 1000;
+            if (seconds < 60) snprintf(age, sizeof(age), "%llus",
+                                       (unsigned long long)seconds);
+            else if (seconds < 3600) snprintf(age, sizeof(age), "%llum",
+                                              (unsigned long long)(seconds / 60));
+            else if (seconds < 360000) snprintf(age, sizeof(age), "%lluh",
+                                                (unsigned long long)(seconds / 3600));
+            else snprintf(age, sizeof(age), "+++");
+        }
+        snprintf(footer, sizeof(footer), "LAST UPDATE %s AGO", age);
+    } else if (view->overflow_count) {
+        snprintf(footer, sizeof(footer), "%zu HIDDEN / %zu BLOCKED",
+                 view->overflow_count, view->hidden_blocked_count);
+    } else {
+        footer[0] = '\0';
+    }
+    if (footer[0])
+        motion_text(frame, 392 - motion_text_width(footer, true), 288,
+                    footer, true, 280, false);
 }
 
 void dashboard_draw_motion(uint8_t *frame, const dashboard_motion_render_t *view)
 {
-    const dashboard_style_t style = {DASH_AGENT_PAIR, true};
-    draw_styled_chrome(frame, &view->roster, style);
-    if (view->row_count == 0) draw_styled_empty(frame, &view->roster);
+    draw_motion_chrome(frame, view);
+    if (view->row_count == 0) {
+        const char *empty = view->roster.feed_health == DASH_CURRENT
+                          ? "NO ACTIVE SESSIONS" : "FEED UNAVAILABLE";
+        motion_text(frame, 200 - motion_text_width(empty, false) / 2, 140,
+                    empty, false, 384, false);
+    }
     for (size_t i = 0; i < view->row_count; ++i)
         if (view->rows[i].direction == DASHBOARD_MOTION_DIRECTION_DOWN)
-            draw_motion_row(frame, &view->rows[i], view->roster.feed_health);
+            draw_motion_row(frame, &view->rows[i], view);
     for (size_t i = 0; i < view->row_count; ++i)
         if (view->rows[i].direction == DASHBOARD_MOTION_DIRECTION_STATIONARY)
-            draw_motion_row(frame, &view->rows[i], view->roster.feed_health);
+            draw_motion_row(frame, &view->rows[i], view);
     for (size_t i = 0; i < view->row_count; ++i)
         if (view->rows[i].direction == DASHBOARD_MOTION_DIRECTION_UP)
-            draw_motion_row(frame, &view->rows[i], view->roster.feed_health);
-    if (!view->feed_lost && view->roster.count > DASHBOARD_DENSE_VISIBLE_ROWS) {
-        char total[64];
-        snprintf(total, sizeof(total), "%zu TOTAL +%zu",
-                 view->roster.count,
-                 view->roster.count - DASHBOARD_DENSE_VISIBLE_ROWS);
-        rect(frame, 240, 269, 148, 31, true);
-        text(frame, 388 - (int)bounded_length(total, 12) * 12,
-             279, total, 2, 12, false);
-    }
-    if (view->feed_lost) {
-        // The footer remains in place and reports health without cached counts.
-        rect(frame, 12, 269, 376, 31, true);
-        text(frame, 12, 279, "DEMO", 2, 4, false);
-        text(frame, 95, 279, health_label(view->roster.feed_health), 2, 12, false);
-    }
+            draw_motion_row(frame, &view->rows[i], view);
 }

@@ -12,6 +12,15 @@ also passes native and on-board timing checks and has been accepted on the panel
 for easier tracking of moving rows.
 The measurements below describe earlier static layouts.
 
+The 2026-10-05 [urgency-band study](urgency-bands.md) adds variable row heights
+to the motion view while retaining these static previews as a regression baseline.
+Its physical readability and row-resizing acceptance are separate from the
+earlier observations below.
+The selected [12px Fusion trial](fusion-12-font-study.md) supersedes the earlier
+8px trial. The current [header refinement](header-24-study.md) uses a larger
+summary, 24/12-pixel rows and a 264px body. Its layout acceptance remains a
+separate physical observation.
+
 ## Why this view
 
 The full-color touch 349 already handles interactive system information and

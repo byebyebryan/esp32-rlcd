@@ -1,0 +1,2 @@
+PASS: 4488 packed rectangles equal pixel reference; edge masks, colors, clipping and guards
+PASS: urgency geometry, prefix admission, identity, atomic input, shared progress, direction layers, burst rearming, clipping, source loss, polarity; sizeof(controller)=11744

@@ -1,0 +1,20 @@
+{
+  "README.md": "b3f833f266ad29dc4b55aada66685ddd4919a15e1c182ba5f6fe2fa9ad19b474",
+  "acceptance.json": "1cf14c41fbb65e0d6c59cdd0594c59b0022d6d909c4b9316ee64810067d898f6",
+  "build-motion.log": "8c0568c2d79d567267e868efaf0422f00a83deef8165d60d0a8fde1efdb530e8",
+  "build-static.log": "a03efddbd3a09e463f68f24b8c0cf1fb171752ec4022a5b9f3cfee95eca5dcf6",
+  "demo-settled-00-initial-order.png": "eded6f9e47d9378e44f14d71df22fe0c7efcfd199f74a48780f22f4a1e021ab5",
+  "demo-settled-09-feed-stale-during-motion.png": "06ac861359b8c6261baadf17aaa03d07cebe14ff58861d7636e0de66ed1bf47e",
+  "demo-settled-17-compact-capacity.png": "16e68c23eb6c3dc8ba4743569fd45b98665f38913a543c710d40e5aafb6d6b67",
+  "demo-settled-18-waiting-only.png": "b499042fe44f06db08c29cc4373a402f55a0853447f490c223f74c065e3b3fde",
+  "demo-settled-19-blocked-only.png": "b2a90443a4b924c575dbbdec7b6410168514a175344cd6ca7363283b8dc3ce1a",
+  "flash.log": "db3c1970ad625c07f7ce0a82fcf28e98e35ed1fd1e7f49d80505f575a5bbb3c4",
+  "images.json": "e30f8ed6ebbf1c9ccfd7a0d7207d5450de84c63ee13631262ca4fe390ddb0c73",
+  "native-checks.log": "e8c47805d145dc13a2bd2a76afc8876468c28d51306dbe2e3f5bb5bcf0e07854",
+  "native-frames.json": "83161cc7a9a054750c036e245abdfe06ded072165b476e7523e29297a84aa103",
+  "readback-result.json": "71b6bf0f30d42e51f06a6b8d31e612b7f3eb4df23f3ea914f38c150585db5ee3",
+  "serial.log": "e8f7195cfe4b610054fac2b0ec53fd1c155805ae3dc3ca0442a01431969666e2",
+  "static-comparison.json": "36c3c4322376947f4b4d428b6e8ef1f02a55c1a05c870b786dc5393cd51fb2a9",
+  "static-preview.log": "bebc1e3ef94f5695c07b7e21a0ac04ee6c0906e27d0f680240993faf7e8e4c13",
+  "summary.json": "1dd92e679b9a53294fdbca9641301241512882cec6380abb90c9714611f2d686"
+}

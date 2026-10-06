@@ -1,0 +1,7 @@
+{
+  "projects/agent-dashboard/components/agent_dashboard/agent_dashboard.c": "1a5739805547234ef750a62d3f3b7ea36cba89ec9346ab21b4539ea301d09c85",
+  "projects/agent-dashboard/tests/motion_dashboard.c": "325e3f585096f3368f89e4008bdfbdee3d731707c0cdf669ca3d7e19e11e1561",
+  "projects/agent-dashboard/components/agent_dashboard/include/dashboard_motion.h": "444f3283dde4286c7fea0d6fd78c74c864ae2a713e2f93e3fe246fc2f3425b87",
+  "projects/agent-dashboard/main/main.c": "082f574c63bec0818f04b4dac6c6c1c255ccf73d1ca4df390b86e2f665b50e21",
+  "projects/agent-dashboard/sdkconfig": "ec3eec3d0ffccb1b0ba229a86d71bdf13da1a81ed0d99f072be6ead65c5f7ca0"
+}

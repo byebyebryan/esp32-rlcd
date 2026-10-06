@@ -1,0 +1,25 @@
+{
+  "head": "06c74f688c14b2be350bbe54f8a6f633806f4ec0",
+  "dirty": true,
+  "sha256": {
+    "projects/agent-dashboard/components/agent_dashboard/agent_dashboard.c": "1e9f384f84442476f4488a8fb49c3b6c5c27fb4d4d27f879ad14088e1a370198",
+    "projects/agent-dashboard/components/agent_dashboard/agent_dashboard_motion.c": "2f71201af4da039c4d754cc92801a6e8e416212dccab55692eb9ec772184524f",
+    "projects/agent-dashboard/components/agent_dashboard/fusion_pixel_8_zh_hans.c": "02f6e44c4a2715354db7e02243a9de9fd45115afd9044e36ad1c0706055c1f05",
+    "projects/agent-dashboard/components/agent_dashboard/include/agent_dashboard.h": "bbbb47414d5f319c0f6a57217f9b71b234e44b7384c8134933d854ad67c2bb68",
+    "projects/agent-dashboard/components/agent_dashboard/include/dashboard_motion.h": "ffed51fb2bff7c7186fe0676835397419c908875b77fb95307a2eeb849f34ab1",
+    "projects/agent-dashboard/components/agent_dashboard/include/fusion_font.h": "623bf5a77e946acc82ce664e9602a9890d392809faff9824b85ca797c0d38b48",
+    "projects/agent-dashboard/components/agent_dashboard/scripts/generate_fusion_font.py": "6394108018bc5139faf3d1cd5437cf6a3e56ec8ec3ccfeb9ad58fa208a34346b",
+    "projects/agent-dashboard/components/agent_dashboard/assets/fonts/fusion-pixel-font-2026.09.25/fusion-pixel-8px-monospaced-zh_hans.bdf": "3c00ccab762c0c75967eea724f5cd57feb544be7a0814d06233160ef9482a50b",
+    "projects/agent-dashboard/components/agent_dashboard/CMakeLists.txt": "8389cf44d803a715533d8a7ba74c2f141c623477d770a8b48faa976e3b357ebc",
+    "projects/agent-dashboard/main/main.c": "86dc357d21ef5199f9061daf1d3c15a43a77b8d2d23fff0c9b0a64a379f4534b",
+    "projects/agent-dashboard/motion_demo.c": "06d9c120f9cdff3512098b2bd9e6c5eab4c6d97f05f43d1fa905872b71fd4d70",
+    "projects/agent-dashboard/scripts/test-dashboard-motion.sh": "d9485ff8fa4cb9fd721284d75139115d17dd473a4b9b9f4c426c18efcae0b14a",
+    "projects/agent-dashboard/scripts/preview-dashboard.sh": "76e4e5b9cea3e0ecb796cda72d8ebca4d04756b0e2c54089396f43d4ac4f179a",
+    "projects/agent-dashboard/scripts/capture-dashboard-motion.py": "011e7f3c613691b5140b668dcceb1487e7a4850cc84e047758ffed4c7c6b30c0",
+    "projects/agent-dashboard/tests/motion_dashboard.c": "a49448eb77a5b64f0a9a03dfc6eadc12e599f623635c0cf14d46393e052222ab",
+    "projects/agent-dashboard/tests/rect_dashboard.c": "e9eb69f1b9b02dd9753c542920bb2328453add5272c85a0b35996ad0e5d8e762",
+    "projects/agent-dashboard/sdkconfig": "50023b8cd6dab810ba3d87af563ef81e97e9c57ae9522489fecad9dca63df317",
+    "projects/agent-dashboard/CMakeLists.txt": "930f3d2e0550b3eea4ce11a15c6df98265c08a733926bc2e9ada69fe73b2124d",
+    "components/display_rlcd/rlcd_frame.c": "ddd85b4833a7b7db34dca0d8759838ff7b88ed9860d30d0aab4ac834b83d4c35"
+  }
+}

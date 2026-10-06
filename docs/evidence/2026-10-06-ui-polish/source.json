@@ -1,0 +1,17 @@
+{
+  "projects/agent-dashboard/components/agent_dashboard/agent_dashboard.c": "4f748090601f60068710e47a82cac90d06f075d68044f83b2113c277f49b5d5b",
+  "projects/agent-dashboard/components/agent_dashboard/agent_dashboard_motion.c": "5b69a123321570d606205bb61307dffc533c828fc63967fa2fc88404c9fa31c4",
+  "projects/agent-dashboard/components/agent_dashboard/include/dashboard_motion.h": "e03c5bbb18c2a1c71b3bf785eff285fe6ce77428e3c3e69ad345495fe15c5d87",
+  "projects/agent-dashboard/tests/motion_dashboard.c": "29bbee6e54bb513ef4b77e1fed12f7c411e3f7efe52709e83a1ae11ba35b394a",
+  "projects/agent-dashboard/main/main.c": "f044203c6859311184425e523b4e6fc38625e1484d2c9df78d55423c65f62b1b",
+  "projects/agent-dashboard/motion_demo.c": "06d9c120f9cdff3512098b2bd9e6c5eab4c6d97f05f43d1fa905872b71fd4d70",
+  "projects/agent-dashboard/sdkconfig": "ec3eec3d0ffccb1b0ba229a86d71bdf13da1a81ed0d99f072be6ead65c5f7ca0",
+  "projects/agent-dashboard/partitions.csv": "9e856e79e9b387850a154093f43ff4be8690a927d6ecda0d8954003401f09e7e",
+  "projects/agent-dashboard/CMakeLists.txt": "ea73630717a76e80b6729c071acf64bbb24774495801c4af7abe5bc1c5baf836",
+  "projects/agent-dashboard/components/agent_dashboard/CMakeLists.txt": "fb8ff1566b4c7577a46abe6182e99b451082c4ce8109f530a47961a2c8a072ad",
+  "projects/agent-dashboard/components/agent_dashboard/fusion_pixel_12_zh_hans.c": "0dd98e8d9c1236f9de9a201f942c04c7e36cedf7c27a82c1d3aade94574778f3",
+  "projects/agent-dashboard/components/agent_dashboard/include/fusion_font_12.h": "ff7f1fe7d6bdf6e583ca38f58c1df92037cafedd535eb419625fcb05fc0c9bee",
+  "projects/agent-dashboard/components/agent_dashboard/motion_fonts.h": "050ecccafec85650f1456e8f99c4423d6ce5443d10de42a6eabdc8fd6f054a32",
+  "components/display_rlcd/rlcd_frame.c": "ddd85b4833a7b7db34dca0d8759838ff7b88ed9860d30d0aab4ac834b83d4c35",
+  "components/display_rlcd/rlcd_panel.c": "4a7db99a19cb68d3e3340b083e18ec5646daea1b8d86a2cbfe17a3b70135d45c"
+}

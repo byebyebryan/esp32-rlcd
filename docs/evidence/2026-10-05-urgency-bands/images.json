@@ -1,0 +1,77 @@
+{
+  "created_utc": "2026-10-05T20:46:07.025908+00:00",
+  "source_head": "06c74f688c14b2be350bbe54f8a6f633806f4ec0",
+  "source_worktree_dirty": true,
+  "esp_idf": "v5.5.3",
+  "board_mac": "94:a9:90:de:d0:04",
+  "port": "/dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_94:A9:90:DE:D0:04-if00",
+  "synthetic_data": true,
+  "physical_animation_acceptance": "pending",
+  "sources": {
+    "projects/agent-dashboard/components/agent_dashboard/agent_dashboard.c": "ce9b0345560ef6e947843e9ece16a81162db248f37492cd8db35d7a1f72b822e",
+    "projects/agent-dashboard/components/agent_dashboard/agent_dashboard_motion.c": "2bcfa0f594cd879468c6a35bbd2535ace5a12766d5fa62908d6aa5281a41eac7",
+    "projects/agent-dashboard/components/agent_dashboard/include/agent_dashboard.h": "bbbb47414d5f319c0f6a57217f9b71b234e44b7384c8134933d854ad67c2bb68",
+    "projects/agent-dashboard/components/agent_dashboard/include/dashboard_motion.h": "e1630efbca7b78a667454e563fef533cdacbeba91ceb3c3a303dfa89ff6dd3db",
+    "components/display_rlcd/rlcd_frame.c": "ddd85b4833a7b7db34dca0d8759838ff7b88ed9860d30d0aab4ac834b83d4c35",
+    "components/display_rlcd/rlcd_panel.c": "4a7db99a19cb68d3e3340b083e18ec5646daea1b8d86a2cbfe17a3b70135d45c",
+    "components/display_rlcd/include/rlcd_frame.h": "96ca04c42f8983a44b8c362bbedbd05f85e400ce617f4daebe80ba25ce4a155a",
+    "components/display_rlcd/include/rlcd_panel.h": "638c1f9c89c7abda86e0e5c369db32125ff198986c205b4ee7733627f921fbfb",
+    "projects/agent-dashboard/main/main.c": "823c90af385a62cb4a865bb057cb59808eafab8f019c9f8ebf4626dbf4f8a518",
+    "projects/agent-dashboard/demo.c": "9506e76bfafc31a744cd410cded7f14fc072a9b29d2154f234bde99d49359462",
+    "projects/agent-dashboard/demo.h": "b62a13887a61ddf5cd14bf0c8d645f9f5e5ab277c4676111e759c9ea014e36fc",
+    "projects/agent-dashboard/motion_demo.c": "ea6d684a16d32707c603fb789f28d745545743224026529a390891e165c59b59",
+    "projects/agent-dashboard/tests/motion_dashboard.c": "dcb5a2921774e25ac560c26531de1a8f39995232652dc5c5ab4683f5661781c5",
+    "projects/agent-dashboard/tests/rect_dashboard.c": "66415dae8089caf9f08e2d46b74bdb593fd3ea95bffa7aabd3df7efa08c915b8",
+    "projects/agent-dashboard/scripts/test-dashboard-motion.sh": "054564bb358170963021a239f0a71dee13aab32415d731931bbb8db9175bb346",
+    "projects/agent-dashboard/scripts/capture-dashboard-motion.py": "011e7f3c613691b5140b668dcceb1487e7a4850cc84e047758ffed4c7c6b30c0",
+    "projects/agent-dashboard/sdkconfig": "50023b8cd6dab810ba3d87af563ef81e97e9c57ae9522489fecad9dca63df317",
+    "projects/agent-dashboard/CMakeLists.txt": "930f3d2e0550b3eea4ce11a15c6df98265c08a733926bc2e9ada69fe73b2124d",
+    "projects/agent-dashboard/main/CMakeLists.txt": "d74136a49cadd82ec8616f0a644d9973832576575b6807c5d5e5b42166be9f81",
+    "projects/agent-dashboard/main/Kconfig.projbuild": "fd79ea0e509f9d90cc8be995ea928b6bdc70988d0373132f92c56c3d15b78759",
+    "projects/agent-dashboard/components/agent_dashboard/CMakeLists.txt": "6ba87b75adfe3627379683ffd4a8ecba70b8ca987a8c7ef163b39f8ce6e87d35",
+    "sdkconfig.defaults": "9ae2973d38b5ce537cbe4f1696cae68d94264ea261babc3266192050c4b92a35",
+    "components/display_rlcd/CMakeLists.txt": "17aa7d981b70d7faeb8316a5cc5ea63daa7a824a87f6d3b0fcfc661863d869a9"
+  },
+  "images": {
+    "projects/agent-dashboard/build/rlcd-dashboard.bin": {
+      "size_bytes": 257648,
+      "sha256": "40c4b69a99a9f6d3202e7303db3890c0190889d51b6b5e46162f20f31d8873c7"
+    },
+    "projects/agent-dashboard/build/rlcd-dashboard.elf": {
+      "size_bytes": 4252704,
+      "sha256": "cdddbb3c7b232fb4bd1e5392bc87048c9feec942a2438bdb21a4f1cc90f000a1"
+    },
+    "projects/agent-dashboard/build/bootloader/bootloader.bin": {
+      "size_bytes": 20832,
+      "sha256": "e70699ccea4752369a56b05bfc9fa57a470f3b2673fe555530ee40cae9e9304e"
+    },
+    "projects/agent-dashboard/build/partition_table/partition-table.bin": {
+      "size_bytes": 3072,
+      "sha256": "7f00b6c042a89b15b0cac534f82ed988caf29278ff5700b0c511eb1b5bb7c820"
+    },
+    "projects/agent-dashboard/build/evidence/urgency-bands-20261005T202031Z/static-build/rlcd-dashboard.bin": {
+      "size_bytes": 249568,
+      "sha256": "6b9d039ce42f3af230942efea00adadad44976b3869052bd0a91d9a6de59c516"
+    },
+    "projects/agent-dashboard/build/evidence/urgency-bands-20261005T202031Z/static-sdkconfig": {
+      "size_bytes": 74578,
+      "sha256": "cf9ab2ac9c7dabb61f6cdc0420b418694a26ff859024a19239f1c3cd26a0733e"
+    }
+  },
+  "native_controller_bytes": 11744,
+  "build_description": {
+    "project_name": "rlcd-dashboard",
+    "project_version": "06c74f6",
+    "target": "esp32s3",
+    "app_elf": "rlcd-dashboard.elf",
+    "app_bin": "rlcd-dashboard.bin"
+  },
+  "boot_identity": {
+    "project_name": "rlcd-dashboard",
+    "reported_app_version": "06c74f6",
+    "elf_sha256_prefix": "cdddbb3c7",
+    "elf_prefix_matches": true,
+    "idf_version": "v5.5.3",
+    "note": "Version and app-descriptor compile time were cached from the base revision; source hashes, changed motion config and full application readback identify this uncommitted build."
+  }
+}

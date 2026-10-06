@@ -1,0 +1,62 @@
+{
+  "started_utc": "2026-10-05T21:08:56.660804+00:00",
+  "elapsed_seconds": 110.15115429699654,
+  "application_start_count": 1,
+  "expected_phase_count": 23,
+  "missing_phases": [],
+  "cycles_observed": 1,
+  "frame_count": 338,
+  "moving_frame_count": 228,
+  "frame_budget_misses": 0,
+  "errors": [],
+  "timing": {
+    "draw_us": {
+      "min": 1598,
+      "max": 7811
+    },
+    "transfer_us": {
+      "min": 12164,
+      "max": 12229
+    },
+    "frame_us": {
+      "min": 13774,
+      "max": 20428
+    },
+    "internal_free": {
+      "min": 342835,
+      "max": 342835
+    },
+    "stack_watermark": {
+      "min": 1848,
+      "max": 1864
+    },
+    "consecutive_motion_interval_us": {
+      "min": 39998,
+      "max": 40003
+    }
+  },
+  "complete_cycle_pass": true,
+  "pass": true,
+  "text_heights": [
+    12,
+    12,
+    8
+  ],
+  "row_heights": [
+    26,
+    26,
+    18
+  ],
+  "elf_hash_prefix_matches": true,
+  "source_hashes_match": true,
+  "physical_readability": "pending",
+  "repository_state": "uncommitted",
+  "synthetic_data": true,
+  "device_acl_restored": true,
+  "separate_349_daemon": {
+    "state": "active/running",
+    "main_pid_before": 111660,
+    "main_pid_after": 111660,
+    "serial_owner_pid": 111663
+  }
+}

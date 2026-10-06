@@ -8,6 +8,15 @@ refinement on the panel: moving rows are easier to track. This is a local UI exp
 not live Agent Observer integration.
 See [the ordering decisions](ui-ordering.md) and [earlier layout evidence](ui-study.md).
 
+The 2026-10-05 [urgency-band refinement](urgency-bands.md) adds compact working
+rows, height-based visibility and eight further synthetic scenarios. Its current
+loop is 92 seconds. The sequence and measurements below remain the historical
+2026-10-03 evidence for the earlier fixed-height motion prototype.
+The earlier [8px Fusion study](fusion-font-study.md) was superseded by the
+selected [12px Fusion trial](fusion-12-font-study.md). The current
+[header refinement](header-24-study.md) uses 24px summary text, 24/12-pixel
+rows and a 264px body. [UI polish](ui-polish.md) records packed feed-loss targets.
+
 ## Prototype boundary
 
 The experiment keeps eight visible rows, CX/CC provider labels, state symbols,

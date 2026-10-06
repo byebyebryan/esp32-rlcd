@@ -11,6 +11,15 @@ accepted on the panel for easier tracking. Attention rows keep their inverse sty
 retain their original polarity.
 See [the earlier layout study](ui-study.md).
 
+The 2026-10-05 [urgency-band contract](urgency-bands.md) keeps these priority,
+identity and age rules while replacing the fixed eight-row layout with compact
+working rows and height-based admission. It records current geometry, motion
+and acceptance requirements for that pass; the eight-row experiment below is earlier history.
+The selected [12px Fusion trial](fusion-12-font-study.md) supersedes the earlier
+8px trial while preserving these ordering and identity rules. The current
+[header refinement](header-24-study.md) records 24/12-pixel rows and a 264px
+body; [UI polish](ui-polish.md) records packed feed-loss targets.
+
 ## Agreed ordering
 
 The user chose these groups, in descending urgency:

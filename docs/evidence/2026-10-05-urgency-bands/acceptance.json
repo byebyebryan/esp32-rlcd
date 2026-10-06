@@ -1,0 +1,89 @@
+{
+  "started_utc": "2026-10-05T20:47:08.406245+00:00",
+  "elapsed_seconds": 110.15119511098601,
+  "application_start_count": 1,
+  "expected_phase_count": 23,
+  "missing_phases": [],
+  "cycles_observed": 1,
+  "frame_count": 338,
+  "moving_frame_count": 228,
+  "frame_budget_us": 40000,
+  "frame_budget_misses": 0,
+  "errors": [],
+  "timing": {
+    "draw_us": {
+      "min": 1379,
+      "max": 6332
+    },
+    "transfer_us": {
+      "min": 12166,
+      "max": 12216
+    },
+    "frame_us": {
+      "min": 13560,
+      "max": 18826
+    },
+    "internal_free": {
+      "min": 342835,
+      "max": 342835
+    },
+    "stack_watermark": {
+      "min": 1848,
+      "max": 1864
+    },
+    "consecutive_motion_interval_us": {
+      "min": 40000,
+      "max": 40001
+    }
+  },
+  "complete_cycle_pass": true,
+  "pass": true,
+  "verified_geometry_phases": {
+    "17": {
+      "case": "compact-capacity",
+      "count": 12,
+      "visible": 11,
+      "overflow": 1,
+      "hidden_blocked": 0
+    },
+    "18": {
+      "case": "waiting-only",
+      "count": 12,
+      "visible": 8,
+      "overflow": 4,
+      "hidden_blocked": 0
+    },
+    "19": {
+      "case": "blocked-only",
+      "count": 12,
+      "visible": 8,
+      "overflow": 4,
+      "hidden_blocked": 4
+    },
+    "20": {
+      "case": "inactive-removal",
+      "count": 11,
+      "visible": 8,
+      "overflow": 3,
+      "hidden_blocked": 3
+    },
+    "21": {
+      "case": "readmission",
+      "count": 12,
+      "visible": 8,
+      "overflow": 4,
+      "hidden_blocked": 3
+    },
+    "22": {
+      "case": "empty-roster",
+      "count": 0,
+      "visible": 0,
+      "overflow": 0,
+      "hidden_blocked": 0
+    }
+  },
+  "loss_suppresses_overflow": true,
+  "board_controller_bytes": 10640,
+  "synthetic_data": true,
+  "physical_animation_acceptance": "pending"
+}

@@ -1,0 +1,46 @@
+SNAPSHOT phase=2 case=idle-to-run offset=0 health=0 moving=1
+  y=12.00 height=24 cached_group=0 label=agent-observer
+  y=36.00 height=12 cached_group=2 label=cubey
+  y=60.00 height=24 cached_group=1 label=agent-observer
+  y=84.00 height=24 cached_group=1 label=homelab
+  y=108.00 height=12 cached_group=2 label=esp32-rlcd
+  y=120.00 height=12 cached_group=2 label=powered-descent
+  y=132.00 height=12 cached_group=2 label=remote-chrome
+  y=144.00 height=12 cached_group=2 label=agent-observer
+SNAPSHOT phase=9 case=feed-stale-during-motion offset=1000 health=1 moving=0
+  y=12.00 height=24 cached_group=0 label=esp32-rlcd
+  y=36.00 height=24 cached_group=0 label=remote-chrome
+  y=60.00 height=24 cached_group=0 label=wear-os
+  y=84.00 height=24 cached_group=0 label=cubey
+  y=108.00 height=24 cached_group=1 label=homelab
+  y=132.00 height=24 cached_group=1 label=agent-observer
+  y=156.00 height=12 cached_group=2 label=dashboard / 完了
+  y=168.00 height=12 cached_group=2 label=layout / 密度
+  y=180.00 height=12 cached_group=2 label=test / かな
+  y=192.00 height=12 cached_group=2 label=data / 同步
+  y=204.00 height=12 cached_group=2 label=worker / 渲染
+  y=216.00 height=12 cached_group=2 label=demo / 等待
+  y=228.00 height=12 cached_group=2 label=rofi / picker
+  y=240.00 height=12 cached_group=2 label=chrome / 開発
+  y=252.00 height=12 cached_group=2 label=font / 한글
+  y=264.00 height=12 cached_group=2 label=renderer / 字体
+  y=276.00 height=12 cached_group=2 label=queue / 排序
+SNAPSHOT phase=11 case=feed-offline-during-motion offset=1000 health=2 moving=0
+  y=12.00 height=24 cached_group=0 label=esp32-rlcd
+  y=36.00 height=24 cached_group=0 label=wear-os
+  y=60.00 height=24 cached_group=0 label=cubey
+  y=84.00 height=24 cached_group=1 label=homelab
+  y=108.00 height=24 cached_group=1 label=agent-observer
+  y=132.00 height=24 cached_group=1 label=rofi-agent-plus
+  y=156.00 height=12 cached_group=2 label=dashboard / 完了
+  y=168.00 height=12 cached_group=2 label=layout / 密度
+  y=180.00 height=12 cached_group=2 label=test / かな
+  y=192.00 height=12 cached_group=2 label=data / 同步
+  y=204.00 height=12 cached_group=2 label=worker / 渲染
+  y=216.00 height=12 cached_group=2 label=demo / 等待
+  y=228.00 height=12 cached_group=2 label=rofi / picker
+  y=240.00 height=12 cached_group=2 label=chrome / 開発
+  y=252.00 height=12 cached_group=2 label=font / 한글
+  y=264.00 height=12 cached_group=2 label=renderer / 字体
+  y=276.00 height=12 cached_group=2 label=queue / 排序
+PASS all settled frames=2117 phases=23; no added gaps or priority inversions

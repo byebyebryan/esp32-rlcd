@@ -1,0 +1,3 @@
+PASS: UTF-8 valid, malformed, truncated, fallback, widths and codepoint ellipsis
+PASS: 4488 packed rectangles equal pixel reference; edge masks, colors, clipping and guards
+PASS: urgency geometry, prefix admission, identity, atomic input, shared progress, direction layers, burst rearming, clipping, source loss, polarity; sizeof(controller)=23896

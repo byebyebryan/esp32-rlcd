@@ -13,6 +13,7 @@ mkdir -p "$RLCD_OUTPUT_DIR"
     -I "$RLCD_APP_ROOT" \
     "$RLCD_APP_ROOT/tests/preview_dashboard.c" \
     "$RLCD_APP_ROOT/components/agent_dashboard/agent_dashboard.c" \
+    "$RLCD_APP_ROOT/components/agent_dashboard/fusion_pixel_12_zh_hans.c" \
     "$RLCD_APP_ROOT/demo.c" "$RLCD_REPO_ROOT/components/display_rlcd/rlcd_frame.c" \
     -o "$RLCD_OUTPUT_DIR/render"
 "$RLCD_OUTPUT_DIR/render" "$RLCD_OUTPUT_DIR"

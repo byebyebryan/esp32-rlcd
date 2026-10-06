@@ -11,6 +11,7 @@ mkdir -p "$RLCD_OUTPUT_DIR"
     -I "$RLCD_REPO_ROOT/components/display_rlcd/include" \
     -I "$RLCD_APP_ROOT/components/agent_dashboard/include" \
     "$RLCD_APP_ROOT/tests/rect_dashboard.c" \
+    "$RLCD_APP_ROOT/components/agent_dashboard/fusion_pixel_12_zh_hans.c" \
     "$RLCD_REPO_ROOT/components/display_rlcd/rlcd_frame.c" \
     -o "$RLCD_OUTPUT_DIR/test-rect"
 "$RLCD_OUTPUT_DIR/test-rect"
@@ -21,6 +22,7 @@ mkdir -p "$RLCD_OUTPUT_DIR"
     -I "$RLCD_APP_ROOT" \
     "$RLCD_APP_ROOT/tests/motion_dashboard.c" \
     "$RLCD_APP_ROOT/components/agent_dashboard/agent_dashboard.c" \
+    "$RLCD_APP_ROOT/components/agent_dashboard/fusion_pixel_12_zh_hans.c" \
     "$RLCD_APP_ROOT/components/agent_dashboard/agent_dashboard_motion.c" \
     "$RLCD_APP_ROOT/motion_demo.c" "$RLCD_REPO_ROOT/components/display_rlcd/rlcd_frame.c" \
     -o "$RLCD_OUTPUT_DIR/test"

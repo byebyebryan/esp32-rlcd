@@ -47,10 +47,18 @@ static void run_motion_demo(void)
     bool previous_moving = false;
     TickType_t wake_tick = xTaskGetTickCount();
     ESP_LOGI("rlcd_dashboard", "MOTION event=config phases=%zu cycle_ms=%" PRIu64
-             " fps=25 duration_ms=%d frame_budget_us=%d capacity=%d model_bytes=%zu",
+             " fps=25 duration_ms=%d frame_budget_us=%d capacity=%d model_bytes=%zu"
+             " visible_policy=height_prefix full_row_px=%d working_row_px=%d"
+             " normal_text_px=%d working_text_px=%d body_top=%d body_bottom=%d"
+             " font=fusion_pixel_12_zh_hans font_release=2026.09.25"
+             " normal_scale=2 working_scale=1 normal_cap_px=16 working_cap_px=8"
+             " header_px=24 footer_px=12 chrome=summary source=simulated feed_loss=settle_target",
              dashboard_motion_demo_phase_count(), cycle_ms,
              DASHBOARD_MOTION_DURATION_MS, FRAME_BUDGET_US,
-             DASHBOARD_MOTION_CAPACITY, sizeof(motion));
+             DASHBOARD_MOTION_CAPACITY, sizeof(motion),
+             DASHBOARD_MOTION_ROW_HEIGHT, DASHBOARD_MOTION_WORKING_ROW_HEIGHT,
+             DASHBOARD_MOTION_TEXT_HEIGHT, DASHBOARD_MOTION_WORKING_TEXT_HEIGHT,
+             DASHBOARD_MOTION_BODY_TOP, DASHBOARD_MOTION_BODY_BOTTOM);
     for (;;) {
         const int64_t frame_start_us = esp_timer_get_time();
         const uint64_t elapsed_ms = (uint64_t)(frame_start_us - origin_us) / 1000;
@@ -89,10 +97,14 @@ static void run_motion_demo(void)
         }
         if (phase != previous_phase || changed) {
             ESP_LOGI("rlcd_dashboard", "MOTION event=phase phase=%zu case=%s"
-                     " tick_ms=%" PRIu64 " count=%zu feed_health=%d",
+                     " tick_ms=%" PRIu64 " count=%zu feed_health=%d"
+                     " visible=%zu overflow=%zu hidden_blocked=%zu",
                      phase, dashboard_motion_demo_phase_name(phase), elapsed_ms,
                      dashboard_motion_count(&motion),
-                     dashboard_motion_feed_health(&motion));
+                     dashboard_motion_feed_health(&motion),
+                     dashboard_motion_visible_count(&motion),
+                     dashboard_motion_overflow_count(&motion),
+                     dashboard_motion_hidden_blocked_count(&motion));
             previous_phase = phase;
         }
         previous_moving = moving;

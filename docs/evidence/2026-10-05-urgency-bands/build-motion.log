@@ -1,0 +1,48 @@
+Added environment variable ESP_IDF_VERSION = 5.5
+Added environment variable IDF_VERSION = 5.5.3
+Added environment variable IDF_TOOLS_PATH = /home/bryan/.espressif/tools
+Added environment variable IDF_COMPONENT_LOCAL_STORAGE_URL = file:///home/bryan/.espressif/tools
+Added environment variable IDF_PATH = /home/bryan/.espressif/v5.5.3/esp-idf
+Added environment variable ESP_ROM_ELF_DIR = /home/bryan/.espressif/tools/esp-rom-elfs/20241011/
+Added environment variable OPENOCD_SCRIPTS = /home/bryan/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/share/openocd/scripts
+Added environment variable IDF_PYTHON_ENV_PATH = /home/bryan/.espressif/tools/python/v5.5.3/venv
+Added proper directory to PATH
+Activated virtual environment at /home/bryan/.espressif/tools/python/v5.5.3/venv
+Environment setup complete for the current shell session.
+These changes will be lost when you close this terminal.
+You are now using IDF version 5.5.3.
+eim select v5.5.3
+ESP-IDF v5.5.3 activated for esp32-rlcd.
+Executing action: all (aliases: build)
+Running ninja in directory /home/bryan/code/esp32-rlcd/projects/agent-dashboard/build
+Executing "ninja all"...
+[1/13] Building C object esp-idf/main/CMakeFiles/__idf_main.dir/main.c.obj
+[2/13] Performing build step for 'bootloader'
+[1/1] cd /home/bryan/code/esp32-rlcd/projects/agent-dashboard/build/bootloader/esp-idf/esptool_py && /home/bryan/.espressif/tools/python/v5.5.3/venv/bin/python /home/bryan/.espressif/v5.5.3/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x0 /home/bryan/code/esp32-rlcd/projects/agent-dashboard/build/bootloader/bootloader.bin
+Bootloader binary size 0x5160 bytes. 0x2ea0 bytes (36%) free.
+[3/13] No install step for 'bootloader'
+[4/13] Building C object esp-idf/main/CMakeFiles/__idf_main.dir/__/motion_demo.c.obj
+[5/13] Completed 'bootloader'
+[6/13] Building C object esp-idf/agent_dashboard/CMakeFiles/__idf_agent_dashboard.dir/agent_dashboard.c.obj
+[7/13] Building C object esp-idf/agent_dashboard/CMakeFiles/__idf_agent_dashboard.dir/agent_dashboard_motion.c.obj
+[8/13] Linking C static library esp-idf/agent_dashboard/libagent_dashboard.a
+[9/13] Linking C static library esp-idf/main/libmain.a
+[10/13] Generating esp-idf/esp_system/ld/sections.ld
+[11/13] Linking CXX executable rlcd-dashboard.elf
+[12/13] Generating binary image from built executable
+esptool.py v4.12.0
+Creating esp32s3 image...
+Merged 2 ELF sections
+Successfully created esp32s3 image.
+Generated /home/bryan/code/esp32-rlcd/projects/agent-dashboard/build/rlcd-dashboard.bin
+[13/13] cd /home/bryan/code/esp32-rlcd/projects/agent-dashboard/build/esp-idf/esptool_py && /home/bryan/.espressif/tools/python/v5.5.3/venv/bin/python /home/bryan/.espressif/v5.5.3/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app /home/bryan/code/esp32-rlcd/projects/agent-dashboard/build/partition_table/partition-table.bin /home/bryan/code/esp32-rlcd/projects/agent-dashboard/build/rlcd-dashboard.bin
+rlcd-dashboard.bin binary size 0x3ee70 bytes. Smallest app partition is 0x100000 bytes. 0xc1190 bytes (75%) free.
+
+Project build complete. To flash, run:
+ idf.py flash
+or
+ idf.py -p PORT flash
+or
+ python -m esptool --chip esp32s3 -b 460800 --before default_reset --after hard_reset write_flash --flash_mode dio --flash_size 16MB --flash_freq 80m 0x0 projects/agent-dashboard/build/bootloader/bootloader.bin 0x8000 projects/agent-dashboard/build/partition_table/partition-table.bin 0x10000 projects/agent-dashboard/build/rlcd-dashboard.bin
+or from the "/home/bryan/code/esp32-rlcd/projects/agent-dashboard/build" directory
+ python -m esptool --chip esp32s3 -b 460800 --before default_reset --after hard_reset write_flash "@flash_args"

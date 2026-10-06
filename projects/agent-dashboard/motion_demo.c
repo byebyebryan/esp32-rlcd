@@ -24,6 +24,14 @@ static const char *const phase_names[DASHBOARD_MOTION_DEMO_PHASES] = {
     "feed-recovery-again",
     "attention-overflow",
     "uncertainty-section",
+    "working-to-blocked",
+    "blocked-to-working",
+    "compact-capacity",
+    "waiting-only",
+    "blocked-only",
+    "inactive-removal",
+    "readmission",
+    "empty-roster",
 };
 
 uint64_t dashboard_motion_demo_cycle_ms(void)
@@ -70,14 +78,60 @@ static void make_sample(dashboard_motion_sample_t *sample,
     };
 }
 
+static const char *const density_ids[] = {
+    "codex@local/session/density/12",
+    "claude@local/session/density/13",
+    "codex@local/session/density/14",
+    "claude@local/session/density/15",
+    "codex@local/session/density/16",
+    "claude@local/session/density/17",
+    "codex@local/session/density/18",
+    "claude@local/session/density/19",
+    "codex@local/session/density/20",
+    "claude@local/session/density/21",
+    "codex@local/session/density/22",
+    "claude@local/session/density/23",
+    "codex@local/session/density/24",
+    "claude@local/session/density/25",
+    "codex@local/session/density/26",
+    "claude@local/session/density/27",
+    "codex@local/session/density/28",
+    "claude@local/session/density/29",
+    "codex@local/session/density/30",
+    "claude@local/session/density/31",
+};
+
+static const char *const density_labels[] = {
+    "café / résumé",
+    "中文 / 审批",
+    "日本語 / レビュー",
+    "한국어 / 대시보드",
+    "naïve / façade",
+    "esp32 / 屏幕",
+    "gomoku2d / 五目",
+    "raster90 / pixels",
+    "agent / 会话",
+    "queue / 排序",
+    "renderer / 字体",
+    "font / 한글",
+    "chrome / 開発",
+    "rofi / picker",
+    "demo / 等待",
+    "worker / 渲染",
+    "data / 同步",
+    "test / かな",
+    "layout / 密度",
+    "dashboard / 完了",
+};
+
 static void reset_fixture(dashboard_motion_t *motion, uint64_t now_ms)
 {
     memset(motion->demo_samples, 0, sizeof(motion->demo_samples));
     make_sample(&motion->demo_samples[0],
-                "codex@local/session/agent-observer/core", "agent-observer / core",
+                "codex@local/session/agent-observer/core", "agent-observer",
                 "CODEX", "7A3D", DASH_NEEDS_INPUT, DASH_CURRENT, now_ms, 92000);
     make_sample(&motion->demo_samples[1],
-                "claude@local/session/agent-observer/ui", "agent-observer / ui",
+                "claude@local/session/agent-observer/ui", "agent-observer",
                 "CLAUDE", "FA29", DASH_ERROR, DASH_CURRENT, now_ms, 35000);
     make_sample(&motion->demo_samples[2],
                 "claude@local/session/cubey/main", "cubey",
@@ -95,7 +149,7 @@ static void reset_fixture(dashboard_motion_t *motion, uint64_t now_ms)
                 "codex@local/session/powered-descent/unknown", "powered-descent",
                 "CODEX", "F209", DASH_WORKING, DASH_CURRENT, now_ms, 55000);
     make_sample(&motion->demo_samples[7],
-                "claude@local/session/agent-observer/review", "agent-observer / review",
+                "claude@local/session/agent-observer/review", "agent-observer",
                 "CLAUDE", "C178", DASH_SETTLED, DASH_CURRENT, now_ms, 300000);
     make_sample(&motion->demo_samples[8],
                 "codex@local/session/cubey/flood", "cubey",
@@ -109,6 +163,10 @@ static void reset_fixture(dashboard_motion_t *motion, uint64_t now_ms)
     make_sample(&motion->demo_samples[11],
                 "claude@local/session/homelab/monitor", "homelab",
                 "CLAUDE", "B234", DASH_SETTLED, DASH_CURRENT, now_ms, 510000);
+    for (size_t i = 12; i < DASHBOARD_MOTION_DEMO_CAPACITY; ++i)
+        make_sample(&motion->demo_samples[i], density_ids[i - 12], density_labels[i - 12],
+                    i % 2 ? "CLAUDE" : "CODEX", "DENS", DASH_WORKING,
+                    DASH_CURRENT, now_ms, 90000 + i * 1000);
     motion->demo_count = 8;
 }
 
@@ -138,6 +196,19 @@ static bool apply_fixture(dashboard_motion_t *motion, uint64_t now_ms)
         .count = motion->demo_count,
     };
     return dashboard_motion_apply(motion, &snapshot, now_ms) == DASHBOARD_MOTION_APPLIED;
+}
+
+static bool remove_demo_sample(dashboard_motion_t *motion, size_t index)
+{
+    if (index >= motion->demo_count) return false;
+    const size_t tail_count = motion->demo_count - index - 1;
+    dashboard_motion_sample_t removed = motion->demo_samples[index];
+    if (tail_count)
+        memmove(&motion->demo_samples[index], &motion->demo_samples[index + 1],
+                tail_count * sizeof(motion->demo_samples[0]));
+    motion->demo_samples[motion->demo_count - 1] = removed;
+    --motion->demo_count;
+    return true;
 }
 
 static bool begin_phase(dashboard_motion_t *motion, size_t phase, uint64_t now_ms)
@@ -191,13 +262,51 @@ static bool begin_phase(dashboard_motion_t *motion, size_t phase, uint64_t now_m
         set_state(&s[5], DASH_SETTLED, now_ms);
         break;
     case 13:
-        for (size_t i = 0; i < 10; ++i)
+        for (size_t i = 0; i < motion->demo_count; ++i)
             set_state(&s[i], (i % 4 == 1) ? DASH_ERROR : DASH_NEEDS_INPUT, now_ms);
         break;
     case 14:
         motion->demo_count = 8;
         set_uncertain(&s[6], DASH_CURRENT);
         set_uncertain(&s[7], DASH_STALE);
+        set_state(&s[4], DASH_WORKING, now_ms);
+        break;
+    case 15:
+        set_state(&s[4], DASH_NEEDS_INPUT, now_ms);
+        break;
+    case 16:
+        set_state(&s[4], DASH_WORKING, now_ms);
+        break;
+    case 17:
+        motion->demo_count = DASHBOARD_MOTION_DEMO_CAPACITY;
+        for (size_t i = 0; i < motion->demo_count; ++i)
+            set_state(&s[i], DASH_WORKING, now_ms);
+        break;
+    case 18:
+        motion->demo_count = DASHBOARD_MOTION_DEMO_CAPACITY;
+        for (size_t i = 0; i < motion->demo_count; ++i)
+            set_state(&s[i], DASH_SETTLED, now_ms);
+        break;
+    case 19:
+        motion->demo_count = DASHBOARD_MOTION_DEMO_CAPACITY;
+        for (size_t i = 0; i < motion->demo_count; ++i)
+            set_state(&s[i], (i % 4 == 1) ? DASH_ERROR : DASH_NEEDS_INPUT,
+                      now_ms);
+        // Keep one visible identity unmistakably first so omission animates
+        // an on-screen row rather than an already hidden roster member.
+        s[0].state_entered_ms = now_ms - 100000;
+        break;
+    case 20:
+        motion->demo_count = DASHBOARD_MOTION_DEMO_CAPACITY;
+        if (!remove_demo_sample(motion, 0)) return false;
+        break;
+    case 21:
+        if (motion->demo_count >= DASHBOARD_MOTION_DEMO_CAPACITY) return false;
+        set_state(&s[motion->demo_count], DASH_WORKING, now_ms);
+        ++motion->demo_count;
+        break;
+    case 22:
+        motion->demo_count = 0;
         break;
     default:
         return false;

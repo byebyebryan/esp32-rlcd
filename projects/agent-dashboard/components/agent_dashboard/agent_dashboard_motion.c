@@ -102,15 +102,45 @@ static void sort_roster(dashboard_motion_t *motion)
         motion->tracks[motion->order[rank]].prior_rank = (uint16_t)rank;
 }
 
-static int32_t target_y_q8(int rank, int boundaries)
+static uint8_t row_height_for(const dashboard_motion_track_t *track)
 {
-    // The ninth and later rows are fully outside the body. They still retain
-    // their sorted identity/order so a later promotion has a stable origin.
-    if (rank >= DASHBOARD_DENSE_VISIBLE_ROWS)
-        return (DASHBOARD_MOTION_BODY_BOTTOM +
-                (rank - DASHBOARD_DENSE_VISIBLE_ROWS) * DASHBOARD_MOTION_ROW_HEIGHT) * Q8_ONE;
-    return (DASHBOARD_MOTION_BODY_TOP + rank * DASHBOARD_MOTION_ROW_HEIGHT +
-            boundaries * 2) * Q8_ONE;
+    return track->health == DASH_CURRENT && track->work == DASH_WORKING
+         ? DASHBOARD_MOTION_WORKING_ROW_HEIGHT : DASHBOARD_MOTION_ROW_HEIGHT;
+}
+
+static void layout_roster(dashboard_motion_t *motion, bool *layout_changed)
+{
+    int32_t cursor_q8 = DASHBOARD_MOTION_BODY_TOP * Q8_ONE;
+    bool prefix_fits = true;
+    motion->visible_count = 0;
+    motion->hidden_blocked_count = 0;
+
+    for (size_t rank = 0; rank < motion->count; ++rank) {
+        dashboard_motion_track_t *track = &motion->tracks[motion->order[rank]];
+        const int group = group_of(track);
+
+        const int32_t candidate_y = cursor_q8;
+        const int32_t candidate_bottom = candidate_y + track->row_height * Q8_ONE;
+        const bool admitted = prefix_fits &&
+            candidate_y >= DASHBOARD_MOTION_BODY_TOP * Q8_ONE &&
+            candidate_bottom <= DASHBOARD_MOTION_BODY_BOTTOM * Q8_ONE;
+        if (!admitted) prefix_fits = false;
+        track->admitted = admitted;
+        if (admitted) {
+            ++motion->visible_count;
+        } else if (group == 0) {
+            ++motion->hidden_blocked_count;
+        }
+        // Keep the target prefix complete: the first non-fitting row exits at
+        // the body edge, and later identities wait fully below it. A formerly
+        // visible row remains drawable while its current pose moves offscreen.
+        const int32_t next_y = admitted ? candidate_y
+            : (candidate_y < DASHBOARD_MOTION_BODY_BOTTOM * Q8_ONE
+               ? DASHBOARD_MOTION_BODY_BOTTOM * Q8_ONE : candidate_y);
+        if (track->target_y_q8 != next_y) *layout_changed = true;
+        track->target_y_q8 = next_y;
+        cursor_q8 = next_y + track->row_height * Q8_ONE;
+    }
 }
 
 static uint64_t burst_deadline(const dashboard_motion_t *motion)
@@ -241,6 +271,7 @@ static bool copy_sample(dashboard_motion_track_t *track,
         track->state_entered_ms = sample->state_entered_ms;
     }
     track->state_episode = sample->state_episode;
+    track->row_height = row_height_for(track);
     return true;
 }
 
@@ -275,9 +306,11 @@ dashboard_motion_result_t dashboard_motion_apply(
         if (found >= 0) matched[found] = true;
     }
 
+    bool geometry_changed = false;
     for (size_t sample_index = 0; sample_index < snapshot->count; ++sample_index) {
         const dashboard_motion_sample_t *sample = &snapshot->sessions[sample_index];
         int found = find_track(motion, sample->logical_id);
+        const bool existing_track = found >= 0;
         bool is_new = found < 0;
         if (is_new) {
             found = allocate_track(motion, was_active, matched);
@@ -290,9 +323,18 @@ dashboard_motion_result_t dashboard_motion_apply(
             track->used = true;
             track->admission_order = motion->next_admission_order++;
             created[found] = true;
+        } else if (!was_active[found] && motion->tracks[found].exiting) {
+            // A healthy re-admission after an omitted snapshot begins a new
+            // age/order episode even when the identity reuses an exit slot.
+            is_new = true;
+            motion->tracks[found].prior_rank = UINT16_MAX;
+            motion->tracks[found].admission_order = motion->next_admission_order++;
         }
         dashboard_motion_track_t *track = &motion->tracks[found];
+        const uint8_t previous_height = track->row_height;
         if (!copy_sample(track, sample, is_new)) return DASHBOARD_MOTION_REJECTED_INVALID;
+        if (existing_track && previous_height != track->row_height)
+            geometry_changed = true;
         track->active = true;
         track->exiting = false;
         matched[found] = true;
@@ -300,13 +342,13 @@ dashboard_motion_result_t dashboard_motion_apply(
     }
     motion->count = snapshot->count;
 
-    bool layout_changed = false;
+    bool layout_changed = geometry_changed;
     for (size_t i = 0; i < DASHBOARD_MOTION_TRACK_CAPACITY; ++i) {
         dashboard_motion_track_t *track = &motion->tracks[i];
         if (was_active[i] && !matched[i]) {
             const int32_t body_end = DASHBOARD_MOTION_BODY_BOTTOM * Q8_ONE;
             const bool intersects_body = track->y_q8 < body_end &&
-                track->y_q8 + DASHBOARD_MOTION_ROW_HEIGHT * Q8_ONE >
+                track->y_q8 + track->row_height * Q8_ONE >
                 DASHBOARD_MOTION_BODY_TOP * Q8_ONE;
             if (intersects_body) {
                 track->active = false;
@@ -314,6 +356,7 @@ dashboard_motion_result_t dashboard_motion_apply(
                 track->work = DASH_UNKNOWN;
                 track->health = DASH_UNAVAILABLE;
                 track->state_age_known = false;
+                track->admitted = false;
                 track->start_y_q8 = track->y_q8;
                 if (track->target_y_q8 != body_end) layout_changed = true;
                 track->target_y_q8 = body_end;
@@ -329,15 +372,9 @@ dashboard_motion_result_t dashboard_motion_apply(
     }
 
     sort_roster(motion);
-    int previous_group = -1, boundaries = 0;
+    layout_roster(motion, &layout_changed);
     for (size_t rank = 0; rank < motion->count; ++rank) {
         dashboard_motion_track_t *track = &motion->tracks[motion->order[rank]];
-        const int group = group_of(track);
-        if (previous_group >= 0 && group != previous_group) ++boundaries;
-        previous_group = group;
-        const int32_t next_y = target_y_q8((int)rank, boundaries);
-        if (track->target_y_q8 != next_y) layout_changed = true;
-        track->target_y_q8 = next_y;
         if (!motion->initialized) {
             track->y_q8 = track->start_y_q8 = track->target_y_q8;
         } else if (created[motion->order[rank]] &&
@@ -357,8 +394,7 @@ dashboard_motion_result_t dashboard_motion_apply(
         motion->animating = false;
         motion->initialized = true;
     } else if (layout_changed) {
-        if (!motion->burst_exhausted &&
-            now_ms >= motion->last_layout_change_ms &&
+        if (now_ms >= motion->last_layout_change_ms &&
             now_ms - motion->last_layout_change_ms >= DASHBOARD_MOTION_DURATION_MS)
             motion->burst_exhausted = false;
         if (!motion->burst_exhausted && !motion->animating) motion->burst_start_ms = now_ms;
@@ -402,6 +438,8 @@ dashboard_motion_result_t dashboard_motion_apply(
     }
     motion->feed_health = DASH_CURRENT;
     motion->now_ms = now_ms;
+    motion->last_healthy_update_ms = now_ms;
+    motion->last_healthy_update_known = true;
     return DASHBOARD_MOTION_APPLIED;
 }
 
@@ -412,11 +450,18 @@ dashboard_motion_result_t dashboard_motion_feed_lost(
         now_ms < motion->now_ms) return DASHBOARD_MOTION_REJECTED_INVALID;
     dashboard_motion_tick(motion, now_ms);
     motion->animating = false;
+    const int32_t body_end_q8 = DASHBOARD_MOTION_BODY_BOTTOM * Q8_ONE;
     for (size_t i = 0; i < DASHBOARD_MOTION_TRACK_CAPACITY; ++i) {
         dashboard_motion_track_t *track = &motion->tracks[i];
         if (!track->used) continue;
-        track->start_y_q8 = track->target_y_q8 = track->y_q8;
+        // Feed loss commits the newest accepted packed layout. Freezing at an
+        // intermediate interpolated pose can leave gaps after a reorder.
+        track->y_q8 = track->start_y_q8 = track->target_y_q8;
         track->direction = DASHBOARD_MOTION_DIRECTION_STATIONARY;
+        if (track->exiting && track->y_q8 >= body_end_q8) {
+            memset(track, 0, sizeof(*track));
+            track->prior_rank = UINT16_MAX;
+        }
     }
     motion->feed_health = health;
     motion->now_ms = now_ms;
@@ -433,10 +478,10 @@ static void format_age(char target[4], const dashboard_motion_track_t *track,
         return;
     }
     const uint64_t seconds = (now_ms - track->state_entered_ms) / 1000;
-    if (seconds < 60) snprintf(target, 4, "%02lluS", (unsigned long long)seconds);
-    else if (seconds < 3600) snprintf(target, 4, "%02lluM",
+    if (seconds < 60) snprintf(target, 4, "%llus", (unsigned long long)seconds);
+    else if (seconds < 3600) snprintf(target, 4, "%llum",
                                       (unsigned long long)(seconds / 60));
-    else if (seconds < 360000) snprintf(target, 4, "%02lluH",
+    else if (seconds < 360000) snprintf(target, 4, "%lluh",
                                         (unsigned long long)(seconds / 3600));
     else memcpy(target, "+++\0", 4);
 }
@@ -503,6 +548,7 @@ void dashboard_motion_render(dashboard_motion_t *motion, uint8_t *frame)
         motion->render_poses[i] = (dashboard_motion_render_row_t){
             .session = &motion->render_rows[i],
             .y = (int16_t)rounded_y(track->y_q8),
+            .height = track->row_height,
             .direction = track->direction,
         };
     }
@@ -515,7 +561,15 @@ void dashboard_motion_render(dashboard_motion_t *motion, uint8_t *frame)
         },
         .rows = motion->render_poses,
         .row_count = row_count,
+        .visible_count = motion->visible_count,
+        .overflow_count = motion->feed_health == DASH_CURRENT
+                        ? motion->count - motion->visible_count : 0,
+        .hidden_blocked_count = motion->feed_health == DASH_CURRENT
+                              ? motion->hidden_blocked_count : 0,
         .feed_lost = motion->feed_health != DASH_CURRENT,
+        .now_ms = motion->now_ms,
+        .last_healthy_update_ms = motion->last_healthy_update_ms,
+        .last_healthy_update_known = motion->last_healthy_update_known,
     };
     dashboard_draw_motion(frame, &render);
 }
@@ -548,6 +602,23 @@ int dashboard_motion_position_y(const dashboard_motion_t *motion,
     if (!motion || !logical_id) return INT_MIN;
     const int index = find_track(motion, logical_id);
     return index < 0 ? INT_MIN : rounded_y(motion->tracks[index].y_q8);
+}
+
+size_t dashboard_motion_visible_count(const dashboard_motion_t *motion)
+{
+    return motion ? motion->visible_count : 0;
+}
+
+size_t dashboard_motion_overflow_count(const dashboard_motion_t *motion)
+{
+    if (!motion || motion->feed_health != DASH_CURRENT) return 0;
+    return motion->count - motion->visible_count;
+}
+
+size_t dashboard_motion_hidden_blocked_count(const dashboard_motion_t *motion)
+{
+    if (!motion || motion->feed_health != DASH_CURRENT) return 0;
+    return motion->hidden_blocked_count;
 }
 
 bool dashboard_motion_state_entry(const dashboard_motion_t *motion,

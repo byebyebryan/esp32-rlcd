@@ -1,0 +1,76 @@
+{
+  "date": "2026-10-05",
+  "synthetic_data": true,
+  "routing": "Luna implemented controller/renderer/fixture/native tests; primary owns contract, review, main/capture integration, builds and deployment acceptance.",
+  "checks": [
+    {
+      "command": "./scripts/check-frame.sh",
+      "exit_code": 0
+    },
+    {
+      "command": "./projects/agent-dashboard/scripts/preview-dashboard.sh",
+      "exit_code": 0,
+      "static_frames": 42,
+      "unchanged_pbm_sha256": true
+    },
+    {
+      "command": "./projects/agent-dashboard/scripts/test-dashboard-motion.sh",
+      "exit_code": 0,
+      "sanitizers": [
+        "ASan",
+        "UBSan"
+      ],
+      "rectangle_cases": 4488,
+      "motion_pbm_frames": 88
+    },
+    {
+      "command": "./scripts/idf.sh -C projects/agent-dashboard build",
+      "exit_code": 0,
+      "static_mode": false
+    },
+    {
+      "command": "./scripts/idf.sh -C projects/agent-dashboard -B <isolated-build> -D SDKCONFIG=<isolated-static-sdkconfig> build",
+      "exit_code": 0,
+      "static_mode": true
+    },
+    {
+      "command": "idf.py flash (explicit RLCD by-id port)",
+      "exit_code": 0,
+      "written_hashes_verified": true
+    },
+    {
+      "command": "esptool read_flash 0x10000 257648",
+      "exit_code": 0,
+      "byte_for_byte_match": true
+    },
+    {
+      "command": "capture-dashboard-motion.py --seconds110 --reset (explicit RLCD by-id port)",
+      "exit_code": 0,
+      "phase_count": 23,
+      "complete_cycle_pass": true,
+      "frame_budget_misses": 0,
+      "internal_free_stable": true
+    }
+  ],
+  "physical_animation_acceptance": "pending",
+  "repository_state": "uncommitted; no commit or push requested",
+  "selected_frames": [
+    "demo-settled-00-initial-order.png",
+    "demo-settled-09-feed-stale-during-motion.png",
+    "demo-transition-15-working-to-blocked-160.png",
+    "demo-settled-17-compact-capacity.png",
+    "demo-settled-18-waiting-only.png",
+    "demo-settled-19-blocked-only.png",
+    "demo-settled-20-inactive-removal.png",
+    "demo-settled-21-readmission.png",
+    "demo-settled-22-empty-roster.png"
+  ],
+  "device_acl_restored": true,
+  "other_board_daemon": {
+    "service": "349d.service",
+    "before_main_pid": 111660,
+    "after_main_pid": 111660,
+    "serial_owner_pid": 111663,
+    "state": "active/running"
+  }
+}

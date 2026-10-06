@@ -1,0 +1,14 @@
+{
+  "verified_utc": "2026-10-06T19:07:59.973187+00:00",
+  "acl_restored_exactly": true,
+  "rlcd_serial_released": true,
+  "separate_349_service": {
+    "ActiveState": "active",
+    "SubState": "running",
+    "MainPID": "111660"
+  },
+  "separate_349_serial_owner": [
+    "111663"
+  ],
+  "separate_349_untouched": true
+}

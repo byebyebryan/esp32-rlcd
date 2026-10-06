@@ -1,0 +1,7 @@
+# file: /dev/ttyACM0
+# owner: root
+# group: uucp
+user::rw-
+group::rw-
+other::---
+

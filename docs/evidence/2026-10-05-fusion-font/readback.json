@@ -1,0 +1,7 @@
+{
+  "match": true,
+  "address": "0x10000",
+  "bytes": 766528,
+  "sha256": "1ae51070e4abb8973ec616381f58243c8928fcebdd2b2d5ce87ed0e6d99a9173",
+  "mac": "94:a9:90:de:d0:04"
+}

@@ -1,14 +1,30 @@
 # Synthetic agent roster and motion study
 
 Independent ESP-IDF application for exploring a compact session roster on the
-400 × 300 RLCD. The current eight-row layout shows a state symbol, name,
-provider (CX/CC) and a state-age example. Current waits/errors have white text
-on black rows. The earlier five-row layout and eight-row table with visible IDs
-are retained in the renderer and native previews.
-Every screen is marked **DEMO**.
+400 × 300 RLCD. The motion view shows a state symbol, name, provider (CX/CC)
+and a state-age example. Blocked sessions use white text on black 24-pixel rows;
+sessions waiting for a prompt use black text on white 24-pixel rows. Healthy
+working sessions use 12-pixel rows. Fusion Pixel's native 12-pixel font is
+doubled for full rows and drawn at native scale in working rows. Basic Latin
+capital heights are 16 and 8 pixels. Mixed case and supported Unicode labels
+retain their supplied characters.
+The 264-pixel list admits eleven full rows or twenty-two working rows, with mixed
+rosters between those limits and explicit hidden blocked counts. The local
+model holds up to thirty-two sessions. The earlier five-row layout and fixed
+eight-row studies remain in the renderer and native previews.
+The motion footer identifies the source as **SIMULATED**; the earlier static
+screens retain their **DEMO** label.
 
-Status icons retain their original white-on-black polarity on highlighted
-rows; only the row text and background reverse.
+Motion-view status icons follow the row text: black marks on white rows and white marks
+on black blocked rows, drawn directly on the row background.
+
+A 24-pixel header shows blocked, waiting and working totals for the
+whole active roster, including hidden rows, with a thin divider below it.
+Uncertain rows add an explicit native 12-pixel unknown count on the same line.
+The 12-pixel footer reports overflow and hidden blocked rows,
+or the last successful fixture update's age while the source is unavailable.
+Column labels and the generic title are omitted. Duplicate project names
+gain their supplied short session ID; labels never become identity keys.
 
 There is no live session discovery, host protocol, hook, network connection or
 Agent Observer dependency. The presentation structs are local study inputs;
@@ -31,7 +47,7 @@ From the repository root:
 Requires a native C compiler with AddressSanitizer/UndefinedBehaviorSanitizer
 and Python 3's standard library. Outputs 42 PBMs, 1-bit PNGs and a comparison
 page at `projects/agent-dashboard/build/native-preview/index.html`. The motion
-and rectangle suite writes its 32 PBMs under
+and rectangle suite writes its native scenario and transition PBMs under
 `projects/agent-dashboard/build/native-motion/`. Frames are exactly 400 × 300;
 browser scaling and monitor contrast do not establish physical readability.
 
@@ -51,20 +67,39 @@ RLCD_PORT='/dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_YOUR_BOARD
 ./scripts/idf.sh -C projects/agent-dashboard -p "$RLCD_PORT" flash monitor
 ```
 
-The default motion demo repeats every 60 seconds, with four seconds per scenario.
+The app uses a 2MiB factory partition for the complete 12px font, keeping the
+NVS and PHY partitions at their original addresses.
+
+The default motion demo repeats twenty-three scenarios over 92 seconds, with
+four seconds per scenario. Startup logs report the phase count and cycle duration.
 It exercises answered waits, prompts, new waits, settling, simultaneous changes,
-retargeting, overflow, same-project identity and feed loss/recovery. See
+retargeting, height-based admission, overflow, same-project identity, known
+inactivity/readmission, empty groups and feed loss/recovery. See
 [the motion proof](docs/ui-motion.md) for its sequence and validation status.
+The [urgency-band contract](docs/urgency-bands.md) records the variable-height
+refinement and its separate acceptance gates.
+The [larger header refinement](docs/header-24-study.md) records the current
+chrome and geometry. The [UI polish](docs/ui-polish.md) records the footer and
+feed-loss behavior. The [12px Fusion trial](docs/fusion-12-font-study.md)
+records the selected font and earlier device acceptance.
+The [earlier 8px Fusion trial](docs/fusion-font-study.md)
+records the denser layout rejected during physical review. The earlier
+[font-size comparison](docs/font-size-study.md) records the hand-authored 12/8-pixel
+bitmaps and preceding 14-pixel baseline.
 Rows share eased progress over a 360 ms transition, each along its own start-to-target
 path. Downward rows draw behind stationary rows; upward rows draw in front. State
-symbols and highlights update immediately, before the slide finishes.
+symbols, highlights and row heights update immediately, before the slide finishes.
+Whole-feed loss settles the last accepted packed layout, retains row heights
+and replaces cached work claims with health indicators. Known inactive sessions leave the selected
+roster; missing or stale work evidence does not imply inactivity.
 
-For a complete motion trace under the activated IDF Python:
+For a complete motion trace under the activated IDF Python (the capture must
+last longer than the complete-cycle duration reported at startup):
 
 ```sh
 . scripts/env.sh
 python3 projects/agent-dashboard/scripts/capture-dashboard-motion.py \
-    --port "$RLCD_PORT" --seconds 95 \
+    --port "$RLCD_PORT" --seconds 110 \
     --reset --output projects/agent-dashboard/build/evidence/dashboard-motion-local
 ```
 
@@ -98,7 +133,7 @@ dependencies, resets only the selected board via USB RTS, and checks that all
 seven cases were logged with one application start and no logged errors.
 Physical readability remains a separate human observation.
 
-In the current view, CX means Codex and CC means Claude Code. A filled triangle means
+In the earlier static view, CX means Codex and CC means Claude Code. A filled triangle means
 working, a black exclamation square needs input, a hollow circle settled, a
 filled square interrupted, and a black cross square error. A clock/dash/question
 mark/slashed circle indicates stale/unavailable/unknown-or-conflicting/unsupported
@@ -106,6 +141,10 @@ observations. The header shows PARTIAL instead of totals when any session's
 work state is uncertain. Ages are invented state durations, not source freshness.
 Settled/idle does not assert task success. The visible ID is removed; the identity
 case uses distinct explicit display labels for same-project sessions.
+The motion view instead uses row-coloured pixel marks, compact state ages
+such as `5s`/`2m`/`1h`, known-state totals plus unknown counts, and conditional
+short IDs for duplicate project names. Source update age is separate from
+each session's state age.
 
 The comparison page also includes the earlier X/C symbol layout, normal CX/CC
 rows, and a version without the provider field. The selected firmware style is

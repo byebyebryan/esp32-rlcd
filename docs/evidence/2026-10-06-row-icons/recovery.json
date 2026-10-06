@@ -1,0 +1,16 @@
+{
+  "verified_utc": "2026-10-06T17:21:34.140564+00:00",
+  "rlcd_port": "/dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_94:A9:90:DE:D0:04-if00",
+  "rlcd_node": "/dev/ttyACM0",
+  "rlcd_serial_released": true,
+  "acl_restored_exactly": true,
+  "separate_349_service": {
+    "ActiveState": "active",
+    "SubState": "running",
+    "MainPID": "111660"
+  },
+  "separate_349_serial_owner": [
+    "111663"
+  ],
+  "separate_349_untouched": true
+}

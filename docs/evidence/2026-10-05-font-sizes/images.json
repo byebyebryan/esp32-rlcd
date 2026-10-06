@@ -1,0 +1,52 @@
+{
+  "created_utc": "2026-10-05T21:07:28.267138+00:00",
+  "source_head": "06c74f688c14b2be350bbe54f8a6f633806f4ec0",
+  "source_worktree_dirty": true,
+  "synthetic_data": true,
+  "esp_idf": "v5.5.3",
+  "board_mac": "94:a9:90:de:d0:04",
+  "row_heights": [
+    26,
+    26,
+    18
+  ],
+  "text_heights": [
+    12,
+    12,
+    8
+  ],
+  "physical_readability": "pending",
+  "sources": {
+    "projects/agent-dashboard/components/agent_dashboard/agent_dashboard.c": "09e1cf62f314b64ab0a37b30266931bbb904639daa9bebc9782fdd804c178d49",
+    "projects/agent-dashboard/components/agent_dashboard/agent_dashboard_motion.c": "2bcfa0f594cd879468c6a35bbd2535ace5a12766d5fa62908d6aa5281a41eac7",
+    "projects/agent-dashboard/components/agent_dashboard/motion_fonts.h": "050ecccafec85650f1456e8f99c4423d6ce5443d10de42a6eabdc8fd6f054a32",
+    "projects/agent-dashboard/components/agent_dashboard/include/agent_dashboard.h": "bbbb47414d5f319c0f6a57217f9b71b234e44b7384c8134933d854ad67c2bb68",
+    "projects/agent-dashboard/components/agent_dashboard/include/dashboard_motion.h": "bfc6ff0442b8b2e6706ec0b26e4cac2c67ff1df568b459c14ab3971458196b61",
+    "projects/agent-dashboard/main/main.c": "a9726b66ff88e3fe594ab01fa8fed8322ea0f1c2710418d0b440d8f168de1b1c",
+    "projects/agent-dashboard/tests/motion_dashboard.c": "8deadf048a5c731f78f1be7b5f9dfebc8873a9f01a760f69a22999d13be313d9",
+    "projects/agent-dashboard/sdkconfig": "50023b8cd6dab810ba3d87af563ef81e97e9c57ae9522489fecad9dca63df317",
+    "projects/agent-dashboard/build/evidence/font-12-8-20261005T210221Z/static-sdkconfig": "cf9ab2ac9c7dabb61f6cdc0420b418694a26ff859024a19239f1c3cd26a0733e"
+  },
+  "images": {
+    "projects/agent-dashboard/build/rlcd-dashboard.bin": {
+      "size_bytes": 258960,
+      "sha256": "3afad8995da88384ed521efc23e199c675e0090f67399c8c71a822e162267707"
+    },
+    "projects/agent-dashboard/build/rlcd-dashboard.elf": {
+      "size_bytes": 4255768,
+      "sha256": "f606a8edc9654f1d4eb34e810cedd67d283b3ad0104a669087f06f13a5a006c0"
+    },
+    "projects/agent-dashboard/build/bootloader/bootloader.bin": {
+      "size_bytes": 20832,
+      "sha256": "e70699ccea4752369a56b05bfc9fa57a470f3b2673fe555530ee40cae9e9304e"
+    },
+    "projects/agent-dashboard/build/partition_table/partition-table.bin": {
+      "size_bytes": 3072,
+      "sha256": "7f00b6c042a89b15b0cac534f82ed988caf29278ff5700b0c511eb1b5bb7c820"
+    },
+    "projects/agent-dashboard/build/evidence/font-12-8-20261005T210221Z/static-build/rlcd-dashboard.bin": {
+      "size_bytes": 249488,
+      "sha256": "3d39ccf8f079ce618cb0658d575ae693183b83a0f2b8a5d417cf2b7cf5a44fa4"
+    }
+  }
+}

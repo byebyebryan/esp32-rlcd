@@ -1,0 +1,23 @@
+{
+  "glyph_count": 36981,
+  "ascent": 10,
+  "descent": 2,
+  "cap_height": 8,
+  "bitmap_bytes": 530745,
+  "lookup_bytes": 443772,
+  "source_bits": 4245956,
+  "full_font_bytes": 974517,
+  "max_advance": 30,
+  "max_bbx": [
+    27,
+    22
+  ],
+  "vertical_cell_exceptions": [
+    "U+3031",
+    "U+3032"
+  ],
+  "native_cell_clipping": true,
+  "generator_check": true,
+  "independent_all_glyph_and_bit_comparison": true,
+  "standalone_c11_werror": true
+}

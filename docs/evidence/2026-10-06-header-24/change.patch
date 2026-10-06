@@ -1,0 +1,239 @@
+--- before/projects/agent-dashboard/components/agent_dashboard/agent_dashboard.c
++++ projects/agent-dashboard/components/agent_dashboard/agent_dashboard.c
+@@ -640,10 +640,11 @@
+     const dashboard_view_t *roster = &view->roster;
+     rlcd_frame_clear(frame, true);
+     char summary[96];
++    size_t unknown = 0;
+     if (roster->feed_health != DASH_CURRENT) {
+         snprintf(summary, sizeof(summary), "FEED %s", health_label(roster->feed_health));
+     } else {
+-        size_t blocked = 0, waiting = 0, working = 0, unknown = 0;
++        size_t blocked = 0, waiting = 0, working = 0;
+         for (size_t i = 0; i < roster->count; ++i) {
+             const dashboard_session_t *session = &roster->sessions[i];
+             if (session->health != DASH_CURRENT || session->work == DASH_UNKNOWN) {
+@@ -654,14 +655,18 @@
+             else if (session->work == DASH_SETTLED || session->work == DASH_INTERRUPTED) ++waiting;
+             else if (session->work == DASH_WORKING) ++working;
+         }
+-        const int used = snprintf(summary, sizeof(summary),
+-                                  "%zu BLOCKED %zu WAIT %zu WORK",
+-                                  blocked, waiting, working);
+-        if (unknown && used > 0 && (size_t)used < sizeof(summary))
+-            snprintf(summary + used, sizeof(summary) - (size_t)used,
+-                     " %zu UNKNOWN", unknown);
+-    }
+-    motion_text(frame, 8, 0, summary, true, 384, false);
++        snprintf(summary, sizeof(summary), "%zu BLOCKED %zu WAIT %zu WORK",
++                 blocked, waiting, working);
++    }
++    const int summary_width = motion_text(frame, 8, 0, summary, false, 384, false);
++    if (unknown) {
++        // Secondary uncertainty still fits beside the full-size known totals.
++        char extra[32];
++        snprintf(extra, sizeof(extra), "%zu UNKNOWN", unknown);
++        motion_text(frame, 8 + summary_width + 12, 6, extra, true,
++                    384 - summary_width - 12, false);
++    }
++    rect(frame, 8, DASHBOARD_MOTION_BODY_TOP - 1, 384, 1, false);
+     motion_text(frame, 8, 288, "SIMULATED", true, 128, false);
+     char footer[64];
+     if (roster->feed_health != DASH_CURRENT) {
+--- before/projects/agent-dashboard/components/agent_dashboard/include/dashboard_motion.h
++++ projects/agent-dashboard/components/agent_dashboard/include/dashboard_motion.h
+@@ -19,7 +19,7 @@
+     DASHBOARD_MOTION_WORKING_ROW_HEIGHT = 12,
+     DASHBOARD_MOTION_TEXT_HEIGHT = 24,
+     DASHBOARD_MOTION_WORKING_TEXT_HEIGHT = 12,
+-    DASHBOARD_MOTION_BODY_TOP = 12,
++    DASHBOARD_MOTION_BODY_TOP = 24,
+     DASHBOARD_MOTION_BODY_BOTTOM = 288,
+     DASHBOARD_MOTION_RENDER_AGE_CAPACITY = DASHBOARD_MOTION_TRACK_CAPACITY + DASHBOARD_MOTION_CAPACITY,
+     DASHBOARD_MOTION_DEMO_CAPACITY = 32,
+--- before/projects/agent-dashboard/tests/motion_dashboard.c
++++ projects/agent-dashboard/tests/motion_dashboard.c
+@@ -668,9 +668,9 @@
+                           DASH_WORKING, DASH_CURRENT, true, i, 1);
+     }
+     apply_ok(&motion, items, DASHBOARD_MOTION_CAPACITY, 1000);
+-    assert(dashboard_motion_visible_count(&motion) == 23);
+-    assert(dashboard_motion_overflow_count(&motion) == 9);
+-    assert(dashboard_motion_position_y(&motion, ids[22]) == 276);
++    assert(dashboard_motion_visible_count(&motion) == 22);
++    assert(dashboard_motion_overflow_count(&motion) == 10);
++    assert(dashboard_motion_position_y(&motion, ids[21]) == 276);
+ 
+     // Increasing the final worker to a full blocked row admits it first and
+     // pushes the last workers out of the complete highest-priority prefix.
+@@ -679,9 +679,9 @@
+     ++items[31].state_episode;
+     apply_ok(&motion, items, 32, 1000);
+     assert(strcmp(dashboard_motion_identity_at(&motion, 0), ids[31]) == 0);
+-    assert(dashboard_motion_visible_count(&motion) == 22);
+-    assert(dashboard_motion_overflow_count(&motion) == 10);
+-    const int displaced = track_index(&motion, ids[21]);
++    assert(dashboard_motion_visible_count(&motion) == 21);
++    assert(dashboard_motion_overflow_count(&motion) == 11);
++    const int displaced = track_index(&motion, ids[20]);
+     assert(!motion.tracks[displaced].admitted);
+     assert(motion.tracks[displaced].y_q8 == 264 * 256);
+     assert(motion.tracks[displaced].target_y_q8 == DASHBOARD_MOTION_BODY_BOTTOM * 256);
+@@ -689,25 +689,25 @@
+     dashboard_motion_tick(&motion, 1360);
+     assert(motion.tracks[displaced].y_q8 == DASHBOARD_MOTION_BODY_BOTTOM * 256);
+ 
+-    // Two blocked, four waiting, and twenty-six workers fit fifteen rows.
++    // Two blocked, four waiting, and twenty-six workers fit sixteen rows.
+     dashboard_motion_init(&motion);
+     for (size_t i = 0; i < 32; ++i)
+         items[i].work = i < 2 ? DASH_NEEDS_INPUT : i < 6 ? DASH_SETTLED : DASH_WORKING;
+     apply_ok(&motion, items, 32, 2000);
+-    assert(dashboard_motion_visible_count(&motion) == 17);
+-    assert(dashboard_motion_overflow_count(&motion) == 15);
++    assert(dashboard_motion_visible_count(&motion) == 16);
++    assert(dashboard_motion_overflow_count(&motion) == 16);
+     assert(dashboard_motion_hidden_blocked_count(&motion) == 0);
+     assert(dashboard_motion_position_y(&motion, ids[0]) == DASHBOARD_MOTION_BODY_TOP);
+     assert(dashboard_motion_position_y(&motion, ids[2]) == DASHBOARD_MOTION_BODY_TOP + 48);
+     assert(dashboard_motion_position_y(&motion, ids[6]) == DASHBOARD_MOTION_BODY_TOP + 144);
+-    assert(dashboard_motion_position_y(&motion, ids[16]) == 276);
++    assert(dashboard_motion_position_y(&motion, ids[15]) == 276);
+ 
+     dashboard_motion_init(&motion);
+     for (size_t i = 0; i < 32; ++i) items[i].work = DASH_SETTLED;
+     apply_ok(&motion, items, 32, 2000);
+     assert(dashboard_motion_visible_count(&motion) == 11);
+     assert(dashboard_motion_overflow_count(&motion) == 21);
+-    assert(dashboard_motion_position_y(&motion, ids[10]) == 252);
++    assert(dashboard_motion_position_y(&motion, ids[10]) == 264);
+     assert(dashboard_motion_position_y(&motion, ids[11]) == DASHBOARD_MOTION_BODY_BOTTOM);
+ 
+     dashboard_motion_init(&motion);
+@@ -936,12 +936,17 @@
+     dashboard_draw_motion(empty_frame, &empty_view);
+     int known_end = 7;
+     for (int x = 8; x < RLCD_WIDTH; ++x)
+-        for (int y = 0; y < 12; ++y)
++        for (int y = 0; y < DASHBOARD_MOTION_BODY_TOP - 1; ++y)
+             if (!pixel(known_frame, x, y) && x > known_end) known_end = x;
+     assert(known_end >= 8);
+-    assert_band_equal(known_frame, frame_partial_header, 0, known_end + 1, 0, 12);
+-    assert(band_has_ink(frame_partial_header, known_end + 1, RLCD_WIDTH, 0, 12));
+-    assert_band_white(frame_partial_header, 0, 8, 0, 12);
++    assert_band_equal(known_frame, frame_partial_header, 0, known_end + 1,
++                      0, DASHBOARD_MOTION_BODY_TOP - 1);
++    assert(band_has_ink(frame_partial_header, known_end + 1, RLCD_WIDTH,
++                        0, DASHBOARD_MOTION_BODY_TOP - 1));
++    assert_band_white(frame_partial_header, 0, 8, 0, DASHBOARD_MOTION_BODY_TOP);
++    for (int x = 8; x < 392; ++x)
++        assert(!pixel(known_frame, x, DASHBOARD_MOTION_BODY_TOP - 1));
++    assert(band_has_ink(known_frame, 8, 392, 12, DASHBOARD_MOTION_BODY_TOP - 1));
+     assert_band_white(empty_frame, 0, RLCD_WIDTH, DASHBOARD_MOTION_BODY_TOP,
+                       DASHBOARD_MOTION_BODY_TOP + DASHBOARD_MOTION_ROW_HEIGHT);
+     assert_band_white(empty_frame, 0, RLCD_WIDTH,
+@@ -960,8 +965,8 @@
+         .roster = {.sessions = all_working,
+                    .count = DASHBOARD_MOTION_CAPACITY,
+                    .feed_health = DASH_CURRENT},
+-        .visible_count = 23,
+-        .overflow_count = 9,
++        .visible_count = 22,
++        .overflow_count = 10,
+     };
+     dashboard_motion_render_t visible_only = all_roster;
+     visible_only.roster.count = visible_only.visible_count;
+@@ -970,11 +975,11 @@
+     dashboard_draw_motion(whole_header, &all_roster);
+     dashboard_draw_motion(visible_header, &visible_only);
+     bool header_differs = false;
+-    for (int y = 0; y < 12; ++y)
++    for (int y = 0; y < DASHBOARD_MOTION_BODY_TOP - 1; ++y)
+         for (int x = 0; x < RLCD_WIDTH; ++x)
+             header_differs |= pixel(whole_header, x, y) !=
+                               pixel(visible_header, x, y);
+-    assert(header_differs); // Counts include the nine offscreen sessions.
++    assert(header_differs); // Counts include the ten offscreen sessions.
+     assert(band_has_ink(whole_header, 200, 392,
+                         DASHBOARD_MOTION_BODY_BOTTOM, RLCD_HEIGHT));
+     assert_band_white(visible_header, 120, RLCD_WIDTH,
+@@ -1045,12 +1050,15 @@
+     render_at(&no_id_motion, 1000, expected_frame);
+     // Supplied IDs change the two duplicate-name rows; an empty ID leaves its
+     // row byte-identical. All suffix pixels remain inside the name column.
++    const int top = DASHBOARD_MOTION_BODY_TOP;
+     assert(band_differs(frame_duplicate_names, expected_frame,
+-                        24, 312, 12, 24));
++                        24, 312, top, top + 12));
+     assert(band_differs(frame_duplicate_names, expected_frame,
+-                        24, 312, 24, 36));
+-    assert_band_equal(frame_duplicate_names, expected_frame, 8, 392, 36, 48);
+-    assert_band_equal(frame_duplicate_names, expected_frame, 312, 360, 12, 48);
++                        24, 312, top + 12, top + 24));
++    assert_band_equal(frame_duplicate_names, expected_frame,
++                      8, 392, top + 24, top + 36);
++    assert_band_equal(frame_duplicate_names, expected_frame,
++                      312, 360, top, top + 36);
+ 
+     static dashboard_motion_t full_ids;
+     static dashboard_motion_t full_no_ids;
+@@ -1071,10 +1079,12 @@
+     uint8_t full_with_ids[RLCD_FRAME_BYTES], full_without_ids[RLCD_FRAME_BYTES];
+     render_at(&full_ids, 2000, full_with_ids);
+     render_at(&full_no_ids, 2000, full_without_ids);
+-    assert(band_differs(full_with_ids, full_without_ids, 24, 312, 12, 36));
+-    assert(band_differs(full_with_ids, full_without_ids, 24, 312, 36, 60));
+-    assert_band_equal(full_with_ids, full_without_ids, 8, 392, 60, 72);
+-    assert_band_equal(full_with_ids, full_without_ids, 312, 360, 12, 60);
++    assert(band_differs(full_with_ids, full_without_ids, 24, 312, top, top + 24));
++    assert(band_differs(full_with_ids, full_without_ids,
++                        24, 312, top + 24, top + 48));
++    assert_band_equal(full_with_ids, full_without_ids,
++                      8, 392, top + 48, top + 60);
++    assert_band_equal(full_with_ids, full_without_ids, 312, 360, top, top + 48);
+     memcpy(frame_duplicate_names, full_with_ids, sizeof(frame_duplicate_names));
+ }
+ 
+@@ -1355,7 +1365,7 @@
+            dashboard_motion_identity_at(&motion, 11)) == DASHBOARD_MOTION_BODY_BOTTOM);
+     render_at(&motion, 100000, frame_overflow);
+ 
+-    // Build a full 32-worker model with 23 visible ghosts, then put new identities
++    // Build a full 32-worker model with 22 visible ghosts, then put new identities
+     // before identities being restored from those ghost slots.
+     static dashboard_motion_t stress;
+     dashboard_motion_init(&stress);
+@@ -1396,9 +1406,9 @@
+             exiting_tracks += stress.tracks[i].exiting ? 1u : 0u;
+         }
+     assert(used_tracks > DASHBOARD_MOTION_CAPACITY);
+-    assert(exiting_tracks == 23);
++    assert(exiting_tracks == 22);
+     // Exercise every active row and exit ghost through the packed renderer;
+-    // the twenty-three ghosts plus thirty-two current rows exceed the former
++    // the twenty-two ghosts plus thirty-two current rows exceed the former
+     // scratch capacity and remain within the expanded bounded storage.
+     render_at(&stress, 2200, frame_endpoint);
+     assert(stress.render_poses[used_tracks - 1].session != NULL);
+@@ -1450,8 +1460,8 @@
+                 const char *prefix = strcmp(entry->provider, "CODEX") == 0 ? "codex@" : "claude@";
+                 assert(strncmp(entry->logical_id, prefix, strlen(prefix)) == 0);
+             }
+-            assert(dashboard_motion_visible_count(&motion) == 23);
+-            assert(dashboard_motion_overflow_count(&motion) == 9);
++            assert(dashboard_motion_visible_count(&motion) == 22);
++            assert(dashboard_motion_overflow_count(&motion) == 10);
+             assert(dashboard_motion_hidden_blocked_count(&motion) == 0);
+         }
+         if (elapsed == 72000) {
+--- before/projects/agent-dashboard/main/main.c
++++ projects/agent-dashboard/main/main.c
+@@ -52,7 +52,7 @@
+              " normal_text_px=%d working_text_px=%d body_top=%d body_bottom=%d"
+              " font=fusion_pixel_12_zh_hans font_release=2026.09.25"
+              " normal_scale=2 working_scale=1 normal_cap_px=16 working_cap_px=8"
+-             " header_px=12 footer_px=12 chrome=summary source=simulated feed_loss=settle_target",
++             " header_px=24 footer_px=12 chrome=summary source=simulated feed_loss=settle_target",
+              dashboard_motion_demo_phase_count(), cycle_ms,
+              DASHBOARD_MOTION_DURATION_MS, FRAME_BUDGET_US,
+              DASHBOARD_MOTION_CAPACITY, sizeof(motion),

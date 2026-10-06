@@ -7,7 +7,7 @@
 #include <stdint.h>
 
 enum {
-    DASHBOARD_MOTION_CAPACITY = 16,
+    DASHBOARD_MOTION_CAPACITY = 32,
     DASHBOARD_MOTION_TRACK_CAPACITY = DASHBOARD_MOTION_CAPACITY * 2,
     DASHBOARD_MOTION_ID_MAX = 96,
     DASHBOARD_MOTION_PROJECT_MAX = 64,
@@ -15,12 +15,15 @@ enum {
     DASHBOARD_MOTION_SHORT_ID_MAX = 12,
     DASHBOARD_MOTION_DURATION_MS = 360,
     DASHBOARD_MOTION_BURST_LIMIT_MS = 720,
-    DASHBOARD_MOTION_ROW_HEIGHT = 26,
-    DASHBOARD_MOTION_BODY_TOP = 52,
-    DASHBOARD_MOTION_BODY_BOTTOM = 267,
+    DASHBOARD_MOTION_ROW_HEIGHT = 24,
+    DASHBOARD_MOTION_WORKING_ROW_HEIGHT = 12,
+    DASHBOARD_MOTION_TEXT_HEIGHT = 24,
+    DASHBOARD_MOTION_WORKING_TEXT_HEIGHT = 12,
+    DASHBOARD_MOTION_BODY_TOP = 24,
+    DASHBOARD_MOTION_BODY_BOTTOM = 288,
     DASHBOARD_MOTION_RENDER_AGE_CAPACITY = DASHBOARD_MOTION_TRACK_CAPACITY + DASHBOARD_MOTION_CAPACITY,
-    DASHBOARD_MOTION_DEMO_CAPACITY = 12,
-    DASHBOARD_MOTION_DEMO_PHASES = 15,
+    DASHBOARD_MOTION_DEMO_CAPACITY = 32,
+    DASHBOARD_MOTION_DEMO_PHASES = 23,
 };
 
 // Local fixed-capacity presentation input. logical_id is the full provider-
@@ -65,6 +68,8 @@ typedef struct {
     char short_id[DASHBOARD_MOTION_SHORT_ID_MAX + 1];
     dashboard_work_t work;
     dashboard_health_t health;
+    uint8_t row_height;
+    bool admitted;
     bool state_age_known;
     uint64_t state_entered_ms;
     uint64_t state_episode;
@@ -79,6 +84,7 @@ typedef struct {
 typedef struct {
     const dashboard_session_t *session;
     int16_t y;
+    uint8_t height;
     dashboard_motion_direction_t direction;
 } dashboard_motion_render_row_t;
 
@@ -88,7 +94,13 @@ typedef struct {
     // departing ghosts in prior order, followed by active rows in target order.
     const dashboard_motion_render_row_t *rows;
     size_t row_count;
+    size_t visible_count;
+    size_t overflow_count;
+    size_t hidden_blocked_count;
     bool feed_lost;
+    uint64_t now_ms;
+    uint64_t last_healthy_update_ms;
+    bool last_healthy_update_known;
 } dashboard_motion_render_t;
 
 // Called by the motion controller; public so the two C translation units can
@@ -103,14 +115,18 @@ typedef struct {
     size_t count;
     uint64_t next_admission_order;
     uint64_t now_ms;
+    uint64_t last_healthy_update_ms;
     uint64_t motion_start_ms;
     uint64_t burst_start_ms;
     uint64_t last_layout_change_ms;
     uint32_t motion_duration_ms;
+    size_t visible_count;
+    size_t hidden_blocked_count;
     dashboard_health_t feed_health;
     bool initialized;
     bool animating;
     bool burst_exhausted;
+    bool last_healthy_update_known;
     dashboard_session_t render_sessions[DASHBOARD_MOTION_CAPACITY];
     dashboard_session_t render_rows[DASHBOARD_MOTION_TRACK_CAPACITY];
     dashboard_motion_render_row_t render_poses[DASHBOARD_MOTION_TRACK_CAPACITY];
@@ -129,7 +145,8 @@ void dashboard_motion_init(dashboard_motion_t *motion);
 dashboard_motion_result_t dashboard_motion_apply(
     dashboard_motion_t *motion, const dashboard_motion_snapshot_t *snapshot,
     uint64_t now_ms);
-// Whole-feed loss freezes current poses and suppresses cached state claims.
+// Whole-feed loss settles tracks at the newest accepted targets and suppresses
+// cached state claims while retaining accepted row geometry.
 // Only non-current health values are accepted.
 dashboard_motion_result_t dashboard_motion_feed_lost(
     dashboard_motion_t *motion, dashboard_health_t health, uint64_t now_ms);
@@ -142,6 +159,9 @@ const char *dashboard_motion_identity_at(const dashboard_motion_t *motion,
                                          size_t rank);
 int dashboard_motion_position_y(const dashboard_motion_t *motion,
                                 const char *logical_id);
+size_t dashboard_motion_visible_count(const dashboard_motion_t *motion);
+size_t dashboard_motion_overflow_count(const dashboard_motion_t *motion);
+size_t dashboard_motion_hidden_blocked_count(const dashboard_motion_t *motion);
 bool dashboard_motion_state_entry(const dashboard_motion_t *motion,
                                   const char *logical_id, uint64_t *entered_ms);
 

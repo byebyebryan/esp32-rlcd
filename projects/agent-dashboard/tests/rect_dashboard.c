@@ -38,8 +38,58 @@ static void check_rect(int x, int y, int width, int height, bool white, bool cli
     assert(memcmp(reference_rect, guarded_rect + 1, RLCD_FRAME_BYTES) == 0);
 }
 
+static void check_unicode_text(void)
+{
+    const char *valid[] = {"a", "é", "中", "한", "🙂"};
+    const uint32_t expected[] = {'a', 0xe9, 0x4e2d, 0xd55c, 0x1f642};
+    for (size_t i = 0; i < 5; ++i) {
+        const char *cursor = valid[i];
+        size_t remaining = strlen(cursor);
+        assert(motion_codepoint(&cursor, &remaining) == expected[i]);
+        assert(remaining == 0);
+    }
+    const char *invalid[] = {"\x80", "\xc0\xaf", "\xe0\x80\x80", "\xed\xa0\x80", "\xf4\x90\x80\x80", "\xe4\xb8", "\xf0"};
+    for (size_t i = 0; i < 7; ++i) {
+        const char *cursor = invalid[i];
+        size_t remaining = strlen(cursor);
+        assert(motion_codepoint(&cursor, &remaining) == 0xfffd);
+        assert(cursor == invalid[i] + 1);
+    }
+    const char *bounded = "中";
+    size_t one_byte = 1;
+    assert(motion_codepoint(&bounded, &one_byte) == 0xfffd);
+    assert(one_byte == 0);
+    assert(motion_text_width("Fa中", true) == 24);
+    assert(motion_text_width("Fa中", false) == 48);
+    assert(fusion_pixel_12_lookup(0x4e2d));
+    assert(fusion_pixel_12_lookup(0xd55c));
+    assert(!fusion_pixel_12_lookup(0x1f642));
+    assert(motion_glyph(0x1f642) == fusion_pixel_12_lookup(0xfffd));
+    // A wide codepoint that cannot fit is replaced by a complete ellipsis,
+    // with the following column untouched; malformed tails remain bounded.
+    rlcd_frame_clear(reference_rect, true);
+    rlcd_frame_clear(guarded_rect + 1, true);
+    motion_clip_enabled = false;
+    motion_text(reference_rect, 24, 100, "a...", true, 24, false);
+    motion_text(guarded_rect + 1, 24, 100, "a中中中", true, 24, false);
+    assert(memcmp(reference_rect, guarded_rect + 1, RLCD_FRAME_BYTES) == 0);
+    // The source's two-line vertical kana mark is cropped to one cell.
+    rlcd_frame_clear(guarded_rect + 1, true);
+    motion_text(guarded_rect + 1, 24, 100, "〱", true, 12, false);
+    for (int y = 0; y < RLCD_HEIGHT; ++y)
+        if (y < 100 || y >= 112)
+            for (int x = 0; x < RLCD_WIDTH; ++x) {
+                const unsigned iy = RLCD_HEIGHT - 1 - (unsigned)y;
+                const size_t at = ((unsigned)x / 2) * (RLCD_HEIGHT / 4) + iy / 4;
+                assert(guarded_rect[1 + at] & (1u << (7 - (iy % 4) * 2 - (x % 2))));
+            }
+    motion_text(guarded_rect + 1, 24, 150, "\xe4\xb8", true, 40, false);
+    puts("PASS: UTF-8 valid, malformed, truncated, fallback, widths and codepoint ellipsis");
+}
+
 int main(void)
 {
+    check_unicode_text();
     size_t cases = 0;
     // All edge masks for a single tile and neighboring tiles, in both colors.
     for (int x = 0; x < 4; ++x)

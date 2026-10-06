@@ -1,0 +1,79 @@
+{
+  "technical_pass": true,
+  "readability": "pending user observation",
+  "mac": "94:a9:90:de:d0:04",
+  "app_sha256": "f15731c01f28daff767c2aef4d4e7c2f8dca420a020d75fe4a2c6434cec6c9ed",
+  "app_bytes": 1233408,
+  "elf_boot_prefix": "7ec7f256c",
+  "config": {
+    "event": "config",
+    "phases": 23,
+    "cycle_ms": 92000,
+    "fps": 25,
+    "duration_ms": 360,
+    "frame_budget_us": 40000,
+    "capacity": 32,
+    "model_bytes": 21568,
+    "visible_policy": "height_prefix",
+    "full_row_px": 24,
+    "working_row_px": 12,
+    "normal_text_px": 24,
+    "working_text_px": 12,
+    "body_top": 36,
+    "body_bottom": 288,
+    "font": "fusion_pixel_12_zh_hans",
+    "font_release": "2026.09.25",
+    "normal_scale": 2,
+    "working_scale": 1,
+    "normal_cap_px": 16,
+    "working_cap_px": 8
+  },
+  "complete_cycle_pass": true,
+  "seconds": 110.1295263209613,
+  "frames": 338,
+  "moving_frames": 228,
+  "frame_budget_misses": 0,
+  "errors": [],
+  "timing": {
+    "draw_us": {
+      "min": 1600,
+      "max": 11652
+    },
+    "transfer_us": {
+      "min": 12161,
+      "max": 12221
+    },
+    "frame_us": {
+      "min": 13853,
+      "max": 25325
+    },
+    "internal_free": {
+      "min": 331907,
+      "max": 331907
+    },
+    "stack_watermark": {
+      "min": 1736,
+      "max": 1864
+    },
+    "consecutive_motion_interval_us": {
+      "min": 39998,
+      "max": 40003
+    }
+  },
+  "density_checks_pass": true,
+  "source_hashes_match": true,
+  "motion_build": true,
+  "static_build": true,
+  "static_frames_unchanged": 42,
+  "native_asan_ubsan": true,
+  "recovery": {
+    "acl_restored": true,
+    "rlcd_serial_released": true,
+    "other_daemon_active": true,
+    "other_main_pid": 111660,
+    "other_serial_owner": 111663,
+    "other_daemon_restart": false
+  },
+  "commit": false,
+  "push": false
+}

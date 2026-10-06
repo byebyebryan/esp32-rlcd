@@ -1,0 +1,19 @@
+{
+  "ascent": 7,
+  "descent": 1,
+  "cap_height": 6,
+  "glyph_count": 28410,
+  "bitmap_bytes": 166776,
+  "lookup_bytes": 340920,
+  "total_font_bytes": 507696,
+  "advances": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "all_glyphs_fit_native_cell": true,
+  "generator_check": true
+}

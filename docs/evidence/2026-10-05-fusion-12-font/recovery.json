@@ -1,0 +1,8 @@
+{
+  "acl_restored": true,
+  "rlcd_serial_released": true,
+  "other_daemon_active": true,
+  "other_main_pid": 111660,
+  "other_serial_owner": 111663,
+  "other_daemon_restart": false
+}

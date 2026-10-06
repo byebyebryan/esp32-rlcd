@@ -1,0 +1,26 @@
+{
+  "rlcd-dashboard.bin": {
+    "bytes": 1233408,
+    "sha256": "f15731c01f28daff767c2aef4d4e7c2f8dca420a020d75fe4a2c6434cec6c9ed"
+  },
+  "rlcd-dashboard.elf": {
+    "bytes": 5238940,
+    "sha256": "7ec7f256c7eb7124b6b2f95d40990cd09792046f74cdd34ee9e65ee68417b8ba"
+  },
+  "bootloader/bootloader.bin": {
+    "bytes": 20832,
+    "sha256": "ae60bc67ae31b08fedf539cce951435b9d07ba02671bea1ed87e8b1cfad6c227"
+  },
+  "partition_table/partition-table.bin": {
+    "bytes": 3072,
+    "sha256": "5e71c3c890e04714daa03b21a0d23953a2dadf9fdf15eec02b886f7b6e9f8c81"
+  },
+  "static/rlcd-dashboard.bin": {
+    "bytes": 249488,
+    "sha256": "468ff857c2caec19121237f77263b0c2412722e1cdf5c64fdf1fe75b4b208f12"
+  },
+  "static/rlcd-dashboard.elf": {
+    "bytes": 4202944,
+    "sha256": "01248d006b1824a7e2222a88f74599b97ac322e517b5c252cb8aed78e4eda263"
+  }
+}
