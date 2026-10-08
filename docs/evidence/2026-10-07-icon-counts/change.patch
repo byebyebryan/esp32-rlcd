@@ -1,0 +1,356 @@
+diff --git a/projects/agent-dashboard/README.md b/projects/agent-dashboard/README.md
+index a7c554b..05d4247 100644
+--- a/projects/agent-dashboard/README.md
++++ b/projects/agent-dashboard/README.md
+@@ -7,11 +7,11 @@ at 1Hz until resolved. Waiting rows stay white on black; working rows stay
+ black on white. All rows and their text are 24 pixels high, using Fusion Pixel's
+ native 12-pixel font at scale two. Basic Latin capital height is 16 pixels.
+ Mixed case and supported Unicode labels retain their supplied characters.
+-The 264-pixel list admits eleven complete rows with no row/group gaps and
+-explicit hidden blocked counts. The local model holds up to thirty-two
++The 276-pixel list admits eleven complete rows with no row/group gaps.
++The local model holds up to thirty-two
+ sessions. The earlier five-row layout and fixed
+ eight-row studies remain in the renderer and native previews.
+-The motion footer identifies the source as **SIMULATED**; the earlier static
++The motion view has no footer. Its data remains synthetic; the earlier static
+ screens retain their **DEMO** label.
+ 
+ Motion-view status icons use the earlier shapes and x=8 placement, following
+@@ -20,13 +20,14 @@ the row text colour directly on its background. Blocked rows share a clock:
+ inactivity and unavailable evidence stop flashing. On-device feedback accepted
+ this scheme for roughly one to three blocked requests that clear quickly.
+ 
+-A 24-pixel AGENTS title anchors the header, with native 12-pixel blocked,
+-waiting and working totals right-aligned for the whole active roster,
+-including hidden rows. A thin divider leaves two white scanlines before
+-the first row, within the existing 24-pixel header band. Uncertain rows
+-add an explicit unknown count beside the source label in the footer.
+-The 12-pixel footer reports overflow and hidden blocked rows,
+-or the last successful fixture update's age while the source is unavailable.
++A 24-pixel AGENTS title anchors the header. Right-aligned state icons and
++counts use the same 24-pixel font: blocked, waiting and working totals for
++the whole active roster, including hidden rows. Uncertain observations add
++a question-mark count; `+N` reports hidden rows when necessary. The state
++icons use the row shapes at a larger integer scale and remain steady.
++A thin divider leaves two white scanlines before the first row, within
++the existing 24-pixel header band. Whole-feed loss replaces the title and
++counts with a large source-health message; cached work totals are suppressed.
+ Column labels are omitted. Duplicate project names
+ gain their supplied short session ID; labels never become identity keys.
+ 
+@@ -82,8 +83,9 @@ inactivity/readmission, empty groups and feed loss/recovery. See
+ [the motion proof](docs/ui-motion.md) for its sequence and validation status.
+ The [urgency-band contract](docs/urgency-bands.md) records the variable-height
+ refinement and its separate acceptance gates.
+-The [accepted state layout](docs/flashing-rows-study.md) records the current state
+-styles and slow flashing. The [uniform-row trial](docs/uniform-rows-study.md)
++The [icon-count header trial](docs/icon-counts-study.md) records the current
++header and footer removal. The [accepted state layout](docs/flashing-rows-study.md)
++records the retained row styles and slow flashing. The [uniform-row trial](docs/uniform-rows-study.md)
+ records the preceding marker/icon-cue comparison. The [title and count refinement](docs/header-title-study.md)
+ records the retained chrome. The [UI polish](docs/ui-polish.md) records the footer and
+ feed-loss behavior. The [12px Fusion trial](docs/fusion-12-font-study.md)
+diff --git a/projects/agent-dashboard/components/agent_dashboard/agent_dashboard.c b/projects/agent-dashboard/components/agent_dashboard/agent_dashboard.c
+index bc8ed1d..43c4eb0 100644
+--- a/projects/agent-dashboard/components/agent_dashboard/agent_dashboard.c
++++ b/projects/agent-dashboard/components/agent_dashboard/agent_dashboard.c
+@@ -543,10 +543,9 @@ void dashboard_draw_styled(uint8_t *f, const dashboard_view_t *view,
+ 
+ static void motion_state_symbol(uint8_t *frame, int x, int y,
+                                 dashboard_work_t work, dashboard_health_t health,
+-                                bool compact, bool white)
++                                int scale, bool white)
+ {
+-    // Draw only the mark on the opaque row's background, using its text colour.
+-    // Full rows use the identical mark at integer scale two.
++    // Rows use scale two; header counts use scale three for a 15px cap height.
+     static const uint8_t working[6] = {0, 0x10, 0x08, 0x04, 0x08, 0x10};
+     static const uint8_t blocked[6] = {0, 0x08, 0x08, 0x08, 0, 0x08};
+     static const uint8_t waiting[6] = {0, 0, 0x02, 0x14, 0x08, 0};
+@@ -559,7 +558,6 @@ static void motion_state_symbol(uint8_t *frame, int x, int y,
+         else if (work == DASH_ERROR) bits = error;
+         else if (work == DASH_SETTLED || work == DASH_INTERRUPTED) bits = waiting;
+     }
+-    const int scale = compact ? 1 : 2;
+     for (int row = 0; row < 6; ++row)
+         for (int col = 0; col < 6; ++col)
+             if (bits[row] & (0x20u >> col))
+@@ -625,7 +623,7 @@ static void draw_motion_row(uint8_t *frame, const dashboard_motion_render_row_t
+     rect(frame, 8, y, 384, height, !highlighted);
+     const bool compact = false;
+     motion_state_symbol(frame, 8, y + (height - 12) / 2,
+-                        s->work, health, compact, highlighted);
++                        s->work, health, 2, highlighted);
+     motion_project_name(frame, 24, y, view, s, compact, 288, highlighted);
+     const char *agent = "??";
+     if (s->provider && strcmp(s->provider, "CODEX") == 0) agent = "CX";
+@@ -644,61 +642,53 @@ static void draw_motion_chrome(uint8_t *frame,
+     const dashboard_view_t *roster = &view->roster;
+     rlcd_frame_clear(frame, true);
+     char summary[96];
+-    size_t unknown = 0;
+     if (roster->feed_health != DASH_CURRENT) {
+         snprintf(summary, sizeof(summary), "FEED %s", health_label(roster->feed_health));
+         motion_text(frame, 8, 0, summary, false, 384, false);
+     } else {
+-        size_t blocked = 0, waiting = 0, working = 0;
++        enum { ICON_WIDTH = 18, ICON_GAP = 4, GROUP_GAP = 12 };
++        const dashboard_work_t states[] = {
++            DASH_NEEDS_INPUT, DASH_SETTLED, DASH_WORKING, DASH_UNKNOWN,
++        };
++        size_t totals[4] = {0};
+         for (size_t i = 0; i < roster->count; ++i) {
+             const dashboard_session_t *session = &roster->sessions[i];
+             if (session->health != DASH_CURRENT || session->work == DASH_UNKNOWN) {
+-                ++unknown;
++                ++totals[3];
+                 continue;
+             }
+-            if (session->work == DASH_NEEDS_INPUT || session->work == DASH_ERROR) ++blocked;
+-            else if (session->work == DASH_SETTLED || session->work == DASH_INTERRUPTED) ++waiting;
+-            else if (session->work == DASH_WORKING) ++working;
++            if (session->work == DASH_NEEDS_INPUT || session->work == DASH_ERROR) ++totals[0];
++            else if (session->work == DASH_SETTLED || session->work == DASH_INTERRUPTED) ++totals[1];
++            else if (session->work == DASH_WORKING) ++totals[2];
++        }
++        const size_t groups = totals[3] ? 4 : 3;
++        char values[4][24];
++        int widths[4];
++        int total_width = (int)(groups - 1) * GROUP_GAP;
++        for (size_t i = 0; i < groups; ++i) {
++            snprintf(values[i], sizeof(values[i]), "%zu", totals[i]);
++            widths[i] = ICON_WIDTH + ICON_GAP + motion_text_width(values[i], false);
++            total_width += widths[i];
++        }
++        char overflow[24] = "";
++        if (view->overflow_count) {
++            snprintf(overflow, sizeof(overflow), "+%zu", view->overflow_count);
++            total_width += GROUP_GAP + motion_text_width(overflow, false);
+         }
+-        snprintf(summary, sizeof(summary), "%zu BLOCKED %zu WAIT %zu WORK",
+-                 blocked, waiting, working);
+         motion_text(frame, 8, 0, "AGENTS", false, 128, false);
+-        motion_text(frame, 392 - motion_text_width(summary, true), 6,
+-                    summary, true, 280, false);
++        int x = 392 - total_width;
++        for (size_t i = 0; i < groups; ++i) {
++            motion_state_symbol(frame, x, 2, states[i], DASH_CURRENT, 3, false);
++            motion_text(frame, x + ICON_WIDTH + ICON_GAP, 0,
++                        values[i], false, widths[i] - ICON_WIDTH - ICON_GAP, false);
++            x += widths[i] + GROUP_GAP;
++        }
++        if (overflow[0])
++            motion_text(frame, x, 0, overflow, false,
++                        motion_text_width(overflow, false), false);
+     }
+     // Keep two white scanlines between the divider and the first packed row.
+     rect(frame, 8, DASHBOARD_MOTION_BODY_TOP - 3, 384, 1, false);
+-    char source[48];
+-    if (unknown) snprintf(source, sizeof(source), "SIMULATED  %zu unknown", unknown);
+-    else snprintf(source, sizeof(source), "SIMULATED");
+-    motion_text(frame, 8, 288, source, true, 128, false);
+-    char footer[64];
+-    if (roster->feed_health != DASH_CURRENT) {
+-        char age[8];
+-        if (!view->last_healthy_update_known ||
+-            view->now_ms < view->last_healthy_update_ms) {
+-            snprintf(age, sizeof(age), "?");
+-        } else {
+-            const uint64_t seconds =
+-                (view->now_ms - view->last_healthy_update_ms) / 1000;
+-            if (seconds < 60) snprintf(age, sizeof(age), "%llus",
+-                                       (unsigned long long)seconds);
+-            else if (seconds < 3600) snprintf(age, sizeof(age), "%llum",
+-                                              (unsigned long long)(seconds / 60));
+-            else if (seconds < 360000) snprintf(age, sizeof(age), "%lluh",
+-                                                (unsigned long long)(seconds / 3600));
+-            else snprintf(age, sizeof(age), "+++");
+-        }
+-        snprintf(footer, sizeof(footer), "LAST UPDATE %s AGO", age);
+-    } else if (view->overflow_count) {
+-        snprintf(footer, sizeof(footer), "%zu HIDDEN / %zu BLOCKED",
+-                 view->overflow_count, view->hidden_blocked_count);
+-    } else {
+-        footer[0] = '\0';
+-    }
+-    if (footer[0])
+-        motion_text(frame, 392 - motion_text_width(footer, true), 288,
+-                    footer, true, 280, false);
+ }
+ 
+ void dashboard_draw_motion(uint8_t *frame, const dashboard_motion_render_t *view)
+diff --git a/projects/agent-dashboard/components/agent_dashboard/include/dashboard_motion.h b/projects/agent-dashboard/components/agent_dashboard/include/dashboard_motion.h
+index eb3f179..e16a268 100644
+--- a/projects/agent-dashboard/components/agent_dashboard/include/dashboard_motion.h
++++ b/projects/agent-dashboard/components/agent_dashboard/include/dashboard_motion.h
+@@ -21,7 +21,7 @@ enum {
+     DASHBOARD_MOTION_WORKING_TEXT_HEIGHT = 24,
+     DASHBOARD_MOTION_FLASH_HALF_PERIOD_MS = 500,
+     DASHBOARD_MOTION_BODY_TOP = 24,
+-    DASHBOARD_MOTION_BODY_BOTTOM = 288,
++    DASHBOARD_MOTION_BODY_BOTTOM = 300,
+     DASHBOARD_MOTION_RENDER_AGE_CAPACITY = DASHBOARD_MOTION_TRACK_CAPACITY + DASHBOARD_MOTION_CAPACITY,
+     DASHBOARD_MOTION_DEMO_CAPACITY = 32,
+     DASHBOARD_MOTION_DEMO_PHASES = 23,
+diff --git a/projects/agent-dashboard/main/main.c b/projects/agent-dashboard/main/main.c
+index e7ad6ab..b23c5f9 100644
+--- a/projects/agent-dashboard/main/main.c
++++ b/projects/agent-dashboard/main/main.c
+@@ -53,8 +53,8 @@ static void run_motion_demo(void)
+              " normal_text_px=%d working_text_px=%d body_top=%d body_bottom=%d"
+              " font=fusion_pixel_12_zh_hans font_release=2026.09.25"
+              " normal_scale=2 working_scale=2 normal_cap_px=16 working_cap_px=16"
+-             " header_px=24 summary_px=12 footer_px=12 divider_y=21 header_gap_px=2"
+-             " chrome=title_counts source=simulated feed_loss=settle_target"
++             " header_px=24 summary_px=24 header_icon_px=18 footer_px=0 divider_y=21 header_gap_px=2"
++             " chrome=icon_counts overflow=header source=simulated feed_loss=settle_target"
+              " waiting_marker_px=0 blocked_flash_hz=1 blocked_flash_half_ms=500"
+              " waiting_polarity=inverse working_polarity=normal",
+              dashboard_motion_demo_phase_count(), cycle_ms,
+diff --git a/projects/agent-dashboard/tests/motion_dashboard.c b/projects/agent-dashboard/tests/motion_dashboard.c
+index 63a0cec..1ec6620 100644
+--- a/projects/agent-dashboard/tests/motion_dashboard.c
++++ b/projects/agent-dashboard/tests/motion_dashboard.c
+@@ -277,7 +277,7 @@ static void test_transitions_and_stationary_chrome(void)
+     assert(run_y == DASHBOARD_MOTION_BODY_TOP + 6);
+     assert(wait_y == DASHBOARD_MOTION_BODY_TOP + 18);
+ 
+-    // Motion header/footer stay stationary while body rows transition.
++    // The header stays stationary while body rows transition.
+     render_at(&motion, 1360, frame_endpoint);
+     for (int y = 0; y < RLCD_HEIGHT; ++y) {
+         if (y >= DASHBOARD_MOTION_BODY_TOP && y < DASHBOARD_MOTION_BODY_BOTTOM) continue;
+@@ -424,7 +424,8 @@ static void test_state_polarity_and_slow_flash(const char *directory)
+     assert(!dashboard_motion_flashing(&motion));
+     render_at(&motion, 2100, frame_initial);
+     render_at(&motion, 2600, frame_halfway);
+-    assert_band_equal(frame_initial, frame_halfway, 8, 392, 24, 288);
++    assert_band_equal(frame_initial, frame_halfway, 8, 392,
++                      DASHBOARD_MOTION_BODY_TOP, DASHBOARD_MOTION_BODY_BOTTOM);
+     assert(pixel(frame_halfway, 22, 74)); // Cached waiting claims lose inverse styling.
+     apply_ok(&motion, items, 4, 2700);
+     assert(dashboard_motion_flashing(&motion));
+@@ -919,7 +920,7 @@ static void test_inactive_removal_and_readmission(void)
+     assert(entered == 1150);
+ }
+ 
+-static void test_motion_chrome_states(void)
++static void test_motion_chrome_states(const char *directory)
+ {
+     const dashboard_session_t blocked = {
+         .project = "blocked", .provider = "CODEX", .short_id = "BLCK",
+@@ -983,32 +984,28 @@ static void test_motion_chrome_states(void)
+     dashboard_draw_motion(known_frame, &known_view);
+     dashboard_draw_motion(frame_partial_header, &partial_view);
+     dashboard_draw_motion(empty_frame, &empty_view);
+-    // Unknown counts are explicit in the footer; they leave the title and
+-    // known-state summary unchanged, including its right alignment.
++    // Uncertain evidence gets its own header count without changing the title.
+     assert_band_equal(known_frame, frame_partial_header,
+-                      0, RLCD_WIDTH, 0, DASHBOARD_MOTION_BODY_TOP);
++                      0, 136, 0, DASHBOARD_MOTION_BODY_TOP - 3);
+     assert(band_differs(known_frame, frame_partial_header,
+-                        8, 136, DASHBOARD_MOTION_BODY_BOTTOM, RLCD_HEIGHT));
+-    assert(band_has_ink(frame_partial_header, 74, 136,
+-                        DASHBOARD_MOTION_BODY_BOTTOM, RLCD_HEIGHT));
++                        136, 392, 0, DASHBOARD_MOTION_BODY_TOP - 3));
++    save_pbm(directory, "header-icons-known", known_frame);
++    save_pbm(directory, "header-icons-unknown", frame_partial_header);
+     assert_band_white(frame_partial_header, 0, 8, 0, DASHBOARD_MOTION_BODY_TOP);
+     for (int x = 8; x < 392; ++x)
+         assert(!pixel(known_frame, x, DASHBOARD_MOTION_BODY_TOP - 3));
+     assert_band_white(known_frame, 0, RLCD_WIDTH,
+                       DASHBOARD_MOTION_BODY_TOP - 2, DASHBOARD_MOTION_BODY_TOP);
+     assert(band_has_ink(known_frame, 8, 80, 12, DASHBOARD_MOTION_BODY_TOP - 3));
+-    assert_band_white(known_frame, 200, RLCD_WIDTH, 16,
+-                      DASHBOARD_MOTION_BODY_TOP - 3);
++    // The last count uses the full-size font, with ink below the old 12px line.
++    assert(band_has_ink(known_frame, 380, 392, 12, 20));
+     assert_band_white(empty_frame, 0, RLCD_WIDTH, DASHBOARD_MOTION_BODY_TOP,
+                       DASHBOARD_MOTION_BODY_TOP + DASHBOARD_MOTION_ROW_HEIGHT);
+     assert_band_white(empty_frame, 0, RLCD_WIDTH,
+                       DASHBOARD_MOTION_BODY_BOTTOM - 1,
+                       DASHBOARD_MOTION_BODY_BOTTOM);
+-    assert_band_white(empty_frame, 120, RLCD_WIDTH,
+-                      DASHBOARD_MOTION_BODY_BOTTOM,
+-                      RLCD_HEIGHT);
+-    assert(band_has_ink(empty_frame, 8, 120, DASHBOARD_MOTION_BODY_BOTTOM,
+-                        RLCD_HEIGHT));
++    // The former footer has no source label or small text.
++    assert_band_white(empty_frame, 0, RLCD_WIDTH, 288, RLCD_HEIGHT);
+ 
+     dashboard_session_t all_working[DASHBOARD_MOTION_CAPACITY];
+     for (size_t i = 0; i < DASHBOARD_MOTION_CAPACITY; ++i)
+@@ -1017,8 +1014,8 @@ static void test_motion_chrome_states(void)
+         .roster = {.sessions = all_working,
+                    .count = DASHBOARD_MOTION_CAPACITY,
+                    .feed_health = DASH_CURRENT},
+-        .visible_count = 22,
+-        .overflow_count = 10,
++        .visible_count = 11,
++        .overflow_count = 21,
+     };
+     dashboard_motion_render_t visible_only = all_roster;
+     visible_only.roster.count = visible_only.visible_count;
+@@ -1031,14 +1028,33 @@ static void test_motion_chrome_states(void)
+         for (int x = 0; x < RLCD_WIDTH; ++x)
+             header_differs |= pixel(whole_header, x, y) !=
+                               pixel(visible_header, x, y);
+-    assert(header_differs); // Counts include the ten offscreen sessions.
+-    assert(band_has_ink(whole_header, 200, 392,
+-                        DASHBOARD_MOTION_BODY_BOTTOM, RLCD_HEIGHT));
+-    assert_band_white(visible_header, 120, RLCD_WIDTH,
+-                      DASHBOARD_MOTION_BODY_BOTTOM, RLCD_HEIGHT);
+-
+-    // Lost-feed chrome depends on health and last-update provenance, never
+-    // the cached roster count or work labels.
++    assert(header_differs);
++    dashboard_motion_render_t no_overflow = all_roster;
++    no_overflow.overflow_count = 0;
++    uint8_t no_overflow_frame[RLCD_FRAME_BYTES];
++    dashboard_draw_motion(no_overflow_frame, &no_overflow);
++    // Counts still include hidden sessions independently of the +N indicator.
++    assert(band_differs(no_overflow_frame, visible_header,
++                        136, 392, 0, DASHBOARD_MOTION_BODY_TOP - 3));
++    assert(band_differs(whole_header, no_overflow_frame,
++                        136, 392, 0, DASHBOARD_MOTION_BODY_TOP - 3));
++    assert_band_white(whole_header, 0, RLCD_WIDTH, 288, RLCD_HEIGHT);
++    save_pbm(directory, "header-icons-overflow", whole_header);
++
++    // Two-digit totals, uncertainty and overflow all fit without covering
++    // AGENTS, clipping at the right edge or writing beyond the framebuffer.
++    for (size_t i = 0; i < DASHBOARD_MOTION_CAPACITY; ++i)
++        all_working[i] = i < 10 ? blocked : i < 20 ? waiting :
++                         i < 30 ? working : uncertain;
++    memset(guarded, 0x6b, sizeof(guarded));
++    dashboard_draw_motion(guarded + 1, &all_roster);
++    assert(guarded[0] == 0x6b && guarded[RLCD_FRAME_BYTES + 1] == 0x6b);
++    assert_band_equal(known_frame, guarded + 1, 0, 136, 0, 21);
++    assert_band_white(guarded + 1, 0, 8, 0, 21);
++    assert_band_white(guarded + 1, 392, RLCD_WIDTH, 0, 21);
++    save_pbm(directory, "header-icons-capacity", guarded + 1);
++
++    // Lost-feed chrome reports health, suppressing cached counts and overflow.
+     const dashboard_motion_render_t stale_small = {
+         .roster = {.sessions = &blocked, .count = 1, .feed_health = DASH_STALE},
+         .feed_lost = true,
+@@ -1063,7 +1079,8 @@ static void test_motion_chrome_states(void)
+         .last_healthy_update_known = true,
+     };
+     dashboard_draw_motion(expected_frame, &stale_known);
+-    assert(memcmp(stale_a, expected_frame, RLCD_FRAME_BYTES) != 0);
++    assert(memcmp(stale_a, expected_frame, RLCD_FRAME_BYTES) == 0);
++    save_pbm(directory, "header-icons-stale", stale_a);
+ }
+ 
+ static void test_duplicate_project_labels(void)
+@@ -1642,7 +1659,7 @@ int main(int argc, char **argv)
+     test_urgency_geometry_and_admission();
+     test_uniform_height_changes_and_retarget();
+     test_inactive_removal_and_readmission();
+-    test_motion_chrome_states();
++    test_motion_chrome_states(argv[1]);
+     test_duplicate_project_labels();
+     test_compact_ages_and_healthy_provenance();
+     test_feed_loss_settles_retargeted_layouts();

@@ -17,10 +17,11 @@ to the motion view while retaining these static previews as a regression baselin
 Its physical readability and row-resizing acceptance are separate from the
 earlier observations below.
 The selected [12px Fusion trial](fusion-12-font-study.md) supersedes the earlier
-8px trial. The current [flashing-row trial](flashing-rows-study.md) retains the
-larger title and smaller counts, using 24px rows for every state, 1Hz
-blocked-row flashing, inverse waiting rows and normal working rows. The user
-accepted the on-device design for one to three short-lived blocked requests.
+8px trial. The current [accepted icon-count header](icon-counts-study.md) uses
+large icon totals and no footer, retaining 24px rows for every state and the
+[flashing-row styles](flashing-rows-study.md). The user accepted the flashing
+design for one to three short-lived blocked requests and the later header
+refinement after it was flashed.
 
 ## Why this view
 

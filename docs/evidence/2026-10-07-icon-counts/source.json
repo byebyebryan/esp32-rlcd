@@ -1,0 +1,95 @@
+{
+  "base_revision": "2b705536a2dfe3f0e434642d1f18379fe5eb55e7",
+  "app_version": "2b70553-dirty",
+  "port": "/dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_94:A9:90:F3:43:74-if00",
+  "device_mac": "94:a9:90:f3:43:74",
+  "images": {
+    "sdkconfig": {
+      "bytes": 74579,
+      "sha256": "ec3eec3d0ffccb1b0ba229a86d71bdf13da1a81ed0d99f072be6ead65c5f7ca0"
+    },
+    "firmware/rlcd-dashboard.bin": {
+      "bytes": 1234256,
+      "sha256": "2c790ee0bbf1bdecfc6e247474adc66709af9239c305add7ded21a9fa0e3111d"
+    },
+    "firmware/rlcd-dashboard.elf": {
+      "bytes": 5246756,
+      "sha256": "294f84cc267c8aa9125c17b5acd9ce676e30f024e6d21e77de4e7d8cd4d4ea3f"
+    },
+    "firmware/bootloader/bootloader.bin": {
+      "bytes": 20832,
+      "sha256": "76cc7a3dc721505d43ed911b8f08810a68e6884d5503bd592f36ec970cb4a784"
+    },
+    "firmware/partition_table/partition-table.bin": {
+      "bytes": 3072,
+      "sha256": "5e71c3c890e04714daa03b21a0d23953a2dadf9fdf15eec02b886f7b6e9f8c81"
+    },
+    "firmware/flasher_args.json": {
+      "bytes": 921,
+      "sha256": "03b00debc111de3cf4ee39edeae8e2d2351f37c2a7907b168ecf7ca5f3763368"
+    }
+  },
+  "sources": {
+    "components/display_rlcd/CMakeLists.txt": "17aa7d981b70d7faeb8316a5cc5ea63daa7a824a87f6d3b0fcfc661863d869a9",
+    "components/display_rlcd/LICENSE.waveshare": "bb01037d243b2614f6c0bcf65671eff4a004b65ef687a4fd4925a9ab068bd613",
+    "components/display_rlcd/UPSTREAM.md": "b202708176866b13d3fba51852957798fb3423a5348d81640f9b188e9153d609",
+    "components/display_rlcd/include/rlcd_frame.h": "96ca04c42f8983a44b8c362bbedbd05f85e400ce617f4daebe80ba25ce4a155a",
+    "components/display_rlcd/include/rlcd_panel.h": "638c1f9c89c7abda86e0e5c369db32125ff198986c205b4ee7733627f921fbfb",
+    "components/display_rlcd/rlcd_frame.c": "ddd85b4833a7b7db34dca0d8759838ff7b88ed9860d30d0aab4ac834b83d4c35",
+    "components/display_rlcd/rlcd_panel.c": "4a7db99a19cb68d3e3340b083e18ec5646daea1b8d86a2cbfe17a3b70135d45c",
+    "projects/agent-dashboard/CMakeLists.txt": "ea73630717a76e80b6729c071acf64bbb24774495801c4af7abe5bc1c5baf836",
+    "projects/agent-dashboard/README.md": "2a14196af7904fc7858d030d4bdadb3403bf7eb4665cac2bfcfc0183701047a9",
+    "projects/agent-dashboard/components/agent_dashboard/CMakeLists.txt": "fb8ff1566b4c7577a46abe6182e99b451082c4ce8109f530a47961a2c8a072ad",
+    "projects/agent-dashboard/components/agent_dashboard/agent_dashboard.c": "d4b1b4aa60150c1eceadf03ad594f0955bcfc655e551f32c78c78a1eaf6a9f90",
+    "projects/agent-dashboard/components/agent_dashboard/agent_dashboard_motion.c": "73a56649b5e7d6b27296515fe4496c29d6b6b3595e67309d767620ffa7d47b14",
+    "projects/agent-dashboard/components/agent_dashboard/assets/fonts/fusion-pixel-font-2026.09.25/LICENSES/ark-pixel/OFL.txt": "3ab41567e68e3988ba1ef16dd2644eca95ca5648ea12e7d46e6287fc0bbe5aee",
+    "projects/agent-dashboard/components/agent_dashboard/assets/fonts/fusion-pixel-font-2026.09.25/LICENSES/boutique-bitmap-7x7-OFL.txt": "ad588b5ce58a02179b806381339fd380e5110771f2fa91279af026fd3ab97002",
+    "projects/agent-dashboard/components/agent_dashboard/assets/fonts/fusion-pixel-font-2026.09.25/LICENSES/cubic-11/OFL.txt": "2b6e5938e5cffa0b9e183bd05f8c363e174e7ebed1a0556e2855fd1707fa2188",
+    "projects/agent-dashboard/components/agent_dashboard/assets/fonts/fusion-pixel-font-2026.09.25/LICENSES/galmuri-LICENSE.txt": "86a3ee9495f942f0243f18c103da9faca27adb88142613edb8bb852e56c892c1",
+    "projects/agent-dashboard/components/agent_dashboard/assets/fonts/fusion-pixel-font-2026.09.25/LICENSES/misaki.txt": "82929cc3b34c79b6a67f21fe137c7bb165589c9e34ba1441611e493afd67dfca",
+    "projects/agent-dashboard/components/agent_dashboard/assets/fonts/fusion-pixel-font-2026.09.25/LICENSES/miseki-bitmap-LICENSE.txt": "e855b45b384d37c9a778119271bd9c32706e3f1f9f278de0ad47347606eea846",
+    "projects/agent-dashboard/components/agent_dashboard/assets/fonts/fusion-pixel-font-2026.09.25/OFL.txt": "bc518cf64b8032c07690f33cc270c35c179255a6ac8efa7c165ebae7e8f76a63",
+    "projects/agent-dashboard/components/agent_dashboard/assets/fonts/fusion-pixel-font-2026.09.25/PROVENANCE.md": "58cce011c87900193d6b7ef4f29a936a088129808e3422e01adc8964ada23a1b",
+    "projects/agent-dashboard/components/agent_dashboard/assets/fonts/fusion-pixel-font-2026.09.25/fusion-pixel-12px-monospaced-zh_hans.bdf": "bb2cdfa029674d83ad9fc6b01bba11752f61779cae1219a722c7ccee96b2d0ae",
+    "projects/agent-dashboard/components/agent_dashboard/assets/fonts/fusion-pixel-font-2026.09.25/fusion-pixel-8px-monospaced-zh_hans.bdf": "3c00ccab762c0c75967eea724f5cd57feb544be7a0814d06233160ef9482a50b",
+    "projects/agent-dashboard/components/agent_dashboard/fusion_pixel_12_zh_hans.c": "0dd98e8d9c1236f9de9a201f942c04c7e36cedf7c27a82c1d3aade94574778f3",
+    "projects/agent-dashboard/components/agent_dashboard/fusion_pixel_8_zh_hans.c": "02f6e44c4a2715354db7e02243a9de9fd45115afd9044e36ad1c0706055c1f05",
+    "projects/agent-dashboard/components/agent_dashboard/include/agent_dashboard.h": "bbbb47414d5f319c0f6a57217f9b71b234e44b7384c8134933d854ad67c2bb68",
+    "projects/agent-dashboard/components/agent_dashboard/include/dashboard_motion.h": "520d7a08b1b525ef90cf6c677d67b26befbdfcae57b9b9791dddd51284bd2b4b",
+    "projects/agent-dashboard/components/agent_dashboard/include/fusion_font.h": "623bf5a77e946acc82ce664e9602a9890d392809faff9824b85ca797c0d38b48",
+    "projects/agent-dashboard/components/agent_dashboard/include/fusion_font_12.h": "ff7f1fe7d6bdf6e583ca38f58c1df92037cafedd535eb419625fcb05fc0c9bee",
+    "projects/agent-dashboard/components/agent_dashboard/motion_fonts.h": "050ecccafec85650f1456e8f99c4423d6ce5443d10de42a6eabdc8fd6f054a32",
+    "projects/agent-dashboard/components/agent_dashboard/scripts/generate_fusion_font.py": "6394108018bc5139faf3d1cd5437cf6a3e56ec8ec3ccfeb9ad58fa208a34346b",
+    "projects/agent-dashboard/components/agent_dashboard/scripts/generate_fusion_font_12.py": "f93cc21daf00adeaa75b2346ca10670f9cd0c06f6b8d2fff7a3c479fd374edd0",
+    "projects/agent-dashboard/demo.c": "9506e76bfafc31a744cd410cded7f14fc072a9b29d2154f234bde99d49359462",
+    "projects/agent-dashboard/demo.h": "b62a13887a61ddf5cd14bf0c8d645f9f5e5ab277c4676111e759c9ea014e36fc",
+    "projects/agent-dashboard/docs/flashing-rows-study.md": "de6dd3f4c565a823665082df681b822064e67aa5b7bbb7a551e9e5081d529b31",
+    "projects/agent-dashboard/docs/font-size-study.md": "2e708ebd11d5b49f26556c4d91831bd55bcadecb04b1236fcea0fb804741b3a2",
+    "projects/agent-dashboard/docs/fusion-12-font-study.md": "28840699d1237133d4e07c7fd77e1b0613c045384ea9d04956b443cd6822e743",
+    "projects/agent-dashboard/docs/fusion-font-study.md": "a373f4814bcaa53c80b038f107b853d5ed6f7ee1eef9a88d1c9ec8a3149a534e",
+    "projects/agent-dashboard/docs/header-24-study.md": "d8b929308878d7fdd4a68d65dda6c3385e2da8ffc693443161554fc5d520d70e",
+    "projects/agent-dashboard/docs/header-title-study.md": "09733c40bd77dcdef6176dd87c9608d381fb5f2f7a1736f08f9cf41aaf960081",
+    "projects/agent-dashboard/docs/ui-motion.md": "96bc9637f9024f46d3f328fc84d39e72592c32318dc5bcd02f588b1f5309a324",
+    "projects/agent-dashboard/docs/ui-ordering.md": "a4032dc46605a59a0ba00bbcad7db81cf6730929c0cabfa78272301030ae16f4",
+    "projects/agent-dashboard/docs/ui-polish.md": "8d62ea8f74a3d00bad81503070753a37c6bccbd373470e12a7ab8c3f4990d1b5",
+    "projects/agent-dashboard/docs/ui-study.md": "9a2c8723b59bd4d764422bd25568e3b6a1ee078ba85c59f0c35770fc46af2dcc",
+    "projects/agent-dashboard/docs/uniform-rows-study.md": "969c48dd42234918ba7c02947cc57ce61ef97610084014b0c150beaa9cd9d2b6",
+    "projects/agent-dashboard/docs/urgency-bands.md": "c0ab00734816feb8a3b92d7dcd12cc313b5651216d95e6022ad63e1f38b8ef1e",
+    "projects/agent-dashboard/main/CMakeLists.txt": "d74136a49cadd82ec8616f0a644d9973832576575b6807c5d5e5b42166be9f81",
+    "projects/agent-dashboard/main/Kconfig.projbuild": "fd79ea0e509f9d90cc8be995ea928b6bdc70988d0373132f92c56c3d15b78759",
+    "projects/agent-dashboard/main/main.c": "7fa11303466425530830cdaa1476991a3a21b2cac722aec80142feb5686d8487",
+    "projects/agent-dashboard/motion_demo.c": "06d9c120f9cdff3512098b2bd9e6c5eab4c6d97f05f43d1fa905872b71fd4d70",
+    "projects/agent-dashboard/partitions.csv": "9e856e79e9b387850a154093f43ff4be8690a927d6ecda0d8954003401f09e7e",
+    "projects/agent-dashboard/scripts/capture-dashboard-motion.py": "011e7f3c613691b5140b668dcceb1487e7a4850cc84e047758ffed4c7c6b30c0",
+    "projects/agent-dashboard/scripts/capture-dashboard.py": "d64a40d9b976780c8958862ec52f16917f071dee21657cfa51dfe14a1b904e2d",
+    "projects/agent-dashboard/scripts/dashboard-preview.py": "a4938c0521ca0981f97d914cd57a2132f9d0008edc4e06f6522bef03e38d6c0c",
+    "projects/agent-dashboard/scripts/preview-dashboard.sh": "0898f7faf5f3ca936d9e5b389ff7bbdeebfe6db079f444a715479774eab80182",
+    "projects/agent-dashboard/scripts/test-dashboard-motion.sh": "e3ec0af3e1df7f6e6edd14ebfa2fb89584c4233351b4beb790f39c013c0b13b7",
+    "projects/agent-dashboard/sdkconfig.defaults": "22c86d3e4272155364ef644a1068021c4f21f3de731e847b3623ff886b030445",
+    "projects/agent-dashboard/tests/motion_dashboard.c": "a36e110693524d41a5d8cf366f35faa7b71968bc5362ae13d953ec94407458cd",
+    "projects/agent-dashboard/tests/preview_dashboard.c": "70b728b270b25511df281c920f6cd626f1e8d92bb7734d2f50ee2452b1fcd4c3",
+    "projects/agent-dashboard/tests/rect_dashboard.c": "f017d0c49f5c5ae46daea905a414d841568d467cbdbdae350429ae76f46aabe2",
+    "sdkconfig.defaults": "9ae2973d38b5ce537cbe4f1696cae68d94264ea261babc3266192050c4b92a35",
+    "projects/agent-dashboard/docs/icon-counts-study.md": "8de2b525ec9809251bd9ab7a3d5dd9777b52ef1812618f5c7631ad5bfe65893b"
+  }
+}

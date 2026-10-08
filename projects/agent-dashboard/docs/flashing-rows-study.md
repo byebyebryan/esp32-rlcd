@@ -1,5 +1,9 @@
 # Accepted state styling with uniform rows
 
+The subsequent [accepted icon-count header](icon-counts-study.md) retains these
+row styles, removes the footer and uses large icon totals with a 276px body.
+Measurements below preserve the original flashing-row trial.
+
 2026-10-06. On-device feedback selected 1Hz flashing blocked rows, steady
 inverse waiting rows and normal working rows, all at the same height. The
 design assumes roughly one to three blocked requests at a time, resolved

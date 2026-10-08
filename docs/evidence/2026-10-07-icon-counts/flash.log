@@ -1,0 +1,102 @@
+Added environment variable ESP_IDF_VERSION = 5.5
+Added environment variable IDF_VERSION = 5.5.3
+Added environment variable IDF_TOOLS_PATH = /home/bryan/.espressif/tools
+Added environment variable IDF_COMPONENT_LOCAL_STORAGE_URL = file:///home/bryan/.espressif/tools
+Added environment variable IDF_PATH = /home/bryan/.espressif/v5.5.3/esp-idf
+Added environment variable ESP_ROM_ELF_DIR = /home/bryan/.espressif/tools/esp-rom-elfs/20241011/
+Added environment variable OPENOCD_SCRIPTS = /home/bryan/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/share/openocd/scripts
+Added environment variable IDF_PYTHON_ENV_PATH = /home/bryan/.espressif/tools/python/v5.5.3/venv
+Added proper directory to PATH
+Activated virtual environment at /home/bryan/.espressif/tools/python/v5.5.3/venv
+Environment setup complete for the current shell session.
+These changes will be lost when you close this terminal.
+You are now using IDF version 5.5.3.
+eim select v5.5.3
+ESP-IDF v5.5.3 activated for esp32-rlcd.
+Executing action: flash
+Running ninja in directory /home/bryan/code/esp32-rlcd/projects/agent-dashboard/build/ui-icon-counts-20261008T035139Z/firmware
+Executing "ninja flash"...
+[1/5] cd /home/bryan/code/esp32-rlcd/projects/agent-dashboard/build/ui-icon-counts-20261008T035139Z/firmware/esp-idf/esptool_py && /home/bryan/.espressif/tools/python/v5.5.3/venv/bin/python /home/bryan/.espressif/v5.5.3/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app /home/bryan/code/esp32-rlcd/projects/agent-dashboard/build/ui-icon-counts-20261008T035139Z/firmware/partition_table/partition-table.bin /home/bryan/code/esp32-rlcd/projects/agent-dashboard/build/ui-icon-counts-20261008T035139Z/firmware/rlcd-dashboard.bin
+rlcd-dashboard.bin binary size 0x12d550 bytes. Smallest app partition is 0x200000 bytes. 0xd2ab0 bytes (41%) free.
+[2/5] Performing build step for 'bootloader'
+[1/1] cd /home/bryan/code/esp32-rlcd/projects/agent-dashboard/build/ui-icon-counts-20261008T035139Z/firmware/bootloader/esp-idf/esptool_py && /home/bryan/.espressif/tools/python/v5.5.3/venv/bin/python /home/bryan/.espressif/v5.5.3/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x0 /home/bryan/code/esp32-rlcd/projects/agent-dashboard/build/ui-icon-counts-20261008T035139Z/firmware/bootloader/bootloader.bin
+Bootloader binary size 0x5160 bytes. 0x2ea0 bytes (36%) free.
+[3/5] No install step for 'bootloader'
+[4/5] Completed 'bootloader'
+[4/5] cd /home/bryan/.espressif/v5.5.3/esp-idf/components/esptool_py && /home/bryan/.espressif/tools/cmake/3.30.2/bin/cmake -D IDF_PATH=/home/bryan/.espressif/v5.5.3/esp-idf -D "SERIAL_TOOL=/home/bryan/.espressif/tools/python/v5.5.3/venv/bin/python;;/home/bryan/.espressif/v5.5.3/esp-idf/components/esptool_py/esptool/esptool.py;--chip;esp32s3" -D "SERIAL_TOOL_ARGS=--before=default_reset;--after=hard_reset;write_flash;@flash_args" -D WORKING_DIRECTORY=/home/bryan/code/esp32-rlcd/projects/agent-dashboard/build/ui-icon-counts-20261008T035139Z/firmware -P /home/bryan/.espressif/v5.5.3/esp-idf/components/esptool_py/run_serial_tool.cmake
+esptool.py --chip esp32s3 -p /dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_94:A9:90:F3:43:74-if00 -b 460800 --before=default_reset --after=hard_reset write_flash --flash_mode dio --flash_freq 80m --flash_size 16MB 0x0 bootloader/bootloader.bin 0x10000 rlcd-dashboard.bin 0x8000 partition_table/partition-table.bin
+esptool.py v4.12.0
+Serial port /dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_94:A9:90:F3:43:74-if00
+Connecting...
+Chip is ESP32-S3 (QFN56) (revision v0.2)
+Features: WiFi, BLE, Embedded PSRAM 8MB (AP_3v3)
+Crystal is 40MHz
+USB mode: USB-Serial/JTAG
+MAC: 94:a9:90:f3:43:74
+Uploading stub...
+Running stub...
+Stub running...
+Changing baud rate to 460800
+Changed.
+Configuring flash size...
+Flash will be erased from 0x00000000 to 0x00005fff...
+Flash will be erased from 0x00010000 to 0x0013dfff...
+Flash will be erased from 0x00008000 to 0x00008fff...
+SHA digest in image updated
+Compressed 20832 bytes to 13353...
+Writing at 0x00000000... (100 %)
+Wrote 20832 bytes (13353 compressed) at 0x00000000 in 0.2 seconds (effective 770.6 kbit/s)...
+Hash of data verified.
+Compressed 1234256 bytes to 685862...
+Writing at 0x00010000... (2 %)
+Writing at 0x0001b109... (4 %)
+Writing at 0x000205b2... (7 %)
+Writing at 0x00024dc6... (9 %)
+Writing at 0x00029902... (11 %)
+Writing at 0x0002e4ac... (14 %)
+Writing at 0x00033075... (16 %)
+Writing at 0x00037d77... (19 %)
+Writing at 0x0003c6a9... (21 %)
+Writing at 0x00041115... (23 %)
+Writing at 0x00045a26... (26 %)
+Writing at 0x0004a2a3... (28 %)
+Writing at 0x0004ed08... (30 %)
+Writing at 0x000535be... (33 %)
+Writing at 0x0005878d... (35 %)
+Writing at 0x0005ce96... (38 %)
+Writing at 0x00061669... (40 %)
+Writing at 0x00065ec4... (42 %)
+Writing at 0x0006a66a... (45 %)
+Writing at 0x0006fb86... (47 %)
+Writing at 0x0007a4c9... (50 %)
+Writing at 0x0008474f... (52 %)
+Writing at 0x0008ed28... (54 %)
+Writing at 0x000966ad... (57 %)
+Writing at 0x0009ad12... (59 %)
+Writing at 0x000a2134... (61 %)
+Writing at 0x000ac9be... (64 %)
+Writing at 0x000b7d08... (66 %)
+Writing at 0x000c324d... (69 %)
+Writing at 0x000ce6a8... (71 %)
+Writing at 0x000d9c29... (73 %)
+Writing at 0x000e4f3c... (76 %)
+Writing at 0x000f0099... (78 %)
+Writing at 0x000fb21d... (80 %)
+Writing at 0x00105cd8... (83 %)
+Writing at 0x0011011a... (85 %)
+Writing at 0x0011651b... (88 %)
+Writing at 0x0011c94e... (90 %)
+Writing at 0x00122879... (92 %)
+Writing at 0x0012b1ae... (95 %)
+Writing at 0x001311b1... (97 %)
+Writing at 0x001378ee... (100 %)
+Wrote 1234256 bytes (685862 compressed) at 0x00010000 in 6.1 seconds (effective 1614.0 kbit/s)...
+Hash of data verified.
+Compressed 3072 bytes to 104...
+Writing at 0x00008000... (100 %)
+Wrote 3072 bytes (104 compressed) at 0x00008000 in 0.0 seconds (effective 1009.2 kbit/s)...
+Hash of data verified.
+
+Leaving...
+Hard resetting via RTS pin...
+Done

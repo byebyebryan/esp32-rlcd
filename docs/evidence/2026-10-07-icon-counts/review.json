@@ -1,0 +1,16 @@
+{
+  "recorded_utc": "2026-10-08 04:06:44 UTC",
+  "ui_acceptance": "accepted by user after the trial was flashed",
+  "user_feedback": "I like this",
+  "code_review": "no blocking findings in the refinement",
+  "compiled_source_hashes_match": true,
+  "documentation_updated_after_capture": true,
+  "publication": "user requested commit and push",
+  "baseline_recommendation": "retain this UI until live data provides reason to revise it",
+  "followups": [
+    "distinct long labels may truncate identically; IDs currently cover exact duplicates",
+    "host access to hidden sessions if workload routinely exceeds eleven visible rows",
+    "real update cadence, state-age and source-health replay"
+  ],
+  "capture_status": "original pending and uncommitted fields preserved; this review records the later decision"
+}

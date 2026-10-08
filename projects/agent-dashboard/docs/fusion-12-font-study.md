@@ -1,8 +1,8 @@
 # Fusion Pixel 12px device trial
 
-The [2026-10-06 flashing-row trial](flashing-rows-study.md) now uses 24px rows
-for every state and retains the title/count header with a 264px body, admitting
-eleven complete rows. Measurements below preserve
+The [accepted icon-count header](icon-counts-study.md) uses 24px rows for every
+state and a footerless 276px body, admitting eleven complete rows. It retains
+the [accepted flashing-row styles](flashing-rows-study.md). Measurements below preserve
 the original font trial and subsequent icon refinement.
 
 2026-10-05. The user found the native 8px working text too small and selected

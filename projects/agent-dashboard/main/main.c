@@ -53,8 +53,8 @@ static void run_motion_demo(void)
              " normal_text_px=%d working_text_px=%d body_top=%d body_bottom=%d"
              " font=fusion_pixel_12_zh_hans font_release=2026.09.25"
              " normal_scale=2 working_scale=2 normal_cap_px=16 working_cap_px=16"
-             " header_px=24 summary_px=12 footer_px=12 divider_y=21 header_gap_px=2"
-             " chrome=title_counts source=simulated feed_loss=settle_target"
+             " header_px=24 summary_px=24 header_icon_px=18 footer_px=0 divider_y=21 header_gap_px=2"
+             " chrome=icon_counts overflow=header source=simulated feed_loss=settle_target"
              " waiting_marker_px=0 blocked_flash_hz=1 blocked_flash_half_ms=500"
              " waiting_polarity=inverse working_polarity=normal",
              dashboard_motion_demo_phase_count(), cycle_ms,

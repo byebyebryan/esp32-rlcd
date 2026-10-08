@@ -1,0 +1,93 @@
+{
+  "verified_utc": "2026-10-08T03:59:46.801804+00:00",
+  "base_revision": "2b705536a2dfe3f0e434642d1f18379fe5eb55e7",
+  "app_version": "2b70553-dirty",
+  "technical_pass": true,
+  "device_mac": "94:a9:90:f3:43:74",
+  "config": {
+    "event": "config",
+    "phases": 23,
+    "cycle_ms": 92000,
+    "fps": 25,
+    "duration_ms": 360,
+    "frame_budget_us": 40000,
+    "capacity": 32,
+    "model_bytes": 21576,
+    "visible_policy": "height_prefix",
+    "full_row_px": 24,
+    "working_row_px": 24,
+    "normal_text_px": 24,
+    "working_text_px": 24,
+    "body_top": 24,
+    "body_bottom": 300,
+    "font": "fusion_pixel_12_zh_hans",
+    "font_release": "2026.09.25",
+    "normal_scale": 2,
+    "working_scale": 2,
+    "normal_cap_px": 16,
+    "working_cap_px": 16,
+    "header_px": 24,
+    "summary_px": 24,
+    "header_icon_px": 18,
+    "footer_px": 0,
+    "divider_y": 21,
+    "header_gap_px": 2,
+    "chrome": "icon_counts",
+    "overflow": "header",
+    "source": "simulated",
+    "feed_loss": "settle_target",
+    "waiting_marker_px": 0,
+    "blocked_flash_hz": 1,
+    "blocked_flash_half_ms": 500,
+    "waiting_polarity": "inverse",
+    "working_polarity": "normal"
+  },
+  "native_checks_pass": true,
+  "unchanged_static_frames": 42,
+  "app_readback": {
+    "bytes": 1234256,
+    "offset": "0x10000",
+    "sha256": "2c790ee0bbf1bdecfc6e247474adc66709af9239c305add7ded21a9fa0e3111d",
+    "match": true
+  },
+  "boot_elf_prefix": "294f84cc2",
+  "capture_seconds": 110.09236438304652,
+  "phases_observed": 23,
+  "cycles_observed": 1,
+  "frames": 390,
+  "moving_frames": 192,
+  "errors": [],
+  "frame_budget_misses": 0,
+  "timing": {
+    "draw_us": {
+      "min": 662,
+      "max": 7440
+    },
+    "transfer_us": {
+      "min": 12188,
+      "max": 12238
+    },
+    "frame_us": {
+      "min": 12973,
+      "max": 19879
+    },
+    "internal_free": {
+      "min": 331899,
+      "max": 331899
+    },
+    "stack_watermark": {
+      "min": 1744,
+      "max": 1824
+    },
+    "consecutive_motion_interval_us": {
+      "min": 40000,
+      "max": 40002
+    }
+  },
+  "serial_acl_unchanged": true,
+  "rlcd_serial_released": true,
+  "separate_349_unchanged": true,
+  "rollback": "/home/bryan/code/esp32-rlcd/projects/agent-dashboard/build/ui-icon-counts-20261008T035139Z/rollback.json",
+  "physical_readability": "pending user observation",
+  "changes": "uncommitted; no push"
+}

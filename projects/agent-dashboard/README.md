@@ -7,11 +7,10 @@ at 1Hz until resolved. Waiting rows stay white on black; working rows stay
 black on white. All rows and their text are 24 pixels high, using Fusion Pixel's
 native 12-pixel font at scale two. Basic Latin capital height is 16 pixels.
 Mixed case and supported Unicode labels retain their supplied characters.
-The 264-pixel list admits eleven complete rows with no row/group gaps and
-explicit hidden blocked counts. The local model holds up to thirty-two
-sessions. The earlier five-row layout and fixed
+The 276-pixel list admits eleven complete rows with no row/group gaps.
+The local model holds up to thirty-two sessions. The earlier five-row layout and fixed
 eight-row studies remain in the renderer and native previews.
-The motion footer identifies the source as **SIMULATED**; the earlier static
+The motion view has no footer. Its data remains synthetic; the earlier static
 screens retain their **DEMO** label.
 
 Motion-view status icons use the earlier shapes and x=8 placement, following
@@ -20,13 +19,14 @@ the row text colour directly on its background. Blocked rows share a clock:
 inactivity and unavailable evidence stop flashing. On-device feedback accepted
 this scheme for roughly one to three blocked requests that clear quickly.
 
-A 24-pixel AGENTS title anchors the header, with native 12-pixel blocked,
-waiting and working totals right-aligned for the whole active roster,
-including hidden rows. A thin divider leaves two white scanlines before
-the first row, within the existing 24-pixel header band. Uncertain rows
-add an explicit unknown count beside the source label in the footer.
-The 12-pixel footer reports overflow and hidden blocked rows,
-or the last successful fixture update's age while the source is unavailable.
+A 24-pixel AGENTS title anchors the header. Right-aligned state icons and
+counts use the same 24-pixel font: blocked, waiting and working totals for
+the whole active roster, including hidden rows. Uncertain observations add
+a question-mark count; `+N` reports hidden rows when necessary. The state
+icons use the row shapes at a larger integer scale and remain steady.
+A thin divider leaves two white scanlines before the first row, within
+the existing 24-pixel header band. Whole-feed loss replaces the title and
+counts with a large source-health message; cached work totals are suppressed.
 Column labels are omitted. Duplicate project names
 gain their supplied short session ID; labels never become identity keys.
 
@@ -82,8 +82,9 @@ inactivity/readmission, empty groups and feed loss/recovery. See
 [the motion proof](docs/ui-motion.md) for its sequence and validation status.
 The [urgency-band contract](docs/urgency-bands.md) records the variable-height
 refinement and its separate acceptance gates.
-The [accepted state layout](docs/flashing-rows-study.md) records the current state
-styles and slow flashing. The [uniform-row trial](docs/uniform-rows-study.md)
+The [accepted icon-count header](docs/icon-counts-study.md) records the current
+header and footer removal. The [accepted state layout](docs/flashing-rows-study.md)
+records the retained row styles and slow flashing. The [uniform-row trial](docs/uniform-rows-study.md)
 records the preceding marker/icon-cue comparison. The [title and count refinement](docs/header-title-study.md)
 records the retained chrome. The [UI polish](docs/ui-polish.md) records the footer and
 feed-loss behavior. The [12px Fusion trial](docs/fusion-12-font-study.md)
@@ -152,11 +153,12 @@ such as `5s`/`2m`/`1h`, known-state totals plus unknown counts, and conditional
 short IDs for duplicate project names. Source update age is separate from
 each session's state age.
 
-The comparison page also includes the earlier X/C symbol layout, normal CX/CC
-rows, and a version without the provider field. The selected firmware style is
-CX/CC with persistent inverse attention rows. The native check verifies that
+The static comparison page also includes the earlier X/C symbol layout, normal
+CX/CC rows, and a version without the provider field. The earlier static firmware
+uses CX/CC with persistent inverse attention rows. The native check verifies that
 stale or unavailable work observations cannot retain an attention highlight.
-A brief entry pulse remains a separate proposal; attention highlighting is steady.
+That static study has steady attention highlighting. The current motion view
+uses the accepted full-row flashing described above.
 
 [Urgency/age ordering and row motion](docs/ui-motion.md) extend this study
 with numeric fixture ages and hidden full identities. The default firmware is

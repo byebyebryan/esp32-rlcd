@@ -277,7 +277,7 @@ static void test_transitions_and_stationary_chrome(void)
     assert(run_y == DASHBOARD_MOTION_BODY_TOP + 6);
     assert(wait_y == DASHBOARD_MOTION_BODY_TOP + 18);
 
-    // Motion header/footer stay stationary while body rows transition.
+    // The header stays stationary while body rows transition.
     render_at(&motion, 1360, frame_endpoint);
     for (int y = 0; y < RLCD_HEIGHT; ++y) {
         if (y >= DASHBOARD_MOTION_BODY_TOP && y < DASHBOARD_MOTION_BODY_BOTTOM) continue;
@@ -424,7 +424,8 @@ static void test_state_polarity_and_slow_flash(const char *directory)
     assert(!dashboard_motion_flashing(&motion));
     render_at(&motion, 2100, frame_initial);
     render_at(&motion, 2600, frame_halfway);
-    assert_band_equal(frame_initial, frame_halfway, 8, 392, 24, 288);
+    assert_band_equal(frame_initial, frame_halfway, 8, 392,
+                      DASHBOARD_MOTION_BODY_TOP, DASHBOARD_MOTION_BODY_BOTTOM);
     assert(pixel(frame_halfway, 22, 74)); // Cached waiting claims lose inverse styling.
     apply_ok(&motion, items, 4, 2700);
     assert(dashboard_motion_flashing(&motion));
@@ -919,7 +920,7 @@ static void test_inactive_removal_and_readmission(void)
     assert(entered == 1150);
 }
 
-static void test_motion_chrome_states(void)
+static void test_motion_chrome_states(const char *directory)
 {
     const dashboard_session_t blocked = {
         .project = "blocked", .provider = "CODEX", .short_id = "BLCK",
@@ -983,32 +984,28 @@ static void test_motion_chrome_states(void)
     dashboard_draw_motion(known_frame, &known_view);
     dashboard_draw_motion(frame_partial_header, &partial_view);
     dashboard_draw_motion(empty_frame, &empty_view);
-    // Unknown counts are explicit in the footer; they leave the title and
-    // known-state summary unchanged, including its right alignment.
+    // Uncertain evidence gets its own header count without changing the title.
     assert_band_equal(known_frame, frame_partial_header,
-                      0, RLCD_WIDTH, 0, DASHBOARD_MOTION_BODY_TOP);
+                      0, 136, 0, DASHBOARD_MOTION_BODY_TOP - 3);
     assert(band_differs(known_frame, frame_partial_header,
-                        8, 136, DASHBOARD_MOTION_BODY_BOTTOM, RLCD_HEIGHT));
-    assert(band_has_ink(frame_partial_header, 74, 136,
-                        DASHBOARD_MOTION_BODY_BOTTOM, RLCD_HEIGHT));
+                        136, 392, 0, DASHBOARD_MOTION_BODY_TOP - 3));
+    save_pbm(directory, "header-icons-known", known_frame);
+    save_pbm(directory, "header-icons-unknown", frame_partial_header);
     assert_band_white(frame_partial_header, 0, 8, 0, DASHBOARD_MOTION_BODY_TOP);
     for (int x = 8; x < 392; ++x)
         assert(!pixel(known_frame, x, DASHBOARD_MOTION_BODY_TOP - 3));
     assert_band_white(known_frame, 0, RLCD_WIDTH,
                       DASHBOARD_MOTION_BODY_TOP - 2, DASHBOARD_MOTION_BODY_TOP);
     assert(band_has_ink(known_frame, 8, 80, 12, DASHBOARD_MOTION_BODY_TOP - 3));
-    assert_band_white(known_frame, 200, RLCD_WIDTH, 16,
-                      DASHBOARD_MOTION_BODY_TOP - 3);
+    // The last count uses the full-size font, with ink below the old 12px line.
+    assert(band_has_ink(known_frame, 380, 392, 12, 20));
     assert_band_white(empty_frame, 0, RLCD_WIDTH, DASHBOARD_MOTION_BODY_TOP,
                       DASHBOARD_MOTION_BODY_TOP + DASHBOARD_MOTION_ROW_HEIGHT);
     assert_band_white(empty_frame, 0, RLCD_WIDTH,
                       DASHBOARD_MOTION_BODY_BOTTOM - 1,
                       DASHBOARD_MOTION_BODY_BOTTOM);
-    assert_band_white(empty_frame, 120, RLCD_WIDTH,
-                      DASHBOARD_MOTION_BODY_BOTTOM,
-                      RLCD_HEIGHT);
-    assert(band_has_ink(empty_frame, 8, 120, DASHBOARD_MOTION_BODY_BOTTOM,
-                        RLCD_HEIGHT));
+    // The former footer has no source label or small text.
+    assert_band_white(empty_frame, 0, RLCD_WIDTH, 288, RLCD_HEIGHT);
 
     dashboard_session_t all_working[DASHBOARD_MOTION_CAPACITY];
     for (size_t i = 0; i < DASHBOARD_MOTION_CAPACITY; ++i)
@@ -1017,8 +1014,8 @@ static void test_motion_chrome_states(void)
         .roster = {.sessions = all_working,
                    .count = DASHBOARD_MOTION_CAPACITY,
                    .feed_health = DASH_CURRENT},
-        .visible_count = 22,
-        .overflow_count = 10,
+        .visible_count = 11,
+        .overflow_count = 21,
     };
     dashboard_motion_render_t visible_only = all_roster;
     visible_only.roster.count = visible_only.visible_count;
@@ -1031,14 +1028,33 @@ static void test_motion_chrome_states(void)
         for (int x = 0; x < RLCD_WIDTH; ++x)
             header_differs |= pixel(whole_header, x, y) !=
                               pixel(visible_header, x, y);
-    assert(header_differs); // Counts include the ten offscreen sessions.
-    assert(band_has_ink(whole_header, 200, 392,
-                        DASHBOARD_MOTION_BODY_BOTTOM, RLCD_HEIGHT));
-    assert_band_white(visible_header, 120, RLCD_WIDTH,
-                      DASHBOARD_MOTION_BODY_BOTTOM, RLCD_HEIGHT);
+    assert(header_differs);
+    dashboard_motion_render_t no_overflow = all_roster;
+    no_overflow.overflow_count = 0;
+    uint8_t no_overflow_frame[RLCD_FRAME_BYTES];
+    dashboard_draw_motion(no_overflow_frame, &no_overflow);
+    // Counts still include hidden sessions independently of the +N indicator.
+    assert(band_differs(no_overflow_frame, visible_header,
+                        136, 392, 0, DASHBOARD_MOTION_BODY_TOP - 3));
+    assert(band_differs(whole_header, no_overflow_frame,
+                        136, 392, 0, DASHBOARD_MOTION_BODY_TOP - 3));
+    assert_band_white(whole_header, 0, RLCD_WIDTH, 288, RLCD_HEIGHT);
+    save_pbm(directory, "header-icons-overflow", whole_header);
 
-    // Lost-feed chrome depends on health and last-update provenance, never
-    // the cached roster count or work labels.
+    // Two-digit totals, uncertainty and overflow all fit without covering
+    // AGENTS, clipping at the right edge or writing beyond the framebuffer.
+    for (size_t i = 0; i < DASHBOARD_MOTION_CAPACITY; ++i)
+        all_working[i] = i < 10 ? blocked : i < 20 ? waiting :
+                         i < 30 ? working : uncertain;
+    memset(guarded, 0x6b, sizeof(guarded));
+    dashboard_draw_motion(guarded + 1, &all_roster);
+    assert(guarded[0] == 0x6b && guarded[RLCD_FRAME_BYTES + 1] == 0x6b);
+    assert_band_equal(known_frame, guarded + 1, 0, 136, 0, 21);
+    assert_band_white(guarded + 1, 0, 8, 0, 21);
+    assert_band_white(guarded + 1, 392, RLCD_WIDTH, 0, 21);
+    save_pbm(directory, "header-icons-capacity", guarded + 1);
+
+    // Lost-feed chrome reports health, suppressing cached counts and overflow.
     const dashboard_motion_render_t stale_small = {
         .roster = {.sessions = &blocked, .count = 1, .feed_health = DASH_STALE},
         .feed_lost = true,
@@ -1063,7 +1079,8 @@ static void test_motion_chrome_states(void)
         .last_healthy_update_known = true,
     };
     dashboard_draw_motion(expected_frame, &stale_known);
-    assert(memcmp(stale_a, expected_frame, RLCD_FRAME_BYTES) != 0);
+    assert(memcmp(stale_a, expected_frame, RLCD_FRAME_BYTES) == 0);
+    save_pbm(directory, "header-icons-stale", stale_a);
 }
 
 static void test_duplicate_project_labels(void)
@@ -1642,7 +1659,7 @@ int main(int argc, char **argv)
     test_urgency_geometry_and_admission();
     test_uniform_height_changes_and_retarget();
     test_inactive_removal_and_readmission();
-    test_motion_chrome_states();
+    test_motion_chrome_states(argv[1]);
     test_duplicate_project_labels();
     test_compact_ages_and_healthy_provenance();
     test_feed_loss_settles_retargeted_layouts();

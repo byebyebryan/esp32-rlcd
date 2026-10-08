@@ -17,9 +17,10 @@ working rows and height-based admission. It records current geometry, motion
 and acceptance requirements for that pass; the eight-row experiment below is earlier history.
 The selected [12px Fusion trial](fusion-12-font-study.md) supersedes the earlier
 8px trial while preserving these ordering and identity rules. The current
-[flashing-row trial](flashing-rows-study.md) uses 24px rows for every state,
-1Hz blocked-row flashing, inverse waiting rows and normal working rows in
-the 264px body;
+[accepted icon-count header](icon-counts-study.md) uses large icon totals, no
+footer and a 276px body with 24px rows for every state. It retains the
+[flashing-row styles](flashing-rows-study.md): 1Hz blocked-row flashing,
+inverse waiting rows and normal working rows.
 [UI polish](ui-polish.md) records packed feed-loss targets.
 
 ## Agreed ordering

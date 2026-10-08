@@ -543,10 +543,9 @@ void dashboard_draw_styled(uint8_t *f, const dashboard_view_t *view,
 
 static void motion_state_symbol(uint8_t *frame, int x, int y,
                                 dashboard_work_t work, dashboard_health_t health,
-                                bool compact, bool white)
+                                int scale, bool white)
 {
-    // Draw only the mark on the opaque row's background, using its text colour.
-    // Full rows use the identical mark at integer scale two.
+    // Rows use scale two; header counts use scale three for a 15px cap height.
     static const uint8_t working[6] = {0, 0x10, 0x08, 0x04, 0x08, 0x10};
     static const uint8_t blocked[6] = {0, 0x08, 0x08, 0x08, 0, 0x08};
     static const uint8_t waiting[6] = {0, 0, 0x02, 0x14, 0x08, 0};
@@ -559,7 +558,6 @@ static void motion_state_symbol(uint8_t *frame, int x, int y,
         else if (work == DASH_ERROR) bits = error;
         else if (work == DASH_SETTLED || work == DASH_INTERRUPTED) bits = waiting;
     }
-    const int scale = compact ? 1 : 2;
     for (int row = 0; row < 6; ++row)
         for (int col = 0; col < 6; ++col)
             if (bits[row] & (0x20u >> col))
@@ -625,7 +623,7 @@ static void draw_motion_row(uint8_t *frame, const dashboard_motion_render_row_t 
     rect(frame, 8, y, 384, height, !highlighted);
     const bool compact = false;
     motion_state_symbol(frame, 8, y + (height - 12) / 2,
-                        s->work, health, compact, highlighted);
+                        s->work, health, 2, highlighted);
     motion_project_name(frame, 24, y, view, s, compact, 288, highlighted);
     const char *agent = "??";
     if (s->provider && strcmp(s->provider, "CODEX") == 0) agent = "CX";
@@ -644,61 +642,53 @@ static void draw_motion_chrome(uint8_t *frame,
     const dashboard_view_t *roster = &view->roster;
     rlcd_frame_clear(frame, true);
     char summary[96];
-    size_t unknown = 0;
     if (roster->feed_health != DASH_CURRENT) {
         snprintf(summary, sizeof(summary), "FEED %s", health_label(roster->feed_health));
         motion_text(frame, 8, 0, summary, false, 384, false);
     } else {
-        size_t blocked = 0, waiting = 0, working = 0;
+        enum { ICON_WIDTH = 18, ICON_GAP = 4, GROUP_GAP = 12 };
+        const dashboard_work_t states[] = {
+            DASH_NEEDS_INPUT, DASH_SETTLED, DASH_WORKING, DASH_UNKNOWN,
+        };
+        size_t totals[4] = {0};
         for (size_t i = 0; i < roster->count; ++i) {
             const dashboard_session_t *session = &roster->sessions[i];
             if (session->health != DASH_CURRENT || session->work == DASH_UNKNOWN) {
-                ++unknown;
+                ++totals[3];
                 continue;
             }
-            if (session->work == DASH_NEEDS_INPUT || session->work == DASH_ERROR) ++blocked;
-            else if (session->work == DASH_SETTLED || session->work == DASH_INTERRUPTED) ++waiting;
-            else if (session->work == DASH_WORKING) ++working;
+            if (session->work == DASH_NEEDS_INPUT || session->work == DASH_ERROR) ++totals[0];
+            else if (session->work == DASH_SETTLED || session->work == DASH_INTERRUPTED) ++totals[1];
+            else if (session->work == DASH_WORKING) ++totals[2];
         }
-        snprintf(summary, sizeof(summary), "%zu BLOCKED %zu WAIT %zu WORK",
-                 blocked, waiting, working);
+        const size_t groups = totals[3] ? 4 : 3;
+        char values[4][24];
+        int widths[4];
+        int total_width = (int)(groups - 1) * GROUP_GAP;
+        for (size_t i = 0; i < groups; ++i) {
+            snprintf(values[i], sizeof(values[i]), "%zu", totals[i]);
+            widths[i] = ICON_WIDTH + ICON_GAP + motion_text_width(values[i], false);
+            total_width += widths[i];
+        }
+        char overflow[24] = "";
+        if (view->overflow_count) {
+            snprintf(overflow, sizeof(overflow), "+%zu", view->overflow_count);
+            total_width += GROUP_GAP + motion_text_width(overflow, false);
+        }
         motion_text(frame, 8, 0, "AGENTS", false, 128, false);
-        motion_text(frame, 392 - motion_text_width(summary, true), 6,
-                    summary, true, 280, false);
+        int x = 392 - total_width;
+        for (size_t i = 0; i < groups; ++i) {
+            motion_state_symbol(frame, x, 2, states[i], DASH_CURRENT, 3, false);
+            motion_text(frame, x + ICON_WIDTH + ICON_GAP, 0,
+                        values[i], false, widths[i] - ICON_WIDTH - ICON_GAP, false);
+            x += widths[i] + GROUP_GAP;
+        }
+        if (overflow[0])
+            motion_text(frame, x, 0, overflow, false,
+                        motion_text_width(overflow, false), false);
     }
     // Keep two white scanlines between the divider and the first packed row.
     rect(frame, 8, DASHBOARD_MOTION_BODY_TOP - 3, 384, 1, false);
-    char source[48];
-    if (unknown) snprintf(source, sizeof(source), "SIMULATED  %zu unknown", unknown);
-    else snprintf(source, sizeof(source), "SIMULATED");
-    motion_text(frame, 8, 288, source, true, 128, false);
-    char footer[64];
-    if (roster->feed_health != DASH_CURRENT) {
-        char age[8];
-        if (!view->last_healthy_update_known ||
-            view->now_ms < view->last_healthy_update_ms) {
-            snprintf(age, sizeof(age), "?");
-        } else {
-            const uint64_t seconds =
-                (view->now_ms - view->last_healthy_update_ms) / 1000;
-            if (seconds < 60) snprintf(age, sizeof(age), "%llus",
-                                       (unsigned long long)seconds);
-            else if (seconds < 3600) snprintf(age, sizeof(age), "%llum",
-                                              (unsigned long long)(seconds / 60));
-            else if (seconds < 360000) snprintf(age, sizeof(age), "%lluh",
-                                                (unsigned long long)(seconds / 3600));
-            else snprintf(age, sizeof(age), "+++");
-        }
-        snprintf(footer, sizeof(footer), "LAST UPDATE %s AGO", age);
-    } else if (view->overflow_count) {
-        snprintf(footer, sizeof(footer), "%zu HIDDEN / %zu BLOCKED",
-                 view->overflow_count, view->hidden_blocked_count);
-    } else {
-        footer[0] = '\0';
-    }
-    if (footer[0])
-        motion_text(frame, 392 - motion_text_width(footer, true), 288,
-                    footer, true, 280, false);
 }
 
 void dashboard_draw_motion(uint8_t *frame, const dashboard_motion_render_t *view)

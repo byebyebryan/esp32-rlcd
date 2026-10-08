@@ -1,0 +1,20 @@
+Selected lines from the fresh ESP-IDF build; full raw log retained locally.
+-- The C compiler identification is GNU 14.2.0
+-- The CXX compiler identification is GNU 14.2.0
+-- The ASM compiler identification is GNU
+-- Project sdkconfig file /home/bryan/code/esp32-rlcd/projects/agent-dashboard/build/ui-icon-counts-20261008T035139Z/sdkconfig
+Loading defaults file /home/bryan/code/esp32-rlcd/sdkconfig.defaults...
+Loading defaults file /home/bryan/code/esp32-rlcd/projects/agent-dashboard/sdkconfig.defaults...
+-- App "rlcd-dashboard" version: 2b70553-dirty
+-- The C compiler identification is GNU 14.2.0
+-- The CXX compiler identification is GNU 14.2.0
+-- The ASM compiler identification is GNU
+-- Project sdkconfig file /home/bryan/code/esp32-rlcd/projects/agent-dashboard/build/ui-icon-counts-20261008T035139Z/sdkconfig
+[102/123] Building C object CMakeFiles/bootloader.elf.dir/project_elf_src_esp32s3.c.obj
+[121/123] Linking C executable bootloader.elf
+Bootloader binary size 0x5160 bytes. 0x2ea0 bytes (36%) free.
+[1084/1087] Building C object CMakeFiles/rlcd-dashboard.elf.dir/project_elf_src_esp32s3.c.obj
+[1085/1087] Linking CXX executable rlcd-dashboard.elf
+[1087/1087] cd /home/bryan/code/esp32-rlcd/projects/agent-dashboard/build/ui-icon-counts-20261008T035139Z/firmware/esp-idf/esptool_py && /home/bryan/.espressif/tools/python/v5.5.3/venv/bin/python /home/bryan/.espressif/v5.5.3/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app /home/bryan/code/esp32-rlcd/projects/agent-dashboard/build/ui-icon-counts-20261008T035139Z/firmware/partition_table/partition-table.bin /home/bryan/code/esp32-rlcd/projects/agent-dashboard/build/ui-icon-counts-20261008T035139Z/firmware/rlcd-dashboard.bin
+rlcd-dashboard.bin binary size 0x12d550 bytes. Smallest app partition is 0x200000 bytes. 0xd2ab0 bytes (41%) free.
+Project build complete. To flash, run:
