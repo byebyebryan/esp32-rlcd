@@ -6,6 +6,7 @@ import subprocess
 import sys
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 APP = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(APP / "host"))
@@ -258,6 +259,49 @@ class Projection(unittest.TestCase):
             [0, 0, 0, 50],
         )
 
+    def test_whole_roster_survives_partial_loss_and_positive_exclusion(self):
+        p = Projector(["starship"])
+        rows = [row(str(i), label="session " + str(i)) for i in range(40)]
+        p.project([source(rows)])
+        partial = p.project([source(rows[:5], status="partial")])
+        self.assertEqual(partial["hosts"][0]["totals"], [0, 0, 5, 35])
+        lost = p.project([source([], status="offline", remaining=0)])
+        self.assertEqual(lost["hosts"][0]["totals"], [0, 0, 0, 40])
+        self.assertEqual(len(p.explain([], lost)["rows"]), 40)
+        self.assertEqual(
+            sum(r["sent_to_device"] for r in p.explain([], lost)["rows"]), 32
+        )
+        for index, kind in ((37, "system"), (38, "child")):
+            rows[index]["kind"] = kind
+        rows[39]["runtime"]["value"] = "parked"
+        excluded = p.project([source(rows[:5] + rows[37:], status="partial")])
+        self.assertEqual(excluded["hosts"][0]["totals"], [0, 0, 5, 32])
+        again = p.project([source(rows[:5] + rows[37:], status="partial")])
+        self.assertEqual(again["hosts"], excluded["hosts"])
+        final = p.project([source(rows[:5])])
+        self.assertEqual(final["hosts"][0]["total"], 5)
+
+    def test_membership_growth_bound_and_unadmitted_exclusion(self):
+        p = Projector(["starship", "snap"])
+        a, b = row("a"), row("b", host="snap")
+        p.project([source([a]), source([b], host="snap")])
+        a["kind"] = "system"
+        stale = p.project(
+            [source([a], status="offline", remaining=0), source([b], host="snap")]
+        )
+        self.assertEqual(stale["hosts"][0]["total"], 1)
+        self.assertEqual(stale["hosts"][1]["totals"], [0, 0, 1, 0])
+        fresh = row("new")
+        growth = p.project(
+            [source([fresh], status="partial"), source([b], host="snap")]
+        )
+        self.assertEqual(growth["hosts"][0]["totals"], [0, 0, 1, 1])
+        with (
+            patch("live_dashboard.projection.MAX_ROSTER", 2),
+            self.assertRaisesRegex(ValueError, "roster_capacity"),
+        ):
+            p.project([source([fresh, row("another")], status="partial")])
+
     def test_rendered_label_collisions_and_unicode_boundaries(self):
         labels = [
             "abcdefghijklmnopqrstuvwxAAA",
@@ -441,6 +485,28 @@ class NativeAdmission(unittest.TestCase):
         self.assertEqual(state["visible"], 11)
         self.assertEqual(state["total"], 50)
         self.assertEqual(state["totals"], [50, 0, 0, 0])
+
+    def test_partial_roster_beyond_capacity_reaches_device_as_uncertainty(self):
+        p = Projector(["starship"])
+        rows = [row(str(i), label="session " + str(i)) for i in range(40)]
+        self.request(0)
+        self.send(encode(p.project([source(rows)]), "0" * 16, 1, "1" * 16, 1))
+        self.request(100)
+        state = self.send(
+            encode(
+                p.project([source(rows[:5], status="partial")]),
+                "0" * 16,
+                2,
+                "1" * 16,
+                2,
+            )
+        )
+        self.assertEqual(state["total"], 40)
+        self.assertEqual(state["rows"], 32)
+        self.assertEqual(state["totals"], [0, 0, 5, 35])
+        self.assertTrue(state["partial"])
+        expired = self.at(3100)
+        self.assertEqual(expired["totals"], [0, 0, 0, 40])
 
     def test_warming_bridge_retains_device_context_until_positive_empty(self):
         self.request(0)

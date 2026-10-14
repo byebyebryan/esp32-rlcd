@@ -62,12 +62,41 @@ port exclusively and closes its Mesh subscription on exit. It does not reset the
 board or create a background service. This first rollout pins the known RLCD
 identity; another board requires a reviewed identity change.
 
-The current Starship live feed runs in the transient user service
-`rlcd-agent-dashboard.service` so it survives the tool terminal. Inspect its feed
-with `journalctl --user -u rlcd-agent-dashboard.service`; stop it with
-`systemctl --user stop rlcd-agent-dashboard.service` before opening another bridge
-or capture. This service is not enabled for boot. The refinement receipt records
-the foreground-session loss and service recovery.
+The reliability pass installs a versioned host bundle and a Starship user service
+`rlcd-agent-dashboard.service`. Chezmoi owns the host selection, launcher, unit and
+startup link. Starship's existing user lingering allows startup with the user
+manager at boot. The service tolerates absent or busy USB hardware and retries
+without taking another owner's port. A device hangup closes the old descriptor;
+reconnection uses fresh framing and bridge identity. Unexpected worker termination
+fails the owner visibly, and normal service stop releases its owned resources.
+
+After installation, inspect the cached roster with `rlcd-agent-dashboard --roster`.
+Use `systemctl --user status rlcd-agent-dashboard.service` and
+`journalctl --user -u rlcd-agent-dashboard.service` for operation. Stop it with
+`systemctl --user stop rlcd-agent-dashboard.service` before opening a foreground
+bridge, capture or firmware tool; restore it with `systemctl --user start
+rlcd-agent-dashboard.service`. The service's selected runtime and manifest hash
+are recorded in `~/.config/rlcd-agent-dashboard/selection.json`.
+
+`RLCD_EVENT` journal records distinguish Mesh retry, source health, serial
+missing/busy/hangup, missing acknowledgements and worker failure. Repeated failure
+events are limited. Device acknowledgements prove packet admission; source leases
+still determine current observations. The earlier transient-service recovery is
+dated evidence in the refinement receipt.
+
+Build a host bundle after source checks and a local source checkpoint:
+
+```sh
+python3 projects/agent-dashboard/scripts/dashboard-bundle.py build \
+    --python "$RLCD_OBSERVER_PYTHON" \
+    --output "$HOME/.local/share/rlcd-agent-dashboard"
+```
+
+The returned manifest hash identifies an immutable directory containing the
+bridge, its helpers and font metrics source. The verifier rejects changed,
+missing, additional or symlinked payloads and an incompatible dependency tuple.
+Update the host selection and validate scoped chezmoi targets before service
+replacement; retain the previous bundle and exact selection for rollback.
 
 The board requests replacements every second and expires current claims within
 three seconds of the last supported request. Stale rows stop flashing and lose

@@ -13,6 +13,7 @@ from pathlib import Path
 
 ALIASES = {"starship": "ST", "snap": "SN"}
 CAPACITY = 32
+MAX_ROSTER = 65535
 MAX_VALID_MS = 3000
 MARGIN_MS = 100
 GROUP = {"blocked": 0, "waiting": 1, "working": 2, "unknown": 3}
@@ -152,7 +153,6 @@ class Projector:
         self.previous = {}
         self.ranks = {}
         self.keys = {}
-        self.previous_totals = {}
         self.roster = []
 
     def project(self, sources):
@@ -170,7 +170,7 @@ class Projector:
                 else "offline"
             )
             selected = {}
-            excluded_ids = set(source.excluded_ids)
+            excluded_ids = set(source.excluded_ids) if ready else set()
             if ready:
                 excluded_ids.update(
                     token(r["identity"])[0] for r in source.rows if exclusion(r)
@@ -229,14 +229,11 @@ class Projector:
                         "age": "?",
                         "activity": None,
                     }
-            if len(selected) > 65535:
+            if len(selected) > MAX_ROSTER:
                 raise ValueError("roster_capacity")
             counts = [0, 0, 0, 0]
             for row in selected.values():
                 counts[GROUP[row["state"]]] += 1
-            if not ready:
-                counts[3] = max(counts[3], self.previous_totals.get(host, 0))
-            self.previous_totals[host] = sum(counts)
             result.append(
                 {
                     "alias": ALIASES[host],
@@ -295,9 +292,13 @@ class Projector:
         rows = candidates[:CAPACITY]
         self.roster = [dict(r) for r in candidates]
         self.ranks = {r["id"]: i for i, r in enumerate(candidates)}
-        self.previous = {r["id"]: dict(r) for r in rows}
-        # Collision guards are bounded to the selected identities retained here.
-        self.keys = {r["id"]: self.keys[r["id"]] for r in rows if r["id"] in self.keys}
+        # Whole-roster membership is independent of the USB/display prefix.
+        # Retained metadata cannot supply phase, age or native freshness.
+        self.previous = {
+            r["id"]: {k: r[k] for k in ("id", "host", "label", "project")}
+            for r in candidates
+        }
+        self.keys = {r["id"]: self.keys[r["id"]] for r in candidates}
         return {"hosts": result, "rows": rows}
 
     def explain(self, sources, view, *, include_all=False):

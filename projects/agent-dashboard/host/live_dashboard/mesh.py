@@ -5,10 +5,11 @@ import os
 import secrets
 
 from .projection import Source, exclusion, token
+from .runtime import Events, Failure
 
 
 class Fleet:
-    def __init__(self, hosts):
+    def __init__(self, hosts, events=None):
         from agent_observer.mesh_profile import AgentProfile
         from mesh_plus.api import ReadGuard
 
@@ -21,6 +22,7 @@ class Fleet:
         self.ready = asyncio.Event()
         self.closed = False
         self.error = None
+        self.events = events or Events()
 
     def sources(self):
         from agent_observer.public import identity_key
@@ -130,23 +132,37 @@ class Fleet:
                     "extensions": {},
                 }
                 stream = reader.execute(request)
+                connected = False
                 async for frame in stream:
                     self.guard.accept(frame)
                     self.ready.set()
                     if "mesh" not in frame or frame["mesh"]["kind"] == "error":
                         raise ValueError("mesh_terminal")
+                    if not connected:
+                        self.error = None
+                        self.events.emit("mesh_connected")
+                        connected = True
                     delay = 1
                 raise ValueError("mesh_disconnected")
             except asyncio.CancelledError:
                 raise
             except Exception as error:  # noqa: BLE001 - redact SDK failures at the delivery boundary
-                code = getattr(error, "code", None)
-                self.error = code if isinstance(code, str) else type(error).__name__
+                self.error = (
+                    "mesh_timeout" if isinstance(error, TimeoutError) else "mesh_retry"
+                )
+                self.events.emit(
+                    "mesh_retry", interval=30, reason=self.error, retry_ms=delay * 1000
+                )
             finally:
                 self.guard.disconnect()
                 self.closed = True
                 if stream is not None:
-                    await stream.aclose()
+                    try:
+                        await asyncio.wait_for(stream.aclose(), timeout=3)
+                    except asyncio.CancelledError:
+                        raise
+                    except Exception:  # noqa: BLE001 - redact upstream cleanup payloads
+                        raise Failure("mesh_cleanup_failed") from None
             await asyncio.sleep(delay)
             delay = min(30, delay * 2)
             from mesh_plus.api import ReadGuard

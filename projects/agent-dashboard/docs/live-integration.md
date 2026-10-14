@@ -98,6 +98,21 @@ labels but lose work, ages and flashing; healthy siblings retain their rows.
 If all hosts are unavailable, motion settles to its accepted target geometry.
 The host's retained uncertainty cache is bounded and never grants native facts.
 
+The host retains minimal membership metadata for the full selected roster,
+bounded to 65,535 identities per host, independently of the 32-row transport
+prefix. A partial omission preserves uncertain membership and counts. Positive
+child/system/parked evidence removes membership, including identities outside
+the transport prefix; accepted complete omission can retire display membership.
+Capacity failure is explicit rather than a silent loss of whole-roster counts.
+This changes host retention implementation without changing device wire 1.
+
+The bridge supervises its subscription and serial workers. Expected source loss
+uses bounded retry and lease revocation. Unexpected worker exit/cleanup failure
+fails the owner after a bounded cleanup grace. Missing/busy hardware is retried;
+hangup closes the descriptor and clears framing before a fresh serial incarnation.
+The Starship user service runs a verified installed host bundle and owns startup,
+restart and stop. These are application lifecycle responsibilities.
+
 ## Execution and acceptance
 
 1. Record policy/wire and deterministic projection/admission checks.
@@ -111,7 +126,8 @@ The host's retained uncertainty cache is bounded and never grants native facts.
 
 Native previews and serial/readback evidence do not establish physical
 readability. Deployment/resource/visual acceptance are recorded separately.
-No global services or provider configuration are changed by this integration.
+The application user service is independently selected; provider configuration
+and global system services remain external.
 
 Producer reference: the sibling Agent Observer repository's `docs/api-v4.md`
 and `docs/evidence/2026-10-13-system-classification/REPORT.md`. These local source

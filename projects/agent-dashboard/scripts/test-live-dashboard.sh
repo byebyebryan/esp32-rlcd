@@ -16,3 +16,6 @@ mkdir -p "$RLCD_OUTPUT_DIR"
     "$RLCD_REPO_ROOT/components/display_rlcd/rlcd_frame.c" \
     -o "$RLCD_OUTPUT_DIR/feed"
 RLCD_FEED_TEST="$RLCD_OUTPUT_DIR/feed" python3 "$RLCD_APP_ROOT/tests/test_live_dashboard.py" -v
+python3 "$RLCD_APP_ROOT/tests/test_runtime.py" -v
+python3 "$RLCD_APP_ROOT/tests/test_serial.py" -v
+python3 "$RLCD_APP_ROOT/tests/test_bundle.py" -v
