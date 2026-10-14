@@ -69,8 +69,9 @@ guides. Reuse the shared panel component instead of copying its packing or
 transport logic. Keep project-specific fonts, data, host tools and integrations
 with the application.
 
-Add a root gallery entry with a preview, a concise description and links to
-setup, behavior/findings and media source. Put generated assets and their
-manifest in `projects/<name>/docs/media/`. The shared docs check discovers that
+For a showcase application, add a root gallery entry with a preview, a concise
+description and links to setup, behavior/findings and media source. Link
+diagnostic tools from the workspace and setup guides. Put generated assets and
+their manifest in `projects/<name>/docs/media/`. The shared docs check discovers that
 manifest automatically; extend the native exporter and CI comparison for a
 reproducible preview. Label native/fictional inputs and virtual playback clearly.

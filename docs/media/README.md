@@ -9,7 +9,9 @@ fictional, and animation time is virtual.
 | --- | --- |
 | Agent dashboard | [Roster, row motion, source loss and recovery](../../projects/agent-dashboard/docs/media/README.md) |
 | Render bench | [Ball/bar scene and animation](../../projects/render-bench/docs/media/README.md) |
-| Bring-up | [Orientation and pixel-packing pattern](../../projects/bringup/docs/media/README.md) |
+
+The exporter also maintains a [bring-up diagnostic preview](../../projects/bringup/docs/media/README.md)
+for the setup guide.
 
 Static PNGs preserve the exact 400 × 300 screen area. GIFs add a 44-pixel caption
 band outside that area to identify the native source and virtual inputs.

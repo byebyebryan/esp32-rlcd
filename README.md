@@ -31,16 +31,6 @@ The continuous demonstration uses 50 writes/s pacing.
 
 [Project and build](projects/render-bench/README.md) · [Measured findings](projects/render-bench/docs/performance.md) · [Media source](projects/render-bench/docs/media/README.md)
 
-### Panel bring-up
-
-![Native bring-up pattern with an asymmetric orientation marker, RLCD READY text, stripes and two checkerboard scales](projects/bringup/docs/media/bringup.png)
-
-Start with panel orientation, pixel packing, memory and USB diagnostics. The
-pattern includes stripes, coarse and single-pixel checkerboards, a moving square
-and a counter, with a slow heartbeat for initial board checks.
-
-[Project and build](projects/bringup/README.md) · [Recorded hardware checks](docs/bringup.md) · [Media source](projects/bringup/docs/media/README.md)
-
 *Previews use production C rendering with virtual time and fictional dashboard
 records. They are native renders; playback is separate from measured panel
 performance and physical contrast.*
@@ -88,6 +78,7 @@ Each project owns its generated `sdkconfig` and `build/` output.
 
 - [Development](docs/development.md): application boundaries, native checks and adding a project.
 - [Setup](docs/setup.md): toolchain installation, USB access and troubleshooting.
+- [Bring-up diagnostics](projects/bringup/README.md): panel orientation, pixel packing, memory and USB checks.
 - [Shared display component](components/display_rlcd/README.md): packing, transport and upstream provenance.
 - [Presentation media](docs/media/README.md): gallery sources, regeneration and capture guidance.
 - [Dashboard release](docs/evidence/2026-10-13-release-refinement/REPORT.md): current host runtime, source publication and acceptance.
