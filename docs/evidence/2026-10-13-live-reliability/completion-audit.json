@@ -92,9 +92,10 @@
     },
     {
       "requirement": "Actual physical USB unplug/replug and visible recovery",
-      "status": "pending",
+      "status": "partial_transport_proven_visual_confirmation_pending",
       "evidence": [
-        "user confirmation requested; no response or physical reconnect event observed"
+        "physical-usb-recovery.json exact device disconnect/re-enumeration, same process, matched healthy frames",
+        "User visual confirmation still pending"
       ]
     },
     {

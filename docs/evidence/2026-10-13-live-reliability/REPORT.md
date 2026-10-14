@@ -1,8 +1,9 @@
 # Live dashboard reliability acceptance
 
 The bridge reliability implementation and managed Starship service are accepted
-within the automated and live-device gates below. Physical USB reconnect and a
-real host reboot remain separately pending. [Bounded acceptance metadata](acceptance.json)
+within the automated and live-device gates below. Real USB disconnect/reconnect
+transport recovery is verified; user-visible confirmation and a real host reboot
+remain separately pending. [Bounded acceptance metadata](acceptance.json)
 binds source, installed artifact, dependency tuple, test results, protected
 owners and rollback. [Device evidence](device.json) records silence/recovery.
 The [execution plan](../../../projects/agent-dashboard/docs/live-operations-refinement-plan.md)
@@ -123,8 +124,23 @@ device acknowledgements. The [final artifact capture](device-final.json) repeats
 acknowledgements per window, seven rows restored, all work claims cleared during
 silence, and zero logged deadline misses. Its maximum frame is 16,380 microseconds.
 The final installed artifact gate and complete chezmoi canonical check pass.
-Actual hardware reconnect and reboot remain pending;
-isolated CLI proof is not substituted for those physical checks.
+The later real USB transport check below supplements the isolated proof.
+User-visible confirmation and reboot remain pending.
+
+## Real USB disconnect and recovery
+
+The [hardware transport receipt](physical-usb-recovery.json) records the known
+RLCD at USB path `5-1.1.1` disconnecting at 19:42:56 PDT on October 13 and
+re-enumerating at 19:43:01 with serial identity `94:A9:90:F3:43:74`. The same
+bridge PID `1297804` observes hangup and absence, reopens the port at 19:43:03,
+and admits fresh device requests starting from the new device counter.
+Request/checksum/row-matched acknowledgements restore seven rows from both
+current hosts. There are zero service restarts and zero render deadline misses
+in the recovery window. The restored device reports healthy feed state.
+
+These are actual kernel/bridge/device observations. They establish hardware
+transport recovery without restarting the service; visible panel recovery still
+awaits user confirmation. Starship's host boot ID remains unchanged.
 
 ## Rollback and remaining acceptance
 
@@ -142,8 +158,8 @@ restore the retained application selection, scoped apply the four targets,
 reload/start and verify device admission. Provider, Observer/Mesh, Tmux and firmware
 rollback are not involved.
 
-The user has a pending request to physically unplug/replug the RLCD and confirm
-that the roster returns. Reboot timing is separately pending because Starship
+The user has a pending request to confirm the visible roster after reconnect.
+Reboot timing is separately pending because Starship
 has active workloads. Enabled startup and service stop/start do not count as an
 actual reboot. Previous physical readability remains accepted for the unchanged
 layout. These local checkpoints and installed artifacts are unpublished.

@@ -6,7 +6,8 @@ This pass makes the host bridge recover predictably, gives Starship durable
 startup, and repairs whole-roster counts during partial inventory. Implementation,
 automated/live-device validation and managed rollout are accepted in the
 [reliability receipt](../../../docs/evidence/2026-10-13-live-reliability/REPORT.md).
-Physical USB reconnect and a real reboot remain separately pending.
+Real USB transport recovery is verified. User-visible reconnect confirmation and
+a real reboot remain separately pending.
 
 The [integration contract](live-integration.md) and
 [accepted refinement receipt](../../../docs/evidence/2026-10-13-dashboard-refinement/REPORT.md)

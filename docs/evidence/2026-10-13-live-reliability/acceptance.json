@@ -198,9 +198,10 @@
     "NRestarts": "0"
   },
   "physical": {
-    "usbReconnect": "pending_user_check",
+    "usbReconnect": "real_device_transport_recovery_verified",
     "reboot": "pending_coordinated_window",
-    "readability": "previously_accepted_layout_unchanged"
+    "readability": "previously_accepted_layout_unchanged",
+    "usbVisibleRecovery": "pending_user_feedback"
   },
   "firmwareChanged": false,
   "wireVersion": 1,
@@ -263,5 +264,6 @@
   },
   "finalDeviceReceipt": "device-final.json",
   "chezmoiFinalCommit": "18e268d",
-  "completionAudit": "completion-audit.json"
+  "completionAudit": "completion-audit.json",
+  "physicalUsbReceipt": "physical-usb-recovery.json"
 }

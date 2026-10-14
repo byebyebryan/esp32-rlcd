@@ -1,0 +1,57 @@
+{
+  "receiptVersion": 1,
+  "status": "real_usb_transport_recovery_verified_visual_confirmation_pending",
+  "serialIdentity": "94:A9:90:F3:43:74",
+  "usbPath": "5-1.1.1",
+  "kernelDisconnectAtUtc": "2026-10-14T02:42:56.519577+00:00",
+  "kernelEnumerationAtUtc": "2026-10-14T02:43:01.063508+00:00",
+  "firstMatchedRecovery": {
+    "atUtc": "2026-10-14T02:43:03.765228+00:00",
+    "sequence": 2,
+    "request": 2,
+    "rows": 7
+  },
+  "matchedRecoveryAcks": 12,
+  "bridgePid": 1297804,
+  "serviceRestarts": 0,
+  "sameBridgeProcess": true,
+  "newDeviceRequestCounter": 2,
+  "maxFrameUs": 16560,
+  "deadlineMisses": 0,
+  "visualConfirmation": "pending_user_feedback",
+  "hostBootId": "c145673c-6342-45c2-8d1c-3f2d82469e5f",
+  "kernelEvents": [
+    {
+      "atUtc": "2026-10-14T02:42:56.519577+00:00",
+      "message": "usb 5-1.1.1: USB disconnect, device number 14"
+    },
+    {
+      "atUtc": "2026-10-14T02:43:01.063508+00:00",
+      "message": "usb 5-1.1.1: new full-speed USB device number 20 using xhci_hcd"
+    },
+    {
+      "atUtc": "2026-10-14T02:43:01.168509+00:00",
+      "message": "usb 5-1.1.1: New USB device found, idVendor=303a, idProduct=1001, bcdDevice= 1.01"
+    },
+    {
+      "atUtc": "2026-10-14T02:43:01.185523+00:00",
+      "message": "usb 5-1.1.1: New USB device strings: Mfr=1, Product=2, SerialNumber=3"
+    },
+    {
+      "atUtc": "2026-10-14T02:43:01.185776+00:00",
+      "message": "usb 5-1.1.1: Product: USB JTAG/serial debug unit"
+    },
+    {
+      "atUtc": "2026-10-14T02:43:01.185946+00:00",
+      "message": "usb 5-1.1.1: Manufacturer: Espressif"
+    },
+    {
+      "atUtc": "2026-10-14T02:43:01.186106+00:00",
+      "message": "usb 5-1.1.1: SerialNumber: 94:A9:90:F3:43:74"
+    },
+    {
+      "atUtc": "2026-10-14T02:43:01.224510+00:00",
+      "message": "cdc_acm 5-1.1.1:1.0: ttyACM0: USB ACM device"
+    }
+  ]
+}
