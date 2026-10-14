@@ -1,4 +1,4 @@
-"""Device wire 1: bounded tagged ASCII, UTF-8 hex fields and CRC32."""
+"""Device wire 2: bounded tagged ASCII, UTF-8 hex fields and CRC32."""
 
 import binascii
 import re
@@ -6,7 +6,7 @@ import re
 from .projection import WORK
 
 MAX_BYTES = 16384
-REQUEST = re.compile(rb"RLCD\?1 ([0-9a-f]{16}) ([1-9][0-9]{0,9})\Z")
+REQUEST = re.compile(rb"RLCD\?2 ([0-9a-f]{16}) ([1-9][0-9]{0,9})\Z")
 
 
 def parse_request(line):
@@ -19,7 +19,7 @@ def parse_request(line):
 
 def encode(view, boot, request, bridge, sequence):
     fields = [
-        "RLCD!1",
+        "RLCD!2",
         boot,
         str(request),
         bridge,

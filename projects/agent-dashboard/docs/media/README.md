@@ -1,14 +1,14 @@
 # Agent dashboard presentation media
 
 These previews feed fictional normalized records through the production host
-projection and USB wire 1 encoder, then through firmware's C admission, expiry,
+projection and USB wire 2 encoder, then through firmware's C admission, expiry,
 motion and renderer. They use ST/SN host badges and the current live layout.
 They contain no provider conversation data.
 
 | Asset | Content |
 | --- | --- |
 | [dashboard.png](dashboard.png) | Exact 400 × 300 roster with seven fictional conversations |
-| [dashboard-demo.gif](dashboard-demo.gif) | 14-second virtual story: blocked-row flashing, an answered wait, row movement, one-host loss, whole-feed expiry and recovery |
+| [dashboard-demo.gif](dashboard-demo.gif) | 14-second virtual story: blocked/error flashing, a recovered turn, row movement, one-host loss, whole-feed expiry and recovery |
 
 [story.json](story.json) owns the fictional names and initial phases/ages. The
 exporter admits replacement packets every virtual second, samples frames every

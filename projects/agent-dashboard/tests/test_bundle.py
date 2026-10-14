@@ -34,6 +34,7 @@ class Bundle(unittest.TestCase):
     def test_exact_freeze_is_reusable_and_rejects_changed_files(self):
         manifest = bundle.verify(self.target, self.checksum, dependencies=False)
         self.assertEqual(manifest["sourceRevision"], "fixture")
+        self.assertEqual(manifest["deviceWire"], 2)
         again = bundle.freeze(
             self.source, self.root / "installed", sys.executable, "fixture"
         )

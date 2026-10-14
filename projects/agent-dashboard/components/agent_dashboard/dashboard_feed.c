@@ -112,7 +112,7 @@ int dashboard_feed_request(dashboard_feed_t *feed, uint64_t now_ms,
 {
     if (feed->request == UINT32_MAX) return -1;
     ++feed->request; feed->requested_ms = now_ms; feed->pending = true;
-    return snprintf(output, capacity, "RLCD?1 %s %u\n", feed->boot, (unsigned)feed->request);
+    return snprintf(output, capacity, "RLCD?2 %s %u\n", feed->boot, (unsigned)feed->request);
 }
 
 bool dashboard_feed_accept(dashboard_feed_t *feed, const char *line,
@@ -133,7 +133,7 @@ bool dashboard_feed_accept(dashboard_feed_t *feed, const char *line,
     field_t field; char boot[17]; uint32_t request, hosts, rows;
     dashboard_feed_view_t *view = &feed->candidate;
     memset(view, 0, sizeof(*view));
-    if (!take(&cursor, &field) || field.size != 6 || memcmp(field.data, "RLCD!1", 6) ||
+    if (!take(&cursor, &field) || field.size != 6 || memcmp(field.data, "RLCD!2", 6) ||
         !take(&cursor, &field) || !hex_string(field, boot, 16, false) || strcmp(boot, feed->boot) ||
         !number(&cursor, UINT32_MAX, &request) || request != feed->request ||
         !take(&cursor, &field) || !hex_string(field, view->bridge, 16, false) ||
@@ -166,7 +166,7 @@ bool dashboard_feed_accept(dashboard_feed_t *feed, const char *line,
         dashboard_feed_row_t *row = &view->rows[i];
         if (!take(&cursor, &field) || !hex_string(field, row->identity, 64, false) ||
             !number(&cursor, hosts - 1, &row->host) || !number(&cursor, 5, &row->work) ||
-            (row->work != DASH_WORKING && row->work != DASH_NEEDS_INPUT && row->work != DASH_SETTLED && row->work != DASH_UNKNOWN) ||
+            (row->work != DASH_WORKING && row->work != DASH_NEEDS_INPUT && row->work != DASH_SETTLED && row->work != DASH_ERROR && row->work != DASH_UNKNOWN) ||
             !number(&cursor, DASH_UNSUPPORTED, &row->health) ||
             !number(&cursor, DASH_FEED_VALID_MS, &row->valid_ms) ||
             row->valid_ms > view->hosts[row->host].valid_ms ||
@@ -177,7 +177,7 @@ bool dashboard_feed_accept(dashboard_feed_t *feed, const char *line,
         if ((row->health != DASH_CURRENT || !row->valid_ms) && row->work != DASH_UNKNOWN) return false;
         if (row->health != DASH_CURRENT && strcmp(row->age, "?")) return false;
         for (size_t j = 0; j < i; ++j) if (!strcmp(row->identity, view->rows[j].identity)) return false;
-        unsigned group = row->work == DASH_NEEDS_INPUT ? 0 : row->work == DASH_SETTLED ? 1 : row->work == DASH_WORKING ? 2 : 3;
+        unsigned group = (row->work == DASH_NEEDS_INPUT || row->work == DASH_ERROR) ? 0 : row->work == DASH_SETTLED ? 1 : row->work == DASH_WORKING ? 2 : 3;
         if (++selected[row->host][group] > view->hosts[row->host].totals[group]) return false;
     }
     if (cursor.next != cursor.end) return false;
@@ -248,10 +248,10 @@ bool dashboard_feed_tick(dashboard_feed_t *feed, dashboard_motion_t *motion, uin
     for (size_t i = 1; i < view->row_count; ++i) {
         uint8_t candidate = feed->order[i]; size_t j = i;
         unsigned work = feed->samples[candidate].work;
-        unsigned group = work == DASH_NEEDS_INPUT ? 0 : work == DASH_SETTLED ? 1 : work == DASH_WORKING ? 2 : 3;
+        unsigned group = (work == DASH_NEEDS_INPUT || work == DASH_ERROR) ? 0 : work == DASH_SETTLED ? 1 : work == DASH_WORKING ? 2 : 3;
         while (j) {
             work = feed->samples[feed->order[j - 1]].work;
-            unsigned previous = work == DASH_NEEDS_INPUT ? 0 : work == DASH_SETTLED ? 1 : work == DASH_WORKING ? 2 : 3;
+            unsigned previous = (work == DASH_NEEDS_INPUT || work == DASH_ERROR) ? 0 : work == DASH_SETTLED ? 1 : work == DASH_WORKING ? 2 : 3;
             if (previous <= group) break;
             feed->order[j] = feed->order[j - 1]; --j;
         }

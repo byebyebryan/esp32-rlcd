@@ -1,0 +1,665 @@
+{
+  "caseVersion": 1,
+  "provenance": "Fictional identities, paths and clocks; metadata shapes and state transitions independently observed during the live model-capacity incident.",
+  "scope": "Diagnostic native input corpus, not a complete Observer snapshot or a device wire frame.",
+  "failedThreads": [
+    {
+      "host": "snap",
+      "thread": {
+        "id": "00000001-0000-4000-8000-000000000001",
+        "sessionId": "00000001-0000-4000-8000-000000000001",
+        "name": "mesh-plus",
+        "cwd": "/showcase/mesh-plus",
+        "createdAt": 1800000000,
+        "updatedAt": 1800000040,
+        "source": "vscode",
+        "threadSource": "user",
+        "ephemeral": false,
+        "status": {
+          "type": "systemError"
+        }
+      },
+      "turnPage": {
+        "data": [
+          {
+            "id": "0000000b-0000-4000-8000-00000000000b",
+            "items": [],
+            "itemsView": "notLoaded",
+            "status": "failed",
+            "error": {
+              "codexErrorInfo": "serverOverloaded"
+            },
+            "startedAt": 1800000010,
+            "completedAt": 1800000020,
+            "durationMs": 10000
+          }
+        ]
+      },
+      "expectedNativeRuntime": "running",
+      "expectedLastTurnOutcome": "failed",
+      "currentApiPhase": {
+        "value": "unknown",
+        "health": "unsupported",
+        "reason": "native_runtime_error"
+      }
+    },
+    {
+      "host": "snap",
+      "thread": {
+        "id": "00000002-0000-4000-8000-000000000002",
+        "sessionId": "00000002-0000-4000-8000-000000000002",
+        "name": "refine",
+        "cwd": "/showcase/codex-plus",
+        "createdAt": 1800000000,
+        "updatedAt": 1800000040,
+        "source": "vscode",
+        "threadSource": "user",
+        "ephemeral": false,
+        "status": {
+          "type": "systemError"
+        }
+      },
+      "turnPage": {
+        "data": [
+          {
+            "id": "0000000c-0000-4000-8000-00000000000c",
+            "items": [],
+            "itemsView": "notLoaded",
+            "status": "failed",
+            "error": {
+              "codexErrorInfo": "serverOverloaded"
+            },
+            "startedAt": 1800000010,
+            "completedAt": 1800000020,
+            "durationMs": 10000
+          }
+        ]
+      },
+      "expectedNativeRuntime": "running",
+      "expectedLastTurnOutcome": "failed",
+      "currentApiPhase": {
+        "value": "unknown",
+        "health": "unsupported",
+        "reason": "native_runtime_error"
+      }
+    },
+    {
+      "host": "snap",
+      "thread": {
+        "id": "00000003-0000-4000-8000-000000000003",
+        "sessionId": "00000003-0000-4000-8000-000000000003",
+        "name": "codex-plus",
+        "cwd": "/showcase/codex-plus",
+        "createdAt": 1800000000,
+        "updatedAt": 1800000040,
+        "source": "vscode",
+        "threadSource": "user",
+        "ephemeral": false,
+        "status": {
+          "type": "systemError"
+        }
+      },
+      "turnPage": {
+        "data": [
+          {
+            "id": "0000000d-0000-4000-8000-00000000000d",
+            "items": [],
+            "itemsView": "notLoaded",
+            "status": "failed",
+            "error": {
+              "codexErrorInfo": "serverOverloaded"
+            },
+            "startedAt": 1800000010,
+            "completedAt": 1800000020,
+            "durationMs": 10000
+          }
+        ]
+      },
+      "expectedNativeRuntime": "running",
+      "expectedLastTurnOutcome": "failed",
+      "currentApiPhase": {
+        "value": "unknown",
+        "health": "unsupported",
+        "reason": "native_runtime_error"
+      }
+    }
+  ],
+  "titleHelpers": [
+    {
+      "host": "starship",
+      "thread": {
+        "id": "00000004-0000-4000-8000-000000000004",
+        "sessionId": "00000004-0000-4000-8000-000000000004",
+        "name": null,
+        "cwd": "/showcase/codex-plus",
+        "createdAt": 1800000000,
+        "updatedAt": 1800000040,
+        "source": "vscode",
+        "threadSource": "thread_title",
+        "ephemeral": true,
+        "status": {
+          "type": "idle"
+        }
+      },
+      "expectedCorrectedKind": "system"
+    },
+    {
+      "host": "snap",
+      "thread": {
+        "id": "00000005-0000-4000-8000-000000000005",
+        "sessionId": "00000005-0000-4000-8000-000000000005",
+        "name": null,
+        "cwd": "/showcase/codex-plus",
+        "createdAt": 1800000000,
+        "updatedAt": 1800000040,
+        "source": "vscode",
+        "threadSource": "thread_title",
+        "ephemeral": true,
+        "status": {
+          "type": "idle"
+        }
+      },
+      "expectedCorrectedKind": "system"
+    }
+  ],
+  "retryRecovery": {
+    "host": "snap",
+    "thread": {
+      "id": "00000001-0000-4000-8000-000000000001",
+      "sessionId": "00000001-0000-4000-8000-000000000001",
+      "name": "mesh-plus",
+      "cwd": "/showcase/mesh-plus",
+      "createdAt": 1800000000,
+      "updatedAt": 1800000040,
+      "source": "vscode",
+      "threadSource": "user",
+      "ephemeral": false,
+      "status": {
+        "type": "active",
+        "activeFlags": []
+      }
+    },
+    "turnPage": {
+      "data": [
+        {
+          "id": "00000015-0000-4000-8000-000000000015",
+          "items": [],
+          "itemsView": "notLoaded",
+          "status": "inProgress",
+          "error": null,
+          "startedAt": 1800000030,
+          "completedAt": null,
+          "durationMs": null
+        }
+      ]
+    },
+    "expectedLastTurnOutcome": "unknown",
+    "expectedCurrentPhase": "working"
+  },
+  "acceptance": [
+    "Retain the three user identities and make their known failed result distinguishable from unavailable observations.",
+    "Exclude both positively classified title helpers from membership, counts and retained context.",
+    "A fresh active turn clears the preceding failed result for that identity.",
+    "A prior failed outcome never overrides a positively current working or waiting phase.",
+    "Feed or evidence expiry clears current failure claims and retains only uncertain context.",
+    "Generic failed status is available through API 4; capacity-specific text requires a supported public error category."
+  ],
+  "normalizedFailedRows": [
+    {
+      "identity": {
+        "hostScope": "snap",
+        "provider": "codex",
+        "namespace": "fictional",
+        "nativeIdKind": "thread",
+        "nativeId": "00000001-0000-4000-8000-000000000001"
+      },
+      "nativeIds": {
+        "threadId": "00000001-0000-4000-8000-000000000001",
+        "sessionTreeRootId": "00000001-0000-4000-8000-000000000001"
+      },
+      "title": "mesh-plus",
+      "kind": "user",
+      "cwd": "/showcase/mesh-plus",
+      "cwdSource": "codex_rpc",
+      "inventory": "live",
+      "phase": {
+        "value": "unknown",
+        "observedAt": null,
+        "source": null,
+        "health": "unsupported",
+        "reason": "native_runtime_error",
+        "clock": null
+      },
+      "runtime": {
+        "value": "running",
+        "observedAt": 1800000050000,
+        "source": "codex_rpc",
+        "health": "current",
+        "reason": "native_snapshot",
+        "clock": "sample"
+      },
+      "hasSavedHistory": true,
+      "outcome": {
+        "value": "failed",
+        "observedAt": 1800000020000,
+        "source": "codex_turn_metadata",
+        "health": "current",
+        "reason": "latest_terminal_turn",
+        "clock": "native"
+      },
+      "blockedReasons": [],
+      "createdAt": 1800000000000,
+      "activity": {
+        "at": 1800000020000,
+        "source": "codex_turn_metadata",
+        "health": "current",
+        "reason": "native_conversation_event"
+      },
+      "lastUpdated": {
+        "observedAt": 1800000050000,
+        "source": "codex_thread_metadata",
+        "health": "current",
+        "reason": "native_thread_update",
+        "receipt": null,
+        "at": 1800000040000,
+        "timestampPrecisionMs": 1000
+      },
+      "latestTurn": {
+        "observedAt": 1800000050000,
+        "source": "codex_turn_metadata",
+        "health": "current",
+        "reason": "native_latest_turn",
+        "receipt": null,
+        "value": {
+          "id": "0000000b-0000-4000-8000-00000000000b",
+          "status": "failed",
+          "startedAt": 1800000010000,
+          "completedAt": 1800000020000,
+          "durationMs": 10000,
+          "timestampPrecisionMs": 1000
+        }
+      },
+      "workspace": null,
+      "metadataIssues": []
+    },
+    {
+      "identity": {
+        "hostScope": "snap",
+        "provider": "codex",
+        "namespace": "fictional",
+        "nativeIdKind": "thread",
+        "nativeId": "00000002-0000-4000-8000-000000000002"
+      },
+      "nativeIds": {
+        "threadId": "00000002-0000-4000-8000-000000000002",
+        "sessionTreeRootId": "00000002-0000-4000-8000-000000000002"
+      },
+      "title": "refine",
+      "kind": "user",
+      "cwd": "/showcase/codex-plus",
+      "cwdSource": "codex_rpc",
+      "inventory": "live",
+      "phase": {
+        "value": "unknown",
+        "observedAt": null,
+        "source": null,
+        "health": "unsupported",
+        "reason": "native_runtime_error",
+        "clock": null
+      },
+      "runtime": {
+        "value": "running",
+        "observedAt": 1800000050000,
+        "source": "codex_rpc",
+        "health": "current",
+        "reason": "native_snapshot",
+        "clock": "sample"
+      },
+      "hasSavedHistory": true,
+      "outcome": {
+        "value": "failed",
+        "observedAt": 1800000020000,
+        "source": "codex_turn_metadata",
+        "health": "current",
+        "reason": "latest_terminal_turn",
+        "clock": "native"
+      },
+      "blockedReasons": [],
+      "createdAt": 1800000000000,
+      "activity": {
+        "at": 1800000020000,
+        "source": "codex_turn_metadata",
+        "health": "current",
+        "reason": "native_conversation_event"
+      },
+      "lastUpdated": {
+        "observedAt": 1800000050000,
+        "source": "codex_thread_metadata",
+        "health": "current",
+        "reason": "native_thread_update",
+        "receipt": null,
+        "at": 1800000040000,
+        "timestampPrecisionMs": 1000
+      },
+      "latestTurn": {
+        "observedAt": 1800000050000,
+        "source": "codex_turn_metadata",
+        "health": "current",
+        "reason": "native_latest_turn",
+        "receipt": null,
+        "value": {
+          "id": "0000000c-0000-4000-8000-00000000000c",
+          "status": "failed",
+          "startedAt": 1800000010000,
+          "completedAt": 1800000020000,
+          "durationMs": 10000,
+          "timestampPrecisionMs": 1000
+        }
+      },
+      "workspace": null,
+      "metadataIssues": []
+    },
+    {
+      "identity": {
+        "hostScope": "snap",
+        "provider": "codex",
+        "namespace": "fictional",
+        "nativeIdKind": "thread",
+        "nativeId": "00000003-0000-4000-8000-000000000003"
+      },
+      "nativeIds": {
+        "threadId": "00000003-0000-4000-8000-000000000003",
+        "sessionTreeRootId": "00000003-0000-4000-8000-000000000003"
+      },
+      "title": "codex-plus",
+      "kind": "user",
+      "cwd": "/showcase/codex-plus",
+      "cwdSource": "codex_rpc",
+      "inventory": "live",
+      "phase": {
+        "value": "unknown",
+        "observedAt": null,
+        "source": null,
+        "health": "unsupported",
+        "reason": "native_runtime_error",
+        "clock": null
+      },
+      "runtime": {
+        "value": "running",
+        "observedAt": 1800000050000,
+        "source": "codex_rpc",
+        "health": "current",
+        "reason": "native_snapshot",
+        "clock": "sample"
+      },
+      "hasSavedHistory": true,
+      "outcome": {
+        "value": "failed",
+        "observedAt": 1800000020000,
+        "source": "codex_turn_metadata",
+        "health": "current",
+        "reason": "latest_terminal_turn",
+        "clock": "native"
+      },
+      "blockedReasons": [],
+      "createdAt": 1800000000000,
+      "activity": {
+        "at": 1800000020000,
+        "source": "codex_turn_metadata",
+        "health": "current",
+        "reason": "native_conversation_event"
+      },
+      "lastUpdated": {
+        "observedAt": 1800000050000,
+        "source": "codex_thread_metadata",
+        "health": "current",
+        "reason": "native_thread_update",
+        "receipt": null,
+        "at": 1800000040000,
+        "timestampPrecisionMs": 1000
+      },
+      "latestTurn": {
+        "observedAt": 1800000050000,
+        "source": "codex_turn_metadata",
+        "health": "current",
+        "reason": "native_latest_turn",
+        "receipt": null,
+        "value": {
+          "id": "0000000d-0000-4000-8000-00000000000d",
+          "status": "failed",
+          "startedAt": 1800000010000,
+          "completedAt": 1800000020000,
+          "durationMs": 10000,
+          "timestampPrecisionMs": 1000
+        }
+      },
+      "workspace": null,
+      "metadataIssues": []
+    }
+  ],
+  "normalizedHelpers": [
+    {
+      "identity": {
+        "hostScope": "starship",
+        "provider": "codex",
+        "namespace": "fictional",
+        "nativeIdKind": "thread",
+        "nativeId": "00000004-0000-4000-8000-000000000004"
+      },
+      "nativeIds": {
+        "threadId": "00000004-0000-4000-8000-000000000004",
+        "sessionTreeRootId": "00000004-0000-4000-8000-000000000004"
+      },
+      "title": "Codex 00000004-0000-4000-8000-000000000004",
+      "kind": "system",
+      "cwd": "/showcase/codex-plus",
+      "cwdSource": "codex_rpc",
+      "inventory": "live",
+      "phase": {
+        "value": "waiting",
+        "observedAt": 1800000050000,
+        "source": "codex_rpc",
+        "health": "current",
+        "reason": "native_snapshot",
+        "clock": "sample"
+      },
+      "runtime": {
+        "value": "running",
+        "observedAt": 1800000050000,
+        "source": "codex_rpc",
+        "health": "current",
+        "reason": "native_snapshot",
+        "clock": "sample"
+      },
+      "hasSavedHistory": false,
+      "outcome": {
+        "value": "unknown",
+        "observedAt": null,
+        "source": null,
+        "health": "unavailable",
+        "reason": "no_conversation_activity",
+        "clock": null
+      },
+      "blockedReasons": [],
+      "createdAt": 1800000000000,
+      "activity": {
+        "at": null,
+        "source": null,
+        "health": "unavailable",
+        "reason": "no_conversation_activity"
+      },
+      "lastUpdated": {
+        "observedAt": 1800000050000,
+        "source": null,
+        "health": "unsupported",
+        "reason": "timing_source_unproved",
+        "receipt": null,
+        "at": null,
+        "timestampPrecisionMs": null
+      },
+      "latestTurn": {
+        "observedAt": 1800000050000,
+        "source": null,
+        "health": "unsupported",
+        "reason": "timing_source_unproved",
+        "receipt": null,
+        "value": null
+      },
+      "workspace": null,
+      "metadataIssues": []
+    },
+    {
+      "identity": {
+        "hostScope": "snap",
+        "provider": "codex",
+        "namespace": "fictional",
+        "nativeIdKind": "thread",
+        "nativeId": "00000005-0000-4000-8000-000000000005"
+      },
+      "nativeIds": {
+        "threadId": "00000005-0000-4000-8000-000000000005",
+        "sessionTreeRootId": "00000005-0000-4000-8000-000000000005"
+      },
+      "title": "Codex 00000005-0000-4000-8000-000000000005",
+      "kind": "system",
+      "cwd": "/showcase/codex-plus",
+      "cwdSource": "codex_rpc",
+      "inventory": "live",
+      "phase": {
+        "value": "waiting",
+        "observedAt": 1800000050000,
+        "source": "codex_rpc",
+        "health": "current",
+        "reason": "native_snapshot",
+        "clock": "sample"
+      },
+      "runtime": {
+        "value": "running",
+        "observedAt": 1800000050000,
+        "source": "codex_rpc",
+        "health": "current",
+        "reason": "native_snapshot",
+        "clock": "sample"
+      },
+      "hasSavedHistory": false,
+      "outcome": {
+        "value": "unknown",
+        "observedAt": null,
+        "source": null,
+        "health": "unavailable",
+        "reason": "no_conversation_activity",
+        "clock": null
+      },
+      "blockedReasons": [],
+      "createdAt": 1800000000000,
+      "activity": {
+        "at": null,
+        "source": null,
+        "health": "unavailable",
+        "reason": "no_conversation_activity"
+      },
+      "lastUpdated": {
+        "observedAt": 1800000050000,
+        "source": null,
+        "health": "unsupported",
+        "reason": "timing_source_unproved",
+        "receipt": null,
+        "at": null,
+        "timestampPrecisionMs": null
+      },
+      "latestTurn": {
+        "observedAt": 1800000050000,
+        "source": null,
+        "health": "unsupported",
+        "reason": "timing_source_unproved",
+        "receipt": null,
+        "value": null
+      },
+      "workspace": null,
+      "metadataIssues": []
+    }
+  ],
+  "normalizedRetry": {
+    "identity": {
+      "hostScope": "snap",
+      "provider": "codex",
+      "namespace": "fictional",
+      "nativeIdKind": "thread",
+      "nativeId": "00000001-0000-4000-8000-000000000001"
+    },
+    "nativeIds": {
+      "threadId": "00000001-0000-4000-8000-000000000001",
+      "sessionTreeRootId": "00000001-0000-4000-8000-000000000001"
+    },
+    "title": "mesh-plus",
+    "kind": "user",
+    "cwd": "/showcase/mesh-plus",
+    "cwdSource": "codex_rpc",
+    "inventory": "live",
+    "phase": {
+      "value": "working",
+      "observedAt": 1800000050000,
+      "source": "codex_rpc",
+      "health": "current",
+      "reason": "native_snapshot",
+      "clock": "sample"
+    },
+    "runtime": {
+      "value": "running",
+      "observedAt": 1800000050000,
+      "source": "codex_rpc",
+      "health": "current",
+      "reason": "native_snapshot",
+      "clock": "sample"
+    },
+    "hasSavedHistory": true,
+    "outcome": {
+      "value": "unknown",
+      "observedAt": null,
+      "source": null,
+      "health": "unavailable",
+      "reason": "turn_in_progress",
+      "clock": null
+    },
+    "blockedReasons": [],
+    "createdAt": 1800000000000,
+    "activity": {
+      "at": 1800000030000,
+      "source": "codex_turn_metadata",
+      "health": "current",
+      "reason": "native_conversation_event"
+    },
+    "lastUpdated": {
+      "observedAt": 1800000050000,
+      "source": "codex_thread_metadata",
+      "health": "current",
+      "reason": "native_thread_update",
+      "receipt": null,
+      "at": 1800000040000,
+      "timestampPrecisionMs": 1000
+    },
+    "latestTurn": {
+      "observedAt": 1800000050000,
+      "source": "codex_turn_metadata",
+      "health": "current",
+      "reason": "native_latest_turn",
+      "receipt": null,
+      "value": {
+        "id": "00000015-0000-4000-8000-000000000015",
+        "status": "in_progress",
+        "startedAt": 1800000030000,
+        "completedAt": null,
+        "durationMs": null,
+        "timestampPrecisionMs": 1000
+      }
+    },
+    "workspace": null,
+    "metadataIssues": []
+  },
+  "normalizedProvenance": {
+    "observer": "0.7.0a3",
+    "installedWheelSha256": "b2df912102505295e57ffc0d1685fa393815330e3a9121aa6471411306e19f70",
+    "pipeline": "installed native metadata, activity/outcome, public session projection; no timing receipt invented",
+    "sampledAt": 1800000050000
+  }
+}

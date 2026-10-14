@@ -19,7 +19,7 @@ HEALTH_LIMITS = {
     "health": 4,
     "partial": 1,
     "rows": CAPACITY,
-    "blocked": 131070,
+    "attention": 131070,
     "waiting": 131070,
     "working": 131070,
     "unknown": 131070,

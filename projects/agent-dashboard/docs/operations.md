@@ -4,7 +4,9 @@ The default firmware accepts a bounded USB feed from the host bridge. The bridge
 reads running Codex sessions on Starship and Snap through the accepted Observer
 API 4 / Service 4 / Mesh Agent v3 interfaces. ST and SN identify hosts. Age shows
 source-sampled time since conversation activity, rather than time spent blocked
-or waiting. Known system helpers and children are excluded. Useful conversation titles lead
+or waiting. Known system helpers and children are excluded. Current failed turns show an error
+cross and join blocked rows in the attention count; current phases or a fresh
+in-progress turn clear a preceding failure. Useful conversation titles lead
 row labels; repository names are fallbacks, with project context or short identity
 suffixes only when rendered names collide. The accepted row styles and animation
 remain. See the
@@ -148,3 +150,7 @@ observation. The first [implementation and device receipt](../../../docs/evidenc
 records initial automated/native acceptance; the refinement receipt above records
 the completed physical review.
 
+
+The current device protocol is wire 2. Its `attention` health diagnostic and `!`
+header count blocked plus known failed rows. Bundle manifests record `deviceWire`;
+restore the archived wire-1 bridge and firmware together when rolling back.

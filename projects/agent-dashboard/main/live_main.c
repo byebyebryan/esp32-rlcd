@@ -79,7 +79,7 @@ void dashboard_run_live(void)
             if (changed || first || esp_timer_get_time() - started_us > 40000) {
                 char report[240];
                 int length = snprintf(report, sizeof(report),
-                    "RLCD_HEALTH health=%d partial=%d rows=%zu blocked=%u waiting=%u working=%u unknown=%u"
+                    "RLCD_HEALTH health=%d partial=%d rows=%zu attention=%u waiting=%u working=%u unknown=%u"
                     " frame_us=%" PRId64 " miss=%d heap=%zu stack=%u\n",
                     motion.feed_health, motion.live_partial, motion.count,
                     (unsigned)motion.live_totals[0], (unsigned)motion.live_totals[1],

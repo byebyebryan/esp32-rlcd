@@ -93,7 +93,87 @@ def alter(payload, field, replacement):
     return body + f"\t{binascii.crc32(body):08x}\n".encode()
 
 
+def capacity_case():
+    return json.loads((APP / "tests/fixtures/capacity-case.json").read_text())
+
+
+def capacity_sources(case):
+    rows = case["normalizedFailedRows"] + case["normalizedHelpers"]
+    return [
+        source([r for r in rows if r["identity"]["hostScope"] == host], host=host,
+               sampled=case["normalizedProvenance"]["sampledAt"])
+        for host in ("starship", "snap")
+    ]
+
+
 class Projection(unittest.TestCase):
+    def test_capacity_failures_and_title_helpers(self):
+        view = Projector().project(capacity_sources(capacity_case()))
+        self.assertEqual([r["state"] for r in view["rows"]], ["error"] * 3)
+        self.assertEqual([h["total"] for h in view["hosts"]], [0, 3])
+        self.assertEqual(view["hosts"][1]["totals"], [3, 0, 0, 0])
+        self.assertTrue(all(r["health"] == 0 and r["age"] == "30s" for r in view["rows"]))
+
+    def test_failure_requires_current_specific_evidence(self):
+        original = capacity_case()["normalizedFailedRows"][0]
+        for field, value in (
+            ("phase", {"health": "unsupported", "value": "unknown", "reason": "other"}),
+            ("phase", {"health": "stale", "value": "unknown", "reason": "native_runtime_error"}),
+            ("outcome", {"health": "stale", "value": "failed"}),
+            ("outcome", {"health": "unsupported", "value": "failed"}),
+            ("outcome", {"health": "current", "value": "unknown"}),
+            ("outcome", {}),
+        ):
+            with self.subTest(field=field, value=value):
+                view = Projector(["snap"]).project([source([{**original, field: value}], host="snap")])
+                self.assertEqual(view["rows"][0]["state"], "unknown")
+                self.assertEqual(view["rows"][0]["age"], "?")
+        for runtime in ({"health": "stale", "value": "running"}, {"health": "current", "value": "parked"}):
+            self.assertEqual(Projector(["snap"]).project([source([{**original, "runtime": runtime}], host="snap")])["rows"], [])
+
+    def test_retry_and_current_phase_override_old_failure(self):
+        case = capacity_case()
+        p = Projector(["snap"])
+        original = case["normalizedFailedRows"][0]
+        sources = lambda rows: [source(rows, host="snap", sampled=case["normalizedProvenance"]["sampledAt"])]
+        self.assertEqual(p.project(sources([original]))["rows"][0]["state"], "error")
+        for state in ("working", "blocked", "waiting"):
+            active = {**original, "phase": {"health": "current", "value": state}}
+            self.assertEqual(p.project(sources([active]))["rows"][0]["state"], state)
+        retry = case["normalizedRetry"]
+        self.assertEqual(p.project(sources([retry]))["rows"][0]["state"], "working")
+        self.assertEqual(p.project(sources([{**original, "latestTurn": retry["latestTurn"]}]))["rows"][0]["state"], "unknown")
+
+    def test_failure_heartbeat_does_not_renew_age_or_validity(self):
+        case = capacity_case()
+        failed = case["normalizedFailedRows"][0]
+        p = Projector(["snap"])
+        views = [p.project([source([failed], host="snap", remaining=remaining,
+                                  sampled=case["normalizedProvenance"]["sampledAt"])])
+                 for remaining in (2100, 1100, 100)]
+        self.assertEqual([v["rows"][0]["valid_ms"] for v in views], [2000, 1000, 0])
+        self.assertEqual([v["rows"][0]["age"] for v in views], ["30s", "30s", "?"])
+        self.assertEqual(views[-1]["rows"][0]["state"], "unknown")
+
+    def test_failure_age_attention_capacity_and_reclassification(self):
+        original = capacity_case()["normalizedFailedRows"][0]
+        failed = {**original, "identity": {**original["identity"], "hostScope": "starship"},
+                  "activity": {"health": "current", "at": 500}}
+        rows = [row("blocked", state="blocked", at=1000), failed, row("waiting", state="waiting"), row("working")]
+        view = Projector(["starship"]).project([source(rows)])
+        self.assertEqual([r["state"] for r in view["rows"]], ["error", "blocked", "waiting", "working"])
+        self.assertEqual(view["hosts"][0]["totals"], [2, 1, 1, 0])
+        for activity in ({"health": "stale", "at": 500}, {"health": "current", "at": 20000}):
+            view = Projector(["starship"]).project([source([{**failed, "activity": activity}])])
+            self.assertEqual((view["rows"][0]["state"], view["rows"][0]["age"]), ("error", "?"))
+        p = Projector(["starship"])
+        many = [{**failed, "identity": {**failed["identity"], "nativeId": str(i)}} for i in range(40)]
+        view = p.project([source(many)])
+        self.assertEqual((len(view["rows"]), view["hosts"][0]["totals"]), (32, [40, 0, 0, 0]))
+        view = p.project([source([{**many[-1], "kind": "system"}], status="partial")])
+        self.assertEqual(view["hosts"][0]["totals"], [0, 0, 0, 39])
+        self.assertNotIn(token(many[-1]["identity"])[0], p.previous)
+
     def test_urgency_oldest_activity_and_stable_ties(self):
         p = Projector(["starship"])
         rows = [
@@ -326,10 +406,11 @@ class Projection(unittest.TestCase):
         c["identity"]["namespace"] = "other"
         self.assertEqual(len({token(r["identity"])[0] for r in (a, b, c)}), 3)
         self.assertEqual(
-            parse_request(b"RLCD?1 " + b"0" * 16 + b" 1\r\n"), ("0" * 16, 1)
+            parse_request(b"RLCD?2 " + b"0" * 16 + b" 1\r\n"), ("0" * 16, 1)
         )
+        self.assertIsNone(parse_request(b"RLCD?1 " + b"0" * 16 + b" 1\n"))
         for number in (b"0", b"01", b"4294967296", b"-1"):
-            self.assertIsNone(parse_request(b"RLCD?1 " + b"0" * 16 + b" " + number))
+            self.assertIsNone(parse_request(b"RLCD?2 " + b"0" * 16 + b" " + number))
 
     def test_suffix_cannot_collide_with_an_existing_label(self):
         a, b = row("a"), row("b")
@@ -380,6 +461,45 @@ class NativeAdmission(unittest.TestCase):
         self.assertEqual(expired["health"], 2)
         self.assertEqual(expired["totals"], [0, 0, 0, 1])
         self.assertEqual(expired["entries"][0]["age"], "?")
+
+    def test_capacity_case_error_admission_retry_and_expiry(self):
+        case = capacity_case()
+        p = Projector()
+        self.assertIn(b"RLCD?2 ", self.request(0))
+        view = p.project(capacity_sources(case))
+        failed = self.send(encode(view, "0" * 16, 1, "1" * 16, 1))
+        self.assertEqual(failed["totals"], [3, 0, 0, 0])
+        self.assertEqual([r["work"] for r in failed["entries"]], [4, 4, 4])
+        self.assertTrue(failed["flashing"])
+        case["normalizedFailedRows"][0] = case["normalizedRetry"]
+        self.request(100)
+        retry = self.send(encode(p.project(capacity_sources(case)), "0" * 16, 2, "1" * 16, 2))
+        self.assertEqual(retry["totals"], [2, 0, 1, 0])
+        self.assertEqual(retry["entries"][-1]["work"], 0)
+        expired = self.at(3100)
+        self.assertEqual(expired["totals"], [0, 0, 0, 3])
+        self.assertFalse(expired["flashing"])
+        self.assertTrue(all(r["work"] == 5 and r["age"] == "?" for r in expired["entries"]))
+
+    def test_error_frame_version_counts_health_and_partial_host_expiry(self):
+        case = capacity_case()
+        failed = case["normalizedFailedRows"][0]
+        view = Projector().project([
+            source([row("healthy", state="working")], remaining=3000),
+            source([failed], host="snap", remaining=1100, sampled=case["normalizedProvenance"]["sampledAt"]),
+        ])
+        self.request(0)
+        payload = encode(view, "0" * 16, 1, "1" * 16, 1)
+        for bad in (alter(payload, 0, b"RLCD!1"), alter(alter(payload, 18, b"0"), 19, b"1"),
+                    alter(payload, 26, b"1"), payload[:-10] + b"\t00000000\n"):
+            self.send(bad, False)
+        state = self.send(payload)
+        self.assertEqual(state["totals"], [1, 0, 1, 0])
+        expired = self.at(1000)
+        self.assertTrue(expired["partial"])
+        self.assertEqual(expired["totals"], [0, 0, 1, 1])
+        self.assertFalse(expired["flashing"])
+        self.assertEqual([r["work"] for r in expired["entries"]], [0, 5])
 
     def test_request_anchor_shortens_delayed_response(self):
         payload = alter(alter(frame(), 9, b"1000"), 19, b"1000")
@@ -461,14 +581,14 @@ class NativeAdmission(unittest.TestCase):
             alter(base, 5, b"3"),
             alter(base, 6, b"33"),
             alter(base, 9, b"3001"),
-            alter(base, 17, b"4"),
+            alter(base, 17, b"3"),
             alter(base, 19, b"1"),
             alter(base, 20, b"c0af"),
             alter(base, 20, b"ed a080"),
             alter(base, 20, b"41" * 64),
             alter(base, 21, b"1\x00"),
             alter(base, 14, b"4294967296"),
-            base.replace(b"RLCD!1", b"OTHER1"),
+            base.replace(b"RLCD!2", b"OTHER1"),
         ]
         for payload in cases:
             with self.subTest(payload=payload[:20]):

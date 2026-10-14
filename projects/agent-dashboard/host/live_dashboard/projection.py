@@ -16,8 +16,8 @@ CAPACITY = 32
 MAX_ROSTER = 65535
 MAX_VALID_MS = 3000
 MARGIN_MS = 100
-GROUP = {"blocked": 0, "waiting": 1, "working": 2, "unknown": 3}
-WORK = {"blocked": 1, "waiting": 2, "working": 0, "unknown": 5}
+GROUP = {"blocked": 0, "error": 0, "waiting": 1, "working": 2, "unknown": 3}
+WORK = {"blocked": 1, "error": 4, "waiting": 2, "working": 0, "unknown": 5}
 HEALTH = {"current": 0, "stale": 1, "unavailable": 2, "ambiguous": 3, "unsupported": 4}
 
 
@@ -74,6 +74,36 @@ def selection_reason(row):
     if row["runtime"]["value"] != "running":
         return "runtime_unknown"
     return "selected"
+
+
+def presentation(row):
+    """Derive a display failure without adding a provider phase or lease."""
+    phase = row.get("phase") or {}
+    health = phase.get("health", "unavailable")
+    value = phase.get("value", "unknown")
+    if value not in {"working", "blocked", "waiting", "unknown"}:
+        return "unknown", "unsupported"
+    if health == "current" and value in {"working", "blocked", "waiting"}:
+        return value, health
+    runtime = row["runtime"]
+    outcome = row.get("outcome") or {}
+    latest = row.get("latestTurn") or {}
+    retry = (
+        latest.get("health") == "current"
+        and (latest.get("value") or {}).get("status") == "in_progress"
+    )
+    if (
+        runtime.get("health") == "current"
+        and runtime.get("value") == "running"
+        and value == "unknown"
+        and health in {"current", "unsupported"}
+        and phase.get("reason") == "native_runtime_error"
+        and outcome.get("health") == "current"
+        and outcome.get("value") == "failed"
+        and not retry
+    ):
+        return "error", "current"
+    return "unknown", health
 
 
 def age_label(milliseconds):
@@ -182,13 +212,7 @@ class Projector:
                 if identifier in self.keys and self.keys[identifier] != key:
                     raise ValueError("identity_collision")
                 self.keys[identifier] = key
-                phase = row.get("phase") or {}
-                health = phase.get("health", "unavailable")
-                state = (
-                    phase.get("value", "unknown") if health == "current" else "unknown"
-                )
-                if state not in GROUP:
-                    state, health = "unknown", "unsupported"
+                state, health = presentation(row)
                 activity = row["activity"]
                 at = activity.get("at") if activity["health"] == "current" else None
                 sampled = source.sampled_at
@@ -332,12 +356,14 @@ class Projector:
                         "source_status": source.status,
                         "runtime": row["runtime"],
                         "phase": row.get("phase"),
+                        "outcome": row.get("outcome"),
                         "activity": row["activity"],
                         "selection": "retained_uncertain"
                         if displayed and not displayed["valid_ms"]
                         else reason,
                         "display_label": displayed["label"] if displayed else None,
                         "display_age": displayed["age"] if displayed else None,
+                        "display_state": displayed["state"] if displayed else None,
                         "display_position": index + 1 if index is not None else None,
                         "sent_to_device": index is not None and index < CAPACITY,
                         "visible": index is not None and index < 11,

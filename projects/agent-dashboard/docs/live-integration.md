@@ -18,9 +18,14 @@ An accepted complete inventory may retire omitted display membership; that is
 not a provider-session deletion or lifecycle assertion. Partial inventories do
 not supply that exclusion.
 
-Current blocked rows flash at 1 Hz; waiting rows remain inverse; working rows
-remain normal. Outcome failure/cancellation does not determine current phase.
-Uncertain rows lose work styling. Groups are blocked, waiting, working, uncertain.
+Current blocked and known failed rows flash at 1 Hz; waiting rows remain inverse;
+working rows remain normal. A current running runtime, unknown phase with
+`native_runtime_error`, and current failed outcome derive an error cross. Current
+working/blocked/waiting phases and a current in-progress latest turn take
+precedence. This display state preserves Observer's phase vocabulary; an older
+failure alone supplies no current error claim. Missing or expired evidence stays
+uncertain. Groups are attention (blocked plus known failures), waiting, working,
+uncertain. The `!` header counts attention.
 Within healthy groups, oldest known conversation activity comes first, then
 unknown activity; ties preserve previous order. This changes the synthetic
 study's exact state-age policy: phase-entry time is unavailable from Observer.
@@ -49,20 +54,20 @@ Partial delivery has a visible PARTIAL header; whole-feed loss has an OFFLINE
 header and retained identity/layout context. Counts from expired hosts become
 uncertain context, never cached blocked/waiting/working claims.
 
-## Device wire 1
+## Device wire 2
 
 USB uses ASCII LF-delimited records alongside ordinary boot/diagnostic logs.
 Only tagged records enter the protocol. A device request is:
 
 ```text
-RLCD?1 <16 lowercase hex boot nonce> <positive request number>
+RLCD?2 <16 lowercase hex boot nonce> <positive request number>
 ```
 
 Responses are tab-separated ASCII with this field order:
 
 ```text
-RLCD!1 boot request bridge sequence host_count row_count
-  [alias_hex status valid_ms blocked waiting working unknown total] per host
+RLCD!2 boot request bridge sequence host_count row_count
+  [alias_hex status valid_ms attention waiting working unknown total] per host
   [identity_sha256 host_index work health valid_ms label_hex age] per row
   crc32
 ```
@@ -70,7 +75,7 @@ RLCD!1 boot request bridge sequence host_count row_count
 The displayed wrapping is explanatory: each response is one physical line.
 CRC32 covers every byte before the final tab/checksum. Text fields encode UTF-8
 bytes as lowercase hex. Ages are `?`, `+++` or a bounded number with s/m/h/d.
-Work codes use the existing C enum: 0 working, 1 blocked, 2 waiting, 5 unknown.
+Work codes use the existing C enum: 0 working, 1 blocked, 2 waiting, 4 derived error, 5 unknown.
 Health codes are 0 current, 1 stale, 2 unavailable, 3 ambiguous, 4 unsupported.
 Host status is 0 current, 1 partial, 2 offline, 3 warming.
 
@@ -104,7 +109,8 @@ prefix. A partial omission preserves uncertain membership and counts. Positive
 child/system/parked evidence removes membership, including identities outside
 the transport prefix; accepted complete omission can retire display membership.
 Capacity failure is explicit rather than a silent loss of whole-roster counts.
-This changes host retention implementation without changing device wire 1.
+The preceding retention refinement preserved wire 1. Wire 2 adds code 4 to live
+admission and counts it in the attention group.
 
 The bridge supervises its subscription and serial workers. Expected source loss
 uses bounded retry and lease revocation. Unexpected worker exit/cleanup failure
@@ -132,3 +138,7 @@ and global system services remain external.
 Producer reference: the sibling Agent Observer repository's `docs/api-v4.md`
 and `docs/evidence/2026-10-13-system-classification/REPORT.md`. These local source
 checkpoints and installed artifacts have separate publication status.
+
+Wire 1 and wire 2 tags are mutually rejected. Rollback requires selecting the
+retained matching bridge and firmware pair. API 4/read 6/Service 4 and Agent v3
+are unchanged; this is a device presentation migration only.

@@ -107,7 +107,7 @@ def silence(args):
             r
             for r in reports
             if r.get("health") == 2
-            and not r.get("blocked")
+            and not r.get("attention")
             and not r.get("waiting")
             and not r.get("working")
         ]

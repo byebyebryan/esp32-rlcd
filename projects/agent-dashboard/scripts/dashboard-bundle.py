@@ -64,6 +64,7 @@ def freeze(source, output, python, revision, *, source_dirty=False):
         "manifestVersion": 1,
         "sourceRevision": revision,
         "sourceDirty": source_dirty,
+        "deviceWire": 2,
         "python": str(python),
         "dependencies": EXPECTED,
         "files": files,
@@ -108,6 +109,7 @@ def verify(bundle, checksum=None, *, dependencies=True):
     manifest = json.loads(payload)
     if (
         manifest["manifestVersion"] != 1
+        or manifest.get("deviceWire") != 2
         or manifest["dependencies"] != EXPECTED
         or set(manifest["files"]) != set(INPUTS)
     ):

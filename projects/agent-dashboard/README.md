@@ -33,7 +33,7 @@ same projection, wire admission and C renderer as the live application.
 flowchart LR
     Observer[Observer API 4] --> Mesh[Mesh Agent v3]
     Mesh --> Bridge[Host bridge]
-    Bridge -->|USB wire 1| RLCD[RLCD firmware]
+    Bridge -->|USB wire 2| RLCD[RLCD firmware]
 ```
 
 Observer owns native discovery and classification. Mesh owns validated delivery
@@ -47,6 +47,8 @@ and keeps routine diagnostics quiet. The [release receipt](../../docs/evidence/2
 records published source, installed runtime, checks and exercised rollback.
 Names, host badges and activity ages have [physical readability acceptance](../../docs/evidence/2026-10-13-dashboard-refinement/REPORT.md).
 Manual panel/reboot follow-ups remain deferred.
+The [helper and failure refinement plan](docs/failure-refinement-plan.md) covers
+the observed title-helper rows and model-capacity failure presentation.
 
 ## Build and check
 

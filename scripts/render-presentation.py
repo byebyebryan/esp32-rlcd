@@ -55,7 +55,7 @@ def dashboard_commands():
                             continue
                         phase = session["phase"]
                         if elapsed >= 4000:
-                            if session["id"] == "demo-st-01":
+                            if session["id"] in {"demo-st-01", "demo-st-04"}:
                                 phase = "working"
                             if session["id"] == "demo-sn-01":
                                 phase = "blocked"
@@ -65,7 +65,9 @@ def dashboard_commands():
                                          "nativeId": session["id"]},
                             "kind": "user", "title": session["title"], "cwd": "/fictional/demo",
                             "runtime": {"health": "current", "value": "running"},
-                            "phase": {"health": "current", "value": phase},
+                            "phase": ({"health": "unsupported", "value": "unknown", "reason": "native_runtime_error"}
+                                      if phase == "error" else {"health": "current", "value": phase}),
+                            "outcome": {"health": "current", "value": "failed" if phase == "error" else "unknown"},
                             "activity": {"health": "current", "at": 1000000 - session["age_seconds"] * 1000},
                         })
                     sources.append(Source(host, "current", 10000, 1000000 + elapsed,
@@ -139,8 +141,8 @@ def main():
             screens.append(screen)
             if project == "agent-dashboard":
                 elapsed = index * SAMPLE_MS
-                title = ("Blocked and waiting conversations" if elapsed < 4000 else
-                         "Answered wait: rows reorder" if elapsed < 6000 else
+                title = ("Blocked and failed conversations" if elapsed < 4000 else
+                         "Recovery: rows reorder" if elapsed < 6000 else
                          "One host offline: retained uncertainty" if elapsed < 10000 else
                          "Feed expired: work claims cleared" if elapsed < 12000 else
                          "Fresh feed: current observations recover")
@@ -168,7 +170,7 @@ def main():
                 assert duration == count * SAMPLE_MS
         manifest = {
             "description": {
-                "agent-dashboard": "Fictional normalized records through production projection, wire 1 admission and C motion/rendering; virtual time.",
+                "agent-dashboard": "Fictional normalized records through production projection, wire 2 admission and C motion/rendering; virtual time.",
                 "render-bench": "Unchanged benchmark draw_animation scene compiled with native board stubs; virtual time.",
                 "bringup": "Native initial rlcd_frame_draw_test pattern used by bring-up; no hardware access.",
             }[project],
