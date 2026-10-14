@@ -1,0 +1,243 @@
+{
+  "receiptVersion": 1,
+  "status": "implementation_and_managed_service_accepted_physical_checks_pending",
+  "applicationSourceRevision": "2ad5769b2739b708b1a8fe94b2d85c0ba30bc1e6",
+  "sourceDirty": false,
+  "bundle": ".local/share/rlcd-agent-dashboard/18531bb45ac00c42",
+  "bundleManifestSha256": "18531bb45ac00c42338db697d05fc8785c20853dd37b2bc044800e623acf53f4",
+  "dependencies": {
+    "api": 4,
+    "mesh": "0.1.0a17",
+    "nativeVersion": 6,
+    "observer": "0.7.0a1",
+    "profile": "agent-observer.mesh-candidate.v3",
+    "sdk": 1,
+    "service": 4
+  },
+  "runtimeFileSha256": {
+    "components/agent_dashboard/fusion_pixel_12_zh_hans.c": "0dd98e8d9c1236f9de9a201f942c04c7e36cedf7c27a82c1d3aade94574778f3",
+    "host/live_dashboard/__init__.py": "152f3619f26ed65bb895372a3b540bccbabec3c3bbbc40f990b2d97eb622ef34",
+    "host/live_dashboard/mesh.py": "f1c8d2350779b55df0b7fa194bd4a86c9a2d9356dcbd09c2426f46d16c34e21f",
+    "host/live_dashboard/projection.py": "d6756ba385679a61a5bf1555606ecfd31ebae276209c134951ca3fdbf7baf2b0",
+    "host/live_dashboard/runtime.py": "53d0d11a46d7ebb1be5fd1f672cac10ce7af659ef0ec6072e8d297de61f12bb1",
+    "host/live_dashboard/serial.py": "4b21636adc601aebcea332a0ad2c1a8d577ed47e6dfd7684292a4dd78ca63c90",
+    "host/live_dashboard/wire.py": "e1491e4713a0a8bacd74219658c4107344720cafa20ca2d638a8eedfca019c56",
+    "scripts/dashboard-bundle.py": "33b4655bb5cbc20a552f107f915b8b0fcc4436cd04261ac94786c70f4ec52bb9",
+    "scripts/live-dashboard.py": "ac8755b4f8d4450fe26856874228c24cbb72bf68adba727ab41b4534505aef63"
+  },
+  "checks": {
+    "projectionAndDeviceAdmission": 25,
+    "workerLifetime": 5,
+    "serial": 4,
+    "bundle": 2,
+    "total": 36,
+    "motion": "passed",
+    "chezmoiCanonical": "passed",
+    "installedArtifact": "passed",
+    "hostGates": [
+      "starship enabled",
+      "snap ignored",
+      "carbon ignored",
+      "unknown ignored"
+    ]
+  },
+  "rollout": {
+    "status": "passed",
+    "stages": [
+      {
+        "stage": "candidate",
+        "status": "accepted",
+        "healthyMatchedAcks": 139,
+        "rows": 7,
+        "hosts": [
+          {
+            "alias": "ST",
+            "status": 0,
+            "valid_ms": 3000,
+            "totals": [
+              0,
+              1,
+              4,
+              0
+            ],
+            "total": 5
+          },
+          {
+            "alias": "SN",
+            "status": 0,
+            "valid_ms": 3000,
+            "totals": [
+              0,
+              2,
+              0,
+              0
+            ],
+            "total": 2
+          }
+        ],
+        "maxFrameUs": 16793,
+        "deadlineMisses": 0,
+        "pid": 1151649,
+        "enabled": "enabled",
+        "manifestSha256": "18531bb45ac00c42338db697d05fc8785c20853dd37b2bc044800e623acf53f4"
+      },
+      {
+        "stage": "rollback",
+        "status": "accepted",
+        "healthyMatchedAcks": 4,
+        "rows": 7,
+        "hosts": [
+          {
+            "alias": "ST",
+            "status": 0,
+            "valid_ms": 3000,
+            "totals": [
+              0,
+              1,
+              4,
+              0
+            ],
+            "total": 5
+          },
+          {
+            "alias": "SN",
+            "status": 0,
+            "valid_ms": 3000,
+            "totals": [
+              0,
+              2,
+              0,
+              0
+            ],
+            "total": 2
+          }
+        ],
+        "maxFrameUs": 16371,
+        "deadlineMisses": 0,
+        "pid": 1157355,
+        "enabled": "enabled",
+        "manifestSha256": "ab87015dbfc582012e02b4d8aa0995148cb114624d6c3705bb158e646a0c9899"
+      },
+      {
+        "stage": "reselected",
+        "status": "accepted",
+        "healthyMatchedAcks": 4,
+        "rows": 7,
+        "hosts": [
+          {
+            "alias": "ST",
+            "status": 0,
+            "valid_ms": 3000,
+            "totals": [
+              0,
+              1,
+              4,
+              0
+            ],
+            "total": 5
+          },
+          {
+            "alias": "SN",
+            "status": 0,
+            "valid_ms": 3000,
+            "totals": [
+              0,
+              2,
+              0,
+              0
+            ],
+            "total": 2
+          }
+        ],
+        "maxFrameUs": 16375,
+        "deadlineMisses": 0,
+        "pid": 1157610,
+        "enabled": "enabled",
+        "manifestSha256": "18531bb45ac00c42338db697d05fc8785c20853dd37b2bc044800e623acf53f4"
+      }
+    ]
+  },
+  "protected": {
+    "status": "passed",
+    "checks": [
+      {
+        "target": "349d.service",
+        "unchanged": true
+      },
+      {
+        "target": "agent-observer.service",
+        "unchanged": true
+      },
+      {
+        "target": "mesh-plus-agent.service",
+        "unchanged": true
+      },
+      {
+        "target": "tmux-observer-owner@starship.service",
+        "unchanged": true
+      },
+      {
+        "target": "/home/bryan/.codex/config.toml",
+        "unchanged": true
+      },
+      {
+        "target": "/home/bryan/.local/share/chezmoi/deployments/agent-observer.json",
+        "unchanged": true
+      },
+      {
+        "target": "/home/bryan/.local/share/chezmoi/deployments/agent-observer-mesh.json",
+        "unchanged": true
+      }
+    ],
+    "normalization": "Compare MainPID, ActiveState and command definition; exclude ExecStart runtime bookkeeping cleared during daemon reload."
+  },
+  "service": {
+    "ActiveState": "active",
+    "UnitFileState": "enabled",
+    "Transient": "no",
+    "MainPID": "1170573",
+    "NRestarts": "0",
+    "MemoryCurrent": "43388928",
+    "MemoryPeak": "56823808",
+    "CPUUsageNSec": "119797733000"
+  },
+  "physical": {
+    "usbReconnect": "pending_user_check",
+    "reboot": "pending_coordinated_window",
+    "readability": "previously_accepted_layout_unchanged"
+  },
+  "firmwareChanged": false,
+  "wireVersion": 1,
+  "publication": "local_only",
+  "chezmoiCommit": "00220a0",
+  "rollback": {
+    "manifestVersion": 1,
+    "enabledHosts": [
+      "starship"
+    ],
+    "hosts": [
+      "starship",
+      "snap"
+    ],
+    "port": "/dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_94:A9:90:F3:43:74-if00",
+    "bundle": ".local/share/rlcd-agent-dashboard/ab87015dbfc58201",
+    "manifestSha256": "ab87015dbfc582012e02b4d8aa0995148cb114624d6c3705bb158e646a0c9899",
+    "sourceRevision": "2ef115149886d62bb1df0c7d7da2a1c343e090f3",
+    "python": ".local/share/agent-observer/0.7.0a1-07196b5445766002-mesh-a17-system/bin/python",
+    "dependencies": {
+      "observer": "0.7.0a1",
+      "mesh": "0.1.0a17",
+      "profile": "agent-observer.mesh-candidate.v3",
+      "nativeVersion": 6,
+      "sdk": 1,
+      "api": 4,
+      "service": 4
+    },
+    "baselineHelpersFromCandidate": true
+  },
+  "checkLogSha256": {
+    "live-check.log": "2b9fe3f5a94c2b1450b1d9cdeddd528b426721c8096faba8d71efca9d172dde0",
+    "motion-check.log": "3ee01a90c0a1bf5633afffe178ff0b13552248b2074562cc03182532dd2df783",
+    "chezmoi-final-check.log": "e080f4a6e1f0aea3f21f23b2f81ad57ce5259a67098c04ccb84ea4f84de91db0"
+  }
+}

@@ -48,6 +48,9 @@ Add `--all` for saved/excluded row details. Diagnostics retain bounded Observer
 metadata only. The roster's age meaning is explicitly conversation activity.
 The [refinement receipt](../../docs/evidence/2026-10-13-dashboard-refinement/REPORT.md)
 records the classification, naming, installed tuple and device acceptance.
+The [reliability receipt](../../docs/evidence/2026-10-13-live-reliability/REPORT.md)
+records membership, supervised workers, serial recovery, managed startup and
+separate physical operation gates.
 
 After building/flashing the confirmed RLCD, run the bridge in the foreground:
 

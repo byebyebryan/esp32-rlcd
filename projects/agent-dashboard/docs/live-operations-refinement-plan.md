@@ -3,8 +3,10 @@
 The dashboard already consumes real Codex observations from Snap and Starship,
 and its names, host badges and activity ages have physical readability acceptance.
 This pass makes the host bridge recover predictably, gives Starship durable
-startup, and repairs whole-roster counts during partial inventory. Planning
-status: implementation and managed rollout are pending.
+startup, and repairs whole-roster counts during partial inventory. Implementation,
+automated/live-device validation and managed rollout are accepted in the
+[reliability receipt](../../../docs/evidence/2026-10-13-live-reliability/REPORT.md).
+Physical USB reconnect and a real reboot remain separately pending.
 
 The [integration contract](live-integration.md) and
 [accepted refinement receipt](../../../docs/evidence/2026-10-13-dashboard-refinement/REPORT.md)
