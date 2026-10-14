@@ -154,3 +154,9 @@ the completed physical review.
 The current device protocol is wire 2. Its `attention` health diagnostic and `!`
 header count blocked plus known failed rows. Bundle manifests record `deviceWire`;
 restore the archived wire-1 bridge and firmware together when rolling back.
+
+For a bounded fictional failure/retry/expiry proof after selecting wire 2, stop
+the RLCD service and run `python3 projects/agent-dashboard/scripts/capture-failure-case.py`.
+It owns the known RLCD port exclusively for sixteen seconds, exercises three
+failures and one retry, then stops replies to prove expiry. It performs no
+provider reads or actions. Restore the real bridge after this device check.

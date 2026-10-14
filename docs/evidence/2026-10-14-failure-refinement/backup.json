@@ -1,0 +1,8 @@
+{
+  "fullFlashBytes": 16777216,
+  "fullFlashSha256": "fe825ac4358f5eef5b749aa18520a2042c5007f3ac9a2d0c532d71f0c297ddbc",
+  "appSlotOffset": 65536,
+  "appSlotBytes": 2097152,
+  "appSlotSha256": "a0cd62067b1d18ed647f1a09879fbd60ba79e5da5ec8b86b7d6d5cb2d5fc572f",
+  "bootloaderAndPartitionUnchanged": true
+}

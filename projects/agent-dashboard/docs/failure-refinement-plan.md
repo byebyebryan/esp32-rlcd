@@ -1,6 +1,6 @@
 # Dashboard helper and failure refinement
 
-Planned pass: remove Codex title-generation helpers from the live roster and
+Accepted pass: remove Codex title-generation helpers from the live roster and
 distinguish known failed turns from unavailable observations. Preserve Observer
 API 4, source-sampled activity ages, full native identity and provider ownership.
 
@@ -105,3 +105,10 @@ automatic retry, model change, archive or unload.
 Manual panel readability and reboot checks remain deferred under the user's
 existing instruction. Prepared-reader performance adoption remains a separate
 client pass with its own output/cost comparison.
+
+## Accepted result
+
+The [2026-10-14 receipt](../../../docs/evidence/2026-10-14-failure-refinement/REPORT.md)
+records completed producer, bridge/native, firmware/readback, fictional failure
+and real feed, managed service and paired rollback gates. Manual panel/reboot
+and optional prepared-reader performance adoption keep their separate deferrals.

@@ -1,0 +1,50 @@
+{
+  "passed": true,
+  "wire": 2,
+  "service": {
+    "ActiveState": "active",
+    "MainPID": "2398940",
+    "NRestarts": "0"
+  },
+  "bundle": "3a4b22b4556cb243",
+  "positiveAdmission": {
+    "event": "device_ack_recovered",
+    "request": 33,
+    "sequence": 33,
+    "rows": 9,
+    "source_admitted": true
+  },
+  "currentHealth": {
+    "event": "device_health",
+    "health": 0,
+    "partial": 0,
+    "rows": 9,
+    "attention": 1,
+    "waiting": 6,
+    "working": 2,
+    "unknown": 0,
+    "frame_us": 17832,
+    "miss": 0,
+    "heap": 292171,
+    "stack": 4776
+  },
+  "readbackSha256": "df992a713fd8a5cf47e8b45c36b13a9378ba80288d600a1b2b384dad20aefc55",
+  "rollback": {
+    "passed": true,
+    "wire": 1,
+    "bundle": "ccb8f7b3fa388f1d",
+    "pid": 2367562,
+    "positiveAdmission": {
+      "event": "device_ack_recovered",
+      "request": 50,
+      "sequence": 50,
+      "rows": 9,
+      "source_admitted": true
+    }
+  },
+  "rollbackSlotSha256": "a0cd62067b1d18ed647f1a09879fbd60ba79e5da5ec8b86b7d6d5cb2d5fc572f",
+  "protectedNonRlcdRolesEqual": true,
+  "providerActions": 0,
+  "manualPanelReboot": "deferred",
+  "managedSourceRevision": "2bc0e1f"
+}

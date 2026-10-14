@@ -48,7 +48,11 @@ records published source, installed runtime, checks and exercised rollback.
 Names, host badges and activity ages have [physical readability acceptance](../../docs/evidence/2026-10-13-dashboard-refinement/REPORT.md).
 Manual panel/reboot follow-ups remain deferred.
 The [helper and failure refinement plan](docs/failure-refinement-plan.md) covers
-the observed title-helper rows and model-capacity failure presentation.
+the observed title-helper rows and model-capacity failure presentation. Its
+[acceptance receipt](../../docs/evidence/2026-10-14-failure-refinement/REPORT.md)
+records independent producer and paired device rollout. Known
+current failed turns use an error cross and contribute to `!` attention counts.
+A fresh active turn clears the preceding failure; unsupported observations keep `?`.
 
 ## Build and check
 

@@ -1,0 +1,102 @@
+{
+  "scope": "live cached feed and USB/device admission; physical readability remains separate",
+  "initial": {
+    "sent": 44,
+    "acknowledged": 16,
+    "healthyConfirmed": 14,
+    "lastView": {
+      "sequence": 44,
+      "request": 76,
+      "crc": "3d6db44a",
+      "rows": 9,
+      "hosts": [
+        {
+          "alias": "ST",
+          "status": 0,
+          "valid_ms": 3000,
+          "totals": [
+            0,
+            3,
+            2,
+            0
+          ],
+          "total": 5
+        },
+        {
+          "alias": "SN",
+          "status": 0,
+          "valid_ms": 3000,
+          "totals": [
+            1,
+            3,
+            0,
+            0
+          ],
+          "total": 4
+        }
+      ]
+    },
+    "maxFrameUs": 17951,
+    "deadlineMisses": 0,
+    "minInternalHeap": 292171,
+    "minStackWatermark": 4776
+  },
+  "silence": {
+    "windowSeconds": 6,
+    "expired": {
+      "health": 2,
+      "partial": 1,
+      "rows": 9,
+      "attention": 0,
+      "waiting": 0,
+      "working": 0,
+      "unknown": 9,
+      "frame_us": 16455,
+      "miss": 0,
+      "heap": 292171,
+      "stack": 4776
+    }
+  },
+  "recovery": {
+    "sent": 15,
+    "acknowledged": 15,
+    "healthyConfirmed": 14,
+    "lastView": {
+      "sequence": 15,
+      "request": 97,
+      "crc": "b20f0e95",
+      "rows": 9,
+      "hosts": [
+        {
+          "alias": "ST",
+          "status": 0,
+          "valid_ms": 3000,
+          "totals": [
+            0,
+            3,
+            2,
+            0
+          ],
+          "total": 5
+        },
+        {
+          "alias": "SN",
+          "status": 0,
+          "valid_ms": 3000,
+          "totals": [
+            1,
+            3,
+            0,
+            0
+          ],
+          "total": 4
+        }
+      ]
+    },
+    "maxFrameUs": 17927,
+    "deadlineMisses": 0,
+    "minInternalHeap": 292171,
+    "minStackWatermark": 4776
+  },
+  "passed": true
+}

@@ -1,0 +1,190 @@
+{
+  "passed": true,
+  "scope": "fictional device input, no provider reads/actions",
+  "wire": 2,
+  "checks": {
+    "failureAcknowledged": true,
+    "retryAcknowledged": true,
+    "failureAttention": true,
+    "retryAttention": true,
+    "silenceExpiry": true
+  },
+  "acknowledged": [
+    {
+      "stage": "failure",
+      "request": 190,
+      "crc": "47af4f41",
+      "rows": 3
+    },
+    {
+      "stage": "failure",
+      "request": 191,
+      "crc": "30f4661f",
+      "rows": 3
+    },
+    {
+      "stage": "failure",
+      "request": 192,
+      "crc": "ac3eca45",
+      "rows": 3
+    },
+    {
+      "stage": "failure",
+      "request": 193,
+      "crc": "de4234a3",
+      "rows": 3
+    },
+    {
+      "stage": "retry",
+      "request": 194,
+      "crc": "9acf38a6",
+      "rows": 3
+    },
+    {
+      "stage": "retry",
+      "request": 195,
+      "crc": "ed9411f8",
+      "rows": 3
+    },
+    {
+      "stage": "retry",
+      "request": 196,
+      "crc": "715ebda2",
+      "rows": 3
+    },
+    {
+      "stage": "retry",
+      "request": 197,
+      "crc": "096dec34",
+      "rows": 3
+    }
+  ],
+  "health": [
+    {
+      "elapsed": 0.957,
+      "health": 0,
+      "partial": 0,
+      "rows": 3,
+      "attention": 3,
+      "waiting": 0,
+      "working": 0,
+      "unknown": 0,
+      "frame_us": 16916,
+      "miss": 0,
+      "heap": 292171,
+      "stack": 4776
+    },
+    {
+      "elapsed": 1.955,
+      "health": 0,
+      "partial": 0,
+      "rows": 3,
+      "attention": 3,
+      "waiting": 0,
+      "working": 0,
+      "unknown": 0,
+      "frame_us": 14852,
+      "miss": 0,
+      "heap": 292171,
+      "stack": 4776
+    },
+    {
+      "elapsed": 2.954,
+      "health": 0,
+      "partial": 0,
+      "rows": 3,
+      "attention": 3,
+      "waiting": 0,
+      "working": 0,
+      "unknown": 0,
+      "frame_us": 14843,
+      "miss": 0,
+      "heap": 292171,
+      "stack": 4776
+    },
+    {
+      "elapsed": 3.952,
+      "health": 0,
+      "partial": 0,
+      "rows": 3,
+      "attention": 3,
+      "waiting": 0,
+      "working": 0,
+      "unknown": 0,
+      "frame_us": 14839,
+      "miss": 0,
+      "heap": 292171,
+      "stack": 4776
+    },
+    {
+      "elapsed": 4.95,
+      "health": 0,
+      "partial": 0,
+      "rows": 3,
+      "attention": 2,
+      "waiting": 0,
+      "working": 1,
+      "unknown": 0,
+      "frame_us": 14837,
+      "miss": 0,
+      "heap": 292171,
+      "stack": 4776
+    },
+    {
+      "elapsed": 5.958,
+      "health": 0,
+      "partial": 0,
+      "rows": 3,
+      "attention": 2,
+      "waiting": 0,
+      "working": 1,
+      "unknown": 0,
+      "frame_us": 14832,
+      "miss": 0,
+      "heap": 292171,
+      "stack": 4776
+    },
+    {
+      "elapsed": 6.956,
+      "health": 0,
+      "partial": 0,
+      "rows": 3,
+      "attention": 2,
+      "waiting": 0,
+      "working": 1,
+      "unknown": 0,
+      "frame_us": 14833,
+      "miss": 0,
+      "heap": 292171,
+      "stack": 4776
+    },
+    {
+      "elapsed": 7.954,
+      "health": 0,
+      "partial": 0,
+      "rows": 3,
+      "attention": 2,
+      "waiting": 0,
+      "working": 1,
+      "unknown": 0,
+      "frame_us": 14832,
+      "miss": 0,
+      "heap": 292171,
+      "stack": 4776
+    },
+    {
+      "elapsed": 10.916,
+      "health": 2,
+      "partial": 1,
+      "rows": 3,
+      "attention": 0,
+      "waiting": 0,
+      "working": 0,
+      "unknown": 3,
+      "frame_us": 14103,
+      "miss": 0,
+      "heap": 292171,
+      "stack": 4776
+    }
+  ]
+}

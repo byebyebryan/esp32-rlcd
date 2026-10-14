@@ -1,0 +1,12 @@
+{
+  "sourceRevision": "09dd027b376096eae073b68149ca2df89eb2803c",
+  "wire": 2,
+  "files": {
+    "rlcd-dashboard.bin": "df992a713fd8a5cf47e8b45c36b13a9378ba80288d600a1b2b384dad20aefc55",
+    "bootloader.bin": "d6900978265da8af4adf3926fbc1d1b917773361369b7fd729ebf7e746b76c8e",
+    "partition-table.bin": "5e71c3c890e04714daa03b21a0d23953a2dadf9fdf15eec02b886f7b6e9f8c81",
+    "flash_args": "ad27fc019904562287e8c38095b8d90d0f0552c4c544af93e0e8bea9f5af5aaf",
+    "sdkconfig": "21195fd64798f857638982d8b68e61b3aed72d118ddfd1964cf53363ae0ed7d8"
+  },
+  "projectVersion": "09dd027"
+}
