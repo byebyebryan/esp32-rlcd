@@ -74,6 +74,8 @@ reconnection uses fresh framing and bridge identity. Unexpected worker terminati
 fails the owner visibly, and normal service stop releases its owned resources.
 
 After installation, inspect the cached roster with `rlcd-agent-dashboard --roster`.
+The [release and logging receipt](../../docs/evidence/2026-10-13-release-refinement/REPORT.md)
+records the current quiet runtime, scoped source publication and release gates.
 Use `systemctl --user status rlcd-agent-dashboard.service` and
 `journalctl --user -u rlcd-agent-dashboard.service` for operation. Stop it with
 `systemctl --user stop rlcd-agent-dashboard.service` before opening a foreground

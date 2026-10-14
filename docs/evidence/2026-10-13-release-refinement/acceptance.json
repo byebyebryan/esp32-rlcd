@@ -1,0 +1,210 @@
+{
+  "receiptVersion": 1,
+  "status": "accepted_with_manual_followups_deferred",
+  "recordedAtUtc": "2026-10-14T03:56:09.339830+00:00",
+  "publication": {
+    "status": "published",
+    "branch": "main",
+    "method": "fast_forward",
+    "sourceRevisions": {
+      "agent-observer": "7915b6127e5a933f13eb507edb1907348db76b33",
+      "mesh-plus": "fe7e700d5202eac303631ceed0b1ec721a07ae1e",
+      "esp32-rlcd": "41d22c287ce9bc9de0780ccb3255c65f4741af23",
+      "dotfiles": "04d79734fbf1b2547dc16b09eb643abb5ced4c68"
+    },
+    "hostedWheelRelease": false,
+    "hostedChecks": [
+      {
+        "repository": "agent-observer",
+        "conclusion": "success",
+        "headSha": "7915b6127e5a933f13eb507edb1907348db76b33",
+        "status": "completed",
+        "url": "https://github.com/byebyebryan/agent-observer/actions/runs/38508506613"
+      },
+      {
+        "repository": "mesh-plus",
+        "conclusion": "success",
+        "headSha": "fe7e700d5202eac303631ceed0b1ec721a07ae1e",
+        "status": "completed",
+        "url": "https://github.com/byebyebryan/mesh-plus/actions/runs/38508505322"
+      }
+    ]
+  },
+  "installed": {
+    "selection": {
+      "manifestVersion": 1,
+      "enabledHosts": [
+        "starship"
+      ],
+      "hosts": [
+        "starship",
+        "snap"
+      ],
+      "port": "/dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_94:A9:90:F3:43:74-if00",
+      "bundle": ".local/share/rlcd-agent-dashboard/ccb8f7b3fa388f1d",
+      "manifestSha256": "ccb8f7b3fa388f1d59986ba6753ce24060a7febccefffb0c03fc16918dd45d96",
+      "sourceRevision": "41d22c287ce9bc9de0780ccb3255c65f4741af23",
+      "python": ".local/share/agent-observer/0.7.0a1-07196b5445766002-mesh-a17-system/bin/python",
+      "dependencies": {
+        "observer": "0.7.0a1",
+        "mesh": "0.1.0a17",
+        "profile": "agent-observer.mesh-candidate.v3",
+        "nativeVersion": 6,
+        "sdk": 1,
+        "api": 4,
+        "service": 4
+      }
+    },
+    "sourceDirty": false,
+    "runtimeFileSha256": {
+      "components/agent_dashboard/fusion_pixel_12_zh_hans.c": "0dd98e8d9c1236f9de9a201f942c04c7e36cedf7c27a82c1d3aade94574778f3",
+      "host/live_dashboard/__init__.py": "152f3619f26ed65bb895372a3b540bccbabec3c3bbbc40f990b2d97eb622ef34",
+      "host/live_dashboard/mesh.py": "f1c8d2350779b55df0b7fa194bd4a86c9a2d9356dcbd09c2426f46d16c34e21f",
+      "host/live_dashboard/projection.py": "d6756ba385679a61a5bf1555606ecfd31ebae276209c134951ca3fdbf7baf2b0",
+      "host/live_dashboard/runtime.py": "53d0d11a46d7ebb1be5fd1f672cac10ce7af659ef0ec6072e8d297de61f12bb1",
+      "host/live_dashboard/serial.py": "3d8abb5420d2a20ca7e58c236207cd3aea265f87b834b467aaa07eb64b01fae9",
+      "host/live_dashboard/wire.py": "e1491e4713a0a8bacd74219658c4107344720cafa20ca2d638a8eedfca019c56",
+      "scripts/dashboard-bundle.py": "33b4655bb5cbc20a552f107f915b8b0fcc4436cd04261ac94786c70f4ec52bb9",
+      "scripts/live-dashboard.py": "ac8755b4f8d4450fe26856874228c24cbb72bf68adba727ab41b4534505aef63"
+    },
+    "service": {
+      "InvocationID": "45f38918cf44408480572c56fcee0a9c",
+      "MainPID": "1605208",
+      "NRestarts": "0"
+    }
+  },
+  "checks": {
+    "dashboard": {
+      "projectionAndCAdmission": 25,
+      "workerLifetime": 5,
+      "serialAndDiagnostics": 8,
+      "bundle": 2,
+      "total": 40
+    },
+    "observer": 401,
+    "meshStandalone": 121,
+    "meshLegacyNativeAndSSH": {
+      "tests": 159,
+      "agentObserver": "0.5.0a20",
+      "tmuxObserver": "0.6.0a7"
+    },
+    "agentV3Conformance": {
+      "profile": 7,
+      "network": 10
+    },
+    "chezmoiCanonical": "passed",
+    "finalArtifactAndUnit": "passed",
+    "logSha256": {
+      "dashboard-check.log": "9c014ee3bd460d2ee86c2856bd84b9d1de00271f2f8f148691d3cdc53b119ffa",
+      "observer-release-check.log": "f32985d076c95f2885ef522d09a5736c5a740a830ee5a6787f28c956db91aeba",
+      "mesh-release-check.log": "aa6e37f50c48101858f59c646a72c09d66cc830c237c75e621b6a60d98ba27f8",
+      "mesh-legacy-native-check.log": "e56ca5b69c1c853280e6bfd36ab63e4b8d56cf809fd3abfd399cd2de45acd88e",
+      "chezmoi-release-check.log": "36fb72dae2df2e32f085d1da1a8bc7b8dc2b21c1f6aa391cf78343ce83d24b21"
+    }
+  },
+  "rollout": {
+    "status": "passed",
+    "stages": [
+      {
+        "stage": "candidate",
+        "status": "passed",
+        "quiet": true,
+        "rows": 7,
+        "healthyMatchedAck": true,
+        "hosts": [
+          "snap",
+          "starship"
+        ],
+        "maxFrameUs": 16385,
+        "deadlineMisses": 0,
+        "invocation": "a9f6118f339e4bed95bcd9cd0d0802c1",
+        "manifestSha256": "ccb8f7b3fa388f1d59986ba6753ce24060a7febccefffb0c03fc16918dd45d96"
+      },
+      {
+        "stage": "rollback",
+        "status": "passed",
+        "quiet": false,
+        "rows": 7,
+        "healthyMatchedAck": true,
+        "hosts": [
+          "snap",
+          "starship"
+        ],
+        "maxFrameUs": 16384,
+        "deadlineMisses": 0,
+        "invocation": "3e6d24f09a484fb2afc6e82206a1f173",
+        "manifestSha256": "30c0fb475fe13866b6fcf201c75055ef062e1c30f991a5fa47915e7906558db4"
+      },
+      {
+        "stage": "reselected",
+        "status": "passed",
+        "quiet": true,
+        "rows": 7,
+        "healthyMatchedAck": true,
+        "hosts": [
+          "snap",
+          "starship"
+        ],
+        "maxFrameUs": 16384,
+        "deadlineMisses": 0,
+        "invocation": "45f38918cf44408480572c56fcee0a9c",
+        "manifestSha256": "ccb8f7b3fa388f1d59986ba6753ce24060a7febccefffb0c03fc16918dd45d96"
+      }
+    ],
+    "baselineJournal": {
+      "windowSeconds": 70,
+      "lines": 210,
+      "bytes": 29330,
+      "rawAckLines": 70
+    }
+  },
+  "quietWindow": {
+    "status": "passed",
+    "windowSeconds": 70.01,
+    "lines": 1,
+    "bytes": 193,
+    "rawFrameLines": 0,
+    "healthSamples": 1,
+    "rows": 7,
+    "health": {
+      "event": "device_health",
+      "health": 0,
+      "partial": 0,
+      "rows": 7,
+      "blocked": 0,
+      "waiting": 6,
+      "working": 1,
+      "unknown": 0,
+      "frame_us": 16341,
+      "miss": 0,
+      "heap": 292171,
+      "stack": 4776
+    },
+    "sameProcess": true,
+    "service": {
+      "InvocationID": "45f38918cf44408480572c56fcee0a9c",
+      "MainPID": "1605208",
+      "NRestarts": "0"
+    }
+  },
+  "protected": {
+    "status": "passed",
+    "concurrentSourceFilesUnchanged": 8,
+    "protectedOwners": {
+      "349d.service": "ActiveState=active\nMainPID=1102\nNRestarts=0",
+      "agent-observer.service": "ActiveState=active\nMainPID=913625\nNRestarts=0",
+      "mesh-plus-agent.service": "ActiveState=active\nMainPID=913630\nNRestarts=0",
+      "tmux-observer-owner@starship.service": "ActiveState=active\nMainPID=1105\nNRestarts=0"
+    },
+    "selectedConfigMatchesSource": true
+  },
+  "firmwareChanged": false,
+  "wireVersion": 1,
+  "layoutChanged": false,
+  "producerArtifactSelectionsChanged": false,
+  "manualFollowups": {
+    "panel": "deferred_by_user",
+    "rebootAndPostBootFeed": "deferred_by_user",
+    "recordedAsPassed": false
+  }
+}
