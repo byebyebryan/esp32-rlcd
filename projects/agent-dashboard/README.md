@@ -1,4 +1,101 @@
-# Synthetic agent roster and motion study
+# Live agent dashboard and synthetic studies
+
+The default firmware accepts a bounded USB feed from the host bridge. The bridge
+reads running Codex sessions on Starship and Snap through the accepted Observer
+API 4 / Service 4 / Mesh Agent v3 interfaces. ST and SN identify hosts. Age shows
+source-sampled time since conversation activity, rather than time spent blocked
+or waiting. Known system helpers and children are excluded. Useful conversation titles lead
+row labels; repository names are fallbacks, with project context or short identity
+suffixes only when rendered names collide. The accepted row styles and animation
+remain. See the
+[live integration contract](docs/live-integration.md) for policy, wire and expiry.
+
+Build and run the native checks:
+
+```sh
+./projects/agent-dashboard/scripts/test-live-dashboard.sh
+./projects/agent-dashboard/scripts/test-dashboard-motion.sh
+./scripts/idf.sh -C projects/agent-dashboard build
+```
+
+Live acquisition needs the accepted Observer/Mesh Python environment. On the
+currently selected hosts it is:
+
+```sh
+RLCD_OBSERVER_PYTHON="$HOME/.local/share/agent-observer/0.7.0a1-07196b5445766002-mesh-a17-system/bin/python"
+"$RLCD_OBSERVER_PYTHON" projects/agent-dashboard/scripts/live-dashboard.py \
+    --preview projects/agent-dashboard/build/live-preview/frame.txt
+projects/agent-dashboard/build/native-live/feed \
+    projects/agent-dashboard/build/live-preview/frame.txt \
+    projects/agent-dashboard/build/live-preview/live.pbm
+python3 projects/agent-dashboard/scripts/dashboard-preview.py \
+    projects/agent-dashboard/build/live-preview --live
+```
+
+The preview uses firmware's C admission and renderer. Data stays in ignored local
+build output. Native checks require only a C compiler and Python's standard
+library. The bridge explicitly supplies Agent profile v3; the generic Mesh v1
+Agent reader does not admit this endpoint.
+
+Inspect the full selected roster, label/identity mapping, hidden rows and exclusion
+counts without opening USB:
+
+```sh
+"$RLCD_OBSERVER_PYTHON" projects/agent-dashboard/scripts/live-dashboard.py --roster
+```
+
+Add `--all` for saved/excluded row details. Diagnostics retain bounded Observer
+metadata only. The roster's age meaning is explicitly conversation activity.
+The [refinement receipt](../../docs/evidence/2026-10-13-dashboard-refinement/REPORT.md)
+records the classification, naming, installed tuple and device acceptance.
+
+After building/flashing the confirmed RLCD, run the bridge in the foreground:
+
+```sh
+RLCD_PORT='/dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_94:A9:90:F3:43:74-if00'
+"$RLCD_OBSERVER_PYTHON" projects/agent-dashboard/scripts/live-dashboard.py \
+    --port "$RLCD_PORT" --verbose
+```
+
+Use `--seconds 60` for a bounded run, or Ctrl+C to stop. The bridge owns the serial
+port exclusively and closes its Mesh subscription on exit. It does not reset the
+board or create a background service. This first rollout pins the known RLCD
+identity; another board requires a reviewed identity change.
+
+The current Starship live feed runs in the transient user service
+`rlcd-agent-dashboard.service` so it survives the tool terminal. Inspect its feed
+with `journalctl --user -u rlcd-agent-dashboard.service`; stop it with
+`systemctl --user stop rlcd-agent-dashboard.service` before opening another bridge
+or capture. This service is not enabled for boot. The refinement receipt records
+the foreground-session loss and service recovery.
+
+The board requests replacements every second and expires current claims within
+three seconds of the last supported request. Stale rows stop flashing and lose
+their age/work claims. Healthy hosts remain useful during partial loss; failed
+hosts retain uncertain identity context. A large PARTIAL header qualifies the
+view, with a compact `?` when saturated counts need space. Counts above 99 display
+`99+`. Whole-feed loss shows FEED OFFLINE. USB power alone does not establish a feed.
+
+The synthetic modes remain available in menuconfig. Disable **Use the live
+Observer USB dashboard** for the motion demo; enable **Use the earlier seven-screen
+static layout study** for the static demo.
+
+To capture a bounded live run, silence expiry and a bridge restart:
+
+```sh
+python3 projects/agent-dashboard/scripts/capture-live-dashboard.py \
+    --python "$RLCD_OBSERVER_PYTHON" --port "$RLCD_PORT" --seconds 25 \
+    --output projects/agent-dashboard/build/live-device-NEW
+```
+
+Use a new output directory and close any existing bridge or monitor first. The
+capture compares accepted frame checksums and row counts, then requires source
+loss and successful live reacquisition. Physical readability remains a separate
+observation. The first [implementation and device receipt](../../docs/evidence/2026-10-13-live-dashboard/REPORT.md)
+records initial automated/native acceptance; the refinement receipt above records
+the completed physical review.
+
+## Synthetic study reference
 
 Independent ESP-IDF application for exploring a compact session roster on the
 400 × 300 RLCD. The motion view shows a state symbol, name, provider (CX/CC)
@@ -30,7 +127,7 @@ counts with a large source-health message; cached work totals are suppressed.
 Column labels are omitted. Duplicate project names
 gain their supplied short session ID; labels never become identity keys.
 
-There is no live session discovery, host protocol, hook, network connection or
+The synthetic modes have no live session discovery, host protocol, hook, network connection or
 Agent Observer dependency. The presentation structs are local study inputs;
 they do not define the shared component's API. The renderer and fixtures are
 shared by the native previews and this firmware.
@@ -74,7 +171,7 @@ RLCD_PORT='/dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_YOUR_BOARD
 The app uses a 2MiB factory partition for the complete 12px font, keeping the
 NVS and PHY partitions at their original addresses.
 
-The default motion demo repeats twenty-three scenarios over 92 seconds, with
+The optional motion demo repeats twenty-three scenarios over 92 seconds, with
 four seconds per scenario. Startup logs report the phase count and cycle duration.
 It exercises answered waits, prompts, new waits, settling, simultaneous changes,
 retargeting, height-based admission, overflow, same-project identity, known
@@ -148,7 +245,7 @@ observations. The header shows PARTIAL instead of totals when any session's
 work state is uncertain. Ages are invented state durations, not source freshness.
 Settled/idle does not assert task success. The visible ID is removed; the identity
 case uses distinct explicit display labels for same-project sessions.
-The motion view instead uses row-coloured pixel marks, compact state ages
+The synthetic motion view instead uses row-coloured pixel marks, compact state ages
 such as `5s`/`2m`/`1h`, known-state totals plus unknown counts, and conditional
 short IDs for duplicate project names. Source update age is separate from
 each session's state age.
@@ -161,8 +258,7 @@ That static study has steady attention highlighting. The current motion view
 uses the accepted full-row flashing described above.
 
 [Urgency/age ordering and row motion](docs/ui-motion.md) extend this study
-with numeric fixture ages and hidden full identities. The default firmware is
-the motion prototype; select **RLCD dashboard study → Use the earlier
+with numeric fixture ages and hidden full identities. Select **RLCD dashboard study → Use the earlier
 seven-screen static layout study** in `menuconfig` to run the seven screens
 above and use their capture command. Both modes use invented data.
 Select the static option with `./scripts/idf.sh -C projects/agent-dashboard menuconfig`.

@@ -628,6 +628,7 @@ static void draw_motion_row(uint8_t *frame, const dashboard_motion_render_row_t 
     const char *agent = "??";
     if (s->provider && strcmp(s->provider, "CODEX") == 0) agent = "CX";
     else if (s->provider && strcmp(s->provider, "CLAUDE") == 0) agent = "CC";
+    else if (s->provider && s->provider[0]) agent = s->provider;
     motion_text(frame, 320, y, agent, compact, 24, highlighted);
     const char *age = health == DASH_CURRENT ? s->detail : "?";
     const int age_width = motion_text_width(age, compact);
@@ -661,22 +662,31 @@ static void draw_motion_chrome(uint8_t *frame,
             else if (session->work == DASH_SETTLED || session->work == DASH_INTERRUPTED) ++totals[1];
             else if (session->work == DASH_WORKING) ++totals[2];
         }
+        if (view->supplied_totals)
+            for (size_t i = 0; i < 4; ++i) totals[i] = view->supplied_totals[i];
         const size_t groups = totals[3] ? 4 : 3;
         char values[4][24];
         int widths[4];
         int total_width = (int)(groups - 1) * GROUP_GAP;
         for (size_t i = 0; i < groups; ++i) {
-            snprintf(values[i], sizeof(values[i]), "%zu", totals[i]);
+            if (view->supplied_totals && totals[i] > 99)
+                snprintf(values[i], sizeof(values[i]), "99+");
+            else snprintf(values[i], sizeof(values[i]), "%zu", totals[i]);
             widths[i] = ICON_WIDTH + ICON_GAP + motion_text_width(values[i], false);
             total_width += widths[i];
         }
         char overflow[24] = "";
         if (view->overflow_count) {
-            snprintf(overflow, sizeof(overflow), "+%zu", view->overflow_count);
+            if (view->supplied_totals && view->overflow_count > 99)
+                snprintf(overflow, sizeof(overflow), "+99+");
+            else snprintf(overflow, sizeof(overflow), "+%zu", view->overflow_count);
             total_width += GROUP_GAP + motion_text_width(overflow, false);
         }
-        motion_text(frame, 8, 0, "AGENTS", false, 128, false);
         int x = 392 - total_width;
+        const char *title = view->partial ? "PARTIAL" : "AGENTS";
+        if (view->supplied_totals && motion_text_width(title, false) + 16 > x)
+            title = view->partial ? "?" : "AG";
+        motion_text(frame, 8, 0, title, false, view->supplied_totals ? x - 16 : 128, false);
         for (size_t i = 0; i < groups; ++i) {
             motion_state_symbol(frame, x, 2, states[i], DASH_CURRENT, 3, false);
             motion_text(frame, x + ICON_WIDTH + ICON_GAP, 0,

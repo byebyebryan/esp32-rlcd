@@ -9,7 +9,9 @@
 #include "rlcd_panel.h"
 #include "sdkconfig.h"
 
-#if CONFIG_RLCD_DASHBOARD_STATIC
+#if CONFIG_RLCD_DASHBOARD_LIVE
+void dashboard_run_live(void);
+#elif CONFIG_RLCD_DASHBOARD_STATIC
 static void run_static_demo(void)
 {
     const dashboard_style_t style = {DASH_AGENT_PAIR, true};
@@ -126,7 +128,9 @@ static void run_motion_demo(void)
 void app_main(void)
 {
     ESP_ERROR_CHECK(rlcd_panel_init());
-#if CONFIG_RLCD_DASHBOARD_STATIC
+#if CONFIG_RLCD_DASHBOARD_LIVE
+    dashboard_run_live();
+#elif CONFIG_RLCD_DASHBOARD_STATIC
     run_static_demo();
 #else
     run_motion_demo();

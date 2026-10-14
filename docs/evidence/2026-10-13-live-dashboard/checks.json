@@ -1,0 +1,43 @@
+{
+  "scope": "implementation/native device acceptance; on-panel readability pending",
+  "nativeCases": 18,
+  "staticFramesUnchanged": 42,
+  "pixelPackingCases": 120000,
+  "rectangleCases": 4488,
+  "liveBuild": "ESP-IDF 5.5.3; main stack 8192",
+  "applicationReadback": {
+    "bytes": 1242560,
+    "buildSha256": "9945cab1b297440fc2a935f1d783ca29ce65e1e50100a77d373cf00e9c6abcfb",
+    "readbackSha256": "9945cab1b297440fc2a935f1d783ca29ce65e1e50100a77d373cf00e9c6abcfb",
+    "matched": true
+  },
+  "sourceHashes": {
+    "README.md": "a51621884ecef678c77908ab98655a83bfc837e48a3efdced01312a4e0f3da45",
+    "docs/evidence/2026-10-13-live-dashboard/REPORT.md": "e14685e2f0d062fbd4bf9f440d2aa90b8310f7d0e4d24b9ad19444f6e0e7448b",
+    "docs/evidence/2026-10-13-live-dashboard/device.json": "c1a4cf0761ca677f9800516cb0cde1339e38b93ac60c3f2bda1d7f69ae3c62d9",
+    "docs/evidence/2026-10-13-live-dashboard/initial-device.json": "3f573252f1a3c13b078a79617d1615bca78fb73e08a9f42688f5085b96291619",
+    "docs/evidence/2026-10-13-live-dashboard/review-run.json": "843aa90ab443b9a07a5174f1966e62caa16eef252f053c4e36ad9832e42d0b31",
+    "projects/agent-dashboard/README.md": "83000d4ce7c411c35373dc4607e45b1a1a94a6fb0d1f8d31d1cf68f0bdf549df",
+    "projects/agent-dashboard/components/agent_dashboard/CMakeLists.txt": "0820db7f720130f9ec50007fac17d0910277fc255887def7aabc518fe25e98f0",
+    "projects/agent-dashboard/components/agent_dashboard/agent_dashboard.c": "4ff0b26de368fd0d4775661e32521a65102d829059569ac18f8571f85c621ef3",
+    "projects/agent-dashboard/components/agent_dashboard/agent_dashboard_motion.c": "722d5de9c99986a9fe7b4707adb21e714fecdafc45f4675eb10ee11f14a59d54",
+    "projects/agent-dashboard/components/agent_dashboard/dashboard_feed.c": "7808c4e3b2d04ebd99e94493dbce78311514f00e83330c979c2e2189ab137a7a",
+    "projects/agent-dashboard/components/agent_dashboard/include/dashboard_feed.h": "820b01dbb03ac1eff556aac6e7b24c0bd2fa5cd6e005b72dffbf0bdf11364fca",
+    "projects/agent-dashboard/components/agent_dashboard/include/dashboard_motion.h": "b356729ea531dbd6affa1bbed6e465896d5e235e07707b445bba31a1874eaa00",
+    "projects/agent-dashboard/docs/live-integration.md": "4962d65cdbdf14030ddd4fae727f6195336eeb41214bf41ff52b60d2e5b55ca5",
+    "projects/agent-dashboard/host/live_dashboard/__init__.py": "152f3619f26ed65bb895372a3b540bccbabec3c3bbbc40f990b2d97eb622ef34",
+    "projects/agent-dashboard/host/live_dashboard/mesh.py": "e9112116665a95f6f0572dec00c877abf9e8468665834a08011151b783f1edae",
+    "projects/agent-dashboard/host/live_dashboard/projection.py": "3e7601b73715f04507c35f0e65ad66eb24dc2868e5e6bf556892f045c263460f",
+    "projects/agent-dashboard/host/live_dashboard/wire.py": "e1491e4713a0a8bacd74219658c4107344720cafa20ca2d638a8eedfca019c56",
+    "projects/agent-dashboard/main/CMakeLists.txt": "14e289a15db37b6223f7522bc485e06330508f5d75888cd9ab491c29f055e3b6",
+    "projects/agent-dashboard/main/Kconfig.projbuild": "49ec2635f4b33f23b70c22037f63b2ffbcacf5baf456efa87a26deaa206c702c",
+    "projects/agent-dashboard/main/live_main.c": "3e61d2a0af8bab7ad3b62724d82abe517011ca992206feb0dc8a10c673d100b9",
+    "projects/agent-dashboard/main/main.c": "bc623faf6c644a25c725a6f1cf9268de2704cb29ec7f05017e8265573bf95a13",
+    "projects/agent-dashboard/scripts/capture-live-dashboard.py": "b66e596fd4aa6135ff116368341268ab7aeb8f09a1721b2caf6db47b47edb7d0",
+    "projects/agent-dashboard/scripts/live-dashboard.py": "df2ec22ec9c64c89592b1c0e0224de902f4878d833c8b30bcb63a3141df8672c",
+    "projects/agent-dashboard/scripts/test-live-dashboard.sh": "131e44c9e3b069f417238e8c06bb01c04dd684b8e5c5ee3c6c8323d3a5de0cc3",
+    "projects/agent-dashboard/sdkconfig.defaults": "ef3c93f8868d27bce6bc4784b0196c4dbc0f21f30b55d64ffa9ac8171c409132",
+    "projects/agent-dashboard/tests/feed_dashboard.c": "d43ef1d730e151f3816d900aaf4184e2c2527bfdb365121d94babed07a9f64b6",
+    "projects/agent-dashboard/tests/test_live_dashboard.py": "78b5506279d5c3fe21d4cf2d8a29eb1dfbedcee6c933857342ec4c10f3562710"
+  }
+}

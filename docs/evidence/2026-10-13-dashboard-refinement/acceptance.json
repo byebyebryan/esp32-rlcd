@@ -1,0 +1,77 @@
+{
+  "receiptVersion": 1,
+  "status": "accepted",
+  "producerVersions": {
+    "observer": "0.7.0a1",
+    "api": 4,
+    "snapshot": 6,
+    "service": 4,
+    "mesh": "0.1.0a17",
+    "profile": "agent-observer.mesh-candidate.v3"
+  },
+  "producerArtifactSha256": {
+    "observer": "07196b544576600297e8c0ae12f9b796c9d6eda52b76ad02901044fc75d4373f",
+    "mesh": "270bf1ce2a1ea950f1d6a1318ad2c6a1f45c8696460b1711a87efae98ea71154"
+  },
+  "selectedFleet": {
+    "status": "passed",
+    "scope": "selected shared launcher, two-host ordinary cached Agent and Tmux sources",
+    "domains": [
+      {
+        "domain": "agent",
+        "profile": "agent-observer.mesh-candidate.v3",
+        "snapshotRows": 483,
+        "watchRows": 483,
+        "hosts": [
+          {
+            "host": "snap",
+            "proof": true,
+            "delivery": "ready"
+          },
+          {
+            "host": "starship",
+            "proof": false,
+            "delivery": "ready"
+          }
+        ],
+        "expiryDisconnectCleanup": "passed"
+      },
+      {
+        "domain": "tmux",
+        "profile": "tmux-observer.mesh-candidate.v1",
+        "snapshotRows": 4,
+        "watchRows": 4,
+        "hosts": [
+          {
+            "host": "snap",
+            "proof": true,
+            "delivery": "ready"
+          },
+          {
+            "host": "starship",
+            "proof": false,
+            "delivery": "ready"
+          }
+        ],
+        "expiryDisconnectCleanup": "passed"
+      }
+    ],
+    "ordinaryProviderActions": 0,
+    "harnessSha256": "16d1635b043e485ad3fe4d170cce3d0ce959f31704efb3e50e1231764211bb60"
+  },
+  "bridgeTests": 22,
+  "physicalReadability": {
+    "status": "accepted",
+    "userReply": "Looks readable",
+    "scope": "conversation names, ST/SN badges and activity ages at normal viewing distance"
+  },
+  "firmwareChangedInRefinement": false,
+  "wireVersion": 1,
+  "firmwareAppSha256": "9945cab1b297440fc2a935f1d783ca29ce65e1e50100a77d373cf00e9c6abcfb",
+  "sourceSha256": {
+    "projects/agent-dashboard/host/live_dashboard/projection.py": "9ca5a4f3aff0ed0bd9f8af5243875de0ac0aded83409710f14effdf6b6278ced",
+    "projects/agent-dashboard/host/live_dashboard/mesh.py": "7333160518932b6ed68f3ab94052a330f42e0beddbbd896503ee40f6f10d384a",
+    "projects/agent-dashboard/scripts/live-dashboard.py": "c84e8b6a8b987bb855d41f371b09bb00312c6d70d38e729de79e76a7d5d6d26e",
+    "projects/agent-dashboard/tests/test_live_dashboard.py": "ca5bd27ba31d4d78d888b48ff726f18c07130e8807ff49d6e927951f48c15a13"
+  }
+}

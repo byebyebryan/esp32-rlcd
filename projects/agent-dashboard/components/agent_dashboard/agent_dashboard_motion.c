@@ -88,7 +88,7 @@ static bool comes_before(const dashboard_motion_track_t *left,
 
 static void sort_roster(dashboard_motion_t *motion)
 {
-    for (size_t i = 0; i < motion->count; ++i) {
+    for (size_t i = 0; !motion->live_presentation && i < motion->count; ++i) {
         const uint8_t candidate = motion->order[i];
         size_t at = i;
         while (at > 0 && comes_before(&motion->tracks[candidate],
@@ -493,7 +493,12 @@ void dashboard_motion_render(dashboard_motion_t *motion, uint8_t *frame)
         const uint8_t index = motion->order[rank];
         const dashboard_motion_track_t *track = &motion->tracks[index];
         char *age = motion->render_age[rank];
-        format_age(age, track, motion->feed_health, motion->now_ms);
+        if (motion->live_presentation) {
+            snprintf(age, 4, "%s", motion->feed_health == DASH_CURRENT &&
+                     track->health == DASH_CURRENT ? track->supplied_age : "?");
+        } else {
+            format_age(age, track, motion->feed_health, motion->now_ms);
+        }
         motion->render_sessions[rank] = (dashboard_session_t){
             .project = track->project,
             .provider = track->provider,
@@ -529,8 +534,14 @@ void dashboard_motion_render(dashboard_motion_t *motion, uint8_t *frame)
     for (size_t i = 0; i < row_count; ++i) {
         const uint8_t index = motion->render_track_index[i];
         const dashboard_motion_track_t *track = &motion->tracks[index];
-        format_age(motion->render_age[DASHBOARD_MOTION_CAPACITY + i], track,
-                   motion->feed_health, motion->now_ms);
+        if (motion->live_presentation) {
+            snprintf(motion->render_age[DASHBOARD_MOTION_CAPACITY + i], 4, "%s",
+                     motion->feed_health == DASH_CURRENT && track->health == DASH_CURRENT
+                     ? track->supplied_age : "?");
+        } else {
+            format_age(motion->render_age[DASHBOARD_MOTION_CAPACITY + i], track,
+                       motion->feed_health, motion->now_ms);
+        }
         motion->render_rows[i] = (dashboard_session_t){
             .project = track->project,
             .provider = track->provider,
@@ -557,13 +568,17 @@ void dashboard_motion_render(dashboard_motion_t *motion, uint8_t *frame)
         .row_count = row_count,
         .visible_count = motion->visible_count,
         .overflow_count = motion->feed_health == DASH_CURRENT
-                        ? motion->count - motion->visible_count : 0,
+                        ? (motion->live_presentation ? motion->live_total : motion->count)
+                          - motion->visible_count : 0,
         .hidden_blocked_count = motion->feed_health == DASH_CURRENT
                               ? motion->hidden_blocked_count : 0,
         .feed_lost = motion->feed_health != DASH_CURRENT,
         .now_ms = motion->now_ms,
         .last_healthy_update_ms = motion->last_healthy_update_ms,
         .last_healthy_update_known = motion->last_healthy_update_known,
+        .supplied_totals = motion->live_presentation ? motion->live_totals : NULL,
+        .supplied_total = motion->live_total,
+        .partial = motion->live_partial,
     };
     dashboard_draw_motion(frame, &render);
 }

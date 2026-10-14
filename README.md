@@ -8,7 +8,7 @@ there is no default application at the repository root.
 | --- | --- | --- |
 | Bring-up | Boot diagnostics, panel test and heartbeat | [projects/bringup](projects/bringup/README.md) |
 | Render bench | Drawing and SPI workload measurements | [projects/render-bench](projects/render-bench/README.md) |
-| Agent dashboard | Synthetic roster and motion study | [projects/agent-dashboard](projects/agent-dashboard/README.md) |
+| Agent dashboard | Live Observer fleet dashboard and synthetic studies | [projects/agent-dashboard](projects/agent-dashboard/README.md) |
 
 ## Set up and build
 

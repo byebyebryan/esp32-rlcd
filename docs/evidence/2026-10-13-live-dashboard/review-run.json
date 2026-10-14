@@ -1,0 +1,19 @@
+{
+  "scope": "five-minute foreground review run; on-panel human review not received",
+  "healthReports": 301,
+  "maxFrameUs": 18776,
+  "deadlineMisses": 0,
+  "lastHealth": {
+    "health": 0,
+    "partial": 0,
+    "rows": 9,
+    "blocked": 0,
+    "waiting": 6,
+    "working": 2,
+    "unknown": 1,
+    "frame_us": 18110,
+    "miss": 0,
+    "heap": 292171,
+    "stack": 4776
+  }
+}

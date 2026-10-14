@@ -75,6 +75,7 @@ typedef struct {
     uint64_t state_entered_ms;
     uint64_t state_episode;
     uint64_t admission_order;
+    char supplied_age[4];
     uint16_t prior_rank;
     int32_t y_q8;
     int32_t start_y_q8;
@@ -102,6 +103,9 @@ typedef struct {
     uint64_t now_ms;
     uint64_t last_healthy_update_ms;
     bool last_healthy_update_known;
+    const uint32_t *supplied_totals;
+    size_t supplied_total;
+    bool partial;
 } dashboard_motion_render_t;
 
 // Called by the motion controller; public so the two C translation units can
@@ -128,6 +132,10 @@ typedef struct {
     bool animating;
     bool burst_exhausted;
     bool last_healthy_update_known;
+    bool live_presentation;
+    bool live_partial;
+    uint32_t live_totals[4];
+    size_t live_total;
     dashboard_session_t render_sessions[DASHBOARD_MOTION_CAPACITY];
     dashboard_session_t render_rows[DASHBOARD_MOTION_TRACK_CAPACITY];
     dashboard_motion_render_row_t render_poses[DASHBOARD_MOTION_TRACK_CAPACITY];

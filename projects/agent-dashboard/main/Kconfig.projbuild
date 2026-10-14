@@ -1,5 +1,14 @@
 menu "RLCD dashboard study"
 
+config RLCD_DASHBOARD_LIVE
+    bool "Use the live Observer USB dashboard"
+    default y
+    depends on !RLCD_DASHBOARD_STATIC
+    help
+        Request bounded current fleet views from the host bridge. Until a
+        validated feed is available, show source loss with no work claims.
+        Disable this and the static option to run the synthetic motion study.
+
 config RLCD_DASHBOARD_STATIC
     bool "Use the earlier seven-screen static layout study"
     default n
