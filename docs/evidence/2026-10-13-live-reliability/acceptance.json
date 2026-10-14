@@ -1,10 +1,10 @@
 {
   "receiptVersion": 1,
   "status": "implementation_and_managed_service_accepted_physical_checks_pending",
-  "applicationSourceRevision": "2ad5769b2739b708b1a8fe94b2d85c0ba30bc1e6",
+  "applicationSourceRevision": "1632d8c4ab5b942ba55404e315110568401de90c",
   "sourceDirty": false,
-  "bundle": ".local/share/rlcd-agent-dashboard/18531bb45ac00c42",
-  "bundleManifestSha256": "18531bb45ac00c42338db697d05fc8785c20853dd37b2bc044800e623acf53f4",
+  "bundle": ".local/share/rlcd-agent-dashboard/30c0fb475fe13866",
+  "bundleManifestSha256": "30c0fb475fe13866b6fcf201c75055ef062e1c30f991a5fa47915e7906558db4",
   "dependencies": {
     "api": 4,
     "mesh": "0.1.0a17",
@@ -20,7 +20,7 @@
     "host/live_dashboard/mesh.py": "f1c8d2350779b55df0b7fa194bd4a86c9a2d9356dcbd09c2426f46d16c34e21f",
     "host/live_dashboard/projection.py": "d6756ba385679a61a5bf1555606ecfd31ebae276209c134951ca3fdbf7baf2b0",
     "host/live_dashboard/runtime.py": "53d0d11a46d7ebb1be5fd1f672cac10ce7af659ef0ec6072e8d297de61f12bb1",
-    "host/live_dashboard/serial.py": "4b21636adc601aebcea332a0ad2c1a8d577ed47e6dfd7684292a4dd78ca63c90",
+    "host/live_dashboard/serial.py": "bfcd9ef689502bc93af7fe8fd1ebe7ef1b53de385847d8552122e2ce0e1223f0",
     "host/live_dashboard/wire.py": "e1491e4713a0a8bacd74219658c4107344720cafa20ca2d638a8eedfca019c56",
     "scripts/dashboard-bundle.py": "33b4655bb5cbc20a552f107f915b8b0fcc4436cd04261ac94786c70f4ec52bb9",
     "scripts/live-dashboard.py": "ac8755b4f8d4450fe26856874228c24cbb72bf68adba727ab41b4534505aef63"
@@ -28,9 +28,9 @@
   "checks": {
     "projectionAndDeviceAdmission": 25,
     "workerLifetime": 5,
-    "serial": 4,
+    "serial": 5,
     "bundle": 2,
-    "total": 36,
+    "total": 37,
     "motion": "passed",
     "chezmoiCanonical": "passed",
     "installedArtifact": "passed",
@@ -47,7 +47,7 @@
       {
         "stage": "candidate",
         "status": "accepted",
-        "healthyMatchedAcks": 139,
+        "healthyMatchedAcks": 4,
         "rows": 7,
         "hosts": [
           {
@@ -75,11 +75,11 @@
             "total": 2
           }
         ],
-        "maxFrameUs": 16793,
+        "maxFrameUs": 16370,
         "deadlineMisses": 0,
-        "pid": 1151649,
+        "pid": 1273222,
         "enabled": "enabled",
-        "manifestSha256": "18531bb45ac00c42338db697d05fc8785c20853dd37b2bc044800e623acf53f4"
+        "manifestSha256": "30c0fb475fe13866b6fcf201c75055ef062e1c30f991a5fa47915e7906558db4"
       },
       {
         "stage": "rollback",
@@ -112,9 +112,9 @@
             "total": 2
           }
         ],
-        "maxFrameUs": 16371,
+        "maxFrameUs": 16317,
         "deadlineMisses": 0,
-        "pid": 1157355,
+        "pid": 1273513,
         "enabled": "enabled",
         "manifestSha256": "ab87015dbfc582012e02b4d8aa0995148cb114624d6c3705bb158e646a0c9899"
       },
@@ -149,11 +149,11 @@
             "total": 2
           }
         ],
-        "maxFrameUs": 16375,
+        "maxFrameUs": 16317,
         "deadlineMisses": 0,
-        "pid": 1157610,
+        "pid": 1273768,
         "enabled": "enabled",
-        "manifestSha256": "18531bb45ac00c42338db697d05fc8785c20853dd37b2bc044800e623acf53f4"
+        "manifestSha256": "30c0fb475fe13866b6fcf201c75055ef062e1c30f991a5fa47915e7906558db4"
       }
     ]
   },
@@ -188,18 +188,14 @@
         "target": "/home/bryan/.local/share/chezmoi/deployments/agent-observer-mesh.json",
         "unchanged": true
       }
-    ],
-    "normalization": "Compare MainPID, ActiveState and command definition; exclude ExecStart runtime bookkeeping cleared during daemon reload."
+    ]
   },
   "service": {
     "ActiveState": "active",
     "UnitFileState": "enabled",
     "Transient": "no",
-    "MainPID": "1170573",
-    "NRestarts": "0",
-    "MemoryCurrent": "43388928",
-    "MemoryPeak": "56823808",
-    "CPUUsageNSec": "119797733000"
+    "MainPID": "1297804",
+    "NRestarts": "0"
   },
   "physical": {
     "usbReconnect": "pending_user_check",
@@ -238,6 +234,34 @@
   "checkLogSha256": {
     "live-check.log": "2b9fe3f5a94c2b1450b1d9cdeddd528b426721c8096faba8d71efca9d172dde0",
     "motion-check.log": "3ee01a90c0a1bf5633afffe178ff0b13552248b2074562cc03182532dd2df783",
-    "chezmoi-final-check.log": "e080f4a6e1f0aea3f21f23b2f81ad57ce5259a67098c04ccb84ea4f84de91db0"
-  }
+    "chezmoi-final-check.log": "e080f4a6e1f0aea3f21f23b2f81ad57ce5259a67098c04ccb84ea4f84de91db0",
+    "live-ack-check.log": "4c072218d390f6ecb3875e5a460259fecd48137a7174e91fb9d8b7cd16831ee6",
+    "chezmoi-ack-check.log": "1ac97a6e4f073c71c77d0290a50a2e5b195fce7b9eee9be24f005b119115a5be"
+  },
+  "initialArtifact": {
+    "applicationSourceRevision": "2ad5769b2739b708b1a8fe94b2d85c0ba30bc1e6",
+    "bundle": ".local/share/rlcd-agent-dashboard/18531bb45ac00c42",
+    "bundleManifestSha256": "18531bb45ac00c42338db697d05fc8785c20853dd37b2bc044800e623acf53f4"
+  },
+  "installedIsolatedLifecycle": {
+    "scope": "installed CLI in owned user/mount/PID namespaces with stable-path private PTYs; ordinary cached Mesh reads only",
+    "ordinaryProviderActions": 0,
+    "realSerialDeviceOpened": false,
+    "absenceSeconds": 16.1,
+    "sameProcessDuringAbsence": true,
+    "busyOwnerPreserved": true,
+    "initialRows": 5,
+    "recoveredRows": 5,
+    "freshIncarnation": true,
+    "checksumAndRequestMatched": true,
+    "stopExitCode": 0,
+    "exclusivePortReleased": true,
+    "status": "passed",
+    "durationSeconds": 62.62,
+    "bundleManifestSha256": "30c0fb475fe13866b6fcf201c75055ef062e1c30f991a5fa47915e7906558db4",
+    "harnessSha256": "ae3c7aa6d83c356356736fe140babbf358da62c073b6801f35be4ef8153ebded"
+  },
+  "finalDeviceReceipt": "device-final.json",
+  "chezmoiFinalCommit": "18e268d",
+  "completionAudit": "completion-audit.json"
 }

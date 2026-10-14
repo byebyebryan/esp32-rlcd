@@ -1,0 +1,117 @@
+{
+  "auditVersion": 1,
+  "status": "incomplete_physical_checks_pending",
+  "requirements": [
+    {
+      "requirement": "Rollback baseline and concurrent source preservation",
+      "status": "proven",
+      "evidence": [
+        "acceptance.json rollback",
+        "rollout candidate/rollback/reselected receipts",
+        "local scoped commits"
+      ]
+    },
+    {
+      "requirement": "Whole-roster membership independent of USB prefix",
+      "status": "proven",
+      "evidence": [
+        "test_whole_roster_survives_partial_loss_and_positive_exclusion",
+        "test_membership_growth_bound_and_unadmitted_exclusion",
+        "test_partial_roster_beyond_capacity_reaches_device_as_uncertainty"
+      ]
+    },
+    {
+      "requirement": "Worker supervision, finite cleanup and graceful stop",
+      "status": "proven",
+      "evidence": [
+        "five runtime tests",
+        "installed-isolated-lifecycle.json stopExitCode and exclusivePortReleased"
+      ]
+    },
+    {
+      "requirement": "Stable device absent/busy/hangup/reappearance and fresh framing",
+      "status": "proven",
+      "evidence": [
+        "five serial tests",
+        "installed-isolated-lifecycle.json absence/busyOwner/freshIncarnation/checksumAndRequestMatched"
+      ]
+    },
+    {
+      "requirement": "Bounded diagnostics distinguish source and device admission",
+      "status": "proven",
+      "evidence": [
+        "serial.py last_request/last_ack_request and ages",
+        "test_ack_retained_rows_during_warmup_and_wrong_healthy_count",
+        "runtime.py repeated event rate limiting"
+      ]
+    },
+    {
+      "requirement": "Immutable bundle, dependency tuple, source/installed provenance",
+      "status": "proven",
+      "evidence": [
+        "acceptance.json final manifest/files/source revision",
+        "installed artifact verification",
+        "two bundle tests"
+      ]
+    },
+    {
+      "requirement": "Managed Starship startup, scoped selection and one serial owner",
+      "status": "proven",
+      "evidence": [
+        "persistent enabled unit",
+        "chezmoi-ack-check.log",
+        "Starship-only render gates",
+        "scoped apply and installed config agreement"
+      ]
+    },
+    {
+      "requirement": "Native/projection/title/clock/source-expiry/renderer regression",
+      "status": "proven",
+      "evidence": [
+        "37 application tests",
+        "motion-check.log",
+        "unchanged firmware/wire/rendering bytes"
+      ]
+    },
+    {
+      "requirement": "Live device checksum/request/rows agreement and silence/recovery",
+      "status": "proven",
+      "evidence": [
+        "device-final.json 14 healthy confirmations each window",
+        "six-second silence clears work states",
+        "rollout.json"
+      ]
+    },
+    {
+      "requirement": "Protected provider/collector/publisher/Tmux/349 selections and owners",
+      "status": "proven",
+      "evidence": [
+        "final-protected.json normalized owners/definitions and hashes",
+        "no provider actions or firmware writes in this pass"
+      ]
+    },
+    {
+      "requirement": "Actual physical USB unplug/replug and visible recovery",
+      "status": "pending",
+      "evidence": [
+        "user confirmation requested; no response or physical reconnect event observed"
+      ]
+    },
+    {
+      "requirement": "Actual reboot and post-boot feed acceptance",
+      "status": "pending",
+      "evidence": [
+        "coordinated reboot choice requested; startup enablement is not actual reboot proof"
+      ]
+    },
+    {
+      "requirement": "Operation docs, local checkpoints and publication boundary",
+      "status": "proven",
+      "evidence": [
+        "README service/diagnostics/bundle/rollback instructions",
+        "chezmoi deployment guide",
+        "unpublished local commits"
+      ]
+    }
+  ]
+}

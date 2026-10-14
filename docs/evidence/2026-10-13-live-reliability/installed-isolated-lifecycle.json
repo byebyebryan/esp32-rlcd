@@ -1,0 +1,18 @@
+{
+  "scope": "installed CLI in owned user/mount/PID namespaces with stable-path private PTYs; ordinary cached Mesh reads only",
+  "ordinaryProviderActions": 0,
+  "realSerialDeviceOpened": false,
+  "absenceSeconds": 16.1,
+  "sameProcessDuringAbsence": true,
+  "busyOwnerPreserved": true,
+  "initialRows": 5,
+  "recoveredRows": 5,
+  "freshIncarnation": true,
+  "checksumAndRequestMatched": true,
+  "stopExitCode": 0,
+  "exclusivePortReleased": true,
+  "status": "passed",
+  "durationSeconds": 62.62,
+  "bundleManifestSha256": "30c0fb475fe13866b6fcf201c75055ef062e1c30f991a5fa47915e7906558db4",
+  "harnessSha256": "ae3c7aa6d83c356356736fe140babbf358da62c073b6801f35be4ef8153ebded"
+}

@@ -35,7 +35,7 @@ provider payloads out of diagnostic failures.
 
 ## Artifact and deployment
 
-Application source checkpoint: `2ad5769b2739b708b1a8fe94b2d85c0ba30bc1e6` on
+Initial application source checkpoint: `2ad5769b2739b708b1a8fe94b2d85c0ba30bc1e6` on
 local branch `dashboard-live-reliability`. Its clean source freezes to
 `~/.local/share/rlcd-agent-dashboard/18531bb45ac00c42`, manifest SHA-256
 `18531bb45ac00c42338db697d05fc8785c20853dd37b2bc044800e623acf53f4`.
@@ -87,6 +87,44 @@ some `ExecStart` execution bookkeeping while retaining live owners; the check
 compares owners and definitions separately from that bookkeeping. No ordinary
 provider action, producer service restart, firmware flash or 349 device access
 was performed.
+
+## Audit followup and final artifact
+
+The completion audit found a diagnostic gap: warm-up packets can validly retain
+previous device rows. Their acknowledgement row count can exceed the packet's
+new row count. The bridge now accepts bounded retained-row acknowledgements for
+offline/warming hosts, while healthy views still require exact row-count equality.
+Matching CRC/request/sequence remain required. This does not renew source facts.
+Recovered-acknowledgement events and missing-acknowledgement events now include
+last valid request/acknowledgement counters and sampled ages where applicable.
+
+The regression gate passes **37 tests**, including a fifth serial case proving
+valid retained rows during warm-up and rejection of an incorrect healthy count.
+Final application source: `1632d8c4ab5b942ba55404e315110568401de90c`.
+Final selected bundle: `~/.local/share/rlcd-agent-dashboard/30c0fb475fe13866`,
+manifest SHA-256
+`30c0fb475fe13866b6fcf201c75055ef062e1c30f991a5fa47915e7906558db4`.
+The original artifact above retains its dated acceptance scope.
+
+The [installed lifecycle proof](installed-isolated-lifecycle.json) runs this final
+CLI in owned user/mount/PID namespaces, masking the stable serial directory with
+private PTYs. Sixteen seconds of absence, exclusive busy ownership, actual tty
+hangup, reappearance/new boot nonce and clean SIGTERM/release pass in one process.
+Request/checksum agreement and a fresh bridge incarnation are verified. Five local
+cached rows were admitted in this isolated source context; normal fleet/device
+adoption separately verifies both hosts. The real RLCD and 349 serial devices
+are inaccessible through the fixture's masked directory and were never opened.
+The private child/PID namespace terminated, releasing its tty and watch resources.
+No borrowed provider credentials or native model turns were created.
+
+Final candidate, baseline rollback and reselection again pass with healthy matched
+device acknowledgements. The [final artifact capture](device-final.json) repeats
+15-second feed windows around six seconds of silence: 14 healthy matched
+acknowledgements per window, seven rows restored, all work claims cleared during
+silence, and zero logged deadline misses. Its maximum frame is 16,380 microseconds.
+The final installed artifact gate and complete chezmoi canonical check pass.
+Actual hardware reconnect and reboot remain pending;
+isolated CLI proof is not substituted for those physical checks.
 
 ## Rollback and remaining acceptance
 
