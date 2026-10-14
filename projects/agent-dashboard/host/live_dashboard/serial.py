@@ -15,6 +15,43 @@ from .runtime import Failure
 from .wire import encode, parse_request
 
 
+HEALTH_LIMITS = {
+    "health": 4,
+    "partial": 1,
+    "rows": CAPACITY,
+    "blocked": 131070,
+    "waiting": 131070,
+    "working": 131070,
+    "unknown": 131070,
+    "frame_us": 0x7FFFFFFFFFFFFFFF,
+    "miss": 1,
+    "heap": 0xFFFFFFFF,
+    "stack": 0xFFFFFFFF,
+}
+
+
+def parse_health(line):
+    """Bound diagnostic fields; device reports never grant source authority."""
+    if not line.startswith(b"RLCD_HEALTH "):
+        return None
+    try:
+        pairs = [field.split("=", 1) for field in line.decode("ascii").split()[1:]]
+        fields = dict(pairs)
+        if len(pairs) != len(fields) or fields.keys() != HEALTH_LIMITS.keys():
+            return None
+        result = {}
+        for name, value in fields.items():
+            if not value.isascii() or not value.isdecimal() or len(value) > 19:
+                return None
+            number = int(value)
+            if number > HEALTH_LIMITS[name]:
+                return None
+            result[name] = number
+        return result
+    except (ValueError, UnicodeError):
+        return None
+
+
 def io_reason(error):
     if error.errno in {errno.ENOENT, errno.ENODEV, errno.ENXIO}:
         return "serial_missing"
@@ -121,6 +158,8 @@ async def serve_serial(
             last_ack = None
             last_ack_request = None
             source_status = None
+            reported_health = None
+            health_reported_at = float("-inf")
             connected_at = clock()
             events.emit("serial_connected")
             previous_reason = None
@@ -177,7 +216,15 @@ async def serve_serial(
                                         delay = retry_initial
                                 except (ValueError, KeyError, UnicodeError):
                                     pass
-                            if line.startswith((b"RLCD_ACK ", b"RLCD_HEALTH ")):
+                            health = parse_health(line)
+                            if health is not None:
+                                now = clock()
+                                state = (health["health"], health["partial"], health["miss"])
+                                if state != reported_health or now - health_reported_at >= 60:
+                                    events.emit("device_health", **health)
+                                    reported_health = state
+                                    health_reported_at = now
+                            if verbose and line.startswith((b"RLCD_ACK ", b"RLCD_HEALTH ")):
                                 print(
                                     line.decode("ascii", "replace"),
                                     file=output,

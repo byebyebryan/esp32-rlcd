@@ -83,9 +83,14 @@ are recorded in `~/.config/rlcd-agent-dashboard/selection.json`.
 
 `RLCD_EVENT` journal records distinguish Mesh retry, source health, serial
 missing/busy/hangup, missing acknowledgements and worker failure. Repeated failure
-events are limited. Device acknowledgements prove packet admission; source leases
-still determine current observations. The earlier transient-service recovery is
-dated evidence in the refinement receipt.
+events are limited. Validated `device_health` records include feed state, counts
+and sampled render/heap/stack diagnostics once a minute and when feed health,
+partial state or deadline status changes. Routine per-frame ACK/health/summary
+output requires `--verbose`, which is useful for bounded foreground captures.
+The production unit uses the quiet default. Device acknowledgements prove packet
+admission; diagnostic health reports cannot acknowledge a request or renew source
+leases. Source leases still determine current observations. The earlier
+transient-service recovery is dated evidence in the refinement receipt.
 
 Build a host bundle after source checks and a local source checkpoint:
 
