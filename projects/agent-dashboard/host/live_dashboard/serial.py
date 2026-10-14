@@ -157,6 +157,7 @@ async def serve_serial(
             last_sent = None
             last_ack = None
             last_ack_request = None
+            last_ack_admitted = None
             source_status = None
             reported_health = None
             health_reported_at = float("-inf")
@@ -203,7 +204,11 @@ async def serve_serial(
                                         )
                                     ):
                                         now = clock()
-                                        if last_ack is None or now - last_ack >= 5:
+                                        if (
+                                            last_ack is None
+                                            or now - last_ack >= 5
+                                            or sent[3] != last_ack_admitted
+                                        ):
                                             events.emit(
                                                 "device_ack_recovered",
                                                 request=sent[1],
@@ -213,6 +218,7 @@ async def serve_serial(
                                             )
                                         last_ack = now
                                         last_ack_request = sent[1]
+                                        last_ack_admitted = sent[3]
                                         delay = retry_initial
                                 except (ValueError, KeyError, UnicodeError):
                                     pass

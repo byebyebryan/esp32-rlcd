@@ -88,7 +88,8 @@ and sampled render/heap/stack diagnostics once a minute and when feed health,
 partial state or deadline status changes. Routine per-frame ACK/health/summary
 output requires `--verbose`, which is useful for bounded foreground captures.
 The production unit uses the quiet default. Device acknowledgements prove packet
-admission; diagnostic health reports cannot acknowledge a request or renew source
+admission; ACK events also report changes in source admission after warm-up or
+source loss. Diagnostic health reports cannot acknowledge a request or renew source
 leases. Source leases still determine current observations. The earlier
 transient-service recovery is dated evidence in the refinement receipt.
 

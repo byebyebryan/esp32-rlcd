@@ -115,6 +115,55 @@ asyncio.run(m.main(types.SimpleNamespace(hosts=["starship"],seconds=0,preview=No
 
 
 class Reconnect(unittest.IsolatedAsyncioTestCase):
+    async def test_ack_reports_change_in_source_admission(self):
+        finished = asyncio.Event()
+        output = io.StringIO()
+
+        class FakePort:
+            def __init__(self):
+                self.queue = [b"RLCD?1 " + b"0" * 16 + b" 1\n"]
+                self.request = 0
+
+            def read(self):
+                if self.queue:
+                    line = self.queue.pop(0)
+                    if line.startswith(b"RLCD?1 "):
+                        self.request += 1
+                    return line
+                finished.set()
+                return b""
+
+            def write(self, payload):
+                f = payload.rstrip(b"\n").split(b"\t")
+                self.queue.append(b"RLCD_ACK seq=" + f[4] + b" rows=" + f[6]
+                                  + b" request=" + f[2] + b" crc=" + f[-1] + b"\n")
+                if self.request == 1:
+                    self.queue.append(b"RLCD?1 " + b"0" * 16 + b" 2\n")
+                return len(payload)
+
+            def close(self):
+                pass
+
+        port = FakePort()
+        fleet = type("Fleet", (), {"sources": lambda _: [
+            source([], status="warming", remaining=0) if port.request == 1
+            else source([row("active")])
+        ]})()
+        task = asyncio.create_task(serve_serial(
+            Path("unused"), fleet, Projector(["starship"]), Events(output),
+            opener=lambda _: port, idle_seconds=0.001,
+        ))
+        try:
+            await asyncio.wait_for(finished.wait(), 0.5)
+        finally:
+            task.cancel()
+            with self.assertRaises(asyncio.CancelledError):
+                await task
+        events = [json.loads(line.removeprefix("RLCD_EVENT "))
+                  for line in output.getvalue().splitlines()]
+        admitted = [e["source_admitted"] for e in events if e["event"] == "device_ack_recovered"]
+        self.assertEqual(admitted, [False, True])
+
     async def test_quiet_health_sampling_transitions_and_verbose_opt_in(self):
         for verbose in (False, True):
             now = 0
