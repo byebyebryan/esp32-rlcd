@@ -1,70 +1,97 @@
-# esp32-rlcd hardware workspace
+# esp32-rlcd
 
-This repository holds three independent ESP-IDF applications for the Waveshare
-ESP32-S3-RLCD-4.2. Select an application explicitly for every build or flash;
-there is no default application at the repository root.
+[![Project checks](https://github.com/byebyebryan/esp32-rlcd/actions/workflows/checks.yml/badge.svg)](https://github.com/byebyebryan/esp32-rlcd/actions/workflows/checks.yml)
 
-| Application | Purpose | Instructions |
-| --- | --- | --- |
-| Bring-up | Boot diagnostics, panel test and heartbeat | [projects/bringup](projects/bringup/README.md) |
-| Render bench | Drawing and SPI workload measurements | [projects/render-bench](projects/render-bench/README.md) |
-| Agent dashboard | Live Observer fleet dashboard and synthetic studies | [projects/agent-dashboard](projects/agent-dashboard/README.md) |
+Projects and shared board support for the **Waveshare ESP32-S3-RLCD-4.2**,
+built with ESP-IDF and a packed monochrome C renderer.
 
-## Set up and build
+[Project gallery](#project-gallery) · [Build](#build) · [Hardware](#hardware) · [Development](docs/development.md)
 
-Follow the [fresh-machine setup guide](docs/setup.md), then build the bring-up
-application from the repository root:
+## Project gallery
+
+### Live agent dashboard
+
+![Native fictional dashboard story: blocked rows flash, answered waits reorder, source loss clears work claims, and the feed recovers](projects/agent-dashboard/docs/media/dashboard-demo.gif)
+
+A desk view of running Codex conversations across Starship and Snap. Conversation
+names, host badges and activity ages sit beside blocked, waiting and working
+states. Whole-roster counts include hidden rows; partial/offline views keep
+uncertainty visible. A supervised host bridge supplies the real Observer/Mesh feed.
+
+[Project and setup](projects/agent-dashboard/README.md) · [Live operation](projects/agent-dashboard/docs/operations.md) · [Media source](projects/agent-dashboard/docs/media/README.md)
+
+### Rendering benchmark
+
+![Native benchmark scene: a ball and narrow bar move over the diagnostic stripes and checkerboards](projects/render-bench/docs/media/benchmark-demo.gif)
+
+Compare full redraw, cached drawing, polling SPI and queued DMA using the same
+panel path. Recorded board trials reached about **80.8 completed SPI writes/s**;
+queued DMA reduced core 0 busy time to roughly **3%** for the cached scene.
+The continuous demonstration uses 50 writes/s pacing.
+
+[Project and build](projects/render-bench/README.md) · [Measured findings](projects/render-bench/docs/performance.md) · [Media source](projects/render-bench/docs/media/README.md)
+
+### Panel bring-up
+
+![Native bring-up pattern with an asymmetric orientation marker, RLCD READY text, stripes and two checkerboard scales](projects/bringup/docs/media/bringup.png)
+
+Start with panel orientation, pixel packing, memory and USB diagnostics. The
+pattern includes stripes, coarse and single-pixel checkerboards, a moving square
+and a counter, with a slow heartbeat for initial board checks.
+
+[Project and build](projects/bringup/README.md) · [Recorded hardware checks](docs/bringup.md) · [Media source](projects/bringup/docs/media/README.md)
+
+*Previews use production C rendering with virtual time and fictional dashboard
+records. They are native renders; playback is separate from measured panel
+performance and physical contrast.*
+
+Each application is standalone firmware; one runs on the board at a time. The
+root is a hardware workspace with no default ESP-IDF application. All projects
+use the shared [display component](components/display_rlcd/README.md).
+
+## Hardware
+
+Built for the [Waveshare ESP32-S3-RLCD-4.2](https://docs.waveshare.com/ESP32-S3-RLCD-4.2):
+ESP32-S3, 16 MiB flash, 8 MiB PSRAM and a 4.2-inch, 300 × 400 reflective monochrome
+LCD. It uses ambient light and has no backlight. Current applications use
+400 × 300 landscape with a 15,000-byte framebuffer and SPI panel transport.
+
+See the [official hardware documentation](https://docs.waveshare.com/ESP32-S3-RLCD-4.2)
+for board resources and revision details, and [board support](docs/board.md) for
+the implemented pins, transport and firmware scope.
+
+## Build
+
+Follow the [fresh-machine setup guide](docs/setup.md), then run from the repository
+root. The toolchain is pinned to ESP-IDF v5.5.3:
 
 ```sh
 ./scripts/setup.sh
 ./scripts/idf.sh --version
-./scripts/idf.sh -C projects/bringup build
-./scripts/check-frame.sh
+./scripts/idf.sh -C projects/agent-dashboard build
+# or: ./scripts/idf.sh -C projects/render-bench build
+# or: ./scripts/idf.sh -C projects/bringup build
 ```
 
-`--version` does not need an application selection. For interactive ESP-IDF
-commands, source `scripts/env.sh` and pass the same project path to `idf.py`:
+For interactive ESP-IDF commands:
 
 ```sh
 . scripts/env.sh
-idf.py -C projects/bringup menuconfig
+idf.py -C projects/agent-dashboard menuconfig
 ```
 
-Each application owns its generated `sdkconfig` and `build/` directory. The
-root [`sdkconfig.defaults`](sdkconfig.defaults) supplies shared board defaults;
-the benchmark adds its own optimization and timing overrides. Existing ignored
-root and former `examples/` build/configuration artifacts remain local history;
-the project commands above do not select them.
+Follow the selected project's guide for flashing and host dependencies. Identify
+the exact board using its stable USB serial path; flashing replaces its firmware.
+Each project owns its generated `sdkconfig` and `build/` output.
 
-## Shared hardware resources
+## Documentation
 
-The applications use the shared [display component](components/display_rlcd/)
-for panel transport and frame packing. The root `tests/test_frame.c` and
-`scripts/check-frame.sh` check native pixel packing independently of an app.
-Board wiring and upstream references are in [docs/board.md](docs/board.md);
-recorded physical bring-up results are in [docs/bringup.md](docs/bringup.md).
-The component retains its [upstream provenance](components/display_rlcd/UPSTREAM.md)
-and license. The shared-workspace history is in
-[docs/workspace-origin.md](docs/workspace-origin.md).
+- [Development](docs/development.md): application boundaries, native checks and adding a project.
+- [Setup](docs/setup.md): toolchain installation, USB access and troubleshooting.
+- [Shared display component](components/display_rlcd/README.md): packing, transport and upstream provenance.
+- [Presentation media](docs/media/README.md): gallery sources, regeneration and capture guidance.
+- [Dashboard release](docs/evidence/2026-10-13-release-refinement/REPORT.md): current host runtime, source publication and acceptance.
+- [Workspace history](docs/workspace-origin.md): earlier layout and migration context.
 
-The immutable [`docs/evidence/`](docs/evidence/) archive contains prior build,
-capture and board records. Source and image paths inside those records describe
-the workspace layout at capture time.
-
-## Flash a selected application
-
-Identify the board by unplugging and reconnecting its USB cable, then use its
-stable `/dev/serial/by-id/` path. Flashing replaces the selected board's
-firmware:
-
-```sh
-RLCD_PORT='/dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_YOUR_BOARD-if00'
-./scripts/idf.sh -C projects/bringup -p "$RLCD_PORT" flash monitor
-```
-
-Exit the monitor with **Ctrl+]**. If the board cannot enter its bootloader,
-follow [Waveshare's board instructions](https://docs.waveshare.com/ESP32-S3-RLCD-4.2).
-
-Replace `projects/bringup` with the selected application directory to build or
-flash another app. Local native checks and successful SPI writes do not replace
-physical panel observation.
+Dated [evidence records](docs/evidence/) retain the source paths, artifacts and
+acceptance scope from their capture time.

@@ -1,7 +1,11 @@
 # Board bring-up application
 
+![Native initial pattern with RLCD READY text, an orientation marker, stripes and checkerboards](docs/media/bringup.png)
+
 This app logs ESP32-S3 boot and memory diagnostics over USB, initializes the
 shared RLCD panel component, and displays the monochrome panel test.
+
+[Recorded checks](../../docs/bringup.md) · [Media source](docs/media/README.md)
 
 Expect `rlcd: Target: esp32s3; ESP-IDF: v5.5.3`, 16 MiB flash, 8 MiB PSRAM,
 and a frame heartbeat every five seconds. The reflective panel should show

@@ -18,9 +18,9 @@ Board model confirmed for this project on 2026-10-02.
 | Audio | ES8311 codec, ES7210 ADC, dual microphones, speaker connector |
 | Storage | microSD slot |
 
-The display uses reflected ambient light and has no backlight. Display
-orientation and controller initialization must be verified against the vendor
-example and physical board during panel bring-up.
+The display uses reflected ambient light and has no backlight. The shared driver
+uses the vendor initialization with 400 × 300 landscape packing; initial panel
+operation has [recorded physical acceptance](bringup.md).
 
 ## Panel pins and transport
 
@@ -39,17 +39,22 @@ Pins and register initialization follow the vendor's LVGL V9 example at
 2-column by 4-row blocks. See
 [component provenance](../components/display_rlcd/UPSTREAM.md).
 
-## Current firmware scope
+## Implemented board support
 
-The app uses flash, PSRAM, the native USB console and the panel pins above.
-SPI writes are synchronous, so the framebuffer is updated only after the
-previous transfer completes. Buttons and other peripherals are not configured.
+The applications use flash, PSRAM, the native USB console and the panel pins
+above. Polling and queued-DMA presentation both wait for transfer completion
+before the framebuffer is reused. The live dashboard uses the USB console for
+its bounded host feed; render-bench measures drawing and completed SPI writes;
+bring-up supplies the diagnostic pattern. Buttons and other peripherals are not
+configured by these applications. See the [project gallery](../README.md#project-gallery).
 
 The local RLCD USB serial is `94:A9:90:F3:43:74`. It was identified from the
 factory app's logs, memory specifications and peripheral startup. The other
 connected board, `28:84:85:92:C2:20`, is the active ESP32-349 device.
 
-For validation scope and remaining physical checks, see [bringup.md](bringup.md).
+The [bring-up receipt](bringup.md) retains its original scope. Current dashboard
+runtime and deferred manual checks are recorded in the
+[release receipt](evidence/2026-10-13-release-refinement/REPORT.md).
 
 ## Primary references
 

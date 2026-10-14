@@ -1,10 +1,14 @@
 # RLCD render bench
 
+![Native cached benchmark scene with a ball and moving bar over the packing pattern](docs/media/benchmark.png)
+
 On-device drawing, SPI and CPU tests for the Waveshare ESP32-S3-RLCD-4.2.
 This independent workspace app shares the panel component and board defaults
 with the bring-up app.
 The working panel initialization, 10 MHz SPI clock and full-frame packing
 are retained. No LVGL or other managed component is required.
+
+[Measured findings](docs/performance.md) · [Native animation and media source](docs/media/README.md)
 
 ## Build, flash and capture
 

@@ -159,7 +159,8 @@ Close any serial monitor or other process holding this specific port, then:
 ```
 
 Flashing replaces the selected board's firmware. Exit the monitor with
-**Ctrl+]**. The pattern and expected logs are described in [README.md](../README.md).
+**Ctrl+]**. The pattern and expected logs are described in the
+[bring-up guide](../projects/bringup/README.md).
 No Wi-Fi credentials are needed for the panel test.
 
 ## Board configuration and generated files
@@ -184,9 +185,10 @@ The shared board configuration is:
 
 Panel GPIOs, 10 MHz SPI3 and 400 x 300 landscape packing are defined in the
 panel component and documented in [board.md](board.md). There is no backlight
-configuration. The default IDF partition table has a single 1 MiB app partition;
-the initial panel test fits it. Additional flash capacity is available for
-future partition changes.
+configuration. Bring-up and render-bench use IDF's default 1 MiB app partition.
+The dashboard owns a [2 MiB factory partition table](../projects/agent-dashboard/partitions.csv)
+for its complete 12-pixel font, retaining the NVS and PHY addresses. Each
+application selects its own defaults and partition layout.
 
 `menuconfig` changes the selected application's local configuration. To make a
 setting reproducible, review and put the intended option in the root
