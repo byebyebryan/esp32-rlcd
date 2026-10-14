@@ -1,0 +1,12 @@
+{
+  "description": "Fictional conversations for the native gallery; no provider data.",
+  "sessions": [
+    {"host": "starship", "id": "demo-st-01", "title": "Firmware bring-up", "phase": "blocked", "age_seconds": 240},
+    {"host": "starship", "id": "demo-st-02", "title": "Feed recovery", "phase": "waiting", "age_seconds": 82},
+    {"host": "starship", "id": "demo-st-03", "title": "Project gallery", "phase": "working", "age_seconds": 45},
+    {"host": "starship", "id": "demo-st-04", "title": "Build pipeline", "phase": "working", "age_seconds": 18},
+    {"host": "snap", "id": "demo-sn-01", "title": "Review tools", "phase": "waiting", "age_seconds": 61},
+    {"host": "snap", "id": "demo-sn-02", "title": "Render benchmark", "phase": "working", "age_seconds": 32},
+    {"host": "snap", "id": "demo-sn-03", "title": "文档检查", "phase": "working", "age_seconds": 12}
+  ]
+}
