@@ -91,6 +91,52 @@ asyncio.run(m.main(types.SimpleNamespace(hosts=["starship"],seconds=0,preview=No
 
 
 class Reconnect(unittest.IsolatedAsyncioTestCase):
+    async def test_ack_retained_rows_during_warmup_and_wrong_healthy_count(self):
+        for status, accepted in (("warming", True), ("current", False)):
+            output = io.StringIO()
+            acknowledged = asyncio.Event()
+
+            class FakePort:
+                def __init__(self):
+                    self.queue = [b"RLCD?1 " + b"0" * 16 + b" 1\n"]
+
+                def read(self):
+                    return self.queue.pop(0) if self.queue else b""
+
+                def write(self, payload, acknowledged=acknowledged):
+                    fields = payload.rstrip(b"\n").split(b"\t")
+                    self.queue.append(
+                        b"RLCD_ACK seq=1 rows=7 request=1 crc=" + fields[-1] + b"\n"
+                    )
+                    acknowledged.set()
+                    return len(payload)
+
+                def close(self):
+                    pass
+
+            port = FakePort()
+            inputs = [
+                source([], status=status, remaining=0 if status == "warming" else 10000)
+            ]
+            fleet = type("Fleet", (), {"sources": lambda _, inputs=inputs: inputs})()
+            task = asyncio.create_task(
+                serve_serial(
+                    Path("unused"),
+                    fleet,
+                    Projector(["starship"]),
+                    Events(output),
+                    opener=lambda _, port=port: port,
+                    output=io.StringIO(),
+                    idle_seconds=0.001,
+                )
+            )
+            await asyncio.wait_for(acknowledged.wait(), 0.2)
+            await asyncio.sleep(0.01)
+            task.cancel()
+            with self.assertRaises(asyncio.CancelledError):
+                await task
+            self.assertEqual("device_ack_recovered" in output.getvalue(), accepted)
+
     async def test_absent_busy_hangup_then_fresh_incarnation(self):
         inputs = [source([row("active")])]
         fleet = type("Fleet", (), {"sources": lambda _: inputs})()

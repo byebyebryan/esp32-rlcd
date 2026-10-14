@@ -10,6 +10,7 @@ import select
 import termios
 import time
 
+from .projection import CAPACITY
 from .runtime import Failure
 from .wire import encode, parse_request
 
@@ -118,6 +119,7 @@ async def serve_serial(
             acknowledged = {}
             last_sent = None
             last_ack = None
+            last_ack_request = None
             source_status = None
             connected_at = clock()
             events.emit("serial_connected")
@@ -150,13 +152,28 @@ async def serve_serial(
                                     )
                                     seq = int(values["seq"])
                                     sent = acknowledged.pop(seq, None)
+                                    rows = int(values["rows"])
                                     if (
                                         sent
                                         and values.get("crc") == sent[0]
                                         and int(values["request"]) == sent[1]
-                                        and int(values["rows"]) == sent[2]
+                                        and (
+                                            rows == sent[2]
+                                            if sent[3]
+                                            else sent[2] <= rows <= CAPACITY
+                                        )
                                     ):
-                                        last_ack = clock()
+                                        now = clock()
+                                        if last_ack is None or now - last_ack >= 5:
+                                            events.emit(
+                                                "device_ack_recovered",
+                                                request=sent[1],
+                                                sequence=seq,
+                                                rows=rows,
+                                                source_admitted=sent[3],
+                                            )
+                                        last_ack = now
+                                        last_ack_request = sent[1]
                                         delay = retry_initial
                                 except (ValueError, KeyError, UnicodeError):
                                     pass
@@ -200,6 +217,7 @@ async def serve_serial(
                             checksum,
                             request[1],
                             len(view["rows"]),
+                            all(h["status"] < 2 for h in view["hosts"]),
                         )
                         if len(acknowledged) > 4:
                             del acknowledged[min(acknowledged)]
@@ -236,6 +254,16 @@ async def serve_serial(
                         "device_ack_missing",
                         interval=30,
                         request_seen=last_sent is not None,
+                        last_request=last_request[1]
+                        if last_request is not None
+                        else None,
+                        request_age_ms=int((now - last_sent) * 1000)
+                        if last_sent is not None
+                        else None,
+                        last_ack_request=last_ack_request,
+                        ack_age_ms=int((now - last_ack) * 1000)
+                        if last_ack is not None
+                        else None,
                     )
                 await asyncio.sleep(idle_seconds)
         except asyncio.CancelledError:
