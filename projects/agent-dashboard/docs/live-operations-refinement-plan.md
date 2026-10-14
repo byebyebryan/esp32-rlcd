@@ -6,8 +6,8 @@ This pass makes the host bridge recover predictably, gives Starship durable
 startup, and repairs whole-roster counts during partial inventory. Implementation,
 automated/live-device validation and managed rollout are accepted in the
 [reliability receipt](../../../docs/evidence/2026-10-13-live-reliability/REPORT.md).
-Real USB transport recovery is verified. User-visible reconnect confirmation and
-a real reboot remain separately pending.
+Real USB transport recovery is verified. The user deferred manual panel and real
+reboot checks as later follow-ups, completing the current refinement pass.
 
 The [integration contract](live-integration.md) and
 [accepted refinement receipt](../../../docs/evidence/2026-10-13-dashboard-refinement/REPORT.md)
@@ -116,7 +116,7 @@ Source publication is a separate delivery step.
 | Native and projection regression | Existing title/fallback/collision, system filtering, source-sampled age, phase/outcome separation, source expiry and healthy-sibling checks continue to pass. Renderer/motion and C admission checks pass. |
 | Installation and service | Bundle hashes/dependency tuple agree; unit configuration validates; startup, prolonged absence, stop/start and rollback/reselection succeed with one serial owner and no unrelated managed drift. |
 | Live device | Healthy acknowledgements match sent request/checksum/rows. Bridge stop clears work claims; restart recovers. A failed source expires while its healthy sibling remains useful. Capture bounded render/heap/stack diagnostics. |
-| Physical operation | Confirm actual unplug/replug and visible offline/recovery behavior in a coordinated hardware window. Record a real host reboot separately from simulated startup and unit enablement checks. |
+| Physical follow-ups (deferred by user) | Actual USB transport recovery is verified. Retain visible offline/recovery confirmation and a real host reboot/post-boot feed check for a later coordinated window; neither is recorded as passed. |
 
 Use deterministic fake clocks/endpoints for the new failure cases, with finite
 timeouts. Device interaction is exclusive and sequential. Preserve the known
@@ -125,11 +125,14 @@ does not need a new layout study unless this pass changes visible presentation.
 
 ## Completion and boundaries
 
-Acceptance requires repaired membership, supervised workers, tested USB recovery,
-a verified installed bundle, enabled Starship startup, scoped rollback and the
-live/physical operation receipts. Report physical unplug/replug or reboot checks
-as pending until actually performed. A host reboot needs a coordinated window
-because other active workloads must be preserved.
+The current pass is complete: membership is repaired, workers are supervised,
+USB recovery is tested, the installed bundle is verified, Starship startup is
+enabled, scoped rollback is exercised and live device receipts are recorded.
+Actual USB transport recovery is also verified. The user explicitly deferred
+manual checks: “let's defer manual checks, these are more like edge cases we take
+care of later”. Visible panel recovery and an actual reboot/post-boot feed check
+remain deferred follow-ups, without a passed result. A later host reboot needs a
+coordinated window because other active workloads must be preserved.
 
 Prepare scoped local commits around application logic/tests, installation and
 managed deployment, and acceptance documentation. Producer fixes already reside

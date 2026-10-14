@@ -1,6 +1,6 @@
 {
   "receiptVersion": 1,
-  "status": "real_usb_transport_recovery_verified_visual_confirmation_pending",
+  "status": "real_usb_transport_recovery_verified_visual_confirmation_deferred",
   "serialIdentity": "94:A9:90:F3:43:74",
   "usbPath": "5-1.1.1",
   "kernelDisconnectAtUtc": "2026-10-14T02:42:56.519577+00:00",
@@ -18,7 +18,7 @@
   "newDeviceRequestCounter": 2,
   "maxFrameUs": 16560,
   "deadlineMisses": 0,
-  "visualConfirmation": "pending_user_feedback",
+  "visualConfirmation": "deferred_by_user",
   "hostBootId": "c145673c-6342-45c2-8d1c-3f2d82469e5f",
   "kernelEvents": [
     {

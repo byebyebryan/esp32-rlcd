@@ -1,6 +1,6 @@
 {
   "receiptVersion": 1,
-  "status": "implementation_and_managed_service_accepted_physical_checks_pending",
+  "status": "accepted_with_manual_followups_deferred",
   "applicationSourceRevision": "1632d8c4ab5b942ba55404e315110568401de90c",
   "sourceDirty": false,
   "bundle": ".local/share/rlcd-agent-dashboard/30c0fb475fe13866",
@@ -199,9 +199,18 @@
   },
   "physical": {
     "usbReconnect": "real_device_transport_recovery_verified",
-    "reboot": "pending_coordinated_window",
+    "reboot": "deferred_by_user",
     "readability": "previously_accepted_layout_unchanged",
-    "usbVisibleRecovery": "pending_user_feedback"
+    "usbVisibleRecovery": "deferred_by_user"
+  },
+  "manualFollowups": {
+    "decision": "deferred_by_user",
+    "userInstruction": "let's defer manual checks, these are more like edge cases we take care of later",
+    "checks": [
+      "visible panel offline/recovery confirmation",
+      "actual host reboot and post-boot feed acceptance"
+    ],
+    "recordedAsPassed": false
   },
   "firmwareChanged": false,
   "wireVersion": 1,

@@ -1,6 +1,11 @@
 {
   "auditVersion": 1,
-  "status": "incomplete_physical_checks_pending",
+  "status": "accepted_with_manual_followups_deferred",
+  "manualFollowups": {
+    "decision": "deferred_by_user",
+    "userInstruction": "let's defer manual checks, these are more like edge cases we take care of later",
+    "recordedAsPassed": false
+  },
   "requirements": [
     {
       "requirement": "Rollback baseline and concurrent source preservation",
@@ -92,17 +97,17 @@
     },
     {
       "requirement": "Actual physical USB unplug/replug and visible recovery",
-      "status": "partial_transport_proven_visual_confirmation_pending",
+      "status": "transport_proven_visual_confirmation_deferred_by_user",
       "evidence": [
         "physical-usb-recovery.json exact device disconnect/re-enumeration, same process, matched healthy frames",
-        "User visual confirmation still pending"
+        "User deferred visible panel confirmation as a later manual check"
       ]
     },
     {
       "requirement": "Actual reboot and post-boot feed acceptance",
-      "status": "pending",
+      "status": "deferred_by_user",
       "evidence": [
-        "coordinated reboot choice requested; startup enablement is not actual reboot proof"
+        "User deferred actual reboot/post-boot feed acceptance; startup enablement is not actual reboot proof"
       ]
     },
     {

@@ -1,13 +1,14 @@
 # Live dashboard reliability acceptance
 
-The bridge reliability implementation and managed Starship service are accepted
+The bridge reliability refinement pass and managed Starship service are complete
 within the automated and live-device gates below. Real USB disconnect/reconnect
-transport recovery is verified; user-visible confirmation and a real host reboot
-remain separately pending. [Bounded acceptance metadata](acceptance.json)
+transport recovery is verified. The user deferred visible panel confirmation and
+a real host reboot as later follow-ups; neither is recorded as passed.
+[Bounded acceptance metadata](acceptance.json)
 binds source, installed artifact, dependency tuple, test results, protected
 owners and rollback. [Device evidence](device.json) records silence/recovery.
 The [execution plan](../../../projects/agent-dashboard/docs/live-operations-refinement-plan.md)
-defines the remaining physical gates.
+records the completed scope and deferred manual checks.
 
 ## Implemented behavior
 
@@ -125,7 +126,7 @@ acknowledgements per window, seven rows restored, all work claims cleared during
 silence, and zero logged deadline misses. Its maximum frame is 16,380 microseconds.
 The final installed artifact gate and complete chezmoi canonical check pass.
 The later real USB transport check below supplements the isolated proof.
-User-visible confirmation and reboot remain pending.
+User-visible confirmation and reboot are deferred by the user.
 
 ## Real USB disconnect and recovery
 
@@ -139,10 +140,10 @@ current hosts. There are zero service restarts and zero render deadline misses
 in the recovery window. The restored device reports healthy feed state.
 
 These are actual kernel/bridge/device observations. They establish hardware
-transport recovery without restarting the service; visible panel recovery still
-awaits user confirmation. Starship's host boot ID remains unchanged.
+transport recovery without restarting the service. Visible panel confirmation is
+deferred by the user. Starship's host boot ID remains unchanged.
 
-## Rollback and remaining acceptance
+## Rollback and deferred follow-ups
 
 Retained baseline bundle: `~/.local/share/rlcd-agent-dashboard/ab87015dbfc58201`,
 manifest `ab87015dbfc582012e02b4d8aa0995148cb114624d6c3705bb158e646a0c9899`.
@@ -158,8 +159,11 @@ restore the retained application selection, scoped apply the four targets,
 reload/start and verify device admission. Provider, Observer/Mesh, Tmux and firmware
 rollback are not involved.
 
-The user has a pending request to confirm the visible roster after reconnect.
-Reboot timing is separately pending because Starship
-has active workloads. Enabled startup and service stop/start do not count as an
-actual reboot. Previous physical readability remains accepted for the unchanged
-layout. These local checkpoints and installed artifacts are unpublished.
+The user closed the manual acceptance scope with: “let's defer manual checks,
+these are more like edge cases we take care of later”. Visible roster/offline/
+recovery confirmation and an actual reboot/post-boot feed check are retained as
+deferred follow-ups. Enabled startup and service stop/start do not count as an
+actual reboot. A later reboot check needs a coordinated window that preserves
+Starship's active workloads. Previous physical readability remains accepted for
+the unchanged layout. These local checkpoints and installed artifacts are
+unpublished.
