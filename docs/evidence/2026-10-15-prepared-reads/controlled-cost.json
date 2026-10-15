@@ -1,0 +1,186 @@
+{
+  "trials": {
+    "D0": [
+      {
+        "cpuSeconds": 6.448295826,
+        "seconds": 30.001167641981738,
+        "percentOneCore": 21.493482863569156,
+        "counts": {
+          "deviceRequests": 31,
+          "responses": 31,
+          "lateResponses": 0,
+          "cachedNativeReads": 6
+        },
+        "semanticSignatures": {
+          "210e24af9021e8f88774a1b21db0ac065d43845d4382bfa30032a6409a0381c4": 31
+        },
+        "rowsPerHost": 250,
+        "warmupSeconds": 10,
+        "application": "/tmp/agent-cpu-delivery-20261015/rlcd-old-source/projects/agent-dashboard",
+        "packages": {
+          "agent-observer": "0.7.0a1",
+          "mesh-plus": "0.1.0a17"
+        },
+        "cleanup": true,
+        "limits": [
+          "synthetic native bodies; no providers or ordinary endpoints",
+          "combined fixture publisher/Reader/application/serial-supervisor process CPU",
+          "remote nonce proof over owned IPC; SSH crypto/server and physical device excluded",
+          "unchanged native views with original ten-minute fixture leases; not native freshness proof"
+        ]
+      },
+      {
+        "cpuSeconds": 6.538405787,
+        "seconds": 30.005717944004573,
+        "percentOneCore": 21.79053272180223,
+        "counts": {
+          "deviceRequests": 31,
+          "responses": 31,
+          "lateResponses": 0,
+          "cachedNativeReads": 6
+        },
+        "semanticSignatures": {
+          "210e24af9021e8f88774a1b21db0ac065d43845d4382bfa30032a6409a0381c4": 31
+        },
+        "rowsPerHost": 250,
+        "warmupSeconds": 10,
+        "application": "/tmp/agent-cpu-delivery-20261015/rlcd-old-source/projects/agent-dashboard",
+        "packages": {
+          "agent-observer": "0.7.0a1",
+          "mesh-plus": "0.1.0a17"
+        },
+        "cleanup": true,
+        "limits": [
+          "synthetic native bodies; no providers or ordinary endpoints",
+          "combined fixture publisher/Reader/application/serial-supervisor process CPU",
+          "remote nonce proof over owned IPC; SSH crypto/server and physical device excluded",
+          "unchanged native views with original ten-minute fixture leases; not native freshness proof"
+        ]
+      }
+    ],
+    "D1": [
+      {
+        "cpuSeconds": 5.4694969769999995,
+        "seconds": 30.001160004001576,
+        "percentOneCore": 18.23095165743749,
+        "counts": {
+          "deviceRequests": 30,
+          "responses": 30,
+          "lateResponses": 0,
+          "cachedNativeReads": 6
+        },
+        "semanticSignatures": {
+          "210e24af9021e8f88774a1b21db0ac065d43845d4382bfa30032a6409a0381c4": 30
+        },
+        "rowsPerHost": 250,
+        "warmupSeconds": 10,
+        "application": "/tmp/agent-cpu-delivery-20261015/rlcd-old-source/projects/agent-dashboard",
+        "packages": {
+          "agent-observer": "0.7.0a5",
+          "mesh-plus": "0.1.0a20"
+        },
+        "cleanup": true,
+        "limits": [
+          "synthetic native bodies; no providers or ordinary endpoints",
+          "combined fixture publisher/Reader/application/serial-supervisor process CPU",
+          "remote nonce proof over owned IPC; SSH crypto/server and physical device excluded",
+          "unchanged native views with original ten-minute fixture leases; not native freshness proof"
+        ]
+      },
+      {
+        "cpuSeconds": 5.586872232999999,
+        "seconds": 30.00219629300409,
+        "percentOneCore": 18.621544164427544,
+        "counts": {
+          "deviceRequests": 31,
+          "responses": 31,
+          "lateResponses": 0,
+          "cachedNativeReads": 6
+        },
+        "semanticSignatures": {
+          "210e24af9021e8f88774a1b21db0ac065d43845d4382bfa30032a6409a0381c4": 31
+        },
+        "rowsPerHost": 250,
+        "warmupSeconds": 10,
+        "application": "/tmp/agent-cpu-delivery-20261015/rlcd-old-source/projects/agent-dashboard",
+        "packages": {
+          "agent-observer": "0.7.0a5",
+          "mesh-plus": "0.1.0a20"
+        },
+        "cleanup": true,
+        "limits": [
+          "synthetic native bodies; no providers or ordinary endpoints",
+          "combined fixture publisher/Reader/application/serial-supervisor process CPU",
+          "remote nonce proof over owned IPC; SSH crypto/server and physical device excluded",
+          "unchanged native views with original ten-minute fixture leases; not native freshness proof"
+        ]
+      }
+    ],
+    "D2": [
+      {
+        "cpuSeconds": 3.948264346,
+        "seconds": 30.01043526601279,
+        "percentOneCore": 13.156304835309939,
+        "counts": {
+          "deviceRequests": 31,
+          "responses": 31,
+          "lateResponses": 0,
+          "cachedNativeReads": 6
+        },
+        "semanticSignatures": {
+          "210e24af9021e8f88774a1b21db0ac065d43845d4382bfa30032a6409a0381c4": 31
+        },
+        "rowsPerHost": 250,
+        "warmupSeconds": 10,
+        "application": "/home/bryan/code/esp32-rlcd/projects/agent-dashboard",
+        "packages": {
+          "agent-observer": "0.7.0a5",
+          "mesh-plus": "0.1.0a20"
+        },
+        "cleanup": true,
+        "limits": [
+          "synthetic native bodies; no providers or ordinary endpoints",
+          "combined fixture publisher/Reader/application/serial-supervisor process CPU",
+          "remote nonce proof over owned IPC; SSH crypto/server and physical device excluded",
+          "unchanged native views with original ten-minute fixture leases; not native freshness proof"
+        ]
+      },
+      {
+        "cpuSeconds": 3.9819299470000002,
+        "seconds": 30.016182221006602,
+        "percentOneCore": 13.265944075370372,
+        "counts": {
+          "deviceRequests": 31,
+          "responses": 31,
+          "lateResponses": 0,
+          "cachedNativeReads": 6
+        },
+        "semanticSignatures": {
+          "210e24af9021e8f88774a1b21db0ac065d43845d4382bfa30032a6409a0381c4": 31
+        },
+        "rowsPerHost": 250,
+        "warmupSeconds": 10,
+        "application": "/home/bryan/code/esp32-rlcd/projects/agent-dashboard",
+        "packages": {
+          "agent-observer": "0.7.0a5",
+          "mesh-plus": "0.1.0a20"
+        },
+        "cleanup": true,
+        "limits": [
+          "synthetic native bodies; no providers or ordinary endpoints",
+          "combined fixture publisher/Reader/application/serial-supervisor process CPU",
+          "remote nonce proof over owned IPC; SSH crypto/server and physical device excluded",
+          "unchanged native views with original ten-minute fixture leases; not native freshness proof"
+        ]
+      }
+    ]
+  },
+  "meanPercentOneCore": {
+    "D0": 21.642007792685693,
+    "D1": 18.426247910932517,
+    "D2": 13.211124455340155
+  },
+  "clientReductionPercent": 28.302687995954756,
+  "totalReductionPercent": 38.95610526577348,
+  "semanticParity": true
+}

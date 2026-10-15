@@ -28,7 +28,7 @@ Live acquisition needs the accepted Observer/Mesh Python environment. On the
 currently selected hosts it is:
 
 ```sh
-RLCD_OBSERVER_PYTHON="$HOME/.local/share/agent-observer/0.7.0a1-07196b5445766002-mesh-a17-system/bin/python"
+RLCD_OBSERVER_PYTHON="$HOME/.local/share/agent-observer/0.7.0a5-25cd5663560c973b-cpu/bin/python"
 mkdir -p projects/agent-dashboard/build/live-preview
 "$RLCD_OBSERVER_PYTHON" projects/agent-dashboard/scripts/live-dashboard.py \
     --preview projects/agent-dashboard/build/live-preview/frame.txt
@@ -43,6 +43,19 @@ The preview uses firmware's C admission and renderer. Data stays in ignored loca
 build output. Native checks require only a C compiler and Python's standard
 library. The bridge explicitly supplies Agent profile v3; the generic Mesh v1
 Agent reader does not admit this endpoint.
+
+The bridge uses Observer prepared read interface 1 through Mesh preparation
+interface 1. Each device tick projects admitted current rows and retained source
+metadata without reconstructing the full saved roster. A heartbeat cannot renew
+native evidence; gap, expiry, clock failure and disconnect still revoke current
+claims. Reconnect creates a new prepared watch. Bundle verification records both
+interface versions alongside the exact accepted dependency tuple.
+
+Run the optional installed-contract checks with the selected Python as well:
+
+```sh
+"$RLCD_OBSERVER_PYTHON" -B projects/agent-dashboard/tests/test_prepared_fleet.py -v
+```
 
 Inspect the full selected roster, label/identity mapping, hidden rows and exclusion
 counts without opening USB:

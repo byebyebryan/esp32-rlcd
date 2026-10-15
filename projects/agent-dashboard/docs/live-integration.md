@@ -7,6 +7,14 @@ bridge belongs to this application. Observer remains the observation authority;
 Mesh remains the delivery/proof authority. Firmware owns display admission,
 expiry, layout and animation. This client performs no provider actions.
 
+The configured Reader feeds Observer's public `PreparedAgentWatch` (read
+interface 1, Mesh preparation interface 1). Preparation validates each admitted
+publication once; device requests use `read.sessions` for current rows and
+`read.context` for source metadata. Context alone grants no current rows. The
+client rechecks admission on every request, retains original expiry, and creates
+a new helper when reconnecting. No full-roster reconstruction or private SDK
+state is used on the device tick.
+
 ## Presentation policy
 
 Confirmed children, system helpers and positively parked sessions are excluded. Current running

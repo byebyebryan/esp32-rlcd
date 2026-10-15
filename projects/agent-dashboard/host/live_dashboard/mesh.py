@@ -11,13 +11,13 @@ from .runtime import Events, Failure
 class Fleet:
     def __init__(self, hosts, events=None):
         from agent_observer.mesh_profile import AgentProfile
-        from mesh_plus.api import ReadGuard
+        from agent_observer.mesh_read import PreparedAgentWatch
 
         self.hosts = list(hosts)
         self.profile = AgentProfile()
         self.request_id = secrets.token_hex(16)
-        self.guard = ReadGuard(
-            "agent", self.request_id, host_ids=self.hosts, profile=self.profile
+        self.guard = PreparedAgentWatch(
+            self.request_id, host_ids=self.hosts, profile=self.profile
         )
         self.ready = asyncio.Event()
         self.closed = False
@@ -25,24 +25,22 @@ class Fleet:
         self.events = events or Events()
 
     def sources(self):
-        from agent_observer.public import identity_key
-        from mesh_plus.api import reconstructed
         from mesh_plus.evidence import clock_domain
         from mesh_plus.transport import boottime_ms
 
         now = boottime_ms()
-        frame = self.guard.view
-        if frame is None or self.closed:
+        read = self.guard.read(now, clock_domain())
+        context = read.context
+        if context is None or self.closed:
             return [
                 Source(host, "offline" if self.closed else "warming")
                 for host in self.hosts
             ]
-        current = {
-            identity_key(row["identity"])
-            for row in self.guard.current(now, clock_domain())
-        }
+        by_host = {host: [] for host in self.hosts}
+        for row in read.sessions:
+            by_host[row["identity"]["hostScope"]].append(row)
         result = []
-        for host in frame["mesh"]["hosts"]:
+        for host in context["hosts"]:
             identifier = host["hostId"]
             status = "current"
             receipts = host["receipts"]
@@ -60,41 +58,39 @@ class Fleet:
                 or remaining <= 0
             ):
                 status = "offline"
-            snapshot = (
-                reconstructed(frame, host, profile=self.profile)["snapshot"]
+            metadata = (
+                host["owner"]["metadata"]
                 if host["owner"] is not None
                 else None
             )
-            rows = (
-                []
-                if snapshot is None
-                else [
-                    r
-                    for r in snapshot["sessions"]
-                    if identity_key(r["identity"]) in current
-                ]
-            )
+            rows = by_host[identifier]
             if (
-                snapshot is not None
+                metadata is not None
                 and status == "current"
                 and (
-                    snapshot["sourceHealth"] != "current"
+                    metadata["sourceHealth"] != "current"
                     or any(
                         s["coverage"]["runtime"]["status"] != "complete"
-                        for s in snapshot["sources"]
+                        for s in metadata["sources"]
                     )
                 )
             ):
                 status = "partial"
+            known, excluded = set(), set()
+            for row in rows:
+                identity = token(row["identity"])[0]
+                known.add(identity)
+                if exclusion(row):
+                    excluded.add(identity)
             result.append(
                 Source(
                     identifier,
                     status,
                     max(0, remaining),
-                    None if snapshot is None else snapshot["collectedAt"],
+                    None if metadata is None else metadata["collectedAt"],
                     rows,
-                    {token(r["identity"])[0] for r in rows},
-                    {token(r["identity"])[0] for r in rows if exclusion(r)},
+                    known,
+                    excluded,
                 )
             )
         return result
@@ -165,9 +161,9 @@ class Fleet:
                         raise Failure("mesh_cleanup_failed") from None
             await asyncio.sleep(delay)
             delay = min(30, delay * 2)
-            from mesh_plus.api import ReadGuard
+            from agent_observer.mesh_read import PreparedAgentWatch
 
             self.request_id = secrets.token_hex(16)
-            self.guard = ReadGuard(
-                "agent", self.request_id, host_ids=self.hosts, profile=self.profile
+            self.guard = PreparedAgentWatch(
+                self.request_id, host_ids=self.hosts, profile=self.profile
             )
