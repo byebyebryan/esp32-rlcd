@@ -25,7 +25,7 @@ void dashboard_run_live(void)
     snprintf(boot, sizeof(boot), "%08" PRIx32 "%08" PRIx32, esp_random(), esp_random());
     dashboard_feed_init(&feed, boot);
     dashboard_motion_init(&motion);
-    ESP_LOGI("rlcd_dashboard", "LIVE wire=1 capacity=32 hosts=2 age=sampled_activity fps=25");
+    ESP_LOGI("rlcd_dashboard", "LIVE wire=2 capacity=32 hosts=2 age=sampled_activity fps=25");
     size_t used = 0;
     bool discard = false, first = true, previous_moving = false;
     uint64_t request_at = 0, flash_step = UINT64_MAX;
