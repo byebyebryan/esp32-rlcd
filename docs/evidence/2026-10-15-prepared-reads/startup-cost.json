@@ -1,0 +1,33 @@
+{
+  "cpuSeconds": 1.3336496419999997,
+  "seconds": 10.002090511989081,
+  "percentOneCore": 13.333708992149296,
+  "startupAndWarmup": {
+    "seconds": 5.14771303901216,
+    "cpuSeconds": 1.9945785550000001
+  },
+  "counts": {
+    "deviceRequests": 10,
+    "responses": 10,
+    "lateResponses": 0,
+    "cachedNativeReads": 2
+  },
+  "semanticSignatures": {
+    "210e24af9021e8f88774a1b21db0ac065d43845d4382bfa30032a6409a0381c4": 10
+  },
+  "rowsPerHost": 250,
+  "warmupSeconds": 5,
+  "application": "/home/bryan/code/esp32-rlcd/projects/agent-dashboard",
+  "readers": 1,
+  "packages": {
+    "agent-observer": "0.7.0a5",
+    "mesh-plus": "0.1.0a20"
+  },
+  "cleanup": true,
+  "limits": [
+    "synthetic native bodies; no providers or ordinary endpoints",
+    "combined fixture publisher/Reader/application/serial-supervisor process CPU",
+    "remote nonce proof over owned IPC; SSH crypto/server and physical device excluded",
+    "unchanged native views with original ten-minute fixture leases; not native freshness proof"
+  ]
+}

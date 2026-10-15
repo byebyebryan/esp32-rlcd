@@ -1,0 +1,12 @@
+{
+  "mac": "94:a9:90:f3:43:74",
+  "flashBytes": 16777216,
+  "flashSha256": "1665922bd89135c69ee59f1174768c489591a660870d6c465e88eae9f620e7ce",
+  "appOffset": 65536,
+  "appSlotBytes": 2097152,
+  "appSlotSha256": "134357c3765335586987bd9fb27b4c5c5db09f4789fb4f305ace74b540cdda96",
+  "protectedPrefixSha256": "455e3be5182bf20e9a1b2d0b95903f0452999ea5556da6f979d8c59c7d448ad2",
+  "partitionSha256": "5e71c3c890e04714daa03b21a0d23953a2dadf9fdf15eec02b886f7b6e9f8c81",
+  "layoutEqual": true,
+  "privateBackup": "/home/bryan/.local/state/esp32-rlcd/backups/20261015T215436Z-94a990f34374-prepared"
+}

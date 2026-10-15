@@ -1,0 +1,11 @@
+{
+  "baselinePercentOneCore": 20.99370873885941,
+  "candidatePercentOneCore": 12.763378483143226,
+  "relativeReductionPercent": 39.20379366072571,
+  "baselineMeanPssMiB": 47.967220052083334,
+  "candidateMeanPssMiB": 47.40597330729167,
+  "candidatePeakPssMiB": 47.4375,
+  "candidateMeanRssMiB": 68.506640625,
+  "candidatePeakRssMiB": 68.5078125,
+  "scope": "descriptive ordinary workload; controlled attribution is separate"
+}

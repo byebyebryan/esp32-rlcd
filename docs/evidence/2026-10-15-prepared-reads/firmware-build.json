@@ -1,0 +1,24 @@
+{
+  "sourceRevision": "19323e6fb3894895b882f70dc569f36fee4bcdd9",
+  "projectVersion": "19323e6",
+  "idfVersion": "v5.5.3",
+  "target": "esp32s3",
+  "files": {
+    "application": {
+      "bytes": 1242640,
+      "sha256": "0ecdc4cd7e3f87a664ad3554f865751106dc2e6601494494e21770319a1f4eca"
+    },
+    "bootloader": {
+      "bytes": 20832,
+      "sha256": "d6900978265da8af4adf3926fbc1d1b917773361369b7fd729ebf7e746b76c8e"
+    },
+    "partition": {
+      "bytes": 3072,
+      "sha256": "5e71c3c890e04714daa03b21a0d23953a2dadf9fdf15eec02b886f7b6e9f8c81"
+    },
+    "sdkconfig": {
+      "bytes": 74608,
+      "sha256": "21195fd64798f857638982d8b68e61b3aed72d118ddfd1964cf53363ae0ed7d8"
+    }
+  }
+}

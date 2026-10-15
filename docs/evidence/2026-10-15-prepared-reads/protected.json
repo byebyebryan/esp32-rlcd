@@ -1,0 +1,11 @@
+{
+  "nonCodexProtectedConfigurationEqual": true,
+  "changedProtectedFiles": [
+    ".codex/config.toml"
+  ],
+  "codexConfigMatchesConcurrentManagedSource": false,
+  "serialIdentitiesEqual": true,
+  "unrelatedSelectedTargetsEqual": true,
+  "foreignSourceHead": "f1a0d660fc5d4bc4a2d9b166bc2e116f0201e300",
+  "scope": "No provider configuration writes in this delivery; concurrent managed Codex changes preserved"
+}

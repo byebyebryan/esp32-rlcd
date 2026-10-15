@@ -1,0 +1,8 @@
+{
+  "mac": "94:a9:90:f3:43:74",
+  "phase": "candidate",
+  "appBytes": 1242640,
+  "appSha256": "0ecdc4cd7e3f87a664ad3554f865751106dc2e6601494494e21770319a1f4eca",
+  "readbackEqual": true,
+  "protectedPrefixEqual": true
+}

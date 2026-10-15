@@ -1,0 +1,34 @@
+{
+  "label": "prepared-app-new-deps-selected",
+  "seconds": 300.0000669930014,
+  "pid": 4071804,
+  "birth": 19256029,
+  "unitCpuPercentOneCore": {
+    "agent-observer.service": 2.8826570229405135,
+    "mesh-plus-agent.service": 4.839780919228501,
+    "rlcd-agent-dashboard.service": 12.763378483143226,
+    "349d.service": 3.4605268938963896
+  },
+  "applicationTreeCpuPercentOneCore": 12.766663815742909,
+  "mean": {
+    "rssBytes": 71834419.2,
+    "pssBytes": 49708765.86666667,
+    "fds": 19.0,
+    "processes": 2.0
+  },
+  "peak": {
+    "rssBytes": 71835648,
+    "pssBytes": 49741824,
+    "fds": 19,
+    "processes": 2
+  },
+  "samples": 60,
+  "allUnitIncarnationsStable": true,
+  "limits": [
+    "ordinary native activity uncontrolled",
+    "no added reader or synthetic device",
+    "application cgroup/tree overlap; do not sum",
+    "remote SSH publisher/server costs excluded; sampled separately",
+    "native frame/request counts not captured by this sample"
+  ]
+}

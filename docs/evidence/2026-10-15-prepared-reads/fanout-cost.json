@@ -1,0 +1,126 @@
+{
+  "trials": [
+    {
+      "cpuSeconds": 2.6565472999999997,
+      "seconds": 20.00047766501666,
+      "percentOneCore": 13.282419272648841,
+      "counts": {
+        "deviceRequests": 21,
+        "responses": 21,
+        "lateResponses": 0,
+        "cachedNativeReads": 4
+      },
+      "semanticSignatures": {
+        "210e24af9021e8f88774a1b21db0ac065d43845d4382bfa30032a6409a0381c4": 21
+      },
+      "rowsPerHost": 250,
+      "warmupSeconds": 5,
+      "application": "/home/bryan/code/esp32-rlcd/projects/agent-dashboard",
+      "readers": 1,
+      "packages": {
+        "agent-observer": "0.7.0a5",
+        "mesh-plus": "0.1.0a20"
+      },
+      "cleanup": true,
+      "limits": [
+        "synthetic native bodies; no providers or ordinary endpoints",
+        "combined fixture publisher/Reader/application/serial-supervisor process CPU",
+        "remote nonce proof over owned IPC; SSH crypto/server and physical device excluded",
+        "unchanged native views with original ten-minute fixture leases; not native freshness proof"
+      ]
+    },
+    {
+      "cpuSeconds": 4.5658665449999996,
+      "seconds": 20.308062748983502,
+      "percentOneCore": 22.48302362187914,
+      "counts": {
+        "deviceRequests": 42,
+        "responses": 42,
+        "lateResponses": 0,
+        "cachedNativeReads": 7
+      },
+      "semanticSignatures": {
+        "210e24af9021e8f88774a1b21db0ac065d43845d4382bfa30032a6409a0381c4": 42
+      },
+      "rowsPerHost": 250,
+      "warmupSeconds": 5,
+      "application": "/home/bryan/code/esp32-rlcd/projects/agent-dashboard",
+      "readers": 2,
+      "packages": {
+        "agent-observer": "0.7.0a5",
+        "mesh-plus": "0.1.0a20"
+      },
+      "cleanup": true,
+      "limits": [
+        "synthetic native bodies; no providers or ordinary endpoints",
+        "combined fixture publisher/Reader/application/serial-supervisor process CPU",
+        "remote nonce proof over owned IPC; SSH crypto/server and physical device excluded",
+        "unchanged native views with original ten-minute fixture leases; not native freshness proof"
+      ]
+    },
+    {
+      "cpuSeconds": 4.205105363,
+      "seconds": 20.20475360599812,
+      "percentOneCore": 20.812455548835025,
+      "counts": {
+        "deviceRequests": 42,
+        "responses": 42,
+        "lateResponses": 0,
+        "cachedNativeReads": 8
+      },
+      "semanticSignatures": {
+        "210e24af9021e8f88774a1b21db0ac065d43845d4382bfa30032a6409a0381c4": 42
+      },
+      "rowsPerHost": 250,
+      "warmupSeconds": 5,
+      "application": "/home/bryan/code/esp32-rlcd/projects/agent-dashboard",
+      "readers": 2,
+      "packages": {
+        "agent-observer": "0.7.0a5",
+        "mesh-plus": "0.1.0a20"
+      },
+      "cleanup": true,
+      "limits": [
+        "synthetic native bodies; no providers or ordinary endpoints",
+        "combined fixture publisher/Reader/application/serial-supervisor process CPU",
+        "remote nonce proof over owned IPC; SSH crypto/server and physical device excluded",
+        "unchanged native views with original ten-minute fixture leases; not native freshness proof"
+      ]
+    },
+    {
+      "cpuSeconds": 2.5884831559999997,
+      "seconds": 20.005893181980355,
+      "percentOneCore": 12.938603302808243,
+      "counts": {
+        "deviceRequests": 21,
+        "responses": 21,
+        "lateResponses": 0,
+        "cachedNativeReads": 4
+      },
+      "semanticSignatures": {
+        "210e24af9021e8f88774a1b21db0ac065d43845d4382bfa30032a6409a0381c4": 21
+      },
+      "rowsPerHost": 250,
+      "warmupSeconds": 5,
+      "application": "/home/bryan/code/esp32-rlcd/projects/agent-dashboard",
+      "readers": 1,
+      "packages": {
+        "agent-observer": "0.7.0a5",
+        "mesh-plus": "0.1.0a20"
+      },
+      "cleanup": true,
+      "limits": [
+        "synthetic native bodies; no providers or ordinary endpoints",
+        "combined fixture publisher/Reader/application/serial-supervisor process CPU",
+        "remote nonce proof over owned IPC; SSH crypto/server and physical device excluded",
+        "unchanged native views with original ten-minute fixture leases; not native freshness proof"
+      ]
+    }
+  ],
+  "meanPercentOneCore": {
+    "1": 13.110511287728542,
+    "2": 21.647739585357083
+  },
+  "extraReaderPercentOneCore": 8.537228297628541,
+  "semanticParity": true
+}

@@ -6,6 +6,10 @@ fixture publishers and the application run in this process; reported CPU is the
 combined owned pipeline, not an installed dashboard application measurement.
 """
 
+import time
+
+PROCESS_STARTED = (time.monotonic(), time.process_time())
+
 import argparse
 import asyncio
 import collections
@@ -18,7 +22,6 @@ import os
 import secrets
 import sys
 import tempfile
-import time
 from pathlib import Path
 from unittest.mock import patch
 
@@ -27,6 +30,7 @@ parser.add_argument("--application", type=Path, required=True)
 parser.add_argument("--seconds", type=int, choices=range(10, 121), default=30)
 parser.add_argument("--warmup", type=int, choices=range(5, 21), default=10)
 parser.add_argument("--rows", type=int, choices=(50, 250), default=250)
+parser.add_argument("--readers", type=int, choices=(1, 2), default=1)
 parser.add_argument("--output", type=Path, required=True)
 args = parser.parse_args()
 sys.path.insert(0, str(args.application / "host"))
@@ -115,34 +119,42 @@ async def run():
                     connect, profile.bind(host, "agent")))
             async def revision():
                 return "sha256:" + "c" * 64
-            reader = Reader("agent", endpoints, local_host="starship", catalog_revision="sha256:" + "c" * 64,
-                            catalog_check=revision, profile=profile)
+            readers = []
             async def configured(*a, **kw):
+                reader = Reader("agent", endpoints, local_host="starship", catalog_revision="sha256:" + "c" * 64,
+                                catalog_check=revision, profile=profile)
+                readers.append(reader)
                 return reader
             stop = asyncio.Event()
-            fleet, port = Fleet(["starship", "snap"], Events(io.StringIO())), Port()
+            fleets = [Fleet(["starship", "snap"], Events(io.StringIO())) for _ in range(args.readers)]
+            ports = [Port() for _ in fleets]
             with patch("mesh_plus.api.configured_reader", configured):
-                owner = asyncio.create_task(supervise(fleet.run(), serve_serial(
+                owners = [asyncio.create_task(supervise(fleet.run(), serve_serial(
                     Path("owned-fixture"), fleet, Projector(fleet.hosts), Events(io.StringIO()),
-                    opener=lambda _: port, output=io.StringIO()), stop))
+                    opener=lambda _, port=port: port, output=io.StringIO()), stop))
+                    for fleet, port in zip(fleets, ports)]
                 try:
                     await asyncio.sleep(args.warmup)
-                    if any(s.status != "current" for s in fleet.sources()):
+                    if any(s.status != "current" for fleet in fleets for s in fleet.sources()):
                         raise ValueError("fixture_not_current")
                     measuring = True
                     cpu, wall = time.process_time(), time.monotonic()
+                    startup = {"seconds": wall - PROCESS_STARTED[0],
+                               "cpuSeconds": cpu - PROCESS_STARTED[1]}
                     await asyncio.sleep(args.seconds)
                     elapsed, used = time.monotonic() - wall, time.process_time() - cpu
                     measuring = False
                 finally:
                     stop.set()
-                    await asyncio.wait_for(owner, 10)
-            stats = reader.inspect()
-            if not port.closed or any(n.watches for n in natives) or stats["activeConnections"] or stats["cleanupFailures"]:
+                    await asyncio.wait_for(asyncio.gather(*owners), 10)
+            if (any(not p.closed for p in ports) or any(n.watches for n in natives)
+                    or any(r.inspect()["activeConnections"] or r.inspect()["cleanupFailures"] for r in readers)):
                 raise ValueError("owned_cleanup")
             return {"cpuSeconds": used, "seconds": elapsed, "percentOneCore": used / elapsed * 100,
+                    "startupAndWarmup": startup,
                     "counts": dict(counters), "semanticSignatures": dict(signatures), "rowsPerHost": args.rows,
                     "warmupSeconds": args.warmup, "application": str(args.application),
+                    "readers": args.readers,
                     "packages": {p: importlib.metadata.version(p) for p in ("agent-observer", "mesh-plus")},
                     "cleanup": True,
                     "limits": ["synthetic native bodies; no providers or ordinary endpoints",

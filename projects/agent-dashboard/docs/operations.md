@@ -163,6 +163,11 @@ observation. The first [implementation and device receipt](../../../docs/evidenc
 records initial automated/native acceptance; the refinement receipt above records
 the completed physical review.
 
+For installed-artifact acceptance, add `--bridge` with the selected bundle's
+`scripts/live-dashboard.py` and use its selected Python. Without that option the
+capture runs the source sibling. Both paths run with isolated Python imports;
+source success alone does not verify an installed bundle.
+
 
 The current device protocol is wire 2. Its `attention` health diagnostic and `!`
 header count blocked plus known failed rows. Bundle manifests record `deviceWire`;

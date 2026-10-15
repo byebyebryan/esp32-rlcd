@@ -1,0 +1,8 @@
+{
+  "mac": "94:a9:90:f3:43:74",
+  "phase": "rollback",
+  "appBytes": 2097152,
+  "appSha256": "134357c3765335586987bd9fb27b4c5c5db09f4789fb4f305ace74b540cdda96",
+  "readbackEqual": true,
+  "protectedPrefixEqual": true
+}

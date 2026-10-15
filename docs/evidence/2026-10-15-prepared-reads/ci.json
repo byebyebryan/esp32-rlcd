@@ -1,0 +1,23 @@
+{
+  "conclusion": "success",
+  "headSha": "19323e6fb3894895b882f70dc569f36fee4bcdd9",
+  "jobs": [
+    {
+      "name": "native",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "presentation (Release)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "presentation (Debug)",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "status": "completed",
+  "url": "https://github.com/byebyebryan/esp32-rlcd/actions/runs/38813567285"
+}

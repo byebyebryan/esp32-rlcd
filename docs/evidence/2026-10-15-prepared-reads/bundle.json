@@ -1,0 +1,29 @@
+{
+  "dependencies": {
+    "api": 4,
+    "mesh": "0.1.0a20",
+    "nativeVersion": 6,
+    "observer": "0.7.0a5",
+    "preparation": 1,
+    "profile": "agent-observer.mesh-candidate.v3",
+    "read": 1,
+    "sdk": 1,
+    "service": 4
+  },
+  "deviceWire": 2,
+  "files": {
+    "components/agent_dashboard/fusion_pixel_12_zh_hans.c": "0dd98e8d9c1236f9de9a201f942c04c7e36cedf7c27a82c1d3aade94574778f3",
+    "host/live_dashboard/__init__.py": "152f3619f26ed65bb895372a3b540bccbabec3c3bbbc40f990b2d97eb622ef34",
+    "host/live_dashboard/mesh.py": "0d771be5ef81ce67084e3e5b8cdfea6bd8078f45db4f2d1802edf83136800d8f",
+    "host/live_dashboard/projection.py": "14a59eaf7ccd31b7249d20d74f9921fc7eceadc84fe94433d5d59ebeabe7cee4",
+    "host/live_dashboard/runtime.py": "53d0d11a46d7ebb1be5fd1f672cac10ce7af659ef0ec6072e8d297de61f12bb1",
+    "host/live_dashboard/serial.py": "653581937c5d1bc65d2dcf4b78c44edcd52f2aa80c6f8f4867d86b454d18b3c0",
+    "host/live_dashboard/wire.py": "976cdf3178b627a338ce141eec1414987c1c97540d1cc9c6e462fb516449732f",
+    "scripts/dashboard-bundle.py": "1b81eec48de05dcc4972c9d560f1dec41beb6a980873ea1ac9a431b03df176e1",
+    "scripts/live-dashboard.py": "ac8755b4f8d4450fe26856874228c24cbb72bf68adba727ab41b4534505aef63"
+  },
+  "manifestVersion": 1,
+  "python": "/home/bryan/.local/share/agent-observer/0.7.0a5-25cd5663560c973b-cpu/bin/python",
+  "sourceDirty": false,
+  "sourceRevision": "19323e6fb3894895b882f70dc569f36fee4bcdd9"
+}

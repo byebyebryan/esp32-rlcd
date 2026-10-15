@@ -19,7 +19,9 @@ def fields(line):
 def live(args, phase):
     command = [
         str(args.python),
-        str(Path(__file__).with_name("live-dashboard.py")),
+        "-I",
+        "-B",
+        str(args.bridge),
         "--port",
         str(args.port),
         "--seconds",
@@ -124,6 +126,9 @@ def silence(args):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--python", type=Path, required=True)
+    parser.add_argument("--bridge", type=Path,
+                        default=Path(__file__).with_name("live-dashboard.py"),
+                        help="Explicit installed bridge; defaults to the source sibling")
     parser.add_argument("--port", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--seconds", type=float, default=25)
@@ -137,7 +142,8 @@ def main():
         parser.error("explicit known RLCD identity required")
     args.output.mkdir(parents=True, exist_ok=False)
     result = {
-        "scope": "live cached feed and USB/device admission; physical readability remains separate"
+        "scope": "live cached feed and USB/device admission; physical readability remains separate",
+        "bridge": str(args.bridge),
     }
     try:
         result["initial"] = live(args, "initial")

@@ -1,0 +1,29 @@
+{
+  "stage": "old",
+  "bundle": "3a4b22b4556cb243",
+  "manifestSha256": "3a4b22b4556cb24345192cc7bb068b1efcf86f9372a529b2475b3aa36b6737d7",
+  "pid": 4069297,
+  "sourceAdmittedAck": {
+    "event": "device_ack_recovered",
+    "request": 9,
+    "sequence": 9,
+    "rows": 9,
+    "source_admitted": true
+  },
+  "health": {
+    "event": "device_health",
+    "health": 0,
+    "partial": 0,
+    "rows": 9,
+    "attention": 0,
+    "waiting": 3,
+    "working": 6,
+    "unknown": 0,
+    "frame_us": 16321,
+    "miss": 0,
+    "heap": 292171,
+    "stack": 4776
+  },
+  "singleSerialOwner": true,
+  "protectedUnitsUnchanged": true
+}
