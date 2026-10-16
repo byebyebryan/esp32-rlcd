@@ -57,6 +57,8 @@ A fresh active turn clears the preceding failure; unsupported observations keep 
 The [owned admission checkpoint](../../docs/evidence/2026-10-15-owned-admission/REPORT.md)
 adopts Observer a6/Mesh a22 with selected current bodies and complete membership
 summaries. Strict admission, per-row expiry, diagnostics and display policy remain.
+The agreed [active-session feed plan](docs/active-feed-plan.md) moves selection
+before consumer transport; producer implementation and qualification come next.
 
 ## Build and check
 
