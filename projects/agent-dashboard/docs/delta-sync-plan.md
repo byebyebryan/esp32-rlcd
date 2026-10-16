@@ -187,6 +187,16 @@ forcing history retention. G1 freeze includes exact joined-row, field-token/
 cohort-renewal, transaction and maximum-head vectors independently executed by
 both owners. Preserve frozen old schema/lock bytes.
 
+Retained canonical key/value buffers count toward the single 32 MiB encoded
+cache/stage/journal/pin budget even when they are the logical map's only internal
+representation. They also count toward the 64 MiB heap/allocation cap. These
+overlapping caps do not imply extra copies: a physically shared buffer is charged
+once within each cap; a separately copied output or stage is another allocation.
+An output-only encoded ledger does not establish compliance. Report unique
+internal canonical, output, stage and pin storage and their sharing at complete
+full/active current/predecessor/staged peaks. This clarifies the accepted G0
+encoded-cache ownership rule without changing frozen contract bytes or caps.
+
 ## Matched performance and correctness acceptance
 
 Compare a7/a23 replacements with the same full scope, then the same active scope.
@@ -211,6 +221,11 @@ separately and 4/16-subscriber sharing/capacity cases.
 | Memory | Aggregate peak RSS at 2,000 <=1.5x matched baseline +16 MiB, hard internal caps, stable reclamation and no leaks |
 | Repeated unchanged bodies | No decode/schema/hash/materialization after baseline except explicit counted exports/oracle |
 | Semantics | Equal complete facts, ordered identities, support, coverage, original leases and uncertainty; no silent fallback or partial publication |
+
+Producer overhead compares matched old and new total owner-generation CPU;
+the new total includes retained common work and all additional sync publication
+work. Report those components and the combined total separately. Comparing one
+new stage against the whole old generation cannot establish the overhead gate.
 
 Use serial installed-artifact ABBA under the shared advisory lock, real local
 IPC and disposable fixed SSH. Qualify WSS independently if exposed. Include
