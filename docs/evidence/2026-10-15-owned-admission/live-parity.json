@@ -1,0 +1,58 @@
+{
+  "application": "/home/bryan/.local/share/rlcd-agent-dashboard/5bf9f44fa523123c",
+  "hostRows": [
+    {
+      "host": "starship",
+      "status": "current",
+      "currentFullRows": 395,
+      "selectedBodies": 8,
+      "currentIdentities": 395,
+      "positiveExclusions": 387
+    },
+    {
+      "host": "snap",
+      "status": "current",
+      "currentFullRows": 0,
+      "selectedBodies": 0,
+      "currentIdentities": 0,
+      "positiveExclusions": 0
+    }
+  ],
+  "wireRows": 8,
+  "hosts": [
+    {
+      "alias": "ST",
+      "status": 0,
+      "valid_ms": 3000,
+      "totals": [
+        0,
+        6,
+        2,
+        0
+      ],
+      "total": 8
+    },
+    {
+      "alias": "SN",
+      "status": 0,
+      "valid_ms": 3000,
+      "totals": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "total": 0
+    }
+  ],
+  "diagnosticRows": 395,
+  "selectionCounts": {
+    "selected": 8,
+    "child": 252,
+    "parked": 135
+  },
+  "membershipSha256": "febdf553f699e22074e8c9bd2c4f803005d098beca1ea878bb7fa664118b3743",
+  "selectedFullProjectionEqual": true,
+  "scope": "one real cached generation; strict reference resets only reader ordering for a fresh comparison guard, retains original proofs/leases and shared query time; no independent native completeness or physical USB claim",
+  "cleanup": true
+}

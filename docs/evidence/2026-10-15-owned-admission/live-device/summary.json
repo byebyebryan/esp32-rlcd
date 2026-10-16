@@ -1,0 +1,103 @@
+{
+  "scope": "live cached feed and USB/device admission; physical readability remains separate",
+  "bridge": "/home/bryan/.local/share/rlcd-agent-dashboard/5bf9f44fa523123c/scripts/live-dashboard.py",
+  "initial": {
+    "sent": 25,
+    "acknowledged": 25,
+    "healthyConfirmed": 24,
+    "lastView": {
+      "sequence": 25,
+      "request": 4676,
+      "crc": "b3668478",
+      "rows": 8,
+      "hosts": [
+        {
+          "alias": "ST",
+          "status": 0,
+          "valid_ms": 3000,
+          "totals": [
+            0,
+            6,
+            2,
+            0
+          ],
+          "total": 8
+        },
+        {
+          "alias": "SN",
+          "status": 0,
+          "valid_ms": 3000,
+          "totals": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "total": 0
+        }
+      ]
+    },
+    "maxFrameUs": 17385,
+    "deadlineMisses": 0,
+    "minInternalHeap": 292171,
+    "minStackWatermark": 4776
+  },
+  "silence": {
+    "windowSeconds": 6,
+    "expired": {
+      "health": 2,
+      "partial": 1,
+      "rows": 8,
+      "attention": 0,
+      "waiting": 0,
+      "working": 0,
+      "unknown": 8,
+      "frame_us": 16079,
+      "miss": 0,
+      "heap": 292171,
+      "stack": 4776
+    }
+  },
+  "recovery": {
+    "sent": 25,
+    "acknowledged": 25,
+    "healthyConfirmed": 24,
+    "lastView": {
+      "sequence": 25,
+      "request": 4707,
+      "crc": "c32ddc86",
+      "rows": 8,
+      "hosts": [
+        {
+          "alias": "ST",
+          "status": 0,
+          "valid_ms": 3000,
+          "totals": [
+            0,
+            6,
+            2,
+            0
+          ],
+          "total": 8
+        },
+        {
+          "alias": "SN",
+          "status": 0,
+          "valid_ms": 3000,
+          "totals": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "total": 0
+        }
+      ]
+    },
+    "maxFrameUs": 17369,
+    "deadlineMisses": 0,
+    "minInternalHeap": 292171,
+    "minStackWatermark": 4776
+  },
+  "passed": true
+}

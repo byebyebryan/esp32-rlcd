@@ -1,0 +1,31 @@
+{
+  "dependencies": {
+    "admission": 1,
+    "api": 4,
+    "mesh": "0.1.0a22",
+    "nativeVersion": 6,
+    "observer": "0.7.0a6",
+    "preparation": 1,
+    "profile": "agent-observer.mesh-candidate.v3",
+    "read": 2,
+    "sdk": 1,
+    "selection": 1,
+    "service": 4
+  },
+  "deviceWire": 2,
+  "files": {
+    "components/agent_dashboard/fusion_pixel_12_zh_hans.c": "0dd98e8d9c1236f9de9a201f942c04c7e36cedf7c27a82c1d3aade94574778f3",
+    "host/live_dashboard/__init__.py": "152f3619f26ed65bb895372a3b540bccbabec3c3bbbc40f990b2d97eb622ef34",
+    "host/live_dashboard/mesh.py": "6bf777bf9d135f3c31e8140599e3484b9867d0b2712c0c484de3db312216eefe",
+    "host/live_dashboard/projection.py": "4dbda083f32d22a0ab04547e5b0c2d5d1ee1399edd7147ba3978f6677fa4a8f7",
+    "host/live_dashboard/runtime.py": "53d0d11a46d7ebb1be5fd1f672cac10ce7af659ef0ec6072e8d297de61f12bb1",
+    "host/live_dashboard/serial.py": "653581937c5d1bc65d2dcf4b78c44edcd52f2aa80c6f8f4867d86b454d18b3c0",
+    "host/live_dashboard/wire.py": "976cdf3178b627a338ce141eec1414987c1c97540d1cc9c6e462fb516449732f",
+    "scripts/dashboard-bundle.py": "4f1e8c0d86ba7fe02e46f67ad4ac30fc8f81eec3139569435dc4d50b947038a0",
+    "scripts/live-dashboard.py": "3cf34c59507a3cdbce68fe41d6aab677bc41942fa413829d4b119a63e3986636"
+  },
+  "manifestVersion": 1,
+  "python": "/home/bryan/.local/share/rlcd-agent-dashboard-python/a6-a22-e01a7129-5ac484d7/bin/python",
+  "sourceDirty": false,
+  "sourceRevision": "ed087091e95954f643ecf85156205b2396057db9"
+}

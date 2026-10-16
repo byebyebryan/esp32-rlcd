@@ -7,5 +7,7 @@
   "packedRectangleCases": 4488,
   "compiledChecks": "ASan/UBSan",
   "sourceProductionSelection": "unchanged at this checkpoint",
-  "excluded": "Initial direct test invocation lacked C harness env; fixture draft errors corrected before these final gates"
+  "excluded": "Initial direct test invocation lacked C harness env; fixture draft errors corrected before these final gates",
+  "newBundleRejectsOldDependencyTuple": true,
+  "newBundleRejectionDiagnostic": "dashboard bundle unavailable: verify inputs and dependency tuple"
 }

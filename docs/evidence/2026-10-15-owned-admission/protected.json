@@ -1,0 +1,188 @@
+{
+  "localBefore": {
+    "rlcd-agent-dashboard.service": {
+      "Id": "rlcd-agent-dashboard.service",
+      "ActiveState": "active",
+      "MainPID": "4071804",
+      "NRestarts": "0",
+      "ExecMainStartTimestampMonotonic": "192560298795",
+      "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/rlcd-agent-dashboard.service"
+    },
+    "agent-observer.service": {
+      "Id": "agent-observer.service",
+      "ActiveState": "active",
+      "MainPID": "2273193",
+      "NRestarts": "0",
+      "ExecMainStartTimestampMonotonic": "57509851267",
+      "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/agent-observer.service"
+    },
+    "mesh-plus-agent.service": {
+      "Id": "mesh-plus-agent.service",
+      "ActiveState": "active",
+      "MainPID": "3899267",
+      "NRestarts": "0",
+      "ExecMainStartTimestampMonotonic": "189941447410",
+      "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/mesh-plus-agent.service"
+    },
+    "tmux-observer-owner@starship.service": {
+      "Id": "tmux-observer-owner@starship.service",
+      "ActiveState": "active",
+      "MainPID": "1105",
+      "NRestarts": "0",
+      "ExecMainStartTimestampMonotonic": "10070407",
+      "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/app-tmux\\x2dobserver\\x2downer.slice/tmux-observer-owner@starship.service"
+    },
+    "tmux-observer-fleet@8c1d28c9c12d0b2bbff36ffd607863dd.service": {
+      "Id": "tmux-observer-fleet@8c1d28c9c12d0b2bbff36ffd607863dd.service",
+      "ActiveState": "active",
+      "MainPID": "199618",
+      "NRestarts": "0",
+      "ExecMainStartTimestampMonotonic": "12873772183",
+      "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/app-tmux\\x2dobserver\\x2dfleet.slice/tmux-observer-fleet@8c1d28c9c12d0b2bbff36ffd607863dd.service"
+    },
+    "349d.service": {
+      "Id": "349d.service",
+      "ActiveState": "active",
+      "MainPID": "69987",
+      "NRestarts": "0",
+      "ExecMainStartTimestampMonotonic": "195361849788",
+      "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/349d.service"
+    }
+  },
+  "localAfter": {
+    "rlcd-agent-dashboard.service": {
+      "Id": "rlcd-agent-dashboard.service",
+      "ActiveState": "active",
+      "MainPID": "1188169",
+      "NRestarts": "0",
+      "ExecMainStartTimestampMonotonic": "213731868022",
+      "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/rlcd-agent-dashboard.service"
+    },
+    "agent-observer.service": {
+      "Id": "agent-observer.service",
+      "ActiveState": "active",
+      "MainPID": "2273193",
+      "NRestarts": "0",
+      "ExecMainStartTimestampMonotonic": "57509851267",
+      "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/agent-observer.service"
+    },
+    "mesh-plus-agent.service": {
+      "Id": "mesh-plus-agent.service",
+      "ActiveState": "active",
+      "MainPID": "3899267",
+      "NRestarts": "0",
+      "ExecMainStartTimestampMonotonic": "189941447410",
+      "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/mesh-plus-agent.service"
+    },
+    "tmux-observer-owner@starship.service": {
+      "Id": "tmux-observer-owner@starship.service",
+      "ActiveState": "active",
+      "MainPID": "1105",
+      "NRestarts": "0",
+      "ExecMainStartTimestampMonotonic": "10070407",
+      "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/app-tmux\\x2dobserver\\x2downer.slice/tmux-observer-owner@starship.service"
+    },
+    "tmux-observer-fleet@8c1d28c9c12d0b2bbff36ffd607863dd.service": {
+      "Id": "tmux-observer-fleet@8c1d28c9c12d0b2bbff36ffd607863dd.service",
+      "ActiveState": "active",
+      "MainPID": "199618",
+      "NRestarts": "0",
+      "ExecMainStartTimestampMonotonic": "12873772183",
+      "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/app-tmux\\x2dobserver\\x2dfleet.slice/tmux-observer-fleet@8c1d28c9c12d0b2bbff36ffd607863dd.service"
+    },
+    "349d.service": {
+      "Id": "349d.service",
+      "ActiveState": "active",
+      "MainPID": "69987",
+      "NRestarts": "0",
+      "ExecMainStartTimestampMonotonic": "195361849788",
+      "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/349d.service"
+    }
+  },
+  "allUnrelatedLocalUnitsUnchanged": true,
+  "snapBefore": {
+    "agent-observer.service": {
+      "Id": "agent-observer.service",
+      "ActiveState": "active",
+      "MainPID": "3135429",
+      "NRestarts": "0",
+      "ExecMainStartTimestampMonotonic": "57431742042"
+    },
+    "mesh-plus-agent.service": {
+      "Id": "mesh-plus-agent.service",
+      "ActiveState": "active",
+      "MainPID": "1428945",
+      "NRestarts": "0",
+      "ExecMainStartTimestampMonotonic": "189738887939"
+    }
+  },
+  "snapAfter": {
+    "agent-observer.service": {
+      "Id": "agent-observer.service",
+      "ActiveState": "active",
+      "MainPID": "3135429",
+      "NRestarts": "0",
+      "ExecMainStartTimestampMonotonic": "57431742042"
+    },
+    "mesh-plus-agent.service": {
+      "Id": "mesh-plus-agent.service",
+      "ActiveState": "active",
+      "MainPID": "1428945",
+      "NRestarts": "0",
+      "ExecMainStartTimestampMonotonic": "189738887939"
+    }
+  },
+  "snapUnitsUnchanged": true,
+  "firmwareChanged": false,
+  "deviceWire": 2,
+  "localFinal": {
+    "rlcd-agent-dashboard.service": {
+      "Id": "rlcd-agent-dashboard.service",
+      "ActiveState": "active",
+      "MainPID": "1188169",
+      "NRestarts": "0",
+      "ExecMainStartTimestampMonotonic": "213731868022",
+      "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/rlcd-agent-dashboard.service"
+    },
+    "agent-observer.service": {
+      "Id": "agent-observer.service",
+      "ActiveState": "active",
+      "MainPID": "2273193",
+      "NRestarts": "0",
+      "ExecMainStartTimestampMonotonic": "57509851267",
+      "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/agent-observer.service"
+    },
+    "mesh-plus-agent.service": {
+      "Id": "mesh-plus-agent.service",
+      "ActiveState": "active",
+      "MainPID": "3899267",
+      "NRestarts": "0",
+      "ExecMainStartTimestampMonotonic": "189941447410",
+      "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/mesh-plus-agent.service"
+    },
+    "tmux-observer-owner@starship.service": {
+      "Id": "tmux-observer-owner@starship.service",
+      "ActiveState": "active",
+      "MainPID": "1105",
+      "NRestarts": "0",
+      "ExecMainStartTimestampMonotonic": "10070407",
+      "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/app-tmux\\x2dobserver\\x2downer.slice/tmux-observer-owner@starship.service"
+    },
+    "tmux-observer-fleet@8c1d28c9c12d0b2bbff36ffd607863dd.service": {
+      "Id": "tmux-observer-fleet@8c1d28c9c12d0b2bbff36ffd607863dd.service",
+      "ActiveState": "active",
+      "MainPID": "199618",
+      "NRestarts": "0",
+      "ExecMainStartTimestampMonotonic": "12873772183",
+      "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/app-tmux\\x2dobserver\\x2dfleet.slice/tmux-observer-fleet@8c1d28c9c12d0b2bbff36ffd607863dd.service"
+    },
+    "349d.service": {
+      "Id": "349d.service",
+      "ActiveState": "active",
+      "MainPID": "69987",
+      "NRestarts": "0",
+      "ExecMainStartTimestampMonotonic": "195361849788",
+      "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/349d.service"
+    }
+  }
+}

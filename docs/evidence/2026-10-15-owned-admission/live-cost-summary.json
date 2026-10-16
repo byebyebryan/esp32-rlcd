@@ -1,0 +1,23 @@
+{
+  "oldPercentOneCore": 10.682659981371577,
+  "newPercentOneCore": 8.123337167759168,
+  "relativeReductionPercent": 23.957729798340075,
+  "windowSeconds": 120,
+  "newWarmupSeconds": 60,
+  "allIncarnationsStable": true,
+  "scope": "descriptive selected-service windows; no added reader; native state/frequency uncontrolled; roster differs from original 494-row investigation and remains independently bounded",
+  "oldResources": {
+    "meanPssMiB": 51.28192608173077,
+    "peakPssMiB": 51.2900390625,
+    "meanRssMiB": 72.546875,
+    "maxProcesses": 2,
+    "maxFds": 19
+  },
+  "newResources": {
+    "meanPssMiB": 40.75383112980769,
+    "peakPssMiB": 41.66015625,
+    "meanRssMiB": 61.46274038461539,
+    "maxProcesses": 2,
+    "maxFds": 19
+  }
+}

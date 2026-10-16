@@ -1,0 +1,15 @@
+{
+  "sourceCommit": "ed087091e95954f643ecf85156205b2396057db9",
+  "dotfilesCommit": "5c5cb12",
+  "selectedBundle": "5bf9f44fa523123c",
+  "manifestSha256": "5bf9f44fa523123c1694daec549d94e5cb8c45120bafa428c158b0dc68385532",
+  "oldBundleRetained": "807eab96b48825ae",
+  "backup": "/home/bryan/.local/state/esp32-rlcd/backups/20261016T033708Z-owned-reads",
+  "scope": "host bundle/Python selection only; firmware unchanged wire2",
+  "publication": "scoped two-file dotfiles commit from isolated origin/main worktree; existing dirty primary source preserved",
+  "manualDeferred": [
+    "panel/readability edge cases",
+    "host reboot"
+  ],
+  "producerNativeCoverage": "Starship populated395; Snap native/old/candidate empty only"
+}

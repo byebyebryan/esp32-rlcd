@@ -1,0 +1,87 @@
+{"sequence": 1, "request": 4652, "crc": "2e582097", "rows": 0, "hosts": [{"alias": "ST", "status": 2, "valid_ms": 0, "totals": [0, 0, 0, 0], "total": 0}, {"alias": "SN", "status": 2, "valid_ms": 0, "totals": [0, 0, 0, 0], "total": 0}]}
+RLCD_ACK seq=1 rows=8 request=4652 crc=2e582097
+RLCD_HEALTH health=2 partial=1 rows=8 attention=0 waiting=0 working=0 unknown=8 frame_us=16371 miss=0 heap=292171 stack=4776
+{"sequence": 2, "request": 4653, "crc": "de04b3dc", "rows": 8, "hosts": [{"alias": "ST", "status": 0, "valid_ms": 3000, "totals": [0, 6, 2, 0], "total": 8}, {"alias": "SN", "status": 0, "valid_ms": 3000, "totals": [0, 0, 0, 0], "total": 0}]}
+RLCD_ACK seq=2 rows=8 request=4653 crc=de04b3dc
+RLCD_HEALTH health=0 partial=0 rows=8 attention=0 waiting=6 working=2 unknown=0 frame_us=17337 miss=0 heap=292171 stack=4776
+{"sequence": 3, "request": 4654, "crc": "c6ef32ae", "rows": 8, "hosts": [{"alias": "ST", "status": 0, "valid_ms": 3000, "totals": [0, 6, 2, 0], "total": 8}, {"alias": "SN", "status": 0, "valid_ms": 3000, "totals": [0, 0, 0, 0], "total": 0}]}
+RLCD_ACK seq=3 rows=8 request=4654 crc=c6ef32ae
+RLCD_HEALTH health=0 partial=0 rows=8 attention=0 waiting=6 working=2 unknown=0 frame_us=17356 miss=0 heap=292171 stack=4776
+{"sequence": 4, "request": 4655, "crc": "f8f56204", "rows": 8, "hosts": [{"alias": "ST", "status": 0, "valid_ms": 3000, "totals": [0, 6, 2, 0], "total": 8}, {"alias": "SN", "status": 0, "valid_ms": 3000, "totals": [0, 0, 0, 0], "total": 0}]}
+RLCD_ACK seq=4 rows=8 request=4655 crc=f8f56204
+RLCD_HEALTH health=0 partial=0 rows=8 attention=0 waiting=6 working=2 unknown=0 frame_us=17365 miss=0 heap=292171 stack=4776
+{"sequence": 5, "request": 4656, "crc": "4d19da2d", "rows": 8, "hosts": [{"alias": "ST", "status": 0, "valid_ms": 3000, "totals": [0, 6, 2, 0], "total": 8}, {"alias": "SN", "status": 0, "valid_ms": 3000, "totals": [0, 0, 0, 0], "total": 0}]}
+RLCD_ACK seq=5 rows=8 request=4656 crc=4d19da2d
+RLCD_HEALTH health=0 partial=0 rows=8 attention=0 waiting=6 working=2 unknown=0 frame_us=17354 miss=0 heap=292171 stack=4776
+{"sequence": 6, "request": 4657, "crc": "e55a2d4c", "rows": 8, "hosts": [{"alias": "ST", "status": 0, "valid_ms": 3000, "totals": [0, 6, 2, 0], "total": 8}, {"alias": "SN", "status": 0, "valid_ms": 3000, "totals": [0, 0, 0, 0], "total": 0}]}
+RLCD_ACK seq=6 rows=8 request=4657 crc=e55a2d4c
+RLCD_HEALTH health=0 partial=0 rows=8 attention=0 waiting=6 working=2 unknown=0 frame_us=17361 miss=0 heap=292171 stack=4776
+{"sequence": 7, "request": 4658, "crc": "7cced8c9", "rows": 8, "hosts": [{"alias": "ST", "status": 0, "valid_ms": 3000, "totals": [0, 6, 2, 0], "total": 8}, {"alias": "SN", "status": 0, "valid_ms": 3000, "totals": [0, 0, 0, 0], "total": 0}]}
+RLCD_ACK seq=7 rows=8 request=4658 crc=7cced8c9
+RLCD_HEALTH health=0 partial=0 rows=8 attention=0 waiting=6 working=2 unknown=0 frame_us=17356 miss=0 heap=292171 stack=4776
+{"sequence": 8, "request": 4659, "crc": "b516c1b4", "rows": 8, "hosts": [{"alias": "ST", "status": 0, "valid_ms": 3000, "totals": [0, 6, 2, 0], "total": 8}, {"alias": "SN", "status": 0, "valid_ms": 3000, "totals": [0, 0, 0, 0], "total": 0}]}
+RLCD_ACK seq=8 rows=8 request=4659 crc=b516c1b4
+RLCD_HEALTH health=0 partial=0 rows=8 attention=0 waiting=6 working=2 unknown=0 frame_us=17367 miss=0 heap=292171 stack=4776
+{"sequence": 9, "request": 4660, "crc": "e0d5b424", "rows": 8, "hosts": [{"alias": "ST", "status": 0, "valid_ms": 3000, "totals": [0, 6, 2, 0], "total": 8}, {"alias": "SN", "status": 0, "valid_ms": 3000, "totals": [0, 0, 0, 0], "total": 0}]}
+RLCD_ACK seq=9 rows=8 request=4660 crc=e0d5b424
+RLCD_HEALTH health=0 partial=0 rows=8 attention=0 waiting=6 working=2 unknown=0 frame_us=17361 miss=0 heap=292171 stack=4776
+{"sequence": 10, "request": 4661, "crc": "82cdd850", "rows": 8, "hosts": [{"alias": "ST", "status": 0, "valid_ms": 3000, "totals": [0, 6, 2, 0], "total": 8}, {"alias": "SN", "status": 0, "valid_ms": 3000, "totals": [0, 0, 0, 0], "total": 0}]}
+RLCD_ACK seq=10 rows=8 request=4661 crc=82cdd850
+RLCD_HEALTH health=0 partial=0 rows=8 attention=0 waiting=6 working=2 unknown=0 frame_us=17367 miss=0 heap=292171 stack=4776
+{"sequence": 11, "request": 4662, "crc": "e654d5d1", "rows": 8, "hosts": [{"alias": "ST", "status": 0, "valid_ms": 3000, "totals": [0, 6, 2, 0], "total": 8}, {"alias": "SN", "status": 0, "valid_ms": 3000, "totals": [0, 0, 0, 0], "total": 0}]}
+RLCD_ACK seq=11 rows=8 request=4662 crc=e654d5d1
+RLCD_HEALTH health=0 partial=0 rows=8 attention=0 waiting=6 working=2 unknown=0 frame_us=17363 miss=0 heap=292171 stack=4776
+{"sequence": 12, "request": 4663, "crc": "b7eb4c17", "rows": 8, "hosts": [{"alias": "ST", "status": 0, "valid_ms": 3000, "totals": [0, 6, 2, 0], "total": 8}, {"alias": "SN", "status": 0, "valid_ms": 3000, "totals": [0, 0, 0, 0], "total": 0}]}
+RLCD_ACK seq=12 rows=8 request=4663 crc=b7eb4c17
+RLCD_HEALTH health=0 partial=0 rows=8 attention=0 waiting=6 working=2 unknown=0 frame_us=17378 miss=0 heap=292171 stack=4776
+{"sequence": 13, "request": 4664, "crc": "2f66ced3", "rows": 8, "hosts": [{"alias": "ST", "status": 0, "valid_ms": 3000, "totals": [0, 6, 2, 0], "total": 8}, {"alias": "SN", "status": 0, "valid_ms": 3000, "totals": [0, 0, 0, 0], "total": 0}]}
+RLCD_ACK seq=13 rows=8 request=4664 crc=2f66ced3
+RLCD_HEALTH health=0 partial=0 rows=8 attention=0 waiting=6 working=2 unknown=0 frame_us=17363 miss=0 heap=292171 stack=4776
+{"sequence": 14, "request": 4665, "crc": "e880f0de", "rows": 8, "hosts": [{"alias": "ST", "status": 0, "valid_ms": 3000, "totals": [0, 6, 2, 0], "total": 8}, {"alias": "SN", "status": 0, "valid_ms": 3000, "totals": [0, 0, 0, 0], "total": 0}]}
+RLCD_ACK seq=14 rows=8 request=4665 crc=e880f0de
+RLCD_HEALTH health=0 partial=0 rows=8 attention=0 waiting=6 working=2 unknown=0 frame_us=17371 miss=0 heap=292171 stack=4776
+{"sequence": 15, "request": 4666, "crc": "8c19fd5f", "rows": 8, "hosts": [{"alias": "ST", "status": 0, "valid_ms": 3000, "totals": [0, 6, 2, 0], "total": 8}, {"alias": "SN", "status": 0, "valid_ms": 3000, "totals": [0, 0, 0, 0], "total": 0}]}
+RLCD_ACK seq=15 rows=8 request=4666 crc=8c19fd5f
+RLCD_HEALTH health=0 partial=0 rows=8 attention=0 waiting=6 working=2 unknown=0 frame_us=17358 miss=0 heap=292171 stack=4776
+{"sequence": 16, "request": 4667, "crc": "dda66499", "rows": 8, "hosts": [{"alias": "ST", "status": 0, "valid_ms": 3000, "totals": [0, 6, 2, 0], "total": 8}, {"alias": "SN", "status": 0, "valid_ms": 3000, "totals": [0, 0, 0, 0], "total": 0}]}
+RLCD_ACK seq=16 rows=8 request=4667 crc=dda66499
+RLCD_HEALTH health=0 partial=0 rows=8 attention=0 waiting=6 working=2 unknown=0 frame_us=17385 miss=0 heap=292171 stack=4776
+{"sequence": 17, "request": 4668, "crc": "6673fe96", "rows": 8, "hosts": [{"alias": "ST", "status": 0, "valid_ms": 3000, "totals": [0, 6, 2, 0], "total": 8}, {"alias": "SN", "status": 0, "valid_ms": 3000, "totals": [0, 0, 0, 0], "total": 0}]}
+RLCD_ACK seq=17 rows=8 request=4668 crc=6673fe96
+RLCD_HEALTH health=0 partial=0 rows=8 attention=0 waiting=6 working=2 unknown=0 frame_us=17369 miss=0 heap=292171 stack=4776
+{"sequence": 18, "request": 4669, "crc": "5657894c", "rows": 8, "hosts": [{"alias": "ST", "status": 0, "valid_ms": 3000, "totals": [0, 6, 2, 0], "total": 8}, {"alias": "SN", "status": 0, "valid_ms": 3000, "totals": [0, 0, 0, 0], "total": 0}]}
+RLCD_ACK seq=18 rows=8 request=4669 crc=5657894c
+RLCD_HEALTH health=0 partial=0 rows=8 attention=0 waiting=6 working=2 unknown=0 frame_us=17371 miss=0 heap=292171 stack=4776
+{"sequence": 19, "request": 4670, "crc": "ce9f51db", "rows": 8, "hosts": [{"alias": "ST", "status": 0, "valid_ms": 3000, "totals": [0, 6, 2, 0], "total": 8}, {"alias": "SN", "status": 0, "valid_ms": 3000, "totals": [0, 0, 0, 0], "total": 0}]}
+RLCD_ACK seq=19 rows=8 request=4670 crc=ce9f51db
+RLCD_HEALTH health=0 partial=0 rows=8 attention=0 waiting=6 working=2 unknown=0 frame_us=17360 miss=0 heap=292171 stack=4776
+{"sequence": 20, "request": 4671, "crc": "bdb2a177", "rows": 8, "hosts": [{"alias": "ST", "status": 0, "valid_ms": 3000, "totals": [0, 6, 2, 0], "total": 8}, {"alias": "SN", "status": 0, "valid_ms": 3000, "totals": [0, 0, 0, 0], "total": 0}]}
+RLCD_ACK seq=20 rows=8 request=4671 crc=bdb2a177
+RLCD_HEALTH health=0 partial=0 rows=8 attention=0 waiting=6 working=2 unknown=0 frame_us=17371 miss=0 heap=292171 stack=4776
+{"sequence": 21, "request": 4672, "crc": "d92bacf6", "rows": 8, "hosts": [{"alias": "ST", "status": 0, "valid_ms": 3000, "totals": [0, 6, 2, 0], "total": 8}, {"alias": "SN", "status": 0, "valid_ms": 3000, "totals": [0, 0, 0, 0], "total": 0}]}
+RLCD_ACK seq=21 rows=8 request=4672 crc=d92bacf6
+RLCD_HEALTH health=0 partial=0 rows=8 attention=0 waiting=6 working=2 unknown=0 frame_us=17361 miss=0 heap=292171 stack=4776
+{"sequence": 22, "request": 4673, "crc": "88943530", "rows": 8, "hosts": [{"alias": "ST", "status": 0, "valid_ms": 3000, "totals": [0, 6, 2, 0], "total": 8}, {"alias": "SN", "status": 0, "valid_ms": 3000, "totals": [0, 0, 0, 0], "total": 0}]}
+RLCD_ACK seq=22 rows=8 request=4673 crc=88943530
+RLCD_HEALTH health=0 partial=0 rows=8 attention=0 waiting=6 working=2 unknown=0 frame_us=17364 miss=0 heap=292171 stack=4776
+{"sequence": 23, "request": 4674, "crc": "1019b7f4", "rows": 8, "hosts": [{"alias": "ST", "status": 0, "valid_ms": 3000, "totals": [0, 6, 2, 0], "total": 8}, {"alias": "SN", "status": 0, "valid_ms": 3000, "totals": [0, 0, 0, 0], "total": 0}]}
+RLCD_ACK seq=23 rows=8 request=4674 crc=1019b7f4
+RLCD_HEALTH health=0 partial=0 rows=8 attention=0 waiting=6 working=2 unknown=0 frame_us=17361 miss=0 heap=292171 stack=4776
+{"sequence": 24, "request": 4675, "crc": "d7ff89f9", "rows": 8, "hosts": [{"alias": "ST", "status": 0, "valid_ms": 3000, "totals": [0, 6, 2, 0], "total": 8}, {"alias": "SN", "status": 0, "valid_ms": 3000, "totals": [0, 0, 0, 0], "total": 0}]}
+RLCD_ACK seq=24 rows=8 request=4675 crc=d7ff89f9
+RLCD_HEALTH health=0 partial=0 rows=8 attention=0 waiting=6 working=2 unknown=0 frame_us=17370 miss=0 heap=292171 stack=4776
+{"sequence": 25, "request": 4676, "crc": "b3668478", "rows": 8, "hosts": [{"alias": "ST", "status": 0, "valid_ms": 3000, "totals": [0, 6, 2, 0], "total": 8}, {"alias": "SN", "status": 0, "valid_ms": 3000, "totals": [0, 0, 0, 0], "total": 0}]}
+RLCD_ACK seq=25 rows=8 request=4676 crc=b3668478
+RLCD_HEALTH health=0 partial=0 rows=8 attention=0 waiting=6 working=2 unknown=0 frame_us=17372 miss=0 heap=292171 stack=4776
+RLCD_EVENT {"event": "bridge_started"}
+RLCD_EVENT {"event": "serial_connected"}
+RLCD_EVENT {"event": "mesh_connected"}
+RLCD_EVENT {"event": "source_health", "host": "starship", "status": "offline"}
+RLCD_EVENT {"event": "source_health", "host": "snap", "status": "offline"}
+RLCD_EVENT {"event": "device_ack_recovered", "request": 4652, "sequence": 1, "rows": 8, "source_admitted": false}
+RLCD_EVENT {"event": "device_health", "health": 2, "partial": 1, "rows": 8, "attention": 0, "waiting": 0, "working": 0, "unknown": 8, "frame_us": 16371, "miss": 0, "heap": 292171, "stack": 4776}
+RLCD_EVENT {"event": "source_health", "host": "starship", "status": "current"}
+RLCD_EVENT {"event": "source_health", "host": "snap", "status": "current"}
+RLCD_EVENT {"event": "device_ack_recovered", "request": 4653, "sequence": 2, "rows": 8, "source_admitted": true}
+RLCD_EVENT {"event": "device_health", "health": 0, "partial": 0, "rows": 8, "attention": 0, "waiting": 6, "working": 2, "unknown": 0, "frame_us": 17337, "miss": 0, "heap": 292171, "stack": 4776}
+RLCD_EVENT {"event": "bridge_stopped"}

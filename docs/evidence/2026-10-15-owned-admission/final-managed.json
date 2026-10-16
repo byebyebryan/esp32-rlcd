@@ -1,0 +1,50 @@
+{
+  "tuple": "new",
+  "selection": {
+    "manifestVersion": 1,
+    "enabledHosts": [
+      "starship"
+    ],
+    "hosts": [
+      "starship",
+      "snap"
+    ],
+    "port": "/dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_94:A9:90:F3:43:74-if00",
+    "bundle": ".local/share/rlcd-agent-dashboard/5bf9f44fa523123c",
+    "manifestSha256": "5bf9f44fa523123c1694daec549d94e5cb8c45120bafa428c158b0dc68385532",
+    "sourceRevision": "ed087091e95954f643ecf85156205b2396057db9",
+    "python": ".local/share/rlcd-agent-dashboard-python/a6-a22-e01a7129-5ac484d7/bin/python",
+    "dependencies": {
+      "admission": 1,
+      "api": 4,
+      "mesh": "0.1.0a22",
+      "nativeVersion": 6,
+      "observer": "0.7.0a6",
+      "preparation": 1,
+      "profile": "agent-observer.mesh-candidate.v3",
+      "read": 2,
+      "sdk": 1,
+      "selection": 1,
+      "service": 4
+    },
+    "deviceWire": 2
+  },
+  "unit": {
+    "ActiveState": "active",
+    "MainPID": "1188169",
+    "NRestarts": "0",
+    "ExecMainStartTimestampMonotonic": "213731868022"
+  },
+  "command": [
+    "/home/bryan/.local/share/rlcd-agent-dashboard-python/a6-a22-e01a7129-5ac484d7/bin/python",
+    "-I",
+    "-B",
+    "/home/bryan/.local/share/rlcd-agent-dashboard/5bf9f44fa523123c/scripts/live-dashboard.py",
+    "--hosts",
+    "starship",
+    "snap",
+    "--port",
+    "/dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_94:A9:90:F3:43:74-if00"
+  ],
+  "passed": true
+}

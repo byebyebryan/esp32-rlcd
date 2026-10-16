@@ -1,0 +1,688 @@
+{
+  "seconds": 120.00006573600695,
+  "percentOneCore": {
+    "rlcd-agent-dashboard.service": 10.682659981371577,
+    "agent-observer.service": 2.864220930979608,
+    "mesh-plus-agent.service": 5.030621410891967
+  },
+  "incarnationsStable": true,
+  "samples": [
+    {
+      "seconds": 0,
+      "units": {
+        "rlcd-agent-dashboard.service": {
+          "unit": {
+            "Id": "rlcd-agent-dashboard.service",
+            "ActiveState": "active",
+            "MainPID": "4071804",
+            "NRestarts": "0",
+            "ExecMainStartTimestampMonotonic": "192560298795",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/rlcd-agent-dashboard.service"
+          },
+          "cpuUs": 2596945681,
+          "processes": [
+            {
+              "pid": 4071804,
+              "rssKiB": 62664,
+              "pssKiB": 49828,
+              "fds": 12
+            },
+            {
+              "pid": 4071824,
+              "rssKiB": 11624,
+              "pssKiB": 2669,
+              "fds": 7
+            }
+          ]
+        },
+        "agent-observer.service": {
+          "unit": {
+            "Id": "agent-observer.service",
+            "ActiveState": "active",
+            "MainPID": "2273193",
+            "NRestarts": "0",
+            "ExecMainStartTimestampMonotonic": "57509851267",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/agent-observer.service"
+          },
+          "cpuUs": 4555755779
+        },
+        "mesh-plus-agent.service": {
+          "unit": {
+            "Id": "mesh-plus-agent.service",
+            "ActiveState": "active",
+            "MainPID": "3899267",
+            "NRestarts": "0",
+            "ExecMainStartTimestampMonotonic": "189941447410",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/mesh-plus-agent.service"
+          },
+          "cpuUs": 1272614893
+        }
+      }
+    },
+    {
+      "seconds": 10.036390848021256,
+      "units": {
+        "rlcd-agent-dashboard.service": {
+          "unit": {
+            "Id": "rlcd-agent-dashboard.service",
+            "ActiveState": "active",
+            "MainPID": "4071804",
+            "NRestarts": "0",
+            "ExecMainStartTimestampMonotonic": "192560298795",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/rlcd-agent-dashboard.service"
+          },
+          "cpuUs": 2597853606,
+          "processes": [
+            {
+              "pid": 4071804,
+              "rssKiB": 62664,
+              "pssKiB": 49849,
+              "fds": 12
+            },
+            {
+              "pid": 4071824,
+              "rssKiB": 11624,
+              "pssKiB": 2672,
+              "fds": 7
+            }
+          ]
+        },
+        "agent-observer.service": {
+          "unit": {
+            "Id": "agent-observer.service",
+            "ActiveState": "active",
+            "MainPID": "2273193",
+            "NRestarts": "0",
+            "ExecMainStartTimestampMonotonic": "57509851267",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/agent-observer.service"
+          },
+          "cpuUs": 4555806303
+        },
+        "mesh-plus-agent.service": {
+          "unit": {
+            "Id": "mesh-plus-agent.service",
+            "ActiveState": "active",
+            "MainPID": "3899267",
+            "NRestarts": "0",
+            "ExecMainStartTimestampMonotonic": "189941447410",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/mesh-plus-agent.service"
+          },
+          "cpuUs": 1272874591
+        }
+      }
+    },
+    {
+      "seconds": 20.078109515015967,
+      "units": {
+        "rlcd-agent-dashboard.service": {
+          "unit": {
+            "Id": "rlcd-agent-dashboard.service",
+            "ActiveState": "active",
+            "MainPID": "4071804",
+            "NRestarts": "0",
+            "ExecMainStartTimestampMonotonic": "192560298795",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/rlcd-agent-dashboard.service"
+          },
+          "cpuUs": 2598804999,
+          "processes": [
+            {
+              "pid": 4071804,
+              "rssKiB": 62664,
+              "pssKiB": 49849,
+              "fds": 12
+            },
+            {
+              "pid": 4071824,
+              "rssKiB": 11624,
+              "pssKiB": 2672,
+              "fds": 7
+            }
+          ]
+        },
+        "agent-observer.service": {
+          "unit": {
+            "Id": "agent-observer.service",
+            "ActiveState": "active",
+            "MainPID": "2273193",
+            "NRestarts": "0",
+            "ExecMainStartTimestampMonotonic": "57509851267",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/agent-observer.service"
+          },
+          "cpuUs": 4556168581
+        },
+        "mesh-plus-agent.service": {
+          "unit": {
+            "Id": "mesh-plus-agent.service",
+            "ActiveState": "active",
+            "MainPID": "3899267",
+            "NRestarts": "0",
+            "ExecMainStartTimestampMonotonic": "189941447410",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/mesh-plus-agent.service"
+          },
+          "cpuUs": 1273395221
+        }
+      }
+    },
+    {
+      "seconds": 30.119734619016526,
+      "units": {
+        "rlcd-agent-dashboard.service": {
+          "unit": {
+            "Id": "rlcd-agent-dashboard.service",
+            "ActiveState": "active",
+            "MainPID": "4071804",
+            "NRestarts": "0",
+            "ExecMainStartTimestampMonotonic": "192560298795",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/rlcd-agent-dashboard.service"
+          },
+          "cpuUs": 2599717357,
+          "processes": [
+            {
+              "pid": 4071804,
+              "rssKiB": 62664,
+              "pssKiB": 49849,
+              "fds": 12
+            },
+            {
+              "pid": 4071824,
+              "rssKiB": 11624,
+              "pssKiB": 2672,
+              "fds": 7
+            }
+          ]
+        },
+        "agent-observer.service": {
+          "unit": {
+            "Id": "agent-observer.service",
+            "ActiveState": "active",
+            "MainPID": "2273193",
+            "NRestarts": "0",
+            "ExecMainStartTimestampMonotonic": "57509851267",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/agent-observer.service"
+          },
+          "cpuUs": 4556220152
+        },
+        "mesh-plus-agent.service": {
+          "unit": {
+            "Id": "mesh-plus-agent.service",
+            "ActiveState": "active",
+            "MainPID": "3899267",
+            "NRestarts": "0",
+            "ExecMainStartTimestampMonotonic": "189941447410",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/mesh-plus-agent.service"
+          },
+          "cpuUs": 1273642947
+        }
+      }
+    },
+    {
+      "seconds": 40.16026630601846,
+      "units": {
+        "rlcd-agent-dashboard.service": {
+          "unit": {
+            "Id": "rlcd-agent-dashboard.service",
+            "ActiveState": "active",
+            "MainPID": "4071804",
+            "NRestarts": "0",
+            "ExecMainStartTimestampMonotonic": "192560298795",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/rlcd-agent-dashboard.service"
+          },
+          "cpuUs": 2600697155,
+          "processes": [
+            {
+              "pid": 4071804,
+              "rssKiB": 62664,
+              "pssKiB": 49849,
+              "fds": 12
+            },
+            {
+              "pid": 4071824,
+              "rssKiB": 11624,
+              "pssKiB": 2672,
+              "fds": 7
+            }
+          ]
+        },
+        "agent-observer.service": {
+          "unit": {
+            "Id": "agent-observer.service",
+            "ActiveState": "active",
+            "MainPID": "2273193",
+            "NRestarts": "0",
+            "ExecMainStartTimestampMonotonic": "57509851267",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/agent-observer.service"
+          },
+          "cpuUs": 4556591721
+        },
+        "mesh-plus-agent.service": {
+          "unit": {
+            "Id": "mesh-plus-agent.service",
+            "ActiveState": "active",
+            "MainPID": "3899267",
+            "NRestarts": "0",
+            "ExecMainStartTimestampMonotonic": "189941447410",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/mesh-plus-agent.service"
+          },
+          "cpuUs": 1274158826
+        }
+      }
+    },
+    {
+      "seconds": 50.201600000000326,
+      "units": {
+        "rlcd-agent-dashboard.service": {
+          "unit": {
+            "Id": "rlcd-agent-dashboard.service",
+            "ActiveState": "active",
+            "MainPID": "4071804",
+            "NRestarts": "0",
+            "ExecMainStartTimestampMonotonic": "192560298795",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/rlcd-agent-dashboard.service"
+          },
+          "cpuUs": 2601902925,
+          "processes": [
+            {
+              "pid": 4071804,
+              "rssKiB": 62664,
+              "pssKiB": 49849,
+              "fds": 12
+            },
+            {
+              "pid": 4071824,
+              "rssKiB": 11624,
+              "pssKiB": 2672,
+              "fds": 7
+            }
+          ]
+        },
+        "agent-observer.service": {
+          "unit": {
+            "Id": "agent-observer.service",
+            "ActiveState": "active",
+            "MainPID": "2273193",
+            "NRestarts": "0",
+            "ExecMainStartTimestampMonotonic": "57509851267",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/agent-observer.service"
+          },
+          "cpuUs": 4556642107
+        },
+        "mesh-plus-agent.service": {
+          "unit": {
+            "Id": "mesh-plus-agent.service",
+            "ActiveState": "active",
+            "MainPID": "3899267",
+            "NRestarts": "0",
+            "ExecMainStartTimestampMonotonic": "189941447410",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/mesh-plus-agent.service"
+          },
+          "cpuUs": 1274434004
+        }
+      }
+    },
+    {
+      "seconds": 60.24314546701498,
+      "units": {
+        "rlcd-agent-dashboard.service": {
+          "unit": {
+            "Id": "rlcd-agent-dashboard.service",
+            "ActiveState": "active",
+            "MainPID": "4071804",
+            "NRestarts": "0",
+            "ExecMainStartTimestampMonotonic": "192560298795",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/rlcd-agent-dashboard.service"
+          },
+          "cpuUs": 2603276908,
+          "processes": [
+            {
+              "pid": 4071804,
+              "rssKiB": 62664,
+              "pssKiB": 49849,
+              "fds": 12
+            },
+            {
+              "pid": 4071824,
+              "rssKiB": 11624,
+              "pssKiB": 2672,
+              "fds": 7
+            }
+          ]
+        },
+        "agent-observer.service": {
+          "unit": {
+            "Id": "agent-observer.service",
+            "ActiveState": "active",
+            "MainPID": "2273193",
+            "NRestarts": "0",
+            "ExecMainStartTimestampMonotonic": "57509851267",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/agent-observer.service"
+          },
+          "cpuUs": 4557420751
+        },
+        "mesh-plus-agent.service": {
+          "unit": {
+            "Id": "mesh-plus-agent.service",
+            "ActiveState": "active",
+            "MainPID": "3899267",
+            "NRestarts": "0",
+            "ExecMainStartTimestampMonotonic": "189941447410",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/mesh-plus-agent.service"
+          },
+          "cpuUs": 1275454934
+        }
+      }
+    },
+    {
+      "seconds": 70.28400835001958,
+      "units": {
+        "rlcd-agent-dashboard.service": {
+          "unit": {
+            "Id": "rlcd-agent-dashboard.service",
+            "ActiveState": "active",
+            "MainPID": "4071804",
+            "NRestarts": "0",
+            "ExecMainStartTimestampMonotonic": "192560298795",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/rlcd-agent-dashboard.service"
+          },
+          "cpuUs": 2604209131,
+          "processes": [
+            {
+              "pid": 4071804,
+              "rssKiB": 62664,
+              "pssKiB": 49849,
+              "fds": 12
+            },
+            {
+              "pid": 4071824,
+              "rssKiB": 11624,
+              "pssKiB": 2672,
+              "fds": 7
+            }
+          ]
+        },
+        "agent-observer.service": {
+          "unit": {
+            "Id": "agent-observer.service",
+            "ActiveState": "active",
+            "MainPID": "2273193",
+            "NRestarts": "0",
+            "ExecMainStartTimestampMonotonic": "57509851267",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/agent-observer.service"
+          },
+          "cpuUs": 4557475428
+        },
+        "mesh-plus-agent.service": {
+          "unit": {
+            "Id": "mesh-plus-agent.service",
+            "ActiveState": "active",
+            "MainPID": "3899267",
+            "NRestarts": "0",
+            "ExecMainStartTimestampMonotonic": "189941447410",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/mesh-plus-agent.service"
+          },
+          "cpuUs": 1275696125
+        }
+      }
+    },
+    {
+      "seconds": 80.32435442099813,
+      "units": {
+        "rlcd-agent-dashboard.service": {
+          "unit": {
+            "Id": "rlcd-agent-dashboard.service",
+            "ActiveState": "active",
+            "MainPID": "4071804",
+            "NRestarts": "0",
+            "ExecMainStartTimestampMonotonic": "192560298795",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/rlcd-agent-dashboard.service"
+          },
+          "cpuUs": 2605191796,
+          "processes": [
+            {
+              "pid": 4071804,
+              "rssKiB": 62664,
+              "pssKiB": 49849,
+              "fds": 12
+            },
+            {
+              "pid": 4071824,
+              "rssKiB": 11624,
+              "pssKiB": 2672,
+              "fds": 7
+            }
+          ]
+        },
+        "agent-observer.service": {
+          "unit": {
+            "Id": "agent-observer.service",
+            "ActiveState": "active",
+            "MainPID": "2273193",
+            "NRestarts": "0",
+            "ExecMainStartTimestampMonotonic": "57509851267",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/agent-observer.service"
+          },
+          "cpuUs": 4557850772
+        },
+        "mesh-plus-agent.service": {
+          "unit": {
+            "Id": "mesh-plus-agent.service",
+            "ActiveState": "active",
+            "MainPID": "3899267",
+            "NRestarts": "0",
+            "ExecMainStartTimestampMonotonic": "189941447410",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/mesh-plus-agent.service"
+          },
+          "cpuUs": 1276222038
+        }
+      }
+    },
+    {
+      "seconds": 90.36618118302431,
+      "units": {
+        "rlcd-agent-dashboard.service": {
+          "unit": {
+            "Id": "rlcd-agent-dashboard.service",
+            "ActiveState": "active",
+            "MainPID": "4071804",
+            "NRestarts": "0",
+            "ExecMainStartTimestampMonotonic": "192560298795",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/rlcd-agent-dashboard.service"
+          },
+          "cpuUs": 2606125960,
+          "processes": [
+            {
+              "pid": 4071804,
+              "rssKiB": 62664,
+              "pssKiB": 49841,
+              "fds": 12
+            },
+            {
+              "pid": 4071824,
+              "rssKiB": 11624,
+              "pssKiB": 2670,
+              "fds": 7
+            }
+          ]
+        },
+        "agent-observer.service": {
+          "unit": {
+            "Id": "agent-observer.service",
+            "ActiveState": "active",
+            "MainPID": "2273193",
+            "NRestarts": "0",
+            "ExecMainStartTimestampMonotonic": "57509851267",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/agent-observer.service"
+          },
+          "cpuUs": 4557897349
+        },
+        "mesh-plus-agent.service": {
+          "unit": {
+            "Id": "mesh-plus-agent.service",
+            "ActiveState": "active",
+            "MainPID": "3899267",
+            "NRestarts": "0",
+            "ExecMainStartTimestampMonotonic": "189941447410",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/mesh-plus-agent.service"
+          },
+          "cpuUs": 1276483144
+        }
+      }
+    },
+    {
+      "seconds": 100.40722385601839,
+      "units": {
+        "rlcd-agent-dashboard.service": {
+          "unit": {
+            "Id": "rlcd-agent-dashboard.service",
+            "ActiveState": "active",
+            "MainPID": "4071804",
+            "NRestarts": "0",
+            "ExecMainStartTimestampMonotonic": "192560298795",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/rlcd-agent-dashboard.service"
+          },
+          "cpuUs": 2607084682,
+          "processes": [
+            {
+              "pid": 4071804,
+              "rssKiB": 62664,
+              "pssKiB": 49838,
+              "fds": 12
+            },
+            {
+              "pid": 4071824,
+              "rssKiB": 11624,
+              "pssKiB": 2668,
+              "fds": 7
+            }
+          ]
+        },
+        "agent-observer.service": {
+          "unit": {
+            "Id": "agent-observer.service",
+            "ActiveState": "active",
+            "MainPID": "2273193",
+            "NRestarts": "0",
+            "ExecMainStartTimestampMonotonic": "57509851267",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/agent-observer.service"
+          },
+          "cpuUs": 4558245144
+        },
+        "mesh-plus-agent.service": {
+          "unit": {
+            "Id": "mesh-plus-agent.service",
+            "ActiveState": "active",
+            "MainPID": "3899267",
+            "NRestarts": "0",
+            "ExecMainStartTimestampMonotonic": "189941447410",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/mesh-plus-agent.service"
+          },
+          "cpuUs": 1276996750
+        }
+      }
+    },
+    {
+      "seconds": 110.44890350400237,
+      "units": {
+        "rlcd-agent-dashboard.service": {
+          "unit": {
+            "Id": "rlcd-agent-dashboard.service",
+            "ActiveState": "active",
+            "MainPID": "4071804",
+            "NRestarts": "0",
+            "ExecMainStartTimestampMonotonic": "192560298795",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/rlcd-agent-dashboard.service"
+          },
+          "cpuUs": 2607995756,
+          "processes": [
+            {
+              "pid": 4071804,
+              "rssKiB": 62664,
+              "pssKiB": 49839,
+              "fds": 12
+            },
+            {
+              "pid": 4071824,
+              "rssKiB": 11624,
+              "pssKiB": 2670,
+              "fds": 7
+            }
+          ]
+        },
+        "agent-observer.service": {
+          "unit": {
+            "Id": "agent-observer.service",
+            "ActiveState": "active",
+            "MainPID": "2273193",
+            "NRestarts": "0",
+            "ExecMainStartTimestampMonotonic": "57509851267",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/agent-observer.service"
+          },
+          "cpuUs": 4558295226
+        },
+        "mesh-plus-agent.service": {
+          "unit": {
+            "Id": "mesh-plus-agent.service",
+            "ActiveState": "active",
+            "MainPID": "3899267",
+            "NRestarts": "0",
+            "ExecMainStartTimestampMonotonic": "189941447410",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/mesh-plus-agent.service"
+          },
+          "cpuUs": 1277239404
+        }
+      }
+    },
+    {
+      "seconds": 120.00006573600695,
+      "units": {
+        "rlcd-agent-dashboard.service": {
+          "unit": {
+            "Id": "rlcd-agent-dashboard.service",
+            "ActiveState": "active",
+            "MainPID": "4071804",
+            "NRestarts": "0",
+            "ExecMainStartTimestampMonotonic": "192560298795",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/rlcd-agent-dashboard.service"
+          },
+          "cpuUs": 2609764880,
+          "processes": [
+            {
+              "pid": 4071804,
+              "rssKiB": 62664,
+              "pssKiB": 49827,
+              "fds": 12
+            },
+            {
+              "pid": 4071824,
+              "rssKiB": 11624,
+              "pssKiB": 2647,
+              "fds": 7
+            }
+          ]
+        },
+        "agent-observer.service": {
+          "unit": {
+            "Id": "agent-observer.service",
+            "ActiveState": "active",
+            "MainPID": "2273193",
+            "NRestarts": "0",
+            "ExecMainStartTimestampMonotonic": "57509851267",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/agent-observer.service"
+          },
+          "cpuUs": 4559192846
+        },
+        "mesh-plus-agent.service": {
+          "unit": {
+            "Id": "mesh-plus-agent.service",
+            "ActiveState": "active",
+            "MainPID": "3899267",
+            "NRestarts": "0",
+            "ExecMainStartTimestampMonotonic": "189941447410",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/mesh-plus-agent.service"
+          },
+          "cpuUs": 1278651642
+        }
+      }
+    }
+  ],
+  "scope": "ordinary selected service; no added reader; source/native activity and host frequency uncontrolled; descriptive only"
+}

@@ -1,0 +1,37 @@
+{
+  "launcher": "/home/bryan/.local/bin/rlcd-agent-dashboard",
+  "rows": 396,
+  "selectionCounts": {
+    "selected": 9,
+    "child": 252,
+    "parked": 135
+  },
+  "hosts": [
+    {
+      "alias": "ST",
+      "status": 0,
+      "valid_ms": 3000,
+      "totals": [
+        0,
+        7,
+        2,
+        0
+      ],
+      "total": 9
+    },
+    {
+      "alias": "SN",
+      "status": 0,
+      "valid_ms": 3000,
+      "totals": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "total": 0
+    }
+  ],
+  "currentIdentitySha256": "12b8da4a5fcf2893602f9a47e76406dc963fc5827dd5b3672ab2ab66311235b3",
+  "scope": "installed launcher full diagnostic; bounded counts/hash only, native titles and row payloads not retained"
+}

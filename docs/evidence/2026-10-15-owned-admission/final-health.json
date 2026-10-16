@@ -1,0 +1,133 @@
+{
+  "selection": {
+    "manifestVersion": 1,
+    "enabledHosts": [
+      "starship"
+    ],
+    "hosts": [
+      "starship",
+      "snap"
+    ],
+    "port": "/dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_94:A9:90:F3:43:74-if00",
+    "bundle": ".local/share/rlcd-agent-dashboard/5bf9f44fa523123c",
+    "manifestSha256": "5bf9f44fa523123c1694daec549d94e5cb8c45120bafa428c158b0dc68385532",
+    "sourceRevision": "ed087091e95954f643ecf85156205b2396057db9",
+    "python": ".local/share/rlcd-agent-dashboard-python/a6-a22-e01a7129-5ac484d7/bin/python",
+    "dependencies": {
+      "admission": 1,
+      "api": 4,
+      "mesh": "0.1.0a22",
+      "nativeVersion": 6,
+      "observer": "0.7.0a6",
+      "preparation": 1,
+      "profile": "agent-observer.mesh-candidate.v3",
+      "read": 2,
+      "sdk": 1,
+      "selection": 1,
+      "service": 4
+    },
+    "deviceWire": 2
+  },
+  "unit": {
+    "ActiveState": "active",
+    "MainPID": "1188169",
+    "NRestarts": "0",
+    "ExecMainStartTimestampMonotonic": "213731868022"
+  },
+  "sourceStatuses": {
+    "starship": "current",
+    "snap": "current"
+  },
+  "lastAdmittedAck": {
+    "event": "device_ack_recovered",
+    "request": 4737,
+    "sequence": 3,
+    "rows": 8,
+    "source_admitted": true
+  },
+  "exclusivePortOwner": 1188169,
+  "events": [
+    {
+      "event": "bridge_started"
+    },
+    {
+      "event": "serial_connected"
+    },
+    {
+      "event": "source_health",
+      "host": "starship",
+      "status": "warming"
+    },
+    {
+      "event": "source_health",
+      "host": "snap",
+      "status": "warming"
+    },
+    {
+      "event": "mesh_connected"
+    },
+    {
+      "event": "source_health",
+      "host": "starship",
+      "status": "offline"
+    },
+    {
+      "event": "source_health",
+      "host": "snap",
+      "status": "offline"
+    },
+    {
+      "event": "device_ack_recovered",
+      "request": 4736,
+      "sequence": 2,
+      "rows": 8,
+      "source_admitted": false
+    },
+    {
+      "event": "device_health",
+      "health": 2,
+      "partial": 1,
+      "rows": 8,
+      "attention": 0,
+      "waiting": 0,
+      "working": 0,
+      "unknown": 8,
+      "frame_us": 16319,
+      "miss": 0,
+      "heap": 292171,
+      "stack": 4776
+    },
+    {
+      "event": "source_health",
+      "host": "starship",
+      "status": "current"
+    },
+    {
+      "event": "source_health",
+      "host": "snap",
+      "status": "current"
+    },
+    {
+      "event": "device_ack_recovered",
+      "request": 4737,
+      "sequence": 3,
+      "rows": 8,
+      "source_admitted": true
+    },
+    {
+      "event": "device_health",
+      "health": 0,
+      "partial": 0,
+      "rows": 8,
+      "attention": 0,
+      "waiting": 6,
+      "working": 2,
+      "unknown": 0,
+      "frame_us": 17328,
+      "miss": 0,
+      "heap": 292171,
+      "stack": 4776
+    }
+  ],
+  "passed": true
+}

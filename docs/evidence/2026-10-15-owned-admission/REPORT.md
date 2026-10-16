@@ -3,8 +3,8 @@
 This host-only application checkpoint adopts the independently accepted Observer
 a6 and Mesh a22 artifacts. It preserves API 4/read wire 6/Service 4/Agent v3 and
 device wire 2. Firmware, source cadence, receipt lifetimes and presentation policy
-remain unchanged. Source and controlled acceptance pass; managed service/device
-acceptance follows this source checkpoint.
+remain unchanged. Source, installed artifact, controlled pipeline and managed device acceptance
+pass independently. The final resource window is recorded separately below.
 
 ## Producer and package inputs
 
@@ -55,6 +55,9 @@ uncertain context; positive exclusions retire it. The stdlib-only gate passes
 with seven explicit optional skips. Frame checks cover 120,000 pixels; motion
 checks cover 4,488 packed rectangles and the unchanged presentation behavior.
 
+The [media readback](media.json) regenerates all five PNG/GIF assets with
+unchanged byte hashes. Only the three source-provenance manifests change.
+
 ## Controlled pipeline comparison
 
 The [six serial trials](controlled-cost.json) run fresh processes in A,B,C,C,B,A
@@ -83,8 +86,65 @@ whole application pipeline and must not be added to upstream operation timings.
 
 ## Managed and device acceptance
 
-Pending the clean source freeze, verified host bundle, live feed/expiry/recovery,
-actual matched host-tuple rollback and descriptive resource readback. The
+The [clean host bundle](bundle.json), frozen at source `ed08709`, is
+`5bf9f44fa523123c`, manifest SHA-256
+`5bf9f44fa523123c1694daec549d94e5cb8c45120bafa428c158b0dc68385532`.
+Its nine runtime files exactly match the controlled candidate. The
+[source CI](ci-source.json) passes native and Debug/Release presentation jobs.
+Scoped [deployment](deployment.json) selects that bundle and its independent
+Python through dotfiles `5c5cb12`; rendered unit/launcher/config/startup and exact
+installed verification pass. Existing primary dotfiles drift is preserved by a
+separate two-file publication from an isolated origin/main worktree.
+
+[Real cached-generation parity](live-parity.json) matches strict full projection:
+395 Starship current identities, eight selected full bodies and 387 positive
+exclusions (252 children and 135 parked). Snap is current and empty. The complete
+diagnostic retains all 395 rows. The reference resets only Reader ordering for a
+fresh guard; native proofs, receipts and query time remain unchanged. This is
+consumer parity, not another independent native completeness claim.
+
+The [physical device capture](live-device/summary.json) confirms 24 healthy
+CRC/request/row matches before and after six seconds of silence. Eight real rows
+recover; silence clears all work/age claims and retains eight uncertain identities.
+Sampled render time peaks at 17,385 microseconds, with zero deadline misses,
+292,171 bytes of internal heap and a 4,776-byte stack watermark. The
 preceding [accepted firmware readback](../2026-10-15-prepared-reads/firmware-readback.json)
-remains the device baseline; this pass changes no firmware bytes or flash.
+remains the unchanged wire-2 device baseline; no firmware build, flash or reset
+is performed in this host pass.
+
+[Actual rollback](rollback-health.json) reselects bundle `807eab96b48825ae` and its
+retained a5/a20 Python; the running old owner receives an admitted eight-row
+ACK. [Reselection](final-health.json) restores the candidate with healthy ACKs,
+NRestarts 0 and exactly one serial owner. Host selections, unit bytes and manifests
+are backed up outside Git under the directory recorded in deployment.json.
+[Protected-state comparison](protected.json) retains collector/publisher, Tmux and
+349 incarnations locally and selected collector/publisher incarnations on Snap.
+
 Manual panel/readability and host reboot acceptance remain deferred.
+
+## Descriptive service resources
+
+The old and new selected-service resource windows are separate from controlled
+fixture timings. Each spans 120 seconds with no added reader; the candidate gets
+60 seconds of warm-up after final reselection. Original native work and host
+frequency remain uncontrolled. The [resource summary](live-cost-summary.json)
+binds the [old](old-live-cost.json) and [new](new-live-cost.json) windows:
+
+| Selected tuple | CPU percent of one core | Mean process-tree PSS |
+| --- | ---: | ---: |
+| Existing a5/a20 bundle | 10.68 | 51.28 MiB |
+| Selected a6/a22 bundle | 8.12 | 40.75 MiB |
+
+The observed CPU difference is 23.96%. Each window has stable unit incarnations,
+two processes and 19 file descriptors. Old and new process ages differ; these
+memory snapshots are not a universal saving claim. Unit CPU and process-tree
+memory accounting have different scopes and must not be added to overlapping
+collector/publisher totals. Fresh correlated acquisition and strict Client/native
+validation still contribute cost; no cadence or protocol shortcut is selected.
+
+The [installed full diagnostic](installed-roster.json) records 396 identities and
+nine selected rows after measurement, one more than the earlier 395/eight parity
+checkpoint. [Final readback](final-readback.json) retains the same selected owner,
+zero restarts, one serial descriptor owner and healthy device diagnostics. This source shape is smaller than the original
+494-record/13% investigation: Snap is now empty at native and baseline sources.
+That input change is separate from this implementation's controlled saving.
