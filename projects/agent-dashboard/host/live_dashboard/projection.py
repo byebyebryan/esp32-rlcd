@@ -173,6 +173,10 @@ class Source:
     # All currently admitted identities, including parked/child/system rows.
     admitted_ids: set[str] = field(default_factory=set)
     excluded_ids: set[str] = field(default_factory=set)
+    # None is the original full-roster contract; active reads use exact scopes.
+    complete_scopes: set[tuple[str, str]] | None = None
+    row_remaining_ms: dict[str, int] = field(default_factory=dict)
+    sampled_by_id: dict[str, int | None] = field(default_factory=dict)
 
 
 class Projector:
@@ -220,15 +224,18 @@ class Projector:
                 state, health = presentation(row)
                 activity = row["activity"]
                 at = activity.get("at") if activity["health"] == "current" else None
-                sampled = source.sampled_at
+                sampled = source.sampled_by_id.get(identifier, source.sampled_at)
+                row_valid = min(valid, max(0, source.row_remaining_ms.get(identifier, source.remaining_ms) - MARGIN_MS))
                 if at is not None and (sampled is None or at > sampled):
                     at = None
+                if row_valid <= 0:
+                    state, health, at = "unknown", "stale", None
                 selected[identifier] = {
                     "id": identifier,
                     "host": index,
                     "state": state,
                     "health": HEALTH[health],
-                    "valid_ms": valid,
+                    "valid_ms": row_valid,
                     "label": project_label(row),
                     "age": age_label(sampled - at if at is not None else None)
                     if health == "current"
@@ -241,7 +248,8 @@ class Projector:
             for identifier, prior in self.previous.items():
                 absent_complete = (
                     ready
-                    and source.status == "current"
+                    and (source.status == "current" if source.complete_scopes is None
+                         else self.keys[identifier][1:3] in source.complete_scopes)
                     and identifier not in source.admitted_ids
                 )
                 if (

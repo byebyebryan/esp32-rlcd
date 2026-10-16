@@ -6,7 +6,6 @@ import io
 import importlib.util
 import sys
 import unittest
-from dataclasses import replace
 from pathlib import Path
 from unittest.mock import patch
 
@@ -19,20 +18,15 @@ AVAILABLE = importlib.util.find_spec("mesh_plus") is not None
 
 @unittest.skipUnless(AVAILABLE, "optional installed Observer/Mesh acceptance")
 class PreparedFleet(unittest.TestCase):
-    def fleet(self, frame, *, full_roster=False):
+    def fleet(self, frame, *, full_roster=True):
         from mesh_fixture import REQUEST
         from agent_observer.mesh_read import PreparedAgentWatch
         fleet = Fleet(["starship", "snap"], full_roster=full_roster)
         fleet.request_id = REQUEST
-        fleet.guard = PreparedAgentWatch(REQUEST, host_ids=fleet.hosts, profile=fleet.profile,
-                                         selection=fleet.selection)
+        fleet.guard = PreparedAgentWatch(REQUEST, host_ids=fleet.hosts, profile=fleet.profile)
         fleet.guard.accept(frame)
         self.addCleanup(fleet.guard.disconnect)
         return fleet
-
-    def selected(self, sources):
-        return [replace(s, rows=[r for r in s.rows if selection_reason(r) == "selected"])
-                for s in sources]
 
     def legacy(self, frame, now):
         from mesh_plus.api import ReadGuard, reconstructed
@@ -82,7 +76,7 @@ class PreparedFleet(unittest.TestCase):
             for now in boundaries:
                 with self.subTest(input=kwargs, now=now):
                     current, reference = self.at(fleet, frame, now), self.legacy(frame, now)
-                    self.assertEqual(current, self.selected(reference))
+                    self.assertEqual(current, reference)
                     self.assertEqual(Projector(fleet.hosts).project(current), Projector(fleet.hosts).project(reference))
 
     def test_mutation_heartbeat_gap_and_resync_preserve_authority(self):
@@ -94,14 +88,14 @@ class PreparedFleet(unittest.TestCase):
         first[0].rows.clear()
         self.assertTrue(self.at(fleet, frame, now)[0].rows)
         fleet.guard.accept(control(frame, "heartbeat", 2))
-        self.assertEqual(self.at(fleet, frame, now), self.selected(self.legacy(frame, now)))
+        self.assertEqual(self.at(fleet, frame, now), self.legacy(frame, now))
         fleet.guard.accept(control(frame, "gap", 3))
         self.assertTrue(all(not s.rows for s in self.at(fleet, frame, now)))
         resync = copy.deepcopy(frame)
         resync["mesh"]["kind"] = "resync"
         resync["mesh"]["reader"].update(sequence=4, revision=2)
         fleet.guard.accept(resync)
-        self.assertEqual(self.at(fleet, frame, now), self.selected(self.legacy(frame, now)))
+        self.assertEqual(self.at(fleet, frame, now), self.legacy(frame, now))
 
     def test_failed_admission_clock_and_disconnect_revoke_rows(self):
         from mesh_fixture import response
@@ -175,7 +169,7 @@ class PreparedFleet(unittest.TestCase):
                                       for r in h["receipts"]})
             for now in boundaries:
                 current, old = self.at(fleet, frame, now), self.legacy(frame, now)
-                self.assertEqual(current, self.selected(old))
+                self.assertEqual(current, old)
                 view = actual.project(current)
                 self.assertEqual(view, reference.project(old))
                 if stage == 1:
@@ -192,19 +186,18 @@ class PreparedFleet(unittest.TestCase):
     def test_owned_replacement_matches_strict_projection_and_full_membership(self):
         from mesh_fixture import REQUEST, response
         from agent_observer.mesh_read import PreparedAgentWatch
-        fleet = Fleet(["starship", "snap"])
+        fleet = Fleet(["starship", "snap"], full_roster=True)
         fleet.request_id = REQUEST
-        fleet.guard = PreparedAgentWatch(REQUEST, host_ids=fleet.hosts, profile=fleet.profile,
-                                         selection=fleet.selection)
+        fleet.guard = PreparedAgentWatch(REQUEST, host_ids=fleet.hosts, profile=fleet.profile)
         self.addCleanup(fleet.guard.disconnect)
         admitted = response(rows=40, profile=fleet.profile, admitted=True)
         fleet.guard.accept(admitted)
         raw = admitted.snapshot()
         now = raw["mesh"]["reader"]["encodedAtMs"]
         current, reference = self.at(fleet, raw, now), self.legacy(raw, now)
-        self.assertEqual(current, self.selected(reference))
+        self.assertEqual(current, reference)
         self.assertEqual(sum(len(s.admitted_ids) for s in current), 80)
-        self.assertLess(sum(len(s.rows) for s in current), 80)
+        self.assertEqual(sum(len(s.rows) for s in current), 80)
         self.assertTrue(any(r["kind"] == "unknown" for s in current for r in s.rows))
         self.assertEqual(Projector(fleet.hosts).project(current),
                          Projector(fleet.hosts).project(reference))
@@ -231,7 +224,7 @@ class PreparedReconnect(unittest.IsolatedAsyncioTestCase):
         from mesh_fixture import response
         from live_dashboard.runtime import Events
         import types
-        fleet = Fleet(["starship", "snap"], Events(io.StringIO()))
+        fleet = Fleet(["starship", "snap"], Events(io.StringIO()), full_roster=True)
         guards, closed = [], []
         second = asyncio.Event()
         async def configured(*a, **kw):

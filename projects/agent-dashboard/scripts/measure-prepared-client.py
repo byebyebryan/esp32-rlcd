@@ -29,7 +29,8 @@ parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("--application", type=Path, required=True)
 parser.add_argument("--seconds", type=int, choices=range(10, 121), default=30)
 parser.add_argument("--warmup", type=int, choices=range(5, 21), default=10)
-parser.add_argument("--rows", type=int, choices=(50, 250), default=250)
+parser.add_argument("--rows", type=int, choices=(50, 250, 1000), default=250)
+parser.add_argument("--feed", choices=("full", "active"), default="active")
 parser.add_argument("--readers", type=int, choices=(1, 2), default=1)
 parser.add_argument("--output", type=Path, required=True)
 args = parser.parse_args()
@@ -44,11 +45,16 @@ from agent_observer.mesh_profile import AgentProfile
 from mesh_plus.api import Bridge, CachedPublication, CachedPublisher, Client, Endpoint, Reader
 from mesh_plus.transport import IPCServer, connect_ipc
 
+if args.feed == "active":
+    from active_fixture import active
+    from agent_observer.mesh_active_profile import ActiveAgentProfile
+
 
 async def run():
     counters = collections.Counter()
     signatures = collections.Counter()
     membership_signatures = collections.Counter()
+    projection_signatures = collections.Counter()
     measuring = False
     original_project = Projector.project
     def checked_project(projector, sources):
@@ -57,10 +63,15 @@ async def run():
                           for s in sources]
             membership_signatures[hashlib.sha256(
                 json.dumps(membership, separators=(",", ":")).encode()).hexdigest()] += 1
-        return original_project(projector, sources)
+        view = original_project(projector, sources)
+        if measuring:
+            projection_signatures[hashlib.sha256(json.dumps(
+                {"view": view, "allCandidates": projector.roster},
+                sort_keys=True, separators=(",", ":")).encode()).hexdigest()] += 1
+        return view
     class Native:
         def __init__(self, host):
-            self.frame = native(host, args.rows, lease_ms=600000)
+            self.frame = (native if args.feed == "full" else active)(host, args.rows, lease_ms=600000)
             self.watches = 0
         async def snapshot(self):
             if measuring:
@@ -101,6 +112,7 @@ async def run():
             late = time.monotonic() - self.sent[request] >= 1
             if measuring:
                 counters["responses"] += 1
+                counters["deviceResponseBytes"] += len(payload)
                 counters["lateResponses"] += late
                 signatures[hashlib.sha256(b"\t".join(fields[5:-1])).hexdigest()] += 1
             if not late:
@@ -111,21 +123,22 @@ async def run():
             self.closed = True
     with tempfile.TemporaryDirectory(prefix="rlcd-prepared-cost-") as directory:
         endpoints, servers, publishers, natives = [], [], [], []
-        profile = AgentProfile()
+        profile = AgentProfile() if args.feed == "full" else ActiveAgentProfile()
+        source_id = "agent" if args.feed == "full" else "agent_active"
         try:
             for host in ("starship", "snap"):
                 source = Native(host)
-                publisher = CachedPublisher("agent", host, "agent", source, profile=profile)
+                publisher = CachedPublisher("agent", host, source_id, source, profile=profile)
                 path = Path(directory) / (host + ".sock")
                 servers.append(await IPCServer(path, Bridge(publisher).serve).start())
                 publishers.append(publisher)
                 natives.append(source)
                 async def connect(path=path, host=host, publisher=publisher):
-                    return await Client.connect(await connect_ipc(path), host=host, source="agent",
+                    return await Client.connect(await connect_ipc(path), host=host, source=source_id,
                         profile=profile.descriptor.profile_id, codec=publisher.validate)
                 endpoints.append(Endpoint(host, host == "starship",
                     None if host == "starship" else "sha256:" + "b" * 64,
-                    connect, profile.bind(host, "agent")))
+                    connect, profile.bind(host, source_id)))
             async def revision():
                 return "sha256:" + "c" * 64
             readers = []
@@ -136,6 +149,8 @@ async def run():
                 return reader
             stop = asyncio.Event()
             fleets = [Fleet(["starship", "snap"], Events(io.StringIO())) for _ in range(args.readers)]
+            if any(fleet.profile.descriptor.profile_id != profile.descriptor.profile_id for fleet in fleets):
+                raise ValueError("fixture_application_profile_mismatch")
             ports = [Port() for _ in fleets]
             with patch("mesh_plus.api.configured_reader", configured), patch.object(
                     Projector, "project", checked_project):
@@ -147,6 +162,7 @@ async def run():
                     await asyncio.sleep(args.warmup)
                     if any(s.status != "current" for fleet in fleets for s in fleet.sources()):
                         raise ValueError("fixture_not_current")
+                    metrics_before = [r.inspect() for r in readers]
                     measuring = True
                     cpu, wall = time.process_time(), time.monotonic()
                     startup = {"seconds": wall - PROCESS_STARTED[0],
@@ -154,6 +170,7 @@ async def run():
                     await asyncio.sleep(args.seconds)
                     elapsed, used = time.monotonic() - wall, time.process_time() - cpu
                     measuring = False
+                    metrics_after = [r.inspect() for r in readers]
                 finally:
                     stop.set()
                     await asyncio.wait_for(asyncio.gather(*owners), 10)
@@ -163,7 +180,10 @@ async def run():
             return {"cpuSeconds": used, "seconds": elapsed, "percentOneCore": used / elapsed * 100,
                     "startupAndWarmup": startup,
                     "counts": dict(counters), "semanticSignatures": dict(signatures),
-                    "membershipSignatures": dict(membership_signatures), "rowsPerHost": args.rows,
+                    "membershipSignatures": dict(membership_signatures),
+                    "projectionSignatures": dict(projection_signatures),
+                    "readerMetricsBefore": metrics_before, "readerMetricsAfter": metrics_after,
+                    "rowsPerHost": args.rows, "feed": args.feed,
                     "warmupSeconds": args.warmup, "application": str(args.application),
                     "readers": args.readers,
                     "packages": {p: importlib.metadata.version(p) for p in ("agent-observer", "mesh-plus")},
@@ -171,7 +191,8 @@ async def run():
                     "limits": ["synthetic native bodies; no providers or ordinary endpoints",
                         "combined fixture publisher/Reader/application/serial-supervisor process CPU",
                         "remote nonce proof over owned IPC; SSH crypto/server and physical device excluded",
-                        "unchanged native views with original ten-minute fixture leases; not native freshness proof"]}
+                        "unchanged native views with original ten-minute fixture leases; not native freshness proof",
+                        "native collection, producer generation, service hosting and catalog checks excluded from timer"]}
         finally:
             for server in servers:
                 await server.close()

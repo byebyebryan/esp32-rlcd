@@ -348,3 +348,41 @@ the private `.cache/active-feed-integration/20261016T052335Z/` baseline. Owned
 synthetic scaling screens and an eleven-case G0 consumer acceptance matrix are
 being prepared there while the producer artifacts are developed. No candidate
 consumer API or production selection has been introduced.
+
+## G1 accepted; RLCD G2 integration
+
+Both producer handoffs accept Observer `0.7.0a7` runtime `7807160` and Mesh
+`0.1.0a23` runtime `1978805`. Their immutable wheel SHA-256 values are
+`5eafd4c126fb31a0574c3c0500998084c6ccc8d4d813df1805e6d21ce4b85bb0` and
+`73455186e187198c8e44b6ae6c381926809931a176f17614864141c62ff850c2`.
+Observer acceptance evidence is `b0cea487`; Mesh acceptance evidence is `b0d78604`.
+The accepted APIs are active read 1, SDK/preparation/admission 1 and lock 5, with
+full API 4, Service 4 and full read 2 retained for diagnostics.
+
+RLCD uses source `agent_active`, profile `agent-observer.mesh-active.v1`, and
+local bridge `mesh-plus-agent-active/read.sock`. `--roster` continues to use the
+original `agent` source/full profile. The projector reconciles exact provider and
+namespace completeness and currently proved nonmembers before its 32-row device
+limit. Partial omissions, expired positives, missed negatives and scope changes
+retain prior presentation context without positive phase/age/freshness.
+Independent history expiry masks its fields without discarding supported runtime
+membership. The catalog uses owned `LibraryMeshAuthority`, fresh checks,
+`report_routes=False`, and explicit close; cadence and budgets remain unchanged.
+
+The active DTO has no full snapshot `collectedAt`. Activity age therefore uses
+the member's original current `runtime.observedAt` with `clock=sample`, only when
+current `activity.at` is no later than that observation. This is age at the row's
+runtime observation, rather than at snapshot publication. Otherwise age is
+unknown. Cached reads, proof emission, delivery and device clocks never advance
+the anchor or renew evidence. This supported per-row anchor was confirmed by
+Observer during adoption.
+
+Installed consumer checks cover nominal full-feed parity and diagnostic retention,
+complete-empty independent expiry, partial reconnect/missed negatives, expired
+activity with continuing runtime, same-key support rejection, exact nonmember
+removal beyond the display cap, namespace/host isolation, heartbeat/gap/clock
+revocation and owned reconnect/catalog cleanup. Controlled cost and operational
+selection remain subsequent gates; this implementation entry is not a live
+acceptance claim. Producer transport savings exclude collection/generation;
+Observer separately reports increased generation and unchanged full-path cost.
+The later whole-stack comparison must retain those costs and their bounds.

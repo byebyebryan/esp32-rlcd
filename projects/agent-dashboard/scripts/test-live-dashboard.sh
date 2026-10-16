@@ -20,3 +20,4 @@ python3 "$RLCD_APP_ROOT/tests/test_runtime.py" -v
 python3 "$RLCD_APP_ROOT/tests/test_serial.py" -v
 python3 "$RLCD_APP_ROOT/tests/test_bundle.py" -v
 python3 "$RLCD_APP_ROOT/tests/test_prepared_fleet.py" -v
+python3 "$RLCD_APP_ROOT/tests/test_active_fleet.py" -v

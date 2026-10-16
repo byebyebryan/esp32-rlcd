@@ -102,14 +102,17 @@ class Lifetime(unittest.IsolatedAsyncioTestCase):
         fake = {
             "mesh_plus": types.ModuleType("mesh_plus"),
             "mesh_plus.api": types.SimpleNamespace(configured_reader=configured),
-            "mesh_plus.catalog": types.SimpleNamespace(SSHPlusAuthority=lambda: None),
+            "mesh_plus.library_authority": types.SimpleNamespace(
+                LibraryMeshAuthority=lambda: types.SimpleNamespace(close=lambda: None)),
         }
         output = io.StringIO()
         fleet = Fleet.__new__(Fleet)
         fleet.hosts = ["starship"]
         fleet.guard = Guard()
         fleet.request_id = "0" * 32
-        fleet.profile = None
+        fleet.profile = types.SimpleNamespace(descriptor=types.SimpleNamespace(profile_id="fixture"))
+        fleet.source = "agent-active"
+        fleet.full_roster = False
         fleet.events = Events(output)
 
         async def serial():
