@@ -48,7 +48,16 @@ from mesh_plus.transport import IPCServer, connect_ipc
 async def run():
     counters = collections.Counter()
     signatures = collections.Counter()
+    membership_signatures = collections.Counter()
     measuring = False
+    original_project = Projector.project
+    def checked_project(projector, sources):
+        if measuring:
+            membership = [(s.host, s.status, sorted(s.admitted_ids), sorted(s.excluded_ids))
+                          for s in sources]
+            membership_signatures[hashlib.sha256(
+                json.dumps(membership, separators=(",", ":")).encode()).hexdigest()] += 1
+        return original_project(projector, sources)
     class Native:
         def __init__(self, host):
             self.frame = native(host, args.rows, lease_ms=600000)
@@ -122,13 +131,14 @@ async def run():
             readers = []
             async def configured(*a, **kw):
                 reader = Reader("agent", endpoints, local_host="starship", catalog_revision="sha256:" + "c" * 64,
-                                catalog_check=revision, profile=profile)
+                                catalog_check=revision, profile=kw["profile"])
                 readers.append(reader)
                 return reader
             stop = asyncio.Event()
             fleets = [Fleet(["starship", "snap"], Events(io.StringIO())) for _ in range(args.readers)]
             ports = [Port() for _ in fleets]
-            with patch("mesh_plus.api.configured_reader", configured):
+            with patch("mesh_plus.api.configured_reader", configured), patch.object(
+                    Projector, "project", checked_project):
                 owners = [asyncio.create_task(supervise(fleet.run(), serve_serial(
                     Path("owned-fixture"), fleet, Projector(fleet.hosts), Events(io.StringIO()),
                     opener=lambda _, port=port: port, output=io.StringIO()), stop))
@@ -152,7 +162,8 @@ async def run():
                 raise ValueError("owned_cleanup")
             return {"cpuSeconds": used, "seconds": elapsed, "percentOneCore": used / elapsed * 100,
                     "startupAndWarmup": startup,
-                    "counts": dict(counters), "semanticSignatures": dict(signatures), "rowsPerHost": args.rows,
+                    "counts": dict(counters), "semanticSignatures": dict(signatures),
+                    "membershipSignatures": dict(membership_signatures), "rowsPerHost": args.rows,
                     "warmupSeconds": args.warmup, "application": str(args.application),
                     "readers": args.readers,
                     "packages": {p: importlib.metadata.version(p) for p in ("agent-observer", "mesh-plus")},

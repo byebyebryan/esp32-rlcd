@@ -26,6 +26,11 @@ def token(identity):
         identity[k]
         for k in ("hostScope", "provider", "namespace", "nativeIdKind", "nativeId")
     )
+    return token_key(key)
+
+
+def token_key(key):
+    """Hash the same full identity from either a native row or a public summary."""
     return hashlib.sha256(
         json.dumps(key, ensure_ascii=False, separators=(",", ":")).encode()
     ).hexdigest(), key

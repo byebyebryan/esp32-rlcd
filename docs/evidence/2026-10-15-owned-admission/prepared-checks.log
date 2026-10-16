@@ -1,0 +1,12 @@
+test_changed_whole_roster_and_independent_component_expiry_match_legacy (__main__.PreparedFleet.test_changed_whole_roster_and_independent_component_expiry_match_legacy) ... ok
+test_complete_partial_missing_host_and_expiry_match_legacy (__main__.PreparedFleet.test_complete_partial_missing_host_and_expiry_match_legacy) ... ok
+test_failed_admission_clock_and_disconnect_revoke_rows (__main__.PreparedFleet.test_failed_admission_clock_and_disconnect_revoke_rows) ... ok
+test_mutation_heartbeat_gap_and_resync_preserve_authority (__main__.PreparedFleet.test_mutation_heartbeat_gap_and_resync_preserve_authority) ... ok
+test_owned_replacement_matches_strict_projection_and_full_membership (__main__.PreparedFleet.test_owned_replacement_matches_strict_projection_and_full_membership) ... ok
+test_roster_diagnostic_retains_excluded_rows_and_reasons (__main__.PreparedFleet.test_roster_diagnostic_retains_excluded_rows_and_reasons) ... ok
+test_retry_uses_a_new_guard_and_closes_both_owned_streams (__main__.PreparedReconnect.test_retry_uses_a_new_guard_and_closes_both_owned_streams) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 2.075s
+
+OK

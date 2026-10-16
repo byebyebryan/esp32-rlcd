@@ -56,8 +56,9 @@ def native(host, rows=8, *, lease_ms=30000):
     return value
 
 
-def response(*, rows=8, partial=False, unavailable=None, lease_ms=30000):
-    profile, now = AgentProfile(), boottime_ms()
+def response(*, rows=8, partial=False, unavailable=None, lease_ms=30000,
+             profile=None, admitted=False):
+    profile, now = AgentProfile() if profile is None else profile, boottime_ms()
     endpoints = [Endpoint(host, host == "starship", None if host == "starship" else
                           "sha256:" + "b" * 64, None, profile.bind(host, "agent"))
                  for host in ("starship", "snap")]
@@ -90,7 +91,8 @@ def response(*, rows=8, partial=False, unavailable=None, lease_ms=30000):
                              "proof": proof}, "viewState": "current", "owner": state.owner,
                 "receipts": receipts}
         outcomes[endpoint.host] = host, list(state.records)
-    return reader.compose(endpoints, outcomes, REQUEST, "watch")
+    compose = reader.compose_admitted if admitted else reader.compose
+    return compose(endpoints, outcomes, REQUEST, "watch")
 
 
 def control(frame, kind, sequence):

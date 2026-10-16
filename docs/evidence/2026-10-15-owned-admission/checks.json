@@ -1,0 +1,11 @@
+{
+  "installedApplicationTests": 54,
+  "installedSkipped": 0,
+  "optionalPreparedCases": 7,
+  "stdlibOptionalSkips": 7,
+  "framePixels": 120000,
+  "packedRectangleCases": 4488,
+  "compiledChecks": "ASan/UBSan",
+  "sourceProductionSelection": "unchanged at this checkpoint",
+  "excluded": "Initial direct test invocation lacked C harness env; fixture draft errors corrected before these final gates"
+}

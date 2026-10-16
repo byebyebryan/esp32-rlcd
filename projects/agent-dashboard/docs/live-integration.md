@@ -7,13 +7,18 @@ bridge belongs to this application. Observer remains the observation authority;
 Mesh remains the delivery/proof authority. Firmware owns display admission,
 expiry, layout and animation. This client performs no provider actions.
 
-The configured Reader feeds Observer's public `PreparedAgentWatch` (read
-interface 1, Mesh preparation interface 1). Preparation validates each admitted
-publication once; device requests use `read.sessions` for current rows and
-`read.context` for source metadata. Context alone grants no current rows. The
-client rechecks admission on every request, retains original expiry, and creates
-a new helper when reconnecting. No full-roster reconstruction or private SDK
-state is used on the device tick.
+The configured Reader feeds Observer's public `PreparedAgentWatch` through
+`execute_admitted`, sharing the same AgentProfile instance. Read interface 2 and
+Mesh preparation/admission/selection interfaces 1 reuse an owned immutable
+admitted replacement. Raw inputs and the transport Client retain strict admission.
+Device requests use `read.sessions` for current running Codex user/unknown-kind
+records, `read.summaries` for every current identity/kind/runtime, and
+`read.context` for source metadata. Summaries preserve complete membership and
+positive exclusions beyond the device prefix without decoding rejected bodies.
+Context alone grants no current rows. Original per-row leases apply to both
+sessions and summaries on every request; reconnect creates a new helper.
+`--roster` explicitly requests complete current bodies to preserve diagnostic
+details and exclusion reasons. No private SDK state or shortened history is used.
 
 ## Presentation policy
 

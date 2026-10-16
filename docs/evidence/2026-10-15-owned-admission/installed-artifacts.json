@@ -1,0 +1,45 @@
+{
+  "wheels": [
+    {
+      "wheel": "/home/bryan/code/agent-observer/dist/private/0.7.0a6-fefa52d-e01a7129/agent_observer-0.7.0a6-py3-none-any.whl",
+      "sha256": "e01a712934a1c13aaf5dca011321ce62e9cadd6abf2d4b89bd263f57a56e8125",
+      "installedPackageFilesEqual": 55
+    },
+    {
+      "wheel": "/home/bryan/code/mesh-plus/dist/private/0.1.0a22-f1ced05-5ac484d7/mesh_plus-0.1.0a22-py3-none-any.whl",
+      "sha256": "5ac484d7dcb3f60665a66b5b6dcff780a967afa1d24a8c092800a430399f3314",
+      "installedPackageFilesEqual": 64
+    }
+  ],
+  "packages": [
+    [
+      "agent-observer",
+      "0.7.0a6"
+    ],
+    [
+      "attrs",
+      "26.1.0"
+    ],
+    [
+      "jsonschema",
+      "4.26.0"
+    ],
+    [
+      "jsonschema-specifications",
+      "2025.9.1"
+    ],
+    [
+      "mesh-plus",
+      "0.1.0a22"
+    ],
+    [
+      "referencing",
+      "0.37.0"
+    ],
+    [
+      "rpds-py",
+      "2026.9.1"
+    ]
+  ],
+  "purelib": "/home/bryan/.local/share/rlcd-agent-dashboard-python/a6-a22-e01a7129-5ac484d7/lib/python3.14/site-packages"
+}

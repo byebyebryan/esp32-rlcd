@@ -1,6 +1,6 @@
 {
   "description": "Fictional normalized records through production projection, wire 2 admission and C motion/rendering; virtual time.",
-  "source_revision": "cbe12c599695841b90222d49c66958de330e7407",
+  "source_revision": "358d2657a2c0191bd619b739e2fe1d60493044fd",
   "source_sha256": {
     "components/display_rlcd/include/rlcd_frame.h": "96ca04c42f8983a44b8c362bbedbd05f85e400ce617f4daebe80ba25ce4a155a",
     "components/display_rlcd/include/rlcd_panel.h": "638c1f9c89c7abda86e0e5c369db32125ff198986c205b4ee7733627f921fbfb",
@@ -15,7 +15,7 @@
     "projects/agent-dashboard/components/agent_dashboard/include/fusion_font.h": "623bf5a77e946acc82ce664e9602a9890d392809faff9824b85ca797c0d38b48",
     "projects/agent-dashboard/components/agent_dashboard/include/fusion_font_12.h": "ff7f1fe7d6bdf6e583ca38f58c1df92037cafedd535eb419625fcb05fc0c9bee",
     "projects/agent-dashboard/docs/media/story.json": "9c4ba807ff6ada4281a3f378b0d59e77906513c4abcb2b1afa1a5c146f3253fb",
-    "projects/agent-dashboard/host/live_dashboard/projection.py": "14a59eaf7ccd31b7249d20d74f9921fc7eceadc84fe94433d5d59ebeabe7cee4",
+    "projects/agent-dashboard/host/live_dashboard/projection.py": "4dbda083f32d22a0ab04547e5b0c2d5d1ee1399edd7147ba3978f6677fa4a8f7",
     "projects/agent-dashboard/host/live_dashboard/wire.py": "976cdf3178b627a338ce141eec1414987c1c97540d1cc9c6e462fb516449732f",
     "projects/bringup/main/main.c": "219295cbc2770f574a5e87ff699771e11e9fb69dc34484a065de16f31780683c",
     "projects/render-bench/main/main.c": "56bd04289188a45f66329c49a021d19c33b7f3abb0011fcd9e2d383d62ba05ed",

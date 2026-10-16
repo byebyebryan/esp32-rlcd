@@ -51,7 +51,7 @@ spec=importlib.util.spec_from_file_location("bridge",sys.argv[1])
 m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
 from live_dashboard.projection import Source
 class Fleet:
- def __init__(self,*args):pass
+ def __init__(self,*args,**kwargs):pass
  async def run(self):await asyncio.Event().wait()
  def sources(self):return [Source("starship","current",10000,10000)]
 m.Fleet=Fleet

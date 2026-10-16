@@ -6,27 +6,33 @@ import io
 import importlib.util
 import sys
 import unittest
+from dataclasses import replace
 from pathlib import Path
 from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "host"))
 from live_dashboard.mesh import Fleet
-from live_dashboard.projection import Projector
+from live_dashboard.projection import Projector, selection_reason
 
 AVAILABLE = importlib.util.find_spec("mesh_plus") is not None
 
 
 @unittest.skipUnless(AVAILABLE, "optional installed Observer/Mesh acceptance")
 class PreparedFleet(unittest.TestCase):
-    def fleet(self, frame):
+    def fleet(self, frame, *, full_roster=False):
         from mesh_fixture import REQUEST
         from agent_observer.mesh_read import PreparedAgentWatch
-        fleet = Fleet(["starship", "snap"])
+        fleet = Fleet(["starship", "snap"], full_roster=full_roster)
         fleet.request_id = REQUEST
-        fleet.guard = PreparedAgentWatch(REQUEST, host_ids=fleet.hosts, profile=fleet.profile)
+        fleet.guard = PreparedAgentWatch(REQUEST, host_ids=fleet.hosts, profile=fleet.profile,
+                                         selection=fleet.selection)
         fleet.guard.accept(frame)
         self.addCleanup(fleet.guard.disconnect)
         return fleet
+
+    def selected(self, sources):
+        return [replace(s, rows=[r for r in s.rows if selection_reason(r) == "selected"])
+                for s in sources]
 
     def legacy(self, frame, now):
         from mesh_plus.api import ReadGuard, reconstructed
@@ -76,7 +82,7 @@ class PreparedFleet(unittest.TestCase):
             for now in boundaries:
                 with self.subTest(input=kwargs, now=now):
                     current, reference = self.at(fleet, frame, now), self.legacy(frame, now)
-                    self.assertEqual(current, reference)
+                    self.assertEqual(current, self.selected(reference))
                     self.assertEqual(Projector(fleet.hosts).project(current), Projector(fleet.hosts).project(reference))
 
     def test_mutation_heartbeat_gap_and_resync_preserve_authority(self):
@@ -88,14 +94,14 @@ class PreparedFleet(unittest.TestCase):
         first[0].rows.clear()
         self.assertTrue(self.at(fleet, frame, now)[0].rows)
         fleet.guard.accept(control(frame, "heartbeat", 2))
-        self.assertEqual(self.at(fleet, frame, now), self.legacy(frame, now))
+        self.assertEqual(self.at(fleet, frame, now), self.selected(self.legacy(frame, now)))
         fleet.guard.accept(control(frame, "gap", 3))
         self.assertTrue(all(not s.rows for s in self.at(fleet, frame, now)))
         resync = copy.deepcopy(frame)
         resync["mesh"]["kind"] = "resync"
         resync["mesh"]["reader"].update(sequence=4, revision=2)
         fleet.guard.accept(resync)
-        self.assertEqual(self.at(fleet, frame, now), self.legacy(frame, now))
+        self.assertEqual(self.at(fleet, frame, now), self.selected(self.legacy(frame, now)))
 
     def test_failed_admission_clock_and_disconnect_revoke_rows(self):
         from mesh_fixture import response
@@ -134,6 +140,11 @@ class PreparedFleet(unittest.TestCase):
                 roster[39]["kind"] = "system"
                 roster[38].update(inventory="saved", phase=None, blockedReasons=[])
                 roster[38]["runtime"]["value"] = "parked"
+                roster[36]["runtime"]["value"] = "unknown"
+                roster[35]["runtime"].update(value="unknown", health="unavailable")
+                for index in (35, 36):
+                    roster[index]["phase"]["value"] = "unknown"
+                    roster[index]["blockedReasons"] = []
                 roster.pop(37)  # Partial omission retains membership until complete.
             if stage == 3 and host == "snap":
                 for component in value["sources"][0]["components"]:
@@ -164,12 +175,54 @@ class PreparedFleet(unittest.TestCase):
                                       for r in h["receipts"]})
             for now in boundaries:
                 current, old = self.at(fleet, frame, now), self.legacy(frame, now)
-                self.assertEqual(current, old)
+                self.assertEqual(current, self.selected(old))
                 view = actual.project(current)
                 self.assertEqual(view, reference.project(old))
                 if stage == 1:
                     self.assertIn(removed, current[1].excluded_ids)
                     self.assertEqual(view["hosts"][1]["total"], 38)
+                    retained = {r["id"]: r for r in actual.roster if r["host"] == 1}
+                    for row in frame["sessions"]:
+                        if (row["identity"]["hostScope"] == "snap"
+                                and row["title"] in {"Roster 35", "Roster 36"}):
+                            prior = retained[token(row["identity"])[0]]
+                            self.assertEqual(prior["state"], "unknown")
+                            self.assertEqual(prior["valid_ms"], 0)
+
+    def test_owned_replacement_matches_strict_projection_and_full_membership(self):
+        from mesh_fixture import REQUEST, response
+        from agent_observer.mesh_read import PreparedAgentWatch
+        fleet = Fleet(["starship", "snap"])
+        fleet.request_id = REQUEST
+        fleet.guard = PreparedAgentWatch(REQUEST, host_ids=fleet.hosts, profile=fleet.profile,
+                                         selection=fleet.selection)
+        self.addCleanup(fleet.guard.disconnect)
+        admitted = response(rows=40, profile=fleet.profile, admitted=True)
+        fleet.guard.accept(admitted)
+        raw = admitted.snapshot()
+        now = raw["mesh"]["reader"]["encodedAtMs"]
+        current, reference = self.at(fleet, raw, now), self.legacy(raw, now)
+        self.assertEqual(current, self.selected(reference))
+        self.assertEqual(sum(len(s.admitted_ids) for s in current), 80)
+        self.assertLess(sum(len(s.rows) for s in current), 80)
+        self.assertTrue(any(r["kind"] == "unknown" for s in current for r in s.rows))
+        self.assertEqual(Projector(fleet.hosts).project(current),
+                         Projector(fleet.hosts).project(reference))
+        raw["sessions"].clear()
+        self.assertEqual(len(fleet.guard.snapshot()["sessions"]), 80)
+
+    def test_roster_diagnostic_retains_excluded_rows_and_reasons(self):
+        from mesh_fixture import response
+        frame = response(rows=40)
+        fleet = self.fleet(frame, full_roster=True)
+        now = frame["mesh"]["reader"]["encodedAtMs"]
+        current = self.at(fleet, frame, now)
+        self.assertEqual(current, self.legacy(frame, now))
+        projector = Projector(fleet.hosts)
+        diagnostic = projector.explain(current, projector.project(current), include_all=True)
+        self.assertEqual(len(diagnostic["rows"]), 80)
+        for reason in ("selected", "child", "system", "parked"):
+            self.assertGreater(diagnostic["selection_counts"][reason], 0)
 
 
 @unittest.skipUnless(AVAILABLE, "optional installed Observer/Mesh acceptance")
@@ -194,7 +247,7 @@ class PreparedReconnect(unittest.IsolatedAsyncioTestCase):
                         await asyncio.Event().wait()
                 finally:
                     closed.append(number)
-            return types.SimpleNamespace(execute=stream)
+            return types.SimpleNamespace(execute_admitted=stream)
         with patch("mesh_plus.api.configured_reader", configured):
             task = asyncio.create_task(fleet.run())
             try:

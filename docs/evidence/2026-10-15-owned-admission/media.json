@@ -1,0 +1,17 @@
+{
+  "agent-dashboard": {
+    "assetsUnchanged": true,
+    "assetCount": 2,
+    "projectionSourceSha256": "4dbda083f32d22a0ab04547e5b0c2d5d1ee1399edd7147ba3978f6677fa4a8f7"
+  },
+  "render-bench": {
+    "assetsUnchanged": true,
+    "assetCount": 2,
+    "projectionSourceSha256": "4dbda083f32d22a0ab04547e5b0c2d5d1ee1399edd7147ba3978f6677fa4a8f7"
+  },
+  "bringup": {
+    "assetsUnchanged": true,
+    "assetCount": 1,
+    "projectionSourceSha256": "4dbda083f32d22a0ab04547e5b0c2d5d1ee1399edd7147ba3978f6677fa4a8f7"
+  }
+}

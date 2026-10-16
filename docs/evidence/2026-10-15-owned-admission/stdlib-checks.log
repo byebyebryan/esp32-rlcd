@@ -1,0 +1,79 @@
+test_atomic_malformed_bounds_checksum_and_utf8 (__main__.NativeAdmission.test_atomic_malformed_bounds_checksum_and_utf8) ... ok
+test_capacity_case_error_admission_retry_and_expiry (__main__.NativeAdmission.test_capacity_case_error_admission_retry_and_expiry) ... ok
+test_duplicate_old_nonce_delayed_and_sequence_rejection (__main__.NativeAdmission.test_duplicate_old_nonce_delayed_and_sequence_rejection) ... ok
+test_error_frame_version_counts_health_and_partial_host_expiry (__main__.NativeAdmission.test_error_frame_version_counts_health_and_partial_host_expiry) ... ok
+test_expiry_during_silence_and_sampled_age (__main__.NativeAdmission.test_expiry_during_silence_and_sampled_age) ... ok
+test_full_roster_counts_and_frame_capacity (__main__.NativeAdmission.test_full_roster_counts_and_frame_capacity) ... ok
+test_partial_host_expiry_preserves_sibling (__main__.NativeAdmission.test_partial_host_expiry_preserves_sibling) ... ok
+test_partial_roster_beyond_capacity_reaches_device_as_uncertainty (__main__.NativeAdmission.test_partial_roster_beyond_capacity_reaches_device_as_uncertainty) ... ok
+test_request_anchor_shortens_delayed_response (__main__.NativeAdmission.test_request_anchor_shortens_delayed_response) ... ok
+test_response_already_expired_on_arrival_never_flashes (__main__.NativeAdmission.test_response_already_expired_on_arrival_never_flashes) ... ok
+test_retained_context_cannot_duplicate_an_incoming_identity (__main__.NativeAdmission.test_retained_context_cannot_duplicate_an_incoming_identity) ... ok
+test_warming_bridge_retains_device_context_until_positive_empty (__main__.NativeAdmission.test_warming_bridge_retains_device_context_until_positive_empty) ... ok
+test_capacity_counts_and_expiry_margin (__main__.Projection.test_capacity_counts_and_expiry_margin) ... ok
+test_capacity_failures_and_title_helpers (__main__.Projection.test_capacity_failures_and_title_helpers) ... ok
+test_complete_membership_and_partial_absence (__main__.Projection.test_complete_membership_and_partial_absence) ... ok
+test_current_phase_not_outcome_and_source_sample_age (__main__.Projection.test_current_phase_not_outcome_and_source_sample_age) ... ok
+test_failure_age_attention_capacity_and_reclassification (__main__.Projection.test_failure_age_attention_capacity_and_reclassification) ... ok
+test_failure_heartbeat_does_not_renew_age_or_validity (__main__.Projection.test_failure_heartbeat_does_not_renew_age_or_validity) ... ok
+test_failure_requires_current_specific_evidence (__main__.Projection.test_failure_requires_current_specific_evidence) ... ok
+test_failure_retains_context_and_positive_recovery_removes (__main__.Projection.test_failure_retains_context_and_positive_recovery_removes) ... ok
+test_membership_growth_bound_and_unadmitted_exclusion (__main__.Projection.test_membership_growth_bound_and_unadmitted_exclusion) ... ok
+test_namespace_and_host_identity_and_request_bounds (__main__.Projection.test_namespace_and_host_identity_and_request_bounds) ... ok
+test_project_context_before_suffix_and_identity_survives_rename (__main__.Projection.test_project_context_before_suffix_and_identity_survives_rename) ... ok
+test_rendered_label_collisions_and_unicode_boundaries (__main__.Projection.test_rendered_label_collisions_and_unicode_boundaries) ... ok
+test_retry_and_current_phase_override_old_failure (__main__.Projection.test_retry_and_current_phase_override_old_failure) ... ok
+test_roster_explains_filters_identity_ages_and_hidden_capacity (__main__.Projection.test_roster_explains_filters_identity_ages_and_hidden_capacity) ... ok
+test_saved_children_and_unknown_kind (__main__.Projection.test_saved_children_and_unknown_kind) ... ok
+test_suffix_cannot_collide_with_an_existing_label (__main__.Projection.test_suffix_cannot_collide_with_an_existing_label) ... ok
+test_system_reclassification_removes_retained_context_and_counts (__main__.Projection.test_system_reclassification_removes_retained_context_and_counts) ... ok
+test_title_priority_and_explicit_placeholder_fallbacks (__main__.Projection.test_title_priority_and_explicit_placeholder_fallbacks) ... ok
+test_urgency_oldest_activity_and_stable_ties (__main__.Projection.test_urgency_oldest_activity_and_stable_ties) ... ok
+test_whole_roster_survives_partial_loss_and_positive_exclusion (__main__.Projection.test_whole_roster_survives_partial_loss_and_positive_exclusion) ... ok
+
+----------------------------------------------------------------------
+Ran 32 tests in 0.116s
+
+OK
+test_failed_or_returned_worker_retires_sibling (__main__.Lifetime.test_failed_or_returned_worker_retires_sibling) ... ok
+test_mesh_cleanup_failure_reaches_supervisor_without_payload (__main__.Lifetime.test_mesh_cleanup_failure_reaches_supervisor_without_payload) ... ok
+test_repeated_failure_events_are_limited (__main__.Lifetime.test_repeated_failure_events_are_limited) ... ok
+test_stop_cleans_both_and_surfaces_cleanup_failure (__main__.Lifetime.test_stop_cleans_both_and_surfaces_cleanup_failure) ... ok
+test_uncooperative_cleanup_has_finite_grace (__main__.Lifetime.test_uncooperative_cleanup_has_finite_grace) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.039s
+
+OK
+test_health_fields_are_bounded_and_unambiguous (__main__.HealthDiagnostics.test_health_fields_are_bounded_and_unambiguous) ... ok
+test_no_data_is_not_hangup_and_busy_owner_is_preserved (__main__.PortLifetime.test_no_data_is_not_hangup_and_busy_owner_is_preserved) ... ok
+test_sigterm_of_real_supervisor_releases_port (__main__.PortLifetime.test_sigterm_of_real_supervisor_releases_port) ... ok
+test_absent_busy_hangup_then_fresh_incarnation (__main__.Reconnect.test_absent_busy_hangup_then_fresh_incarnation) ... ok
+test_absent_device_retry_is_promptly_cancelled (__main__.Reconnect.test_absent_device_retry_is_promptly_cancelled) ... ok
+test_ack_reports_change_in_source_admission (__main__.Reconnect.test_ack_reports_change_in_source_admission) ... ok
+test_ack_retained_rows_during_warmup_and_wrong_healthy_count (__main__.Reconnect.test_ack_retained_rows_during_warmup_and_wrong_healthy_count) ... ok
+test_quiet_health_sampling_transitions_and_verbose_opt_in (__main__.Reconnect.test_quiet_health_sampling_transitions_and_verbose_opt_in) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.163s
+
+OK
+test_exact_freeze_is_reusable_and_rejects_changed_files (__main__.Bundle.test_exact_freeze_is_reusable_and_rejects_changed_files) ... ok
+test_manifest_pin_extra_file_and_symlink_are_rejected (__main__.Bundle.test_manifest_pin_extra_file_and_symlink_are_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.005s
+
+OK
+test_changed_whole_roster_and_independent_component_expiry_match_legacy (__main__.PreparedFleet.test_changed_whole_roster_and_independent_component_expiry_match_legacy) ... skipped 'optional installed Observer/Mesh acceptance'
+test_complete_partial_missing_host_and_expiry_match_legacy (__main__.PreparedFleet.test_complete_partial_missing_host_and_expiry_match_legacy) ... skipped 'optional installed Observer/Mesh acceptance'
+test_failed_admission_clock_and_disconnect_revoke_rows (__main__.PreparedFleet.test_failed_admission_clock_and_disconnect_revoke_rows) ... skipped 'optional installed Observer/Mesh acceptance'
+test_mutation_heartbeat_gap_and_resync_preserve_authority (__main__.PreparedFleet.test_mutation_heartbeat_gap_and_resync_preserve_authority) ... skipped 'optional installed Observer/Mesh acceptance'
+test_owned_replacement_matches_strict_projection_and_full_membership (__main__.PreparedFleet.test_owned_replacement_matches_strict_projection_and_full_membership) ... skipped 'optional installed Observer/Mesh acceptance'
+test_roster_diagnostic_retains_excluded_rows_and_reasons (__main__.PreparedFleet.test_roster_diagnostic_retains_excluded_rows_and_reasons) ... skipped 'optional installed Observer/Mesh acceptance'
+test_retry_uses_a_new_guard_and_closes_both_owned_streams (__main__.PreparedReconnect.test_retry_uses_a_new_guard_and_closes_both_owned_streams) ... skipped 'optional installed Observer/Mesh acceptance'
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.000s
+
+OK (skipped=7)

@@ -25,7 +25,7 @@ async def main(args):
     for name in (signal.SIGTERM, signal.SIGINT):
         loop.add_signal_handler(name, stop.set)
     timer = loop.call_later(args.seconds, stop.set) if args.seconds else None
-    fleet = Fleet(args.hosts, events)
+    fleet = Fleet(args.hosts, events, full_roster=args.roster)
     projector = Projector(args.hosts)
 
     async def preview():

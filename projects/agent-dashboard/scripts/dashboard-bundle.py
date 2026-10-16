@@ -21,15 +21,17 @@ INPUTS = (
     "components/agent_dashboard/fusion_pixel_12_zh_hans.c",
 )
 EXPECTED = {
-    "observer": "0.7.0a5",
-    "mesh": "0.1.0a20",
+    "observer": "0.7.0a6",
+    "mesh": "0.1.0a22",
     "profile": "agent-observer.mesh-candidate.v3",
     "nativeVersion": 6,
     "sdk": 1,
     "api": 4,
     "service": 4,
     "preparation": 1,
-    "read": 1,
+    "admission": 1,
+    "selection": 1,
+    "read": 2,
 }
 
 
@@ -42,11 +44,12 @@ def probe(python):
 from agent_observer.mesh_profile import AgentProfile
 from agent_observer.service_public import SERVICE_PROTOCOL
 from agent_observer.mesh_read import READ_INTERFACE_VERSION
-from mesh_plus.api import PREPARATION_INTERFACE_VERSION
+from mesh_plus.api import PREPARATION_INTERFACE_VERSION, ADMISSION_INTERFACE_VERSION, SELECTION_INTERFACE_VERSION
 p=AgentProfile().descriptor
 print(json.dumps({"observer":m.version("agent-observer"),"mesh":m.version("mesh-plus"),
 "profile":p.profile_id,"nativeVersion":p.native_version,"sdk":p.sdk_version,"service":SERVICE_PROTOCOL,
-"preparation":PREPARATION_INTERFACE_VERSION,"read":READ_INTERFACE_VERSION}))
+"preparation":PREPARATION_INTERFACE_VERSION,"admission":ADMISSION_INTERFACE_VERSION,
+"selection":SELECTION_INTERFACE_VERSION,"read":READ_INTERFACE_VERSION}))
 """
     result = subprocess.run(
         [str(python), "-I", "-B", "-c", code],

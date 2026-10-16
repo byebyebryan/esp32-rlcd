@@ -4,20 +4,27 @@ import asyncio
 import os
 import secrets
 
-from .projection import Source, exclusion, token
+from .projection import Source, exclusion, token, token_key
 from .runtime import Events, Failure
 
 
 class Fleet:
-    def __init__(self, hosts, events=None):
+    def __init__(self, hosts, events=None, *, full_roster=False):
         from agent_observer.mesh_profile import AgentProfile
-        from agent_observer.mesh_read import PreparedAgentWatch
+        from agent_observer.mesh_read import AgentSelection, PreparedAgentWatch
 
         self.hosts = list(hosts)
         self.profile = AgentProfile()
+        self.selection = None if full_roster else AgentSelection(
+            providers=frozenset({"codex"}),
+            kinds=frozenset({"user", "unknown"}),
+            runtime_values=frozenset({"running"}),
+            runtime_healths=frozenset({"current"}),
+        )
         self.request_id = secrets.token_hex(16)
         self.guard = PreparedAgentWatch(
-            self.request_id, host_ids=self.hosts, profile=self.profile
+            self.request_id, host_ids=self.hosts, profile=self.profile,
+            selection=self.selection,
         )
         self.ready = asyncio.Event()
         self.closed = False
@@ -39,6 +46,24 @@ class Fleet:
         by_host = {host: [] for host in self.hosts}
         for row in read.sessions:
             by_host[row["identity"]["hostScope"]].append(row)
+        membership = {host: (set(), set()) for host in self.hosts}
+        if read.summaries is not None:
+            for summary in read.summaries:
+                known, excluded = membership[summary.identity[0]]
+                identifier = token_key(summary.identity)[0]
+                known.add(identifier)
+                if summary.kind in {"child", "system"} or (
+                    summary.runtime_health == "current"
+                    and summary.runtime_value == "parked"
+                ):
+                    excluded.add(identifier)
+        else:  # Explicit diagnostic mode retains complete current row bodies.
+            for row in read.sessions:
+                known, excluded = membership[row["identity"]["hostScope"]]
+                identifier = token(row["identity"])[0]
+                known.add(identifier)
+                if exclusion(row):
+                    excluded.add(identifier)
         result = []
         for host in context["hosts"]:
             identifier = host["hostId"]
@@ -76,12 +101,7 @@ class Fleet:
                 )
             ):
                 status = "partial"
-            known, excluded = set(), set()
-            for row in rows:
-                identity = token(row["identity"])[0]
-                known.add(identity)
-                if exclusion(row):
-                    excluded.add(identity)
+            known, excluded = membership[identifier]
             result.append(
                 Source(
                     identifier,
@@ -127,12 +147,14 @@ class Fleet:
                     "selection": {"mode": "hosts", "hostIds": self.hosts},
                     "extensions": {},
                 }
-                stream = reader.execute(request)
+                stream = reader.execute_admitted(request)
                 connected = False
                 async for frame in stream:
                     self.guard.accept(frame)
                     self.ready.set()
-                    if "mesh" not in frame or frame["mesh"]["kind"] == "error":
+                    if isinstance(frame, dict) and (
+                        "mesh" not in frame or frame["mesh"]["kind"] == "error"
+                    ):
                         raise ValueError("mesh_terminal")
                     if not connected:
                         self.error = None
@@ -165,5 +187,6 @@ class Fleet:
 
             self.request_id = secrets.token_hex(16)
             self.guard = PreparedAgentWatch(
-                self.request_id, host_ids=self.hosts, profile=self.profile
+                self.request_id, host_ids=self.hosts, profile=self.profile,
+                selection=self.selection,
             )

@@ -97,7 +97,7 @@ class Lifetime(unittest.IsolatedAsyncioTestCase):
                 raise RuntimeError("private cleanup body")
 
         async def configured(*args, **kwargs):
-            return types.SimpleNamespace(execute=lambda _: Stream())
+            return types.SimpleNamespace(execute_admitted=lambda _: Stream())
 
         fake = {
             "mesh_plus": types.ModuleType("mesh_plus"),

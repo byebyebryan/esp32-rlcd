@@ -1,0 +1,132 @@
+{
+  "mesh": {
+    "status": "Mesh producer accepted for independent pinned integration",
+    "branch": "mesh-cpu-20261015",
+    "runtimeSourceCommit": "f1ced05a09124e7eaafb303c8a818301da393824",
+    "wheel": {
+      "version": "0.1.0a22",
+      "path": "/home/bryan/code/mesh-plus/dist/private/0.1.0a22-f1ced05-5ac484d7/mesh_plus-0.1.0a22-py3-none-any.whl",
+      "sha256": "5ac484d7dcb3f60665a66b5b6dcff780a967afa1d24a8c092800a430399f3314",
+      "requiresPython": ">=3.11",
+      "dependencies": [
+        "jsonschema>=4.26,<5"
+      ],
+      "optionalWSS": "websockets>=17.1,<18",
+      "descriptors": {
+        "sdk": 1,
+        "preparation": 1,
+        "admission": 1,
+        "selection": 1,
+        "lock": 4
+      }
+    },
+    "apis": {
+      "reader": "watch_admitted(same kwargs as watch), execute_admitted(request); snapshot requests remain raw JSON",
+      "synchronousComposition": "compose_admitted(..., operation=\"watch\")",
+      "admission": "AdmittedResponse full replacements; PreparedReadGuard.accept(token) requires exact profile instance and unchanged descriptor/callbacks; controls/errors stay raw JSON",
+      "exports": "AdmittedResponse.snapshot()/context(); PreparedReadGuard.context() gives detached header sessions=[]",
+      "selection": "guard.select(classify) -> PreparedSelection; classify(immutable_record) -> SelectionRule(selected: bool, summary: dict|None); current(now_ms, clock) -> (detached_selected_rows, detached_current_summaries)",
+      "wholeRoster": "Classify every row once/generation, no Mesh display cap; both outputs share original per-row eligibility and expiry; full raw snapshot retained",
+      "codec": "optional bound codec.admit_bridge(payload) -> NativeState; owner fully validates native once, Mesh independently checks envelope/proof/projection; strict legacy fallback and Client boundaries retained"
+    },
+    "correctness": "validation.json",
+    "performance": "performance.json",
+    "performanceResultsPercentReduction": {
+      "100_rows_selected": 21.98,
+      "500_rows_owned_context": 16.15,
+      "500_rows_selected": 24.58
+    },
+    "compatibility": {
+      "wire": "unchanged",
+      "lock": 4,
+      "legacyDefaults": "unchanged",
+      "acquisition": "unchanged full snapshot/proof requests; local watch-body reuse deferred by frozen contract",
+      "nativeCurrentOwnerArtifact": "Observer owns independent facade and package acceptance"
+    },
+    "exclusions": [
+      "No rollout, package pin/service/endpoint changes, RLCD/Observer edits, provider actions or hardware work",
+      "No live CPU/device/feed acceptance",
+      "No whole-process memory saving claim",
+      "No --check-sources; locked/parity inputs checked instead"
+    ],
+    "allocation": "a21 reserved per reported historical private candidate; a22 unused in inspected Snap/Starship source/artifact inventories before reservation; no a21 candidate wheel created or old artifact overwritten",
+    "cleanup": "All owned tests/benchmark processes and channels retired; immutable wheel and isolated test environments retained for review",
+    "rollback": "No operational changes to roll back. Later adopter retains matched prior Observer/Mesh/consumer pins; source acceptance is not managed selection."
+  },
+  "observer": {
+    "status": "Observer producer accepted for independent pinned integration within stated native coverage",
+    "branch": "cpu-prepared-admission",
+    "runtimeSourceCommit": "fefa52d9f1fc850753cc72292c37dae78fa1c112",
+    "wheel": {
+      "version": "0.7.0a6",
+      "path": "/home/bryan/code/agent-observer/dist/private/0.7.0a6-fefa52d-e01a7129/agent_observer-0.7.0a6-py3-none-any.whl",
+      "sha256": "e01a712934a1c13aaf5dca011321ce62e9cadd6abf2d4b89bd263f57a56e8125",
+      "requiresPython": ">=3.11",
+      "coreDependencies": [],
+      "optionalMesh": "mesh-plus>=0.1.0a22,<0.2"
+    },
+    "mesh": {
+      "version": "0.1.0a22",
+      "path": "/home/bryan/code/mesh-plus/dist/private/0.1.0a22-f1ced05-5ac484d7/mesh_plus-0.1.0a22-py3-none-any.whl",
+      "sha256": "5ac484d7dcb3f60665a66b5b6dcff780a967afa1d24a8c092800a430399f3314",
+      "requiresPython": ">=3.11",
+      "dependencies": [
+        "jsonschema>=4.26,<5"
+      ],
+      "optionalWSS": "websockets>=17.1,<18",
+      "descriptors": {
+        "sdk": 1,
+        "preparation": 1,
+        "admission": 1,
+        "selection": 1,
+        "lock": 4
+      }
+    },
+    "contracts": {
+      "observationApi": 4,
+      "snapshotWatch": 6,
+      "service": 4,
+      "agentProfile": "agent-observer.mesh-candidate.v3",
+      "sdk": 1,
+      "preparation": 1,
+      "admission": 1,
+      "selection": 1,
+      "agentRead": 2
+    },
+    "apis": {
+      "imports": "from agent_observer.mesh_profile import AgentProfile; from agent_observer.mesh_read import AgentSelection, PreparedAgentWatch",
+      "reader": "configure Reader with the same AgentProfile instance as PreparedAgentWatch; consume reader.execute_admitted(request) or reader.watch_admitted(...)",
+      "selection": "PreparedAgentWatch(request_id, host_ids=hosts, profile=profile, selection=AgentSelection(providers=frozenset(...), kinds=frozenset(...), runtime_values=frozenset(...), runtime_healths=frozenset(...)))",
+      "read": "read = watch.read(now_ms, reader_clock); read.context retained Mesh header; read.sessions selected owned full records; read.summaries frozen full-identity/kind/runtime summaries for every current row",
+      "defaults": "selection=None keeps full current rows and summaries=None; None filters accept all values; empty frozensets accept none",
+      "positiveExclusion": "caller can retire exact current child/system/parked identities from summaries beyond any display prefix; absent/unselected is not retirement evidence",
+      "snapshot": "watch.snapshot() retains the full raw roster independent of selection",
+      "lifecycle": "serialize calls, disconnect in finally and close the owned reader iterator; reconnect constructs a fresh helper",
+      "native": "optional AgentCodec.admit_bridge(payload)->NativeState fully validates once; standalone methods remain strict; Mesh owns all envelope/proof/lease safety"
+    },
+    "correctness": "validation.json",
+    "native": {
+      "starshipDirect": "395 exact native identities over two rounds; no direct mismatch",
+      "starshipCached": "395 identity/runtime/phase/activity matches; lastUpdated lags 9-26 seconds on changing rows",
+      "snap": "existing 0.163.0 native daemon, baseline a5 and candidate all empty; empty-source coverage only",
+      "ownedSelectedFleet": "30 seconds from each host; selected/full-current summary and raw export parity; complete cleanup"
+    },
+    "performance": "performance.json",
+    "performanceReductionPercent": {
+      "100RecordOldPairToOwnedSelected": 17.74369626891875,
+      "500RecordOldPairToOwnedSelected": 21.60252390038989,
+      "500RecordOwnedFullToSelected": 5.512785659592778,
+      "500RecordRawToOwnedFull": 13.6034641068421,
+      "readerNativeBridgeAdmission": 42.1581941798119
+    },
+    "limits": [
+      "fixed synthetic work only; no live service/RLCD CPU reduction asserted",
+      "Snap populated-state native gate is not claimed",
+      "fresh correlated source replies, source cadence and transport bytes remain unchanged",
+      "no production rollout, downstream source edit, provider action, service restart, Tmux/writer/device change"
+    ],
+    "cleanup": "all owned channels/watchers/servers/benchmarks closed; immutable artifacts and isolated prefixes retained for review",
+    "rollback": "no operational change to roll back; consumer retains and proves its prior exact Observer a5/Mesh a20/bundle tuple before later adoption",
+    "report": "REPORT.md"
+  }
+}

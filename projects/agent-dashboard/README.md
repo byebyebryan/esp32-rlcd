@@ -54,6 +54,10 @@ records independent producer and paired device rollout. Known
 current failed turns use an error cross and contribute to `!` attention counts.
 A fresh active turn clears the preceding failure; unsupported observations keep `?`.
 
+The [owned admission checkpoint](../../docs/evidence/2026-10-15-owned-admission/REPORT.md)
+adopts Observer a6/Mesh a22 with selected current bodies and complete membership
+summaries. Strict admission, per-row expiry, diagnostics and display policy remain.
+
 ## Build and check
 
 After [toolchain setup](../../docs/setup.md), run from the repository root:

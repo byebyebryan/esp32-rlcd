@@ -25,10 +25,10 @@ Build and run the native checks:
 ## Cached preview and roster
 
 Live acquisition needs the accepted Observer/Mesh Python environment. On the
-currently selected hosts it is:
+RLCD host it is:
 
 ```sh
-RLCD_OBSERVER_PYTHON="$HOME/.local/share/agent-observer/0.7.0a5-25cd5663560c973b-cpu/bin/python"
+RLCD_OBSERVER_PYTHON="$HOME/.local/share/rlcd-agent-dashboard-python/a6-a22-e01a7129-5ac484d7/bin/python"
 mkdir -p projects/agent-dashboard/build/live-preview
 "$RLCD_OBSERVER_PYTHON" projects/agent-dashboard/scripts/live-dashboard.py \
     --preview projects/agent-dashboard/build/live-preview/frame.txt
@@ -44,12 +44,14 @@ build output. Native checks require only a C compiler and Python's standard
 library. The bridge explicitly supplies Agent profile v3; the generic Mesh v1
 Agent reader does not admit this endpoint.
 
-The bridge uses Observer prepared read interface 1 through Mesh preparation
-interface 1. Each device tick projects admitted current rows and retained source
-metadata without reconstructing the full saved roster. A heartbeat cannot renew
-native evidence; gap, expiry, clock failure and disconnect still revoke current
-claims. Reconnect creates a new prepared watch. Bundle verification records both
-interface versions alongside the exact accepted dependency tuple.
+The bridge uses Observer a6 prepared read interface 2 with Mesh a22 preparation,
+admission and selection interfaces 1. Reader and helper share an AgentProfile;
+owned admitted replacements avoid repeated aggregate admission. Each device tick
+decodes eligible running conversation bodies and reads full-current identity
+summaries for membership and positive exclusions. Context exports contain no row
+bodies. A heartbeat cannot renew native evidence; gap, expiry, clock failure and
+disconnect still revoke claims. Reconnect creates a new prepared watch. Bundle
+verification records these capabilities and the exact accepted dependency tuple.
 
 Run the optional installed-contract checks with the selected Python as well:
 
@@ -65,7 +67,9 @@ counts without opening USB:
 ```
 
 Add `--all` for saved/excluded row details. Diagnostics retain bounded Observer
-metadata only. The roster's age meaning is explicitly conversation activity.
+metadata only. The roster diagnostic deliberately materializes complete current
+bodies; normal device ticks use selected bodies and full-current summaries.
+The roster's age meaning is explicitly conversation activity.
 The [refinement receipt](../../../docs/evidence/2026-10-13-dashboard-refinement/REPORT.md)
 records the classification, naming, installed tuple and device acceptance.
 The [reliability receipt](../../../docs/evidence/2026-10-13-live-reliability/REPORT.md)
