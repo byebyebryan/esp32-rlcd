@@ -130,10 +130,8 @@ class Fleet:
             status = ("current" if scopes and len(complete) == len(scopes) else "partial") if ready else "offline"
             rows = by_host[identifier]
             known = {token(row["identity"])[0] for row in rows}
-            # Both exports are already checked at this read's clock by the owner
-            # facade. Raw context/omissions are never retirement authority.
-            known.update(token(e["identity"])[0] for e in read.uncertain
-                         if e["identity"]["hostScope"] == identifier)
+            # Only current members supply admitted identities. Uncertain
+            # metadata is informational; scoped coverage governs absence.
             excluded = {token(e["identity"])[0] for e in read.nonmembers
                         if e["identity"]["hostScope"] == identifier}
             deadlines = {}

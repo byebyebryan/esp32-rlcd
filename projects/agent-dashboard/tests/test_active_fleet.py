@@ -68,6 +68,15 @@ class ActiveFleet(unittest.TestCase):
         scope = empty["projection"]["scopes"][0]
         empty["projection"]["sessions"].clear()
         scope["members"].clear()
+        support = scope["coverage"]["supports"][0]
+        scope["uncertain"] = [{"identity": entry["identity"], "reason": "old_member_context",
+                               "priorSupport": support, "support": None,
+                               "horizonBoottimeMs": support["expiresBoottimeMs"]}
+                              for entry in positive["projection"]["scopes"][0]["members"]]
+        from agent_observer.active_contract import validate_frame
+        with self.assertRaises(ValueError):
+            validate_frame(empty)  # Complete scope cannot coexist with uncertainty.
+        scope["uncertain"].clear()
         # Completeness uses runtime only while history stays current longer.
         scope["coverage"]["supports"] = [scope["coverage"]["supports"][0]]
         empty["sources"][0]["components"][1]["expiresBoottimeMs"] += 10000
