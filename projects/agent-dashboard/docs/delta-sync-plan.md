@@ -52,6 +52,12 @@ Reserved syntax does not establish capability. The new sync family is explicit
 and negotiated; frozen old schemas, lock inputs, SDK 1 and Delivery 1 routes
 retain their contracts. An unsupported new route fails without a legacy retry.
 
+A separate [transport-only relay amendment](delta-sync-relay-addendum.md) is
+under G1 review. G0 explicitly requires material admission in its publisher;
+the proposed additional relay role therefore needs joint producer agreement
+before dependent relay transport work. Reader authority checks, bounds,
+deadlines and later acceptance gates remain unchanged.
+
 ## Ownership and execution gates
 
 | Owner | Authorized work |
