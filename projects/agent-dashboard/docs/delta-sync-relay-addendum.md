@@ -1,7 +1,7 @@
 # G1 transport-only relay amendment
 
 Status: **coordinator supports the design; joint producer agreement pending**,
-2026-10-16. This is amendment A1 to accepted acquisition roles. Exact Mesh/
+2026-10-16, revision 2. This is amendment A1 to accepted acquisition roles. Exact Mesh/
 Observer agreement is required before dependent relay transport implementation.
 Other authorized G1 work continues. Frozen G0 bytes stay unchanged.
 
@@ -38,9 +38,17 @@ imports, commands or source selection.
 Relay checks bind expected UID/socket/service, host, descriptor, full/active
 selector, native owner/context, configured source/profile, route and request/
 channel/reader epochs. Transport structure checks do not claim full native or
-domain admission. The relay exposes no ViewRef, AdmittedCommit, OwnedInputRef or
-equivalent admission capability, semantic queries or authority-bearing profile
-hooks. Forwarded material and tags remain unadmitted at the receiving boundary.
+domain admission. The relay exposes no ViewRef, AdmittedCommit, material-admission
+reuse capability, semantic queries or authority-bearing profile hooks. Forwarded
+material and tags remain unadmitted at the receiving boundary.
+
+Opaque byte-ownership handles may reserve, seal and transfer exact unadmitted
+input under the shared budgets. Such a handle cannot carry trusted material or
+profile decisions, skip receiver admission, mint a semantic view or rebind a
+retired request. If the public API uses the name `OwnedInputRef` for this handle,
+its contract must explicitly mean byte ownership only and distinguish it from
+any admission-reuse capability. Sealing bytes does not validate them. Exact
+handle binding, transfer and cleanup remain part of the joint public API review.
 
 The Reader independently checks all material and roots. A matching relay claim,
 owner root or hash cannot substitute for admission. Original support, order,
@@ -76,6 +84,10 @@ Mesh returns the exact factory/role declaration, source-ticket interface, proof
 envelope and check responsibilities. Observer confirms native acquisition/head/
 identity/context compatibility. Both agree the same addendum/interfaces; RLCD
 then records A1 acceptance. This draft grants no consumer adoption or rollout.
+
+Revision 2 replaces the earlier name-based `OwnedInputRef` exclusion with the
+capability boundary above. It reconciles the pending owned-input accounting API
+without accepting that API or changing frozen G0 bytes, caps or proof rules.
 
 Tests must show Reader rejection of corrupt and self-consistent-but-domain-
 invalid material, wrong roots/receipts/bindings, replay and owner/clock changes;
