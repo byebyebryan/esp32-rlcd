@@ -228,3 +228,19 @@ facets/refs, clock/owner/context/selector changes, mutation, cancellation, faile
 callbacks, oversize/recovery and cleanup/shared-alias isolation. Existing full
 and Tmux routes retain compatibility. Failed gates return to review; source or
 prototype results cannot substitute for exact installed acceptance.
+
+## RLCD fixture preparation
+
+The read-only baseline fingerprint is retained under
+`.cache/delta-sync-integration/20261016T192225Z/baseline.json`. Reproducible
+reference seeds and their manifest are now prepared in that directory's
+`reference-fixtures/`, using the selected a7/a23 interpreter and existing client
+fixtures. Full inputs contain 100/500/2,000 records; each paired active input has
+three selected bodies derived from the same exact original receipts. Full order,
+identity uniqueness, subset membership and old-profile admission were checked.
+
+These are synthetic committed input seeds and a workload matrix, not native,
+currentness, transport, capacity or performance evidence. Stored monotonic
+receipts grant no live authority. Workload transitions and the new sync adapter
+await supported qualified producer APIs; matched timing must still include
+generation and every transport/validation boundary.
