@@ -386,3 +386,19 @@ selection remain subsequent gates; this implementation entry is not a live
 acceptance claim. Producer transport savings exclude collection/generation;
 Observer separately reports increased generation and unchanged full-path cost.
 The later whole-stack comparison must retain those costs and their bounds.
+
+## Integration closure
+
+The [2026-10-16 receipt](../../../docs/evidence/2026-10-16-active-feed/REPORT.md)
+records G2/G3 checks and bounded G4 operational acceptance: both exact artifacts,
+63 consumer tests, twelve matched scaling samples, same-generation populated
+native parity, real configured IPC/SSH/full diagnostic routes, actual paired
+rollback/reselect and passive service CPU windows. RLCD runtime `7033725` and
+bundle `519f202dff6d03c2` are selected with the new collectors and isolated active
+route on both hosts. Full/Tmux/writer/349 owners remain independent.
+
+Physical ACK/readability/reconnect/reboot stay deferred: the known USB device was
+already absent before this pass. Real configured data also passes the one-second
+serial worker and native C admission/rendering against an owned simulated device.
+This distinction is retained in the receipt; source, synthetic/native, selected
+service and physical acceptance are separate.

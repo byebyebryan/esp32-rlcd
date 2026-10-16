@@ -1,0 +1,61 @@
+{
+  "starship": {
+    "before": {
+      "rlcd-agent-dashboard.service": 8.73082148361458,
+      "agent-observer.service": 2.7392483738452307,
+      "mesh-plus-agent.service": 4.687436383970105
+    },
+    "after": {
+      "rlcd-agent-dashboard.service": 0.7107812760391133,
+      "agent-observer.service": 2.04424804319924,
+      "mesh-plus-agent.service": 0.0,
+      "mesh-plus-agent-active.service": 0.29069150690990897
+    },
+    "beforeSeconds": 120.00007123799878,
+    "afterSeconds": 120.00006594898878,
+    "afterWarmupSeconds": 60,
+    "allIncarnationsStable": true,
+    "beforeSumPercentOneCore": 16.157506241429918,
+    "afterSumPercentOneCore": 3.045720826148262,
+    "beforeMainProcessPssKiB": [
+      44539,
+      45554
+    ],
+    "beforeMainProcessFds": [
+      11,
+      14
+    ],
+    "afterMainProcessPssKiB": [
+      23671,
+      23699
+    ],
+    "afterMainProcessFds": [
+      11,
+      11
+    ]
+  },
+  "snap": {
+    "before": {
+      "agent-observer.service": 1.22886977713204,
+      "mesh-plus-agent.service": 0.0
+    },
+    "after": {
+      "agent-observer.service": 0.9936779151062972,
+      "mesh-plus-agent.service": 0.0,
+      "mesh-plus-agent-active.service": 0.0
+    },
+    "beforeSeconds": 120.00026588997571,
+    "afterSeconds": 120.00025177901261,
+    "afterWarmupSeconds": 60,
+    "allIncarnationsStable": true,
+    "beforeSumPercentOneCore": 1.22886977713204,
+    "afterSumPercentOneCore": 0.9936779151062972
+  },
+  "limits": [
+    "two-minute passive selected-service cgroup windows; one old/new observation per host; unrelated host/native activity and CPU frequency uncontrolled",
+    "USB port absent before and after; no physical device cadence or ACK acceptance",
+    "Root includes RLCD with child processes, collector, full and active publisher; Snap includes managed collector/full/active units",
+    "Remote SSH stdio bridge/server crypto and native provider CPU are outside Snap managed-unit sums",
+    "Producer generation/full-path cost disclosed independently; lower live collector CPU does not reverse controlled extra-work finding"
+  ]
+}

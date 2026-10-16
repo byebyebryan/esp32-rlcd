@@ -31,13 +31,14 @@ same projection, wire admission and C renderer as the live application.
 
 ```mermaid
 flowchart LR
-    Observer[Observer API 4] --> Mesh[Mesh Agent v3]
+    Observer[Observer cached active feed 1] --> Mesh[Mesh active Agent profile 1]
     Mesh --> Bridge[Host bridge]
     Bridge -->|USB wire 2| RLCD[RLCD firmware]
 ```
 
 Observer owns native discovery and classification. Mesh owns validated delivery
-and freshness. The bridge owns selection, names and counts; firmware owns packet
+and freshness. Observer applies the fixed running-conversation selector before
+transport. The bridge reconciles scoped membership, names and counts; firmware owns packet
 admission, expiry, layout and animation. This application performs no provider
 actions. The [live contract](docs/live-integration.md) defines the boundaries.
 
@@ -57,8 +58,11 @@ A fresh active turn clears the preceding failure; unsupported observations keep 
 The [owned admission checkpoint](../../docs/evidence/2026-10-15-owned-admission/REPORT.md)
 adopts Observer a6/Mesh a22 with selected current bodies and complete membership
 summaries. Strict admission, per-row expiry, diagnostics and display policy remain.
-The agreed [active-session feed plan](docs/active-feed-plan.md) moves selection
-before consumer transport; producer implementation and qualification come next.
+The [active-session feed plan](docs/active-feed-plan.md) now selects Observer a7 /
+Mesh a23: selection and its cache live before service IPC, while the full inventory
+remains available for diagnostics. The [active-feed receipt](../../docs/evidence/2026-10-16-active-feed/REPORT.md)
+records exact artifacts, scoped retirement, matched scaling, live service cost
+and paired rollback. Physical ACK/readability/reboot gates remain separate.
 
 ## Build and check
 

@@ -1,0 +1,41 @@
+{
+  "runtimeSource": "70337258f02c1d2d70ac9eb0387e88f2bc7f0159",
+  "bundle": "519f202dff6d03c2",
+  "manifestSha256": "519f202dff6d03c2c8b102c1fca01720683a2ac71a94364ddea96b43daa30545",
+  "observer": {
+    "version": "0.7.0a7",
+    "runtimeSource": "7807160384ba39b4d438c5c7f1b5f316c3608dcd",
+    "evidenceSource": "b0cea48759d1771c81e0850bf4e041bd51400b25",
+    "wheelSha256": "5eafd4c126fb31a0574c3c0500998084c6ccc8d4d813df1805e6d21ce4b85bb0"
+  },
+  "mesh": {
+    "version": "0.1.0a23",
+    "runtimeSource": "19788054edcd859f6228a90026695280f746723d",
+    "evidenceSource": "b0d78604d6811a8861236663a0917290135d1aed",
+    "wheelSha256": "73455186e187198c8e44b6ae6c381926809931a176f17614864141c62ff850c2"
+  },
+  "installedReadback": {
+    "hosts": [
+      "starship",
+      "snap"
+    ],
+    "observerFilesPerHost": 63,
+    "meshFilesPerHost": 67,
+    "allWheelBytesMatch": true,
+    "allImportedOwnerModulesUnderSelectedPrefix": true
+  },
+  "python": "3.14.8",
+  "interfaces": {
+    "activeRead": 1,
+    "sdk": 1,
+    "preparation": 1,
+    "admission": 1,
+    "lock": 5,
+    "fullApi": 4,
+    "fullService": 4,
+    "fullRead": 2,
+    "deviceWire": 2
+  },
+  "fullReaderAndWriterSelectionsChanged": false,
+  "firmwareChanged": false
+}

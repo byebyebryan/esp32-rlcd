@@ -1,24 +1,29 @@
 # Live dashboard integration
 
-The first live version reads running Codex sessions across explicitly selected
-Snap and Starship hosts through Observer API 4, snapshot/watch 6, Service 4,
-Mesh SDK 1 and the explicit `agent-observer.mesh-candidate.v3` profile. The
-bridge belongs to this application. Observer remains the observation authority;
-Mesh remains the delivery/proof authority. Firmware owns display admission,
-expiry, layout and animation. This client performs no provider actions.
+The bridge reads running Codex conversations across explicitly selected Snap and
+Starship hosts through Observer's cached active feed 1 and the explicit
+`agent-observer.mesh-active.v1` profile. Observer a7 applies the fixed Codex,
+running/current, user/unknown-kind selector once per accepted generation before
+service IPC. Mesh a23 owns delivery/proof; Observer owns native facts and scoped
+coverage; this application reconciles presentation membership. Firmware owns
+packet admission, expiry, layout and animation. This client performs no provider
+actions. Full API 4, snapshot/watch 6, Service 4 and full Agent v3 remain available.
 
-The configured Reader feeds Observer's public `PreparedAgentWatch` through
-`execute_admitted`, sharing the same AgentProfile instance. Read interface 2 and
-Mesh preparation/admission/selection interfaces 1 reuse an owned immutable
-admitted replacement. Raw inputs and the transport Client retain strict admission.
-Device requests use `read.sessions` for current running Codex user/unknown-kind
-records, `read.summaries` for every current identity/kind/runtime, and
-`read.context` for source metadata. Summaries preserve complete membership and
-positive exclusions beyond the device prefix without decoding rejected bodies.
-Context alone grants no current rows. Original per-row leases apply to both
-sessions and summaries on every request; reconnect creates a new helper.
-`--roster` explicitly requests complete current bodies to preserve diagnostic
-details and exclusion reasons. No private SDK state or shortened history is used.
+The configured Reader feeds public `PreparedActiveAgentWatch` through
+`execute_admitted`, sharing the same `ActiveAgentProfile` instance. Active read 1
+and Mesh preparation/admission 1 reuse an owned immutable replacement. Raw and
+transport Client boundaries stay strict. Each device request reads independently
+supported members/fields, current exact nonmembers and current scoped coverage;
+raw context and informational uncertainty grant no positive or absence authority.
+Complete-empty coverage expires independently of selected bodies. Reconnect
+creates a new helper; gap, clock failure and failed admission revoke its cache.
+
+Normal acquisition uses distinct source `agent_active` and local bridge socket
+`mesh-plus-agent-active/read.sock`. `--roster` retains source `agent`, the full v3
+profile and prepared full read 2, with complete current bodies and exclusion
+reasons. There is no silent full-feed fallback for an unsupported active route.
+An owned `LibraryMeshAuthority` performs fresh catalog checks with unchanged
+five-second idle cadence/check budget, no route reporting and explicit close.
 
 ## Presentation policy
 
@@ -27,9 +32,13 @@ sessions are selected even when their historical kind is unknown. Previously
 selected identities remain uncertain during loss of evidence; cold saved history
 with unknown runtime is excluded. Healthy hosts remain useful when a sibling
 fails. A missing host prevents an empty roster from claiming fleet completeness.
-An accepted complete inventory may retire omitted display membership; that is
-not a provider-session deletion or lifecycle assertion. Partial inventories do
-not supply that exclusion.
+Fresh complete coverage may retire absent members only in its exact host,
+provider and namespace. A new namespace cannot clear prior-scope context. This
+is presentation reconciliation, not provider deletion or lifecycle management.
+Partial omissions, positive expiry, producer pruning/overflow and missed expired
+negatives retain existing uncertain context. There is no new hide timeout or
+prior-identity query; a later fresh complete scope/current exact decision can
+settle it. All reconciliation precedes the 32-row device limit.
 
 Current blocked and known failed rows flash at 1 Hz; waiting rows remain inverse;
 working rows remain normal. A current running runtime, unknown phase with
@@ -44,9 +53,12 @@ unknown activity; ties preserve previous order. This changes the synthetic
 study's exact state-age policy: phase-entry time is unavailable from Observer.
 
 Age is time since conversation activity sampled on the source, calculated from
-the source snapshot's `collectedAt`, and shown only while its evidence remains
-admitted. It advances only on accepted source views. Device time, delivery time,
-native thread updates and latest-turn duration do not replace that clock.
+each member's original current `runtime.observedAt` with `clock=sample`, and
+shown only while activity evidence remains admitted and is no later than that
+observation. The active DTO omits full snapshot publication `collectedAt`; this
+is age at that row's runtime observation. Cached reads/proof emission cannot
+advance it. Device/delivery clocks, thread-update times and latest-turn duration
+do not replace it.
 Missing, future or expired activity displays `?`.
 
 Rows retain full Observer identity in the bridge. SHA-256 tokens of its canonical
@@ -104,7 +116,8 @@ sequence must increase within an incarnation. Every view is a replacement.
 
 The bridge rechecks Mesh admission on each request. Current validity is capped
 at three seconds and reduced by 100 ms from the remaining required source lease.
-All current rows from one host share that host's conservative minimum lease.
+Each row is additionally bounded by its own currently supported field deadlines.
+An expired history field is masked without discarding supported runtime membership.
 Device expiry is anchored to request-send time, not response-receive time;
 transport latency therefore shortens authority. Accepted timing assumes normal
 monotonic-clock rate over this short bound; the margin and delayed-response
@@ -153,5 +166,8 @@ and `docs/evidence/2026-10-13-system-classification/REPORT.md`. These local sour
 checkpoints and installed artifacts have separate publication status.
 
 Wire 1 and wire 2 tags are mutually rejected. Rollback requires selecting the
-retained matching bridge and firmware pair. API 4/read 6/Service 4 and Agent v3
-are unchanged; this is a device presentation migration only.
+retained matching bridge and firmware pair. The active-feed host migration keeps
+wire 2 and firmware unchanged, but rollback must restore its paired collector,
+active publisher/source routing and client selections. Tmux, 349, ordinary native
+sessions and historical writer remain independent. See the
+[active-feed acceptance](../../../docs/evidence/2026-10-16-active-feed/REPORT.md).

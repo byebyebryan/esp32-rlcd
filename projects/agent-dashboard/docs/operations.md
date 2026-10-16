@@ -2,7 +2,7 @@
 
 The default firmware accepts a bounded USB feed from the host bridge. The bridge
 reads running Codex sessions on Starship and Snap through the accepted Observer
-API 4 / Service 4 / Mesh Agent v3 interfaces. ST and SN identify hosts. Age shows
+active feed 1 / Mesh active Agent v1 interfaces; full API 4 / Service 4 remain diagnostic routes. ST and SN identify hosts. Age shows
 source-sampled time since conversation activity, rather than time spent blocked
 or waiting. Known system helpers and children are excluded. Current failed turns show an error
 cross and join blocked rows in the attention count; current phases or a fresh
@@ -28,7 +28,7 @@ Live acquisition needs the accepted Observer/Mesh Python environment. On the
 RLCD host it is:
 
 ```sh
-RLCD_OBSERVER_PYTHON="$HOME/.local/share/rlcd-agent-dashboard-python/a6-a22-e01a7129-5ac484d7/bin/python"
+RLCD_OBSERVER_PYTHON="$HOME/.local/share/agent-observer/0.7.0a7-5eafd4c1-active-feed/bin/python"
 mkdir -p projects/agent-dashboard/build/live-preview
 "$RLCD_OBSERVER_PYTHON" projects/agent-dashboard/scripts/live-dashboard.py \
     --preview projects/agent-dashboard/build/live-preview/frame.txt
@@ -41,22 +41,24 @@ python3 projects/agent-dashboard/scripts/dashboard-preview.py \
 
 The preview uses firmware's C admission and renderer. Data stays in ignored local
 build output. Native checks require only a C compiler and Python's standard
-library. The bridge explicitly supplies Agent profile v3; the generic Mesh v1
-Agent reader does not admit this endpoint.
+library. The bridge explicitly supplies the fixed active profile; generic Mesh
+Agent v1 does not admit this endpoint.
 
-The bridge uses Observer a6 prepared read interface 2 with Mesh a22 preparation,
-admission and selection interfaces 1. Reader and helper share an AgentProfile;
-owned admitted replacements avoid repeated aggregate admission. Each device tick
-decodes eligible running conversation bodies and reads full-current identity
-summaries for membership and positive exclusions. Context exports contain no row
-bodies. A heartbeat cannot renew native evidence; gap, expiry, clock failure and
-disconnect still revoke claims. Reconnect creates a new prepared watch. Bundle
-verification records these capabilities and the exact accepted dependency tuple.
+The bridge uses Observer a7 active read 1 and Mesh a23 preparation/admission 1.
+Reader and helper share an `ActiveAgentProfile`. The collector caches the fixed
+projection before service IPC, and normal device ticks inspect selected bodies,
+current scoped completeness and exact positive exclusions. Individual fields
+keep their original independent leases. Raw headers and uncertainty metadata
+supply no removal authority. Heartbeat/proof reads cannot renew evidence; gap,
+clock failure and disconnect revoke the helper. Bundle verification pins this
+capability tuple. Both hosts require the new collector and active source/publisher;
+a reader-only upgrade against the older collector cannot work.
 
 Run the optional installed-contract checks with the selected Python as well:
 
 ```sh
 "$RLCD_OBSERVER_PYTHON" -B projects/agent-dashboard/tests/test_prepared_fleet.py -v
+"$RLCD_OBSERVER_PYTHON" -B projects/agent-dashboard/tests/test_active_fleet.py -v
 ```
 
 Inspect the full selected roster, label/identity mapping, hidden rows and exclusion
@@ -68,7 +70,8 @@ counts without opening USB:
 
 Add `--all` for saved/excluded row details. Diagnostics retain bounded Observer
 metadata only. The roster diagnostic deliberately materializes complete current
-bodies; normal device ticks use selected bodies and full-current summaries.
+bodies via the original full source; normal ticks use the projected active source
+and reconcile exact scopes before device truncation.
 The roster's age meaning is explicitly conversation activity.
 The [refinement receipt](../../../docs/evidence/2026-10-13-dashboard-refinement/REPORT.md)
 records the classification, naming, installed tuple and device acceptance.
@@ -138,6 +141,15 @@ bridge, its helpers and font metrics source. The verifier rejects changed,
 missing, additional or symlinked payloads and an incompatible dependency tuple.
 Update the host selection and validate scoped chezmoi targets before service
 replacement; retain the previous bundle and exact selection for rollback.
+
+The active-feed migration also selects the a7 collector and separately configured
+active source/publisher on both hosts. Its rollback restores that whole role tuple
+plus the Starship client; application-only rollback does not restore the earlier
+collector cost. Preserve the full `agent` source, Tmux factories and reader/writer
+links. Chezmoi's last-applied state can differ after exact backup restoration:
+verify all affected bytes/links against the retained backup before any scoped
+forced reselect. See the [active-feed receipt](../../../docs/evidence/2026-10-16-active-feed/REPORT.md)
+for accepted scope and deferred physical gates.
 
 ## Expiry and captures
 

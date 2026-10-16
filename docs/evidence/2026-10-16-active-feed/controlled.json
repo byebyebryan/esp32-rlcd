@@ -1,0 +1,272 @@
+{
+  "runtimeSource": "70337258f02c1d2d70ac9eb0387e88f2bc7f0159",
+  "oldRuntimeSource": "ed087091e95954f643ecf85156205b2396057db9",
+  "order": [
+    "full",
+    "active",
+    "active",
+    "full"
+  ],
+  "summary": [
+    {
+      "rows": 100,
+      "fullCpuMs": 979.0284790000001,
+      "activeCpuMs": 245.46238949999997,
+      "cpuReductionPercent": 74.92796228453739,
+      "fullBytes": 1683753,
+      "activeBytes": 267946
+    },
+    {
+      "rows": 500,
+      "fullCpuMs": 4815.59484,
+      "activeCpuMs": 241.72129,
+      "cpuReductionPercent": 94.9804479398437,
+      "fullBytes": 8031653,
+      "activeBytes": 267946
+    },
+    {
+      "rows": 2000,
+      "fullCpuMs": 17350.297457,
+      "activeCpuMs": 241.43644,
+      "cpuReductionPercent": 98.60845936158522,
+      "fullBytes": 31841153,
+      "activeBytes": 267946
+    }
+  ],
+  "trials": [
+    {
+      "total": 100,
+      "index": 0,
+      "result": "fixed-result-100-0-full.json",
+      "feed": "full",
+      "cpuMs": 983.019769,
+      "wallMs": 985.9011280059349,
+      "receivedBytes": 1683753,
+      "nativeCachedReads": 12,
+      "replacements": 6,
+      "projectionReads": 18,
+      "maxReplacementLatencyMs": 228.16234300262295,
+      "cleanup": true,
+      "packages": {
+        "agent-observer": "0.7.0a6",
+        "mesh-plus": "0.1.0a22"
+      }
+    },
+    {
+      "total": 100,
+      "index": 1,
+      "result": "fixed-result-100-1-active.json",
+      "feed": "active",
+      "cpuMs": 243.22740999999996,
+      "wallMs": 244.02926600305364,
+      "receivedBytes": 267946,
+      "nativeCachedReads": 12,
+      "replacements": 6,
+      "projectionReads": 18,
+      "maxReplacementLatencyMs": 61.937613994814456,
+      "cleanup": true,
+      "packages": {
+        "agent-observer": "0.7.0a7",
+        "mesh-plus": "0.1.0a23"
+      }
+    },
+    {
+      "total": 100,
+      "index": 2,
+      "result": "fixed-result-100-2-active.json",
+      "feed": "active",
+      "cpuMs": 247.697369,
+      "wallMs": 248.5499879985582,
+      "receivedBytes": 267946,
+      "nativeCachedReads": 12,
+      "replacements": 6,
+      "projectionReads": 18,
+      "maxReplacementLatencyMs": 63.487948005786166,
+      "cleanup": true,
+      "packages": {
+        "agent-observer": "0.7.0a7",
+        "mesh-plus": "0.1.0a23"
+      }
+    },
+    {
+      "total": 100,
+      "index": 3,
+      "result": "fixed-result-100-3-full.json",
+      "feed": "full",
+      "cpuMs": 975.037189,
+      "wallMs": 977.6725989941042,
+      "receivedBytes": 1683753,
+      "nativeCachedReads": 12,
+      "replacements": 6,
+      "projectionReads": 18,
+      "maxReplacementLatencyMs": 228.8180059986189,
+      "cleanup": true,
+      "packages": {
+        "agent-observer": "0.7.0a6",
+        "mesh-plus": "0.1.0a22"
+      }
+    },
+    {
+      "total": 500,
+      "index": 0,
+      "result": "fixed-result-500-0-full.json",
+      "feed": "full",
+      "cpuMs": 4356.038816000001,
+      "wallMs": 4366.56206700718,
+      "receivedBytes": 8031653,
+      "nativeCachedReads": 12,
+      "replacements": 6,
+      "projectionReads": 18,
+      "maxReplacementLatencyMs": 985.5435309873428,
+      "cleanup": true,
+      "packages": {
+        "agent-observer": "0.7.0a6",
+        "mesh-plus": "0.1.0a22"
+      }
+    },
+    {
+      "total": 500,
+      "index": 1,
+      "result": "fixed-result-500-1-active.json",
+      "feed": "active",
+      "cpuMs": 243.90851000000004,
+      "wallMs": 244.66954899253324,
+      "receivedBytes": 267946,
+      "nativeCachedReads": 12,
+      "replacements": 6,
+      "projectionReads": 18,
+      "maxReplacementLatencyMs": 61.643152992473915,
+      "cleanup": true,
+      "packages": {
+        "agent-observer": "0.7.0a7",
+        "mesh-plus": "0.1.0a23"
+      }
+    },
+    {
+      "total": 500,
+      "index": 2,
+      "result": "fixed-result-500-2-active.json",
+      "feed": "active",
+      "cpuMs": 239.53406999999999,
+      "wallMs": 240.29830799554475,
+      "receivedBytes": 267946,
+      "nativeCachedReads": 12,
+      "replacements": 6,
+      "projectionReads": 18,
+      "maxReplacementLatencyMs": 59.80845901649445,
+      "cleanup": true,
+      "packages": {
+        "agent-observer": "0.7.0a7",
+        "mesh-plus": "0.1.0a23"
+      }
+    },
+    {
+      "total": 500,
+      "index": 3,
+      "result": "fixed-result-500-3-full.json",
+      "feed": "full",
+      "cpuMs": 5275.150863999999,
+      "wallMs": 5289.317670016317,
+      "receivedBytes": 8031653,
+      "nativeCachedReads": 12,
+      "replacements": 6,
+      "projectionReads": 18,
+      "maxReplacementLatencyMs": 1172.4541540024802,
+      "cleanup": true,
+      "packages": {
+        "agent-observer": "0.7.0a6",
+        "mesh-plus": "0.1.0a22"
+      }
+    },
+    {
+      "total": 2000,
+      "index": 0,
+      "result": "fixed-result-2000-0-full.json",
+      "feed": "full",
+      "cpuMs": 17241.104531999998,
+      "wallMs": 17283.904898999026,
+      "receivedBytes": 31841153,
+      "nativeCachedReads": 12,
+      "replacements": 6,
+      "projectionReads": 18,
+      "maxReplacementLatencyMs": 3878.0390880128834,
+      "cleanup": true,
+      "packages": {
+        "agent-observer": "0.7.0a6",
+        "mesh-plus": "0.1.0a22"
+      }
+    },
+    {
+      "total": 2000,
+      "index": 1,
+      "result": "fixed-result-2000-1-active.json",
+      "feed": "active",
+      "cpuMs": 241.60893000000002,
+      "wallMs": 242.35668999608606,
+      "receivedBytes": 267946,
+      "nativeCachedReads": 12,
+      "replacements": 6,
+      "projectionReads": 18,
+      "maxReplacementLatencyMs": 60.73346300399862,
+      "cleanup": true,
+      "packages": {
+        "agent-observer": "0.7.0a7",
+        "mesh-plus": "0.1.0a23"
+      }
+    },
+    {
+      "total": 2000,
+      "index": 2,
+      "result": "fixed-result-2000-2-active.json",
+      "feed": "active",
+      "cpuMs": 241.26394999999997,
+      "wallMs": 242.098899994744,
+      "receivedBytes": 267946,
+      "nativeCachedReads": 12,
+      "replacements": 6,
+      "projectionReads": 18,
+      "maxReplacementLatencyMs": 60.00556098297238,
+      "cleanup": true,
+      "packages": {
+        "agent-observer": "0.7.0a7",
+        "mesh-plus": "0.1.0a23"
+      }
+    },
+    {
+      "total": 2000,
+      "index": 3,
+      "result": "fixed-result-2000-3-full.json",
+      "feed": "full",
+      "cpuMs": 17459.490382000004,
+      "wallMs": 17511.52835600078,
+      "receivedBytes": 31841153,
+      "nativeCachedReads": 12,
+      "replacements": 6,
+      "projectionReads": 18,
+      "maxReplacementLatencyMs": 3908.691531018121,
+      "cleanup": true,
+      "packages": {
+        "agent-observer": "0.7.0a6",
+        "mesh-plus": "0.1.0a22"
+      }
+    }
+  ],
+  "semanticWireAndWorkParity": true,
+  "allCleanup": true,
+  "harnessSha256": "63d1c1883a843b87ccb79505042238e96c75c60956aed30b2b322542721114cb",
+  "fixtureSha256": {
+    "final-fixed-100-active.json": "d9f1098a2aa1e738f20de24d3cde2e6df3c703e14e02d8b440a4cf487e3b2c93",
+    "final-fixed-100-full.json": "28e4150e7655fd017e75a5107f4343f5fe69da490b21dfb20f1428ca727aba20",
+    "final-fixed-2000-active.json": "9c3c7f81734074c0c8882367063d2f50145b14ed02125070b3ee8ff7a5d375e6",
+    "final-fixed-2000-full.json": "db554927cf14054d7f41a64cde9245d68b3cb287eafef5952c86d9b43de661e0",
+    "final-fixed-500-active.json": "9fa1d46fbe130ae63f5d982926e59ae7a35941db47afa2a44f468e6ba24c623d",
+    "final-fixed-500-full.json": "66d0476610a3a55569aeb16f3d31ac06d79371a5375798e4b48aa8b30964330b"
+  },
+  "limits": [
+    "six changing replacements/three reads each; cached nonce acquisition over owned IPC with remote evidence, not SSH crypto",
+    "actual installed old and candidate clients/whole uncapped projection/wire included",
+    "producer collection/generation/service hosting and catalog outside timer",
+    "uncontrolled host frequency/unrelated workloads; two samples/mode/case, no confidence interval",
+    "synthetic original leases are not real native freshness proof"
+  ]
+}

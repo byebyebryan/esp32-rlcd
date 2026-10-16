@@ -1,0 +1,29 @@
+{
+  "requests": 31,
+  "acceptedFrames": 31,
+  "lastNativeState": {
+    "health": 0,
+    "partial": false,
+    "rows": 8,
+    "visible": 8,
+    "total": 8,
+    "totals": [
+      0,
+      7,
+      1,
+      0
+    ],
+    "flashing": false
+  },
+  "admittedAck": {
+    "event": "device_ack_recovered",
+    "request": 2,
+    "sequence": 2,
+    "rows": 8,
+    "source_admitted": true
+  },
+  "nativeProcessExit": 0,
+  "ownedCleanup": true,
+  "physicalDevice": false,
+  "scope": "real configured local IPC + fixed SSH/cached native fleet; ordinary serial worker at one-second cadence; simulated request clock/native C admission/render; no physical panel/USB proof"
+}
