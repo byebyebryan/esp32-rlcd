@@ -8,6 +8,43 @@ closure below. Producer implementation and independent qualification may proceed
 without another general go-ahead. Consumer adoption and normal service selection
 remain behind their later acceptance gates.
 
+## Producer-reported dark status and scoped handoff
+
+On 2026-10-17, the Mesh owner closed its delta-sync write/qualification scope
+and retained the feature dark and gated. Its local wrap commit is
+`bea028964f5c1f89c6527fcd9f04e4d634c00d7b`, on `mesh-delta-sync-20261016`;
+no upstream push is planned or performed by RLCD. Runtime remains
+`03a681f95a609b20eaa20134f7241d3d14d441a6`, with prior evidence
+`d483351d302bdc090f62bcaa18029788b7ec75be` byte-preserved. No packed-control
+candidate was implemented. The previous G1 authorization is not an instruction
+to restart an owning task that has closed its scope.
+
+Mesh's `docs/delta-sync-dark-status.md` is 7,979 bytes, SHA-256
+`0f237d975a9a3c300cd3688646d6c4a76317b81205bca8aa58771767fc0a7950`.
+Its `docs/evidence/2026-10-17-delta-sync-wrap/receipt.json` has SHA-256
+`a70159d37a7712a9050442404718f0efc0d89a4f0adec5e4c92a4e5d031734f1`.
+RLCD verifies the docs/evidence-only diff, clean local readback, no pending Git
+markers, 1,709 preserved tracked files, 18 refs, 229 ancestor commits, two
+retained wheels and two external cache-only review pins. The saved 411-test
+wrap gate is read/hash-checked, not rerun or promoted to qualification. Mesh
+reports no future owned children, jobs or Git operations; its watcher audit
+is cached and makes no fresh global scheduler guarantee.
+
+Mesh releases only its own temporary attribution hold for cleanup coordination
+in `/home/bryan/code/mesh-plus`. This grants no permission to rewrite/prune
+pinned lineage, refs, artifacts, `dist/` or referenced `.cache/` contents.
+`mesh-plus-idle-profile-20261014` at `c7b1d475` and
+`mesh-plus-system-dashboard` at `fe7e700d` remain outside that clearance.
+No cleanup is performed by this review. Observer separately reports its own
+deferred/unqualified wrap; its exact final commit and clearance are pending.
+
+This records producer state and scoped handoff facts. It does not complete
+G1/G2, grant acceptance, release RLCD's attribution HOLD or release another
+owner's hold. Closed contracts and source findings remain closed; CPU,
+2,000-row capacity/recovery and all other failed/open gates remain so.
+Selected a7/a23, ordinary full/material/Tmux/349/writer/provider workflows,
+concurrent work, rollback pins and deferred physical checks are preserved.
+
 ## Accepted G0 contract
 
 | Evidence | Accepted revision |
