@@ -1,7 +1,8 @@
 # Incremental state synchronization plan
 
-Status: **G0 closed, G1 implementation authorized**, 2026-10-16 UTC. Bryan
-authorized execution across the existing Mesh Plus, Agent Observer and RLCD
+Status: **G0 and A1 contracts closed, G1 implementation authorized**,
+2026-10-17 UTC. Bryan authorized execution across the existing Mesh Plus,
+Agent Observer and RLCD
 owners. This thread has reviewed the final contract and records joint G0
 closure below. Producer implementation and independent qualification may proceed
 without another general go-ahead. Consumer adoption and normal service selection
@@ -52,11 +53,11 @@ Reserved syntax does not establish capability. The new sync family is explicit
 and negotiated; frozen old schemas, lock inputs, SDK 1 and Delivery 1 routes
 retain their contracts. An unsupported new route fails without a legacy retry.
 
-A separate [transport-only relay amendment](delta-sync-relay-addendum.md) is
-under G1 review. G0 explicitly requires material admission in its publisher;
-the proposed additional relay role therefore needs joint producer agreement
-before dependent relay transport work. Reader authority checks, bounds,
-deadlines and later acceptance gates remain unchanged.
+The [transport-only relay amendment](delta-sync-relay-addendum.md) records joint
+A1 closure on exact Mesh R4 `7d7b09c` and Observer signoff `ccf6577d`. Its agreed
+dependent relay implementation may proceed under the existing G1 authorization.
+G0 material publishers retain their admission contract. Reader authority checks,
+bounds, deadlines and later acceptance gates remain unchanged.
 
 ## Ownership and execution gates
 
@@ -88,8 +89,9 @@ roles, roll out sibling services or take provider/session/device actions.
 
 The [G1 density review](delta-sync-density-review.md) permits private packed
 storage work under the existing caps and public interfaces. It separates that
-work from the pending joint codec/input contract and A1 relay role agreement;
-the failed dense resource/CPU gates remain open.
+work from compact codec agreement and source/input resource qualification.
+A1's role/API contract is closed; its implementation and the failed dense
+resource/CPU gates remain open.
 
 ## Accepted architecture and authority
 

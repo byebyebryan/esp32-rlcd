@@ -90,18 +90,16 @@ work, including dense producer CPU optimization, may continue.
 
 ## Relay and promotion boundary
 
-The [A1 revision 2 relay proposal](delta-sync-relay-addendum.md), root commit
-`665f6caaed99740a755de9467c7ae53322f7e720`, SHA-256
-`6eaa408376f91bb7c5e4276812927fd2bfce2445412fb02a211bea22a5e52aef`,
-is the current coordinator role review. Observer has reported native conceptual
-compatibility. Exact Mesh factory/declared-role/proof/input-transfer agreement
-remains pending; the earlier request is not an unreviewed general permission
-question. G0 material publishers retain their admission contract. A relay may
+The [A1 role/API amendment](delta-sync-relay-addendum.md) records joint contract
+closure on Mesh R4 `7d7b09c` and Observer exact signoff `ccf6577d`. The original
+coordinator revision 2 at `665f6ca` remains the role-boundary provenance.
+Dependent relay G1 implementation may proceed under the accepted interface.
+G0 material publishers retain their admission contract. A relay may
 own unadmitted bytes but exposes no material-admission or semantic capability;
 the Reader independently validates all material, roots and fresh-owner proof.
 
-Private storage work does not wait for relay closure. Dependent shared codec
-and relay work wait only for their concrete joint interfaces. G1 freeze and G2
+Private storage work remains independent. Shared compact codec work still
+requires its concrete joint interface agreement. G1 freeze and G2
 promotion still require exact immutable paired artifacts and independent
 correctness, native/IPC/fixed-SSH, capacity/resources and matched performance
 evidence. Preserve the selected a7/a23 tuple and all protected workflows.
