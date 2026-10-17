@@ -112,6 +112,44 @@ The retained arithmetic oracle and fixtures are unchanged: prior independent
 Their toy JSON-fragment preservation does not qualify native line framing.
 No runtime tests or implementation are implied by this contract closure.
 
+## Completion transfer agreement
+
+The additive source completion seam is agreed within the existing G1 scope.
+Observer's owning review at `132c0f109784ac849fa1d03d254118669224485a`,
+`docs/delta-sync-completion-transfer-r1-review.md`, SHA-256
+`bdd6e13402c44a6c5c58051ecf12a92658230138adec40a25f317f6166733d93`,
+accepts the method, result name and lifetime contract. Mesh's reconciliation at
+`332e33ff27ee1dfa6c53faf970429c34fe08d46d`,
+`docs/delta-sync-completion-transfer-r2.md`, 4,699 bytes, SHA-256
+`c1aa8a8ad8e449b5b6d68fadc839e57377237d26ba9bb5a035f0571945484706`,
+adopts its sole native-versus-outer control-bound clarification. The Mesh
+evidence manifest is `completion-transfer-review-r2.json`, SHA-256
+`d9ce6d34a708c81287b1a448dc06ac20e2fff26cef8a01e9ee39450704aedd49`.
+The original R1 packet stays unchanged; this agreement reopens neither A1 nor
+compact R2 and needs no additional general execution permission.
+
+Optional `changes_with_completion(...)` returns a source-owned
+`CompletedChanges` with transactions and completion, or an explicit control. Legacy
+`changes()` keeps its transaction-only tuple/control surface. Completion carries
+the exact original native bytes and correlates status, base/target, terminal tag,
+cursor and chain epoch. Generic relay preflight checks the entire result before
+output and drains material before completion; EOF, watch liveness or a
+synthesized control cannot substitute for native completion.
+
+Both existing bounds apply: Agent native control is at most 16,384 bytes;
+the complete nested Mesh control, including its envelope and LF, is at most
+65,536 bytes. Batch/control/header metadata, copies, live pins and late results
+remain prepaid until physical retirement under the shared caps and original
+deadline. Closing a result affects its own resources and preserves siblings.
+
+RLCD verified the exact agreement inputs, all 200 captured Observer files against
+the declared immutable commit, and unchanged original packet/probe bytes. Both
+producer output files exactly match RLCD's prior twelve-case Python 3.14/3.11
+replay: native 16,384 accepted, 16,385 and 65,536 rejected, final fixture credit
+zero. This is synthetic lexical-bound evidence. Actual source method, relay
+consumption, controller grammar, cancellation/close execution and aggregate
+qualification remain implementation work.
+
 ## Implementation and qualification
 
 Mesh may implement the agreed generic relay/controller and byte ownership;
