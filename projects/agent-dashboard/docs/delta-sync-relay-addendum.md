@@ -707,6 +707,21 @@ on initial `828cf0c` reproduces five expected failures on each version, with no
 errors/skips and 30 loaded inputs verified. These are the new carrier clock and
 held-copy-error regressions; they do not reopen earlier source/head findings.
 
+Observer extends this bounded composition to source `f7f7a55` at evidence-only
+`af3ec0096ec29d5f2bac1ad3c2bf1b6031264e95`, with the same Mesh `a482abb`
+runtime. Its `docs/delta-sync-controller-current-pair.md` has SHA-256
+`9bd0e4249c6af2f2070432c18d3e25aed3cbdf722d6e4c28e8aedc40106f6a40`;
+the 221,130-byte `current-pair.json` has SHA-256
+`855c48c544b0aee4a1ccd572188d493967e74574eaabbe91ba73d26f1349dd13`.
+RLCD verifies 225 selected Mesh and 212 Observer inputs, eight protected inputs,
+all 29 upstream artifacts and unchanged runtime/API bytes. Saved dual-Python
+GC-disabled results pass the same two methods/24 controller scenarios and 65
+owning source/export methods, with all 78/90 loaded project files verified per
+run. The saved owning check is 940 tests, zero skips and 197 Markdown files.
+These are independent executions of existing tests; RLCD verifies their evidence
+without repeating them. No Observer source/API change is required. The separate
+carrier copy/close finding below remains open and is not exercised by this subset.
+
 **A new stamped-header copy lifetime finding remains open.** On exact `a482abb`,
 RLCD's controlled reentrant frame close during `HeaderRef.materialize()` releases
 133,112 bytes of frame/parser credit while the original DTO remains in the
