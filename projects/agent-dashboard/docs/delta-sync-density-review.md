@@ -315,6 +315,38 @@ populated native/fixed SSH and immutable installed-pair gates remain open.
 Prior source/controller closures stay closed. No cap/ABI/schema/ID/artifact,
 backend promotion, selection, sibling, Git attribution cleanup or rollout change.
 
+### Intermediate profile/phase pairing receipt
+
+Observer's docs/helper-only `78b9ceee999c5e73c980b2f4f678db37cf3f57c4`
+records runtime `b6ce8428` with Mesh phase runtime `13876e6` / evidence
+`2385712d`. Its 393,226-byte receipt has SHA-256
+`f2f4f3f51078e9a25049f6091a1157d7cf26c64c8b081afe21ebb0be1ee3190d`;
+the guide has SHA-256
+`5ace264736d11f7ebd3b7fd1711af0cce589c652e8d68abfebe0670d76424087`.
+RLCD verifies 212 Observer, 260 Mesh and eight protected inputs against Git,
+61 upstream artifacts, 37 saved artifacts and three initial diagnostic files.
+The exact source/tests remain unchanged by this checkpoint.
+
+Saved focused logs/reports contain 93 passing methods per Python, GC disabled,
+with all 77 imported project files matching that pair. The twelve saved intake
+screens verify eight 100/500-row successes and four 2,000-row baseline
+`sync_decoded_capacity` refusals, each with 78 imported files verified and six
+final counters zero. At 500 rows, default peaks are 38,291,052/38,522,516 bytes;
+packed peaks are 31,388,996/31,620,460 bytes. Each is 968,569 below the named
+`b6ce8428` / `d013d2a` result. This is accounted reservation evidence, not RAM.
+
+The saved packed 2,000-row/3.14 scalar audit completes profile output and the
+6,146,304-byte generic patch charge, then a later 1,050,528-byte reservation
+refuses at 8,288,826 decoded + 58,199,661 reserved bytes. The would-be total is
+67,539,015 bytes. Its immediate caller is the probe's reserve wrapper; this
+does not identify the underlying allocator or support lowering its charge.
+All audit bins/final counters are zero. The saved 947-test/201-Markdown gate
+and the corrected helper diagnostics are verified without rerunning suites or
+capacity screens. These intermediate results do not replace the independently
+executed `d013d2a` and newer `43013395` pairings above. Existing source closures,
+CPU hard failures and all capacity, physical/RSS, recovery, authenticated-route,
+native/fixed-SSH and installed-pair gates retain their boundaries.
+
 ## Shared normalization and ownership
 
 Mesh's original `docs/delta-sync-codec-proposal.md`, SHA-256
