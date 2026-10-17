@@ -121,6 +121,59 @@ remain closed. Earlier canonical and CPU results retain their exact source
 tuples; this diagnostic supplies no native-provider, wheel or installed result.
 No backend promotion, selection or rollout occurs.
 
+### Private normalization phase ownership
+
+Mesh runtime `13876e6d723ad3ff5511c12e2900e7dc34f2c778`, evidence
+`2385712df2f0ea8ba0697facf01ae2543fb377d2`, narrows duplicate-key storage to
+its actual phase lifetime. `docs/evidence/2026-10-17-normalization-phases/README.md`
+has SHA-256 `537cc6381f9ff23a4e7ba45dbe2d7370c88c3c7656c5f99302e6f0583dc7a9b1`;
+the 6,985-byte receipt has SHA-256
+`6a98a0f27563f174a0981fe6c7b2f190bf10669b1ae4247b55b67de6e21bafaf`.
+RLCD verifies 260 before/after Mesh inputs, 211 unchanged Observer `84d284da`
+inputs, eight protected inputs, 27 artifacts and all 34 unchanged prior capacity
+artifacts. Only `normalization.py` and its compact tests change.
+
+The private phase dictionary aliases original tracked key Atoms' encoded
+buffers, retaining their intrinsic/encoded credit. A separate local reservation
+prepays the dictionary and resize overlap before insertion. It retires only
+after foreign phase-iterator cleanup. Baseline record Operation/list storage
+ends after alias definitions and clearing actual operation references; delta
+Operation credit remains through callback, finish or rollback. Reentrant input-
+owner retirement cannot refund the local phase reservation. Other group/alias/
+callback lifetimes and public contracts stay unchanged.
+
+RLCD independently runs 29 compact tests on each Python 3.14.8/3.11.17 with
+GC disabled, no failures/errors/skips and 34 loaded project files verified.
+The two final test methods against old runtime `d013d2a` reproduce one resource
+assertion failure per Python; the delta rollback control passes. The old case
+adds 99,986 bytes at callback entry for 128 metadata entries, above its 32,768-
+byte bound. Missing private helpers are not counted as before regressions.
+
+The unchanged source/Reader probe independently reproduces all eight 500/2,000-
+row screens, with 78 loaded files per run and six zero final counters. Each
+500-row peak falls by exactly 968,569 accounted bytes: default peaks become
+46,627,309/47,086,685 bytes and private packed peaks 39,725,253/40,184,629 bytes
+on Python 3.14/3.11 respectively. **All four 2,000-row baselines still refuse
+`sync_decoded_capacity`**, before proof scratch. Their peaks range from
+67,095,892 to 67,101,794 bytes under the same 67,108,864-byte limit.
+
+The independently replayed unchanged private scalar audit reaches 10,575
+field-token writes before the failed decoded retain, versus 9,153 on the prior
+source. Cumulative Observer token/index staging is now 17,406,450/11,315,921
+bytes; the old 3,862,069-byte cumulative generic phase allowance is absent,
+while generic group staging remains 5,216,000 bytes. All final scalar bins and
+six ledger counters are zero, with 78 loaded files verified. Instrumented
+timing is excluded. This shows progress to a later refusal under fixed caps,
+not 2,000-row fit, unique physical storage or permission to lower estimates.
+
+This clears the private phase-lifetime implementation at bounded source scope.
+The saved 391-test canonical result is verified, not repeated. It supplies no
+physical heap/RSS, matched CPU, dense-nine-field, delivered cold/recovery,
+ordinary public Reader/authenticated route, native-provider/fixed SSH or
+immutable installed-pair acceptance. Observer patch investigation remains
+independent; no cap/estimate relaxation, new shared API, backend promotion,
+selection, artifact or rollout follows.
+
 ## Shared normalization and ownership
 
 Mesh's original `docs/delta-sync-codec-proposal.md`, SHA-256
