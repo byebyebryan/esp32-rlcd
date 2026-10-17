@@ -150,6 +150,38 @@ zero. This is synthetic lexical-bound evidence. Actual source method, relay
 consumption, controller grammar, cancellation/close execution and aggregate
 qualification remain implementation work.
 
+## Generic completion consumer checkpoint
+
+Mesh implements the generic consumer at
+`b57c2176d60a8593fa2f85d7322655384a3227b6`. Its guide,
+`docs/delta-sync-completion-g1.md`, is 3,837 bytes, SHA-256
+`c4549565ff89efc031ed29f82db4a133b0c57a965d5e880c2d46a4c3026d59eb`.
+Setup requires the optional completion-bearing source method and rejects a
+legacy-only source. The consumer preflights all material, terminal metadata and
+outer envelopes before output, retains pins and separately owned metadata, and
+drains material before forwarding the exact original completion bytes.
+
+RLCD verified 187 immutable Mesh input pins and six protected paths, then ran
+all 27 focused relay fixture tests on Python 3.14.8 and 3.11.17 with cyclic GC
+disabled. All pass with five final allocation counters zero. Additional probes
+confirm that an oversized completed result and a malformed five-ref tuple emit
+no delivery prefix, retire their own session/refs, preserve a sibling channel
+and retain 1,024 bytes of unsealed receive credit until physical cleanup. This
+closes the bounded malformed-batch cleanup finding at source.
+
+The separate head-deadline refinement remains open on this runtime. The original
+clock probe still attempts a prefix write at 2,101 ms after a two-second head
+budget; the outer operation rejects and emits zero complete proof frames.
+This establishes no Reader authority bypass. The original nonrenewable deadline
+must also hold before writes.
+
+Completion tests use a fixture source and codec. Actual Observer source/result
+ownership, joined native IPC/Reader and fixed-SSH completion coverage remain
+unqualified. Earlier actual-source baseline/head evidence stays bound to its
+older runtime. The broad core gate was still running at the producer handoff;
+this checkpoint records the independent focused source review only. No installed
+pair, route, resource or performance acceptance follows.
+
 ## Implementation and qualification
 
 Mesh may implement the agreed generic relay/controller and byte ownership;
