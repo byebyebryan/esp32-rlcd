@@ -720,9 +720,11 @@ owning source/export methods, with all 78/90 loaded project files verified per
 run. The saved owning check is 940 tests, zero skips and 197 Markdown files.
 These are independent executions of existing tests; RLCD verifies their evidence
 without repeating them. No Observer source/API change is required. The separate
-carrier copy/close finding below remains open and is not exercised by this subset.
+carrier copy/close edge below is not exercised by this subset; its bounded
+correction and remaining regression are recorded separately.
 
-**A new stamped-header copy lifetime finding remains open.** On exact `a482abb`,
+**Original stamped-header finding m156: CLOSED at bounded source scope.**
+The before cases remain pinned to exact `a482abb`:
 RLCD's controlled reentrant frame close during `HeaderRef.materialize()` releases
 133,112 bytes of frame/parser credit while the original DTO remains in the
 copy operation; materialization then returns a detached dict after revocation.
@@ -739,9 +741,10 @@ revocation and early credit return, not measured RSS/cap overrun, late wire outp
 or admission authority. The existing R2/R4 copy convention requires immediate
 logical revocation, retaining the original frame/copy credit through physical
 unwind and rejecting a copy revoked before completion. Mesh's existing G1 owns
-that correction; no new contract or general approval is needed. The bounded
-controller implementation review remains open on this finding. Joint contract
-closure and the earlier source consuming-ref closure remain closed.
+that correction; no new contract or general approval is needed. The original
+interleavings are closed by the correction below; controller implementation
+review remains open on its separate pending-retirement callback regression.
+Joint contract closure and the earlier source consuming-ref closure remain closed.
 
 These small synthetic Runtime/controller/Reader scenarios use trusted caller
 authentication, private nonce/native-fixture scaffolding and separate ledgers.
@@ -786,10 +789,56 @@ are disclosed instrumentation. Reader admission uses an oracle reserialization;
 original fragment identity retains its separate 24-scenario evidence. Separate
 fixture/client/oracle/owner/Reader/relay storage is not an aggregate resource
 measurement. This clears only the bounded lifecycle supplement; it does not
-exercise or close the stamped-header copy/close finding above, qualify an
+exercise the stamped-header copy/close edge above, qualify an
 ordinary authenticated/selected Reader route, or satisfy the original CPU,
 32/64 MiB, RSS, dense delivery/recovery, populated native/fixed SSH and installed-
 pair gates. No runtime, schema/ID/artifact, selection, sibling or rollout change.
+
+### Carrier copy correction and pending retirement
+
+Mesh runtime `14990c789f853441b51af81ea0919facf0aff320` corrects the
+original m156 interleavings. Evidence `50ac1b9e330865bd900b89fa92fbd3c30b5f0d2d`
+supplies `docs/evidence/2026-10-17-controller/copy-close.md`, SHA-256
+`00f9db1cdc6829e998e6e58518c862e3ac1614293829133826cc6df3011e3c8a`,
+and the 8,302-byte `copy-close.json`, SHA-256
+`e891e3ce2f55f8927e4d3b23c95ffc8ae4db56ba40ec35b160916f6202f233ff`.
+RLCD verifies 193 before/after Mesh inputs, 211 Observer inputs, eight protected
+inputs, 35 correction artifacts and all 36 unchanged prior artifacts. Only
+`control_carrier.py` and its tests change; signatures, wire grammar, caps,
+deadlines, source API and selection remain unchanged.
+
+The original unchanged probe, SHA-256
+`b33788f836fd9585fad85fb50c439eb3d567e3f75682d76145bd2819fc933a0f`,
+reproduces both gaps on `a482abb` and passes the corrected behavior on `14990c7`
+independently on Python 3.14.8/3.11.17 with GC disabled and 29 loaded pins each.
+During copy, all 593,088 heap bytes remain charged; concurrent close waits,
+no detached value returns and `sync_control_retired` rejects the revoked copy.
+Caller credit, sibling usability and final five zero counters remain correct.
+Three final named tests overlaid on the old source reproduce three expected
+failures per Python; all 67 focused checks pass on the new source, with 30/35
+loaded pins verified respectively. The new source plus Observer `e3441d0`
+also passes the 24 basic and 20 lifecycle scenarios on each Python, 77 loaded
+pins per run. The saved 386-test canonical result is verified without rerunning.
+This closes m156's original copy interleavings only.
+
+**New pending-retirement callback finding m165 remains OPEN.** A public worker
+thread closes an idle frame; immediately afterward, the owner awaits carrier
+close before the queued frame-retirement callback runs. On `14990c7`, carrier
+cleanup clears its range storage, then the callback accesses those retired
+ranges and raises `TypeError`. Repeated public close leaves 132,952 heap bytes
+reserved; a shared-ledger sibling stays usable. Exact `a482abb` has no callback
+error and returns all five counters to zero for this same ordering. Both Python
+versions reproduce the contrast with GC disabled and 29 loaded pins per run.
+The probe uses public factories, frame/carrier close and ledger queries, with a
+real worker and short join controlling order; no copy hook or private source
+mutation. Actual callback exceptions are retained. This is a bounded cleanup
+regression, not a measured RSS/cap overrun, late wire output or authority claim.
+
+The existing Mesh G1 owns pending callback/storage/credit ordering, preserving
+the copy-pin correction, immediate revocation, bounded slots and siblings.
+No new ABI, contract or general approval is needed. Overall carrier/producer
+acceptance remains open on m165 and the original resource, CPU, delivery/recovery,
+native/fixed SSH, authenticated route and immutable installed-pair gates.
 
 ## Implementation and qualification
 
