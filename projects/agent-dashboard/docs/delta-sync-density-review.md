@@ -407,6 +407,26 @@ Every screen ends with six zero counters. These are ledger peaks, not physical
 heap/RSS savings or available headroom. The newer default cases record a refused
 1,069,904-byte reservation; packed cases contain no reserve-wrapper failure,
 so no underlying allocator attribution is inferred from the public error.
+
+Mesh's later owning join `b67403bd4eca3c397855b1332014458241b4f7d7` preserves
+these runtime sources. Its 13,621-byte receipt has SHA-256
+`ce4231be7cfb9658b166e09c61bcf950d75775873b5cd00dda87bca6eb965e43`.
+RLCD verifies all 56 artifacts and 27 prior Mesh artifacts, the saved separate
+64/68-method workers per Python and twelve screens; overlapping 500/2,000-row
+outcomes/peaks match the root executions above. No unchanged suite, capacity or
+canonical gate is repeated or reattributed.
+
+RLCD independently repeats only the new packed-2,000/Python-3.14 scalar audit
+on `b6ce8428` / `231a6313`. With GC disabled and 79 imported files verified, it
+matches all 18,000 callback token writes and 2,000 generic field groups charged
+1,744,000 bytes. Compact fixed patch scratch is 6,656 bytes; the old eager
+6,146,304-byte patch charge is absent. A later `_Decoded` retain refuses at
+9,672,159 decoded and 57,369,560 reserved bytes. All audit bins and six final
+counters are zero. This is a later generic failure than the older-profile
+callback refusal. Type/cumulative-charge observations neither identify a safe
+estimate reduction nor prove physical topology, memory headroom, RSS or CPU
+savings; instrumented timing is excluded.
+
 This clears the bounded private workspace source implementation only. Full-only
 3,510/14,010-cell fixtures, separate native-owner account, private arena/nonce/
 proof carrier and synthetic clock remain excluded from dense-nine-field,
