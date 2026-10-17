@@ -298,6 +298,29 @@ a selected Reader route. Batch cleanup passes independently of the still-open
 detached-head tracking gap. Dense/eight-MiB relay delivery, aggregate resources,
 performance, populated native/fixed SSH and installed-pair acceptance remain open.
 
+Observer's separate recheck at `8f05305c699ac22960847c2bc757c2ef7c812d1c`
+preserves its historical failed pair and confirms the existing correction on
+Mesh `be6470ed`, separately using Observer `2f697d4` and `fc7579b`. Its guide
+`docs/delta-sync-completion-join-recheck.md` has SHA-256
+`107b0f80284d339649e86c35ef7f1cbd99405896c4209f4bf3e8e4de03015055`;
+`completion-relay-recheck.json` has SHA-256
+`8630d828cd65aa5f7662bc6da5f2d0e7a7ce25f9dba386cbb77a6986085f2491`.
+RLCD verified 187 upstream Mesh inputs, eight protected inputs, the exact
+152/207/209-file Mesh/old-Observer/current-Observer inventories, five artifacts,
+eight retained logs and six saved reports with all loaded-module pins.
+
+RLCD independently ran only the six new Reader cases on each Python version
+against immutable Observer `fc7579b` / Mesh `be6470ed`, with GC disabled and all
+66 loaded modules verified. Each full/active zero/one/four case admits a baseline,
+confirms it with a fresh native nonce proof, stages actual source transactions
+and confirms the final native tag/DTO with a distinct second proof. Both proofs
+and catch-up share one acquisition capsule. All six Reader and five relay
+counters finish at zero. The unchanged forwarding/source/relay suites retain
+their existing logs rather than being rerun. This adds sequential synthetic
+Reader evidence; it does not fix the consuming-ref defect, qualify network
+controller dispatch, combine the separate ledgers into an aggregate budget,
+or establish dense/recovery, CPU/RSS, native or installed acceptance.
+
 ## Open source pin-tracking finding
 
 A distinct revocation gap is independently reproduced on Observer
@@ -339,10 +362,10 @@ automatic receive still lose a consuming ref's revoker; terminal-history and
 no-inspection controls pass. Ordinary and relay input source files are identical
 between the reported `b57c217` and current Mesh pair.
 
-The proposed additive `revoked` status distinguishes logical retirement from a
-healthy consume and from physical storage reclamation. It fits the existing
-ownership direction, but exact public API agreement and implementation remain
-pending between the owners. No `nbytes` change, private graph access, healthy-pin
+Observer first proposed additive `revoked` status to distinguish logical
+retirement from a healthy consume and physical storage reclamation. The
+owner-bound query below supersedes that property proposal. No `nbytes` change,
+private graph access, healthy-pin
 revocation on inspection or early physical credit refund is accepted by this
 proposal review. These expected failures confirm an open gate, not a source fix.
 
@@ -368,11 +391,21 @@ The owned source requires a callable predicate before reserving session state
 or starting I/O, checks exact bool results, prunes only true and drops the
 captured query after its own children and I/O retire. Missing capability rejects
 `sync_source_input_owner`; no ambiguous `nbytes` fallback is supported. Exact
-Observer agreement remains pending. Once both owners agree these bytes, the
-existing G1 authorization covers their implementation without another general
-or coordinator approval. The query and source fix still require the stated
+Observer agreement is now recorded at
+`5543fc79c7568b6d9e8da7d018e7703ac26e1a06`,
+`docs/delta-sync-input-retirement-agreement.md`, SHA-256
+`4e10173eb5cdf8b231e21f80ccf46cbfa9fce2f44d6a73f406020dcfcca008cf`.
+Its `input-retirement-agreement.json` has SHA-256
+`fc87b17654da3ae4d3fe348bb6eb47eb612ca21cdda24fca1bb6a66705e18ee0`.
+RLCD verified all five agreement artifacts, its retained check log, the exact
+Mesh proposal and unchanged defective source. Both owners now agree these
+bytes. Existing G1 authorization covers Mesh's committed public method and the
+dependent Observer source fix without another general or coordinator approval.
+The query and source fix still require the stated
 cache/relay, detached-head, sibling, cancellation, bounded-history and
-GC-disabled accounting tests; this proposal review closes no runtime gate.
+GC-disabled accounting tests, including independent before/after replay of the
+original failures. This closes the interface-agreement step only; the source
+pin-tracking runtime finding remains open.
 
 ## Relay deadline and failed-intake correction
 
