@@ -61,6 +61,20 @@ archive. Observer reports no pending children, Git operations or automatic
 continuation and releases only its own existing cleanup scope. Other Observer
 worktrees, published objects/artifacts and sibling owners remain excluded.
 
+Repos subsequently reports completion of the narrowed attribution cleanup.
+The local `observer-delta-sync-20261016` ref maps original wrap `79d07f40` to
+`957e328e9215aa6a5b05bb1ac0e963877f06f028`; both have exact tree
+`3a05428a1ecd9e4a453035bf840c0643ed775f66`. RLCD verifies all eight Starship
+ref updates preserve their trees, all four worktree indexes match their byte
+backups, all 57,645 cache files remain exact, and the six release tag objects
+and three excluded sibling refs remain unchanged. Old pinned objects and the
+external recovery directory remain available. Repos' receipt is
+`/home/bryan/code/.identity-audit-20261016T195933Z/observer-cleanup-result.json`;
+its GitHub publication/release-asset and Snap details retain repos' verification
+scope. No runtime, deployment or qualification is changed by this metadata
+mapping. Historical source/acceptance pins continue to identify the original
+objects; the remapped head gains no new producer acceptance.
+
 This records producer state and scoped handoff facts. It does not complete
 G1/G2, grant acceptance, release RLCD's attribution HOLD or release another
 owner's hold. Closed contracts and source findings remain closed; CPU,
