@@ -427,7 +427,8 @@ RLCD verifies 188 Mesh inputs and eight protected inputs, unchanged production
 sources and exact packet/vector bytes. The toy model reproduces 14 positive and
 34 rejection cases identically on Python 3.14.8 and 3.11.17. It does not model
 the new results, carrier ingress, busy scheduling or cancellation concurrency.
-Two contract clarifications are required before dependent dispatcher edits:
+The R1 review required two contract clarifications before dependent dispatcher
+edits:
 
 1. Cancel revokes its capsule, then requires a cancelled receipt for the original
    command and an OK receipt for cancel. End similarly requires OK after closing
@@ -443,10 +444,49 @@ Two contract clarifications are required before dependent dispatcher edits:
    timestamp handoff or an equally conservative bound, rather than assuming an
    existing buffered `LineChannel` exposes that provenance.
 
-These are control-plane contract findings, not new runtime failures or changes to
-the accepted data/role/completion contracts. Exact Observer review remains pending.
-Independent G1 work, including the separate retirement-query agreement, continues;
-no controller implementation, API freeze, producer readiness or rollout is inferred.
+These were control-plane contract findings, not new runtime failures or changes to
+the accepted data/role/completion contracts. Their original R1 evidence remains
+unchanged; the R2 reconciliation follows.
+
+### Controller R2 reconciliation
+
+RLCD's coordinator contract review is clear for standalone Mesh
+`33cb57c98ca3062f139ea1fd0c68b15bd5abd8d6`,
+`docs/delta-sync-controller-proposal-r2.md`, 31,399 bytes, SHA-256
+`89b24a9f3191bcded303d33c8b2ed973335b703811185abf1186848fbd562f48`.
+Its `controller-r2-review.json` has SHA-256
+`40092583a0e5732f62512d6026eb96b28fce5623e5e0d4a64e11af291a09ba3c`.
+Both R1 findings are resolved at contract scope:
+
+- Bounded, single-use receipt records carry exact immutable command/request/
+  channel identities and their original deadlines separately from retired work.
+  Specified end/cancel/failure/busy receipts cannot revive material or proof
+  authority. Request/channel retirement invalidates all receipts. An expired head
+  receipt is suppressed even if a still-live cancel receipt confirms cleanup.
+  The drained `through` watermark is captured once under the output lock.
+- A minted, prepaid carrier for unread IPC sockets or fixed stdio descriptors
+  stamps immediately before each nonblocking userspace admission. Immutable byte
+  ranges retain conservative first-byte floors through coalescing, fragmentation
+  and paused reads. Missing provenance rejects; dequeue time cannot renew the
+  bound. Its ring, range metadata, frame/header copies and output ownership remain
+  subject to the original aggregate caps.
+
+RLCD verified the exact proposal/manifest/vector bytes, all unchanged R1 pins,
+188 Mesh inputs, eight protected inputs and an empty runtime diff. The unchanged
+toy reproducer passes identically on Python 3.14.8 and 3.11.17: R1's 14 positive/
+34 rejection cases plus R2's 15 positive/32 rejection cases. These are metadata,
+state and arithmetic checks; they do not qualify minted provenance, actual
+carrier storage, strict dispatcher/result parsing, concurrency, I/O, physical
+cleanup or resource accounting.
+
+Exact Observer agreement on these R2 bytes remains to be recorded. Once both
+owners agree, the existing G1 authorization covers dependent controller/carrier
+implementation without another general or coordinator approval. The separate
+source retirement-query implementation and all original correctness/lifetime,
+32/64 MiB, two-second/fifteen-second, dense CPU, deliverable 2,000-row recovery,
+RSS, populated native IPC/fixed SSH, immutable installed pair and end-to-end
+gates remain open. This review grants no API freeze, runtime or producer
+acceptance, selection change or rollout.
 
 ## Implementation and qualification
 
