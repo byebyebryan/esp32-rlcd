@@ -134,6 +134,46 @@ native transport and immutable installed pairing remain unqualified. No
 schema/encoding identity, package version or consumer selection is allocated
 or changed by this checkpoint.
 
+## Agent streaming source checkpoint
+
+Observer's actual codec/profile integration is commit
+`c1ae31f575921e58e23dbcd59585128a143585a9`. Its guide,
+`docs/delta-sync-compact-codec.md`, has SHA-256
+`00a9e968f97cc9777ed28c1e7535ec9afbda73797755e1e00e93266437397651`;
+the source manifest `docs/evidence/2026-10-16-delta-sync-source/compact-codec.json`
+has SHA-256 `538a6c0680883c95c0d7df605df5648485a53ab6d85e9176ae3d07ebdab76c0a`.
+
+`AgentCompactSyncCodec` uses public configured specs, sided aliases, keyed
+before/after-record state and `ctx.pack`. The Agent profile validates support
+and mask intents, supplies nine derived tokens for changed bodies, returns an
+empty compact membership expansion and leaves cell writing to Mesh. Head uses
+the original bounded decoder without loading the material schema. The schema
+graph has an explicit conservative 8 MiB reservation per plan in the same heap
+ledger; this is included source ownership, not dense-capacity acceptance.
+
+RLCD verified 167 Observer inputs, 93 reported Mesh inputs, 89 legacy Mesh inputs,
+seven artifacts, eight producer logs and four unchanged candidate wire inputs.
+It independently ran 76 selected codec/parser/profile/read tests on both Python
+3.14.8 and 3.11.17 against each of Mesh `030da1f` and reviewed `be6470ed`.
+All pass with cyclic GC disabled and no skips. The older `66b9c1e` expanded
+profile/read/owned-source path also passes all 68 selected cases on each Python
+version. Full/active warming fixtures pass on both compact pairs.
+
+The source tests admit eight raw baselines and ten transaction cases to the
+expected native roots, check independently recomputed source wrappers, reject
+eight schema-valid invalid cases, preserve genuine equal/omitted-mask token
+changes and losslessly export full/active native DTOs after synthetic fresh
+confirmation. Dotted source names in the frozen arithmetic corpus remain
+unchanged; runtime tests use explicit valid `agents_full`/`agents_active`
+bindings and recompute their distinct wrapper roots. SDK name checks are intact.
+
+This is bounded synthetic source integration. Actual compact native serializer,
+journal and source dispatch, schema/encoding freeze, inclusive memory/RSS,
+dense/cold/recovery CPU/bytes, deliverable 2,000-row recovery and populated
+IPC/fixed-SSH/immutable installed-pair acceptance remain open. The separate
+source pin-tracking and relay head-deadline findings also remain open; this
+checkpoint changes neither path. Current a7/a23 and protected routes stay selected.
+
 ## Remaining qualification
 
 Run the actual expanded and compact paths through strict streaming schema and
