@@ -174,6 +174,68 @@ immutable installed-pair acceptance. Observer patch investigation remains
 independent; no cap/estimate relaxation, new shared API, backend promotion,
 selection, artifact or rollout follows.
 
+### Shared group owners and tracked markers
+
+Mesh runtime `4301339515e84f2edb63c88a886380bcde56c621`, evidence
+`aa4a7fd7b265c18ac6c45144e2462f0b0b5e2024`, shares generic-validated sided
+record-ref and cohort Atoms and gives retained canonical group markers explicit
+heap and encoded ownership. `docs/evidence/2026-10-17-group-ownership/README.md`
+has SHA-256 `c66290d9884409ee54d7ea1213ffe7725508673b33d00253d16e6b9250069f9c`;
+the 6,794-byte receipt has SHA-256
+`c6de2a8f62f2729325d9bd01fb5cf6664df562fae937f9936af9297153fac789`.
+RLCD verifies 260 before/after Mesh inputs, 211 unchanged Observer `84d284da`
+inputs, eight protected inputs, 27 artifacts and all 27 unchanged prior phase
+artifacts. Only `normalization.py` and its compact tests change.
+
+Sharing follows exact identity, birth, side, record-existence and canonical
+alias-ref checks. The before root remains physically pinned. A stage-local
+cohort pool has at most 64 entries for the before/after union, with prepaid
+slots and separately tracked Atom payloads. Marker concatenation prepays its
+temporary heap/encoded overlap before construction; dictionary/order aliases
+point to the tracked marker's exact buffer. The fixed 1,024-byte group metadata
+allowance remains. Ordered aliases drop before marker owners. Callback/root/
+rollback/reentrant-retirement lifetimes and admission authority stay unchanged.
+
+RLCD independently runs 35 compact tests per Python 3.14.8/3.11.17, GC disabled,
+with no failures/errors/skips and 35 loaded files verified per suite. Coverage
+includes both-backend expanded-index parity, sided alias rebirth, canonical
+marker bytes, encoded refusal before construction, reentrant retirement and
+destructor ordering. The one final topology method against old `13876e6`
+reproduces two expected non-sharing assertions, one per backend, after logical
+tags/index roots match. These are allocation-topology differences, not a prior
+output or authority defect. The saved 397-test canonical gate is verified,
+not repeated.
+
+All eight unchanged same-ledger source/Reader screens independently reproduce,
+with 78 imported files verified and six zero final counters per run. The four
+500-row cases still admit a baseline/two generations/fresh heads; peak heap
+falls by another 805,763 bytes on Python 3.14 and 821,683 on Python 3.11.
+Default peaks become 45,821,546/46,265,002 bytes and private packed peaks
+38,919,490/39,362,946 bytes. **All four 2,000-row baselines still refuse
+`sync_decoded_capacity` before proof scratch.** Their encoded peaks are now
+12,490,114 bytes default / 11,954,777 packed, including explicitly owned marker
+payload. Both original caps remain enforced.
+
+The independently replayed private audit matches 12 live tracked Atoms at the
+new packed 2,000-row refusal, versus 4,010 at the prior refusal. PackedAtom count
+stays 14,001, now including tracked markers; its encoded total rises to
+7,747,952 bytes, while ordinary Atom encoded bytes fall to 4,670. These are
+allocation-class observations, not RSS or unique physical workspace totals.
+Admission reaches 11,763 token writes rather than 10,575 before the failed
+decoded retain. Cumulative token/index charges are 19,361,898/12,586,947 bytes;
+fixed generic group metadata is 4,096,000 bytes plus separately tracked marker
+payload and 512 bytes of cohort-pool slots. All audit bins and six final
+counters are zero, with 78 loaded files verified and instrumented timing
+excluded.
+
+This clears the private sharing/marker implementation at bounded source scope
+only. Observer's patch investigation remains independent. The full-only fixture,
+separate native-owner account and synthetic proof/clock scaffolding retain the
+prior exclusions. CPU, physical heap/RSS, dense-nine-field capacity, delivered
+cold/recovery, ordinary public Reader/authenticated route, populated native/
+fixed SSH and immutable installed-pair acceptance remain open. No public API,
+cap/estimate relaxation, backend promotion, artifact, selection or rollout.
+
 ## Shared normalization and ownership
 
 Mesh's original `docs/delta-sync-codec-proposal.md`, SHA-256
