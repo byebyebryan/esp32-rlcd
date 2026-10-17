@@ -411,6 +411,43 @@ the final passing log. These source checks do not close the separate consuming-
 ref pruning gap or qualify actual owned-source completion, controller grammar,
 aggregate resources/performance/native transport or an installed pair.
 
+## Controller contract review
+
+Mesh proposes the first explicit network control plane at
+`5cee72e2d9fe2da8f27102774e09243b906e01ad`:
+`docs/delta-sync-controller-proposal-r1.md`, 17,270 bytes, SHA-256
+`18e8f7f97462613a72353e00e2ffa579b452fdf7855a91443198dca00d51900e`.
+Its `controller-r1-review.json` has SHA-256
+`4b123b9e2535f2a0f707cff58ae7edc27f1d09056b4ffa843eb290342597ca81`.
+Versioned open/command/result records remain separate from unchanged R4 data
+delivery and original native controls. Bounded sequence IDs, request digests,
+drained delivery watermarks and restrictive-only head deadlines fit that direction.
+
+RLCD verifies 188 Mesh inputs and eight protected inputs, unchanged production
+sources and exact packet/vector bytes. The toy model reproduces 14 positive and
+34 rejection cases identically on Python 3.14.8 and 3.11.17. It does not model
+the new results, carrier ingress, busy scheduling or cancellation concurrency.
+Two contract clarifications are required before dependent dispatcher edits:
+
+1. Cancel revokes its capsule, then requires a cancelled receipt for the original
+   command and an OK receipt for cancel. End similarly requires OK after closing
+   its capsule. The blanket ban on results after capsule revocation forbids those
+   receipts. Define bounded cleanup-receipt ownership under the original immutable
+   deadline, distinct from revoked material/proof authority, and make terminal,
+   busy and expiry-result rules consistent. No new time grant or revived work.
+2. Specify how the first-byte timestamp reaches the dispatcher from the prepaid
+   userspace carrier, including coalesced tails and paused reads behind blocked
+   output. Sampling at later dequeue/parse would renew time already spent buffered.
+   For example, bytes admitted at 1,000 ms with 2,000 ms remaining are expired at
+   a 3,500 ms dequeue; they must not gain a new 5,500 ms deadline. Define a supported
+   timestamp handoff or an equally conservative bound, rather than assuming an
+   existing buffered `LineChannel` exposes that provenance.
+
+These are control-plane contract findings, not new runtime failures or changes to
+the accepted data/role/completion contracts. Exact Observer review remains pending.
+Independent G1 work, including the separate retirement-query agreement, continues;
+no controller implementation, API freeze, producer readiness or rollout is inferred.
+
 ## Implementation and qualification
 
 Mesh may implement the agreed generic relay/controller and byte ownership;
