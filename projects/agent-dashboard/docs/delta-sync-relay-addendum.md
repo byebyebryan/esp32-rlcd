@@ -346,6 +346,34 @@ pending between the owners. No `nbytes` change, private graph access, healthy-pi
 revocation on inspection or early physical credit refund is accepted by this
 proposal review. These expected failures confirm an open gate, not a source fix.
 
+Mesh provides the concrete owner-bound alternative at
+`d8d7a6233f625ba352c3451396770a61b28635c7`:
+`docs/delta-sync-ref-retirement-proposal.md`, 6,067 bytes, SHA-256
+`298efa4af40a23651702ac85862d817a045e9b7e781daf363bc43e1300aaf018`.
+Its `ref-retirement-proposal.json` has SHA-256
+`f498c415818e05829545c9abc8db382e1eb5a52d42c668c9d4dbe434a38350aa`.
+RLCD verifies the exact packet, five input pins, three diagnostic pins, source
+pin and retained design-check log; production sources remain unchanged.
+
+Coordinator review is clear for `InputOwner.ref_is_retired(OwnedInputRef)` and
+the corresponding relay-owner/ref method. Both return an exact bool using
+constant-time lifetime metadata. Available or healthy consuming refs return
+false; logical revocation, terminal consumption and a retired intake epoch return
+true even if physical pins remain charged. Wrong type/role/owner or malformed
+refs reject `sync_input_owner` without mutation. A closed minting owner can
+still answer for its own refs. The query provides no bytes, currentness,
+admission or proof capability and cannot refund credit or retire a graph.
+
+The owned source requires a callable predicate before reserving session state
+or starting I/O, checks exact bool results, prunes only true and drops the
+captured query after its own children and I/O retire. Missing capability rejects
+`sync_source_input_owner`; no ambiguous `nbytes` fallback is supported. Exact
+Observer agreement remains pending. Once both owners agree these bytes, the
+existing G1 authorization covers their implementation without another general
+or coordinator approval. The query and source fix still require the stated
+cache/relay, detached-head, sibling, cancellation, bounded-history and
+GC-disabled accounting tests; this proposal review closes no runtime gate.
+
 ## Relay deadline and failed-intake correction
 
 The head-deadline and source-error cleanup findings are now independently closed
