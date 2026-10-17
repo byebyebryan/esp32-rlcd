@@ -100,6 +100,40 @@ identifier remains unallocated and the schema remains unfrozen. Actual streaming
 Agent admission, exporter/source dispatch and generic runtime qualification
 still require their original correctness, ownership and performance gates.
 
+## Generic source checkpoint
+
+Mesh's opt-in implementation is now available for Observer's owning integration
+at runtime `05ad6fc8db1725afd6aac19435af83e4c0eb46eb`, following the initial
+implementation `030da1f0ac083fc51bf9ad10fc93e62678719cdc`. Its exact supported
+API and source evidence are:
+
+| Input | Revision and SHA-256 |
+| --- | --- |
+| `mesh-plus/docs/delta-sync-codec-g1.md` | Runtime `05ad6fc8`, 5,232 bytes, `1eede320e3667f81d909fe2fc3b783962f71c6acd70c4296790ffa1d6f92d26f` |
+| `mesh-plus/docs/evidence/2026-10-16-delta-sync/compact-g1-iterator-review.json` | Evidence commit `51b8e8d6db6cd7a14dce2333f5b52a2f05d2abff`, 35,936 bytes, `10462a1c77cb1b8015db5dcdfdbb33491fc64c8529ea0659d4b0b300d392e50a` |
+
+RLCD reviewed the public configured-codec, staged alias/group, provisional mask,
+generic token expansion and root/rollback paths. It verified 187 Mesh input
+pins, eight immutable Observer `c161090` packet inputs, six protected paths and
+five producer logs. The API document also records the candidate wire
+compatibility above in a durable Mesh source commit.
+
+On independent immutable exports, RLCD reran all 25 focused tests on Python
+3.14.8 and 3.11.17. With the final test file overlaid on the initial runtime,
+both versions reproduce the held-iterator failure: 509 bytes and two pending
+allocations survive close. The fixed runtime passes all 25 tests on both
+versions, with cyclic GC disabled, public errors retained and all five final
+allocation counters zero. The source inputs remain unchanged after execution.
+Mesh separately reports its 330-test canonical gate; RLCD did not rerun that
+broader suite for this bounded review.
+
+This clears a generic source prerequisite for Observer's already-authorized
+integration. The test codec decodes a whole small fixture; actual Agent
+streaming admission, source/export wiring, inclusive resources, performance,
+native transport and immutable installed pairing remain unqualified. No
+schema/encoding identity, package version or consumer selection is allocated
+or changed by this checkpoint.
+
 ## Remaining qualification
 
 Run the actual expanded and compact paths through strict streaming schema and
