@@ -283,6 +283,49 @@ dense 2,000-row/cold recovery, populated providers/fixed SSH and immutable
 installed paired acceptance remain open. No ID/schema allocation, service,
 provider, selection, sibling or rollout action occurs.
 
+## Compact source through relay and Reader
+
+Mesh adds test-only composition evidence at
+`6be8fc9f149596e85e8cfc90e3904e54ee3b4269`, pairing unchanged Observer
+`7213084` with Mesh runtime `6fce5ed0`. Its guide
+`docs/delta-sync-compact-relay-g1.md` has SHA-256
+`7fac4fe763baceecd5211b2808948bbe4e79e53bc6ad296e5c4bfa7314567079`;
+`compact-relay-review.json` has SHA-256
+`9f1366841c31f66c60853968ead59b008c710072e4636d18a3d05e9af7348dba`.
+The exact `verify_compact_relay.py` has SHA-256
+`bbeb88cf0ca8619f6a750bc018dd15279e6bc09797aba5cd58278b8c2dc087c2`.
+
+RLCD verified 188 Mesh inputs, 212 Observer inputs, eight protected inputs,
+the prior source-review receipt and preserved harness diagnostics. It then ran
+the unchanged three new methods on Python 3.14.8 and 3.11.17: nine scenarios
+per run pass with GC disabled, retained errors, no skips and all 73 loaded
+project modules verified. The earlier 203 component tests were not rerun or
+combined into these counts. Two earlier framing/extraction mistakes remain
+explicit test-harness diagnostics, with no production change or failed-before
+claim.
+
+The actual disposable compact Runtime dispatcher, compact source and structural
+transport codec feed Mesh's byte relay over two UNIX sockets into an independent
+compact Reader. Full/active zero/one/four chains preserve exact baseline,
+transaction, whitespace-padded completion and head fragments extracted from
+received Mesh bytes. Baseline and target use fresh original relay-head proofs;
+an original valid completion presented as a proof rejects `sync_proof_shape`,
+and changed material cannot be acquired before confirmation. Final public DTOs
+equal the native owner. Wrong source/transport selections reject before a
+material prefix. A large opaque invalid body crosses unchanged, then independent
+Reader admission rejects `sync_compact_value_shape`.
+
+Reader's six and relay's five counters return to zero, source sessions/sockets
+close, and the synthetic native fixture retires its scratch and Runtime threads.
+The controller is trusted direct test code with private nonce setup. Separate
+owner, capture/oracle, relay and Reader allocations do not establish aggregate
+caps or RSS. Ordinary carrier/controller/authentication bootstrap, compact
+watch/held-drain/cancellation/expired-head composition, dense capacity/recovery,
+CPU, populated providers/fixed SSH and immutable installed-pair acceptance
+remain open. The unchanged source's pin-pruning finding also remains open.
+This adds bounded pipeline evidence without selecting a route or promoting
+artifacts.
+
 ## Remaining qualification
 
 Run the actual expanded and compact paths through strict streaming schema and
