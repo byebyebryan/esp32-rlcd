@@ -167,6 +167,19 @@ confirmation. Dotted source names in the frozen arithmetic corpus remain
 unchanged; runtime tests use explicit valid `agents_full`/`agents_active`
 bindings and recompute their distinct wrapper roots. SDK name checks are intact.
 
+Observer follow-up `b3a85bd77cd2cf76ac2f16c88f61f2dfd9398110` independently
+pairs the unchanged `c1ae31f` runtime with Mesh `05ad6fc`. Its separate
+`docs/evidence/2026-10-16-delta-sync-source/compact-codec-mesh05.json` is 64,702
+bytes, SHA-256 `60699fa7f576d49b8f77ec480f9f6ec0d2d7162fa0e8b9d70562ef60875e1185`;
+the updated guide has SHA-256
+`f160b5fa9d1ed34d2731d0cb249496509b5ae4c0ee80ad1f273a4c764e6a7020`.
+RLCD verified 167 unchanged Observer inputs, 93 Mesh runtime and 59 test inputs,
+93 historical Mesh inputs and seven logs. Observer's 171 integration cases and
+25 Mesh cases pass on each Python version with GC disabled; the old 509-byte/
+two-allocation iterator failure reproduces before the fix. This corroborates
+the prior root source/lifetime checks without reattributing earlier `030da1f`
+results or claiming native, resource, performance or installed-pair acceptance.
+
 This is bounded synthetic source integration. Actual compact native serializer,
 journal and source dispatch, schema/encoding freeze, inclusive memory/RSS,
 dense/cold/recovery CPU/bytes, deliverable 2,000-row recovery and populated
