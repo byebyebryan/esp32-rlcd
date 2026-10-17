@@ -182,6 +182,43 @@ older runtime. The broad core gate was still running at the producer handoff;
 this checkpoint records the independent focused source review only. No installed
 pair, route, resource or performance acceptance follows.
 
+Mesh follow-up `be6470edab0ae7d67063fd08b61a8019c2093e35` removes a
+redundant `nativeBindingDigest` requirement from native completion controls;
+their existing typed tag already carries that binding. RLCD reproduced six
+full/active zero/one/four-transaction cases on each Python version with the
+actual Agent structural codec and fixture batches: `b57c2176` rejects the valid
+controls, while the correction accepts them and preserves the original bytes.
+The 27 relay tests also pass on the corrected runtime. This is structural codec
+composition, with fabricated fixture roots, rather than actual owned-source
+completion or semantic Reader acceptance.
+
+## Open source pin-tracking finding
+
+A distinct revocation gap is independently reproduced on Observer
+`3a751916dd0492e3003a96179bc2121bb628668b` with Mesh `be6470ed`.
+The committed diagnostic is
+`mesh-plus/docs/evidence/2026-10-16-delta-sync/probe_source_inflight_prune.py`,
+SHA-256 `4652a9215421bb92ff801f98db1896d75c9fb68e702b3548dd4baa0577a71fe2`.
+It uses the actual source's head receive over a synthetic UNIX fixture and a
+disclosed private Mesh `input_bytes` pin. Source lifecycle/count checks use
+public `inspect()` and `aclose()`.
+
+Without inspection during consumption, session close makes pin exit reject
+`sync_input_retired`. With inspection, the session's `nbytes`-based pruning
+drops the registry from one ref to zero, and pin exit succeeds after session
+close. Both Python 3.14/3.11 reproduce the difference with cyclic GC disabled.
+The 1,753-byte input remains charged through the pin and all five final counters
+reach zero. This is a tracking/revocation failure; no late relay output,
+material authority or cap overrun was measured.
+
+The owning source/generic retirement seam must preserve session/scope revocation
+of consuming refs while keeping history bounded, physical pin credit charged
+and sibling/shared-owner lifetimes intact. Source receive also invokes this
+pruning helper; the reproduced case uses inspection. Existing `nbytes`
+semantics and the shared ownership API are not changed by this finding.
+Its owning coordination and actual source-to-relay acceptance remain open;
+the previously closed watch-close and cache material-credit findings stay closed.
+
 ## Implementation and qualification
 
 Mesh may implement the agreed generic relay/controller and byte ownership;
