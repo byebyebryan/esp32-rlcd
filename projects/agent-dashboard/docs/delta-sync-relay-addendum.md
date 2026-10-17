@@ -178,7 +178,8 @@ must also hold before writes.
 Completion tests use a fixture source and codec. Actual Observer source/result
 ownership, joined native IPC/Reader and fixed-SSH completion coverage remain
 unqualified. Earlier actual-source baseline/head evidence stays bound to its
-older runtime. The broad core gate was still running at the producer handoff;
+older runtime. The broad core gate was still running at the initial
+`b57c2176` handoff;
 this checkpoint records the independent focused source review only. No installed
 pair, route, resource or performance acceptance follows.
 
@@ -191,6 +192,20 @@ controls, while the correction accepts them and preserves the original bytes.
 The 27 relay tests also pass on the corrected runtime. This is structural codec
 composition, with fabricated fixture roots, rather than actual owned-source
 completion or semantic Reader acceptance.
+
+The finalized evidence commit is `171f21c60697d2671d1db602f991435379819306`:
+`docs/evidence/2026-10-16-delta-sync/completion-g1-review.json`, SHA-256
+`17b87a121c2c590a2b4c60e4b8f65f4bfdd54ba3b2a92a1a0a3216cc90dd4509`.
+Its updated guide has SHA-256
+`4685c4df82c353b05460b357c18cf01ecb94f78266881d59a085f0e97839e134`.
+RLCD verified 187 Mesh and 211 Observer inputs against the immutable commits and
+its existing private exports, eight protected paths and nine committed logs.
+The producer's canonical run passes 342 tests with zero skips, plus its existing
+design/delivery/lock/schema and lint gates. RLCD verified that log and retained
+its prior independent focused runs rather than rerunning the unchanged suite.
+Both native-codec composition and source-pin diagnostic outputs exactly match
+the prior dual-version root replay. The latter remains an expected reproduction
+of an open revocation gap, not passing source-lifetime qualification.
 
 ## Open source pin-tracking finding
 
