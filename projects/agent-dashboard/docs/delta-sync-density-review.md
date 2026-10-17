@@ -236,6 +236,85 @@ cold/recovery, ordinary public Reader/authenticated route, populated native/
 fixed SSH and immutable installed-pair acceptance remain open. No public API,
 cap/estimate relaxation, backend promotion, artifact, selection or rollout.
 
+### Pure Observer patch storage
+
+Observer `b6ce8428b7f9d451bc9e99ca6f8e2943c656c23f` changes only the pure
+`mesh_sync_profile.py` runtime plus five storage tests. Its
+`docs/delta-sync-profile-patch-storage.md` has SHA-256
+`6ee821fe3101d2e91132326b68e56d32023daa6dc4db9b053dcc61ec29c638bf`;
+the 495,350-byte receipt has SHA-256
+`c09bf5d37e8e5a3292ad4e332379a32857a4d32aad3a84c7c5457cffe47f2040`.
+Reported pairing is Mesh evidence `f0924e45` / runtime `d013d2a`, with unchanged
+native serialization. RLCD verifies 212 Observer, 260 Mesh and eight protected
+inputs, all 85 pinned artifacts and 34 upstream artifacts. The restored before
+source and excluded prototypes retain their distinct provenance.
+
+Logical tuple markers replace retained canonical bytes that the heap-only
+callback budget could not encoded-charge. Exact list/integer/string structure
+is preserved; bool/dictionary/null keys reject. One full ref graph is shared by
+each record's field DTOs. Final index slots keep the first key and final value;
+credit covers the unique live old/new graph high-water and never shrinks before
+generic finish/rollback. Result construction prepays DTO/list/tuple overlap and
+a fixed-size token pointer array. Public patch DTOs, APIs and caps stay unchanged.
+
+RLCD independently runs all 64 profile/codec/read/storage tests per Python
+3.14.8/3.11.17 on both reported Mesh `d013d2a` and current Mesh `43013395`, with
+GC disabled, no failures/errors/skips and 74 loaded files verified per suite.
+The final five-method overlay on old Observer `84d284da` reproduces six expected
+storage assertions across four methods; refusal control passes, with 57 loaded
+files verified. The initial root subprocess import-path error is retained as a
+helper diagnostic; corrected suites use explicit immutable paths. The saved
+947-test/200-Markdown canonical result is verified without repeating it.
+
+The unchanged 100/500/2,000-row census emits identical before/after semantic
+digests on both Pythons, with 40 loaded files verified. Python 3.14's 2,000-row
+reachable builder/result graph is 8,309,965 -> 8,144,354 bytes, while charge is
+41,542,434 -> 21,132,788 bytes. The roughly 49% reservation reduction is not a
+49% RAM saving. Python 3.11's graphs are 8,310,077 -> 8,192,466 bytes and charges
+42,966,434 -> 21,756,804 bytes. Marker slots fall from 18,000 to 2,000.
+
+RLCD adds an independent Unicode/max-integer graph check across 24 registry
+resize/old-new overlap checkpoints per Python, plus the live pointer-list/tuple
+constructor overlap. Charged/live constructor figures are 21,399,617/8,422,874
+bytes on 3.14 and 22,077,001/8,492,338 on 3.11, with 40 loaded files verified.
+Growth refusal leaves the stored value intact. This supports the private live
+bound, not inclusive process heap/RSS or whole-pipeline accounting acceptance.
+
+All 24 unchanged source/Reader screens are independently executed and kept by
+exact pairing. Both meshes/Pythons/backends pass 100/500-row baseline, two
+generations and fresh heads. **All eight 2,000-row baselines still refuse
+`sync_decoded_capacity` before proof scratch**, with six final zero counters
+and 78 loaded files verified per screen. The reported pairing's scalar peaks
+match its saved evidence; the current pairing is separate new evidence:
+
+| Mesh / rows / backend | Python 3.14.8 heap peak | Python 3.11.17 peak |
+| --- | ---: | ---: |
+| `d013d2a` / 500 / default | 39,259,621 B | 39,491,085 B |
+| `d013d2a` / 500 / packed | 32,357,565 B | 32,589,029 B |
+| `43013395` / 500 / default | 37,485,289 B | 37,700,833 B |
+| `43013395` / 500 / packed | 30,583,233 B | 30,798,777 B |
+| `43013395` / 2,000 / default, refused | 61,330,663 B | 62,021,983 B |
+| `43013395` / 2,000 / packed, refused | 67,108,368 B | 67,108,357 B |
+
+Independent reported-pair scalar audits match complete output of 18,000 tokens
+and 6,004 final writes, then the `reconstruction.py:610` charge of 6,146,304
+bytes refuses at 8,288,826 decoded + 55,914,108 reserved bytes. The would-be
+70,349,238 bytes exceed 67,108,864. All audit bins/final counters are zero;
+instrumented timing is excluded. The current packed pairing advances further,
+but its next 1,069,904-byte reservation still cannot fit: would-be totals are
+67,109,248/67,109,477 bytes. These remain valid refusals under the fixed cap,
+not grounds for an exception or a lower generic estimate.
+
+This clears the pure-profile source/live-bound review only. Mesh owns remaining
+generic patch/phase/index lifetimes. Full-only native-shape 710/3,510/14,010
+cells, separate native-owner account, private packed backend and synthetic
+proof/clock scaffolding retain their exclusions. No CPU measurement is repeated;
+the prior producer hard failures/fallbacks, dense capacity, delivered cold/
+recovery, aggregate physical heap/RSS, ordinary authenticated Reader route,
+populated native/fixed SSH and immutable installed-pair gates remain open.
+Prior source/controller closures stay closed. No cap/ABI/schema/ID/artifact,
+backend promotion, selection, sibling, Git attribution cleanup or rollout change.
+
 ## Shared normalization and ownership
 
 Mesh's original `docs/delta-sync-codec-proposal.md`, SHA-256
