@@ -375,6 +375,45 @@ aggregate 32/64 MiB, RSS, dense capacity, installed candidate and producer
 acceptance remain open. The source retirement fix is unchanged and closed;
 selected a7/a23, normal workflows, schemas/IDs and rollout remain unchanged.
 
+### Streamed transaction hashing
+
+Observer `f7f7a55e1bbc019d2b866f7e48da85c815c2e031` combines unsigned
+transaction hashing with final output construction, reducing three row walks to
+two. The final unsigned closing brace is hashed before output substitutes the
+canonical ID field and LF. Constructor, staged encoded and per-row reservations,
+size/fragment guards and deterministic iterator retirement remain in force.
+Baseline, original head/control and source APIs are unchanged. The guide
+`docs/delta-sync-compact-transaction-pass.md` has SHA-256
+`7d8f88ed396ff2b8c1496635bb7c6cf2064163d8af93503349963e7a61842d60`;
+the 199,533-byte `compact-owner-streamed-id.json` has SHA-256
+`edfa76ba4f9d3c851f6629a9de0197d2415acbcd737f7f2d92021dd2ca5dff13`.
+
+RLCD verifies 212 producer inputs, the sole production-file change, 76 saved
+comparison artifacts and all saved ABBA samples, source hashes, component sums
+and semantic signatures. Under the shared CPU advisory lock, the unchanged
+17 exporter/source methods and three compact relay methods pass on each Python
+3.14.8/3.11.17 with GC disabled and 81/73 loaded modules verified. Four fresh
+before/after captures reproduce the same 18 full/active baseline, transaction
+and completion frames across both versions, with 68 imported modules verified
+per capture. Exact raw bytes match both the prior source and saved producer
+captures; a separate canonical raw-ID computation passes every transaction.
+The producer's saved 62-case and 940-test/zero-skip checks retain their own
+provenance. No CPU benchmark was rerun.
+
+The new compact all-body medians, including the oracle, are 536.08 ms at 500
+rows and 1,938.75 ms at 2,000 rows; matched a7 controls are 194.79 and 795.79 ms.
+Across twelve generations per side, oracle-excluded old/new combined-owner CPU
+totals are 2,205.188 / 6,259.876 ms (**+183.87%**) and
+9,068.550 / 22,878.023 ms (**+152.28%**). The strict +25% ceiling remains
+**FAIL**. The earlier samples remain separate. The fixture still has
+3,510 / 14,010 full membership cells rather than nine fields on every row;
+each 2,000-row run has five baseline fallbacks with no ensuing baseline delivery.
+Cold/recovery delivery, inclusive resources/RSS, ordinary controller/native
+transport and immutable installed-pair gates remain open. Joint controller
+contract closure and the source retirement closure stay closed. Git attribution
+cleanup remains on HOLD; no artifact/ID, selection, service/provider, sibling or
+rollout action accompanies this source review.
+
 ## Remaining qualification
 
 Run the actual expanded and compact paths through strict streaming schema and
