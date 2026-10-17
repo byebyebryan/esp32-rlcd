@@ -684,6 +684,57 @@ RSS, populated native IPC/fixed SSH, immutable installed pair and end-to-end
 gates remain open. This review grants no API freeze, runtime or producer
 acceptance, selection change or rollout.
 
+### Controller/carrier source checkpoint
+
+Mesh runtime `a482abbd463d23ebf66f23c60e4e95a521c19cc6` implements the
+agreed controller/carrier, following initial `828cf0c` and clock correction
+`6daba40`. Evidence `f667588acc9e41010ce30829bf7fb6b46e6f2b6b` supplies
+`docs/delta-sync-controller-g1.md` and
+`docs/evidence/2026-10-17-controller/README.md`; its `checkpoint.json` has SHA-256
+`beaeb21c1689d9287d1f2e48b8f221e1817ff6a6cb2d8983d5ec74705832a1f6`.
+RLCD verifies 193 current and 193 initial Mesh inputs, 211 Observer inputs,
+eight protected inputs, all 29 evidence artifacts and exact contract pins.
+The saved canonical 383-test result retains its own provenance.
+
+Against immutable Observer `e3441d0`, RLCD independently reproduces all 64
+focused methods on each Python 3.14.8/3.11.17 with GC disabled, no errors or
+skips and 35 loaded project inputs verified. Two actual-source methods cover
+24 scenarios per Python: Unix IPC or real pipe stdio, expanded/compact,
+full/active and 0/1/4 transactions. Original fragments, padded completion,
+independent Reader admission, two distinct fresh head proofs and final counters
+pass, with 77 loaded inputs verified per run. The final two-method test overlay
+on initial `828cf0c` reproduces five expected failures on each version, with no
+errors/skips and 30 loaded inputs verified. These are the new carrier clock and
+held-copy-error regressions; they do not reopen earlier source/head findings.
+
+**A new stamped-header copy lifetime finding remains open.** On exact `a482abb`,
+RLCD's controlled reentrant frame close during `HeaderRef.materialize()` releases
+133,112 bytes of frame/parser credit while the original DTO remains in the
+copy operation; materialization then returns a detached dict after revocation.
+Concurrent carrier close also completes before copy unwind and returns carrier
+and frame credit while the original DTO remains held. Both Python versions
+reproduce these two cases with GC disabled and 29 loaded inputs verified.
+Subsequent header access rejects `sync_control_retired`; the caller's separate
+66,760-byte copy reservation remains charged, siblings stay usable and all five
+final counters are zero.
+
+The probe uses public factories, headers, frame/carrier close and ledger queries;
+a disclosed `deepcopy` hook controls reentrant/concurrent timing. It demonstrates
+revocation and early credit return, not measured RSS/cap overrun, late wire output
+or admission authority. The existing R2/R4 copy convention requires immediate
+logical revocation, retaining the original frame/copy credit through physical
+unwind and rejecting a copy revoked before completion. Mesh's existing G1 owns
+that correction; no new contract or general approval is needed. The bounded
+controller implementation review remains open on this finding. Joint contract
+closure and the earlier source consuming-ref closure remain closed.
+
+These small synthetic Runtime/controller/Reader scenarios use trusted caller
+authentication, private nonce/native-fixture scaffolding and separate ledgers.
+They do not qualify selected/authenticated Reader routes, actual compact watch
+and cancellation stress, aggregate resources/RSS, whole CPU, dense 2,000-row
+delivery/recovery, populated native providers, fixed SSH or immutable installed
+pairs. The producer CPU failures, a7/a23 selection and no-rollout boundary remain.
+
 ## Implementation and qualification
 
 Mesh may implement the agreed generic relay/controller and byte ownership;
