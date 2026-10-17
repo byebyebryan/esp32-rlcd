@@ -86,6 +86,11 @@ descriptors, public APIs, installed gates, exclusions and cleanup evidence.
 Publication follows review and exact acceptance. Producers do not select normal
 roles, roll out sibling services or take provider/session/device actions.
 
+The [G1 density review](delta-sync-density-review.md) permits private packed
+storage work under the existing caps and public interfaces. It separates that
+work from the pending joint codec/input contract and A1 relay role agreement;
+the failed dense resource/CPU gates remain open.
+
 ## Accepted architecture and authority
 
 Cover the entire path:
