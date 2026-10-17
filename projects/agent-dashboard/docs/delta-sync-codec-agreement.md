@@ -201,6 +201,46 @@ is [independently closed at source scope](delta-sync-relay-addendum.md#relay-dea
 This codec checkpoint changes neither path. Current a7/a23 and protected routes
 stay selected.
 
+## Native compact owner output
+
+Observer implements the native serializer at
+`fc7579bd2e3e6b020b4e66958e8e425e60889b93`. Its guide
+`docs/delta-sync-compact-export.md` has SHA-256
+`5fc10018f3ed7050eaa0a923c9ab876f7ec444448e31e25d22bc34c7f743e46b`;
+`docs/evidence/2026-10-16-delta-sync-source/compact-export.json` has SHA-256
+`ae25cbacfb0b4de3291e68fbfe0b562230172bbf8b071f08b7c4e87c1aae1e58`.
+Explicit startup selection `sync_serialization="compact"` chooses one serializer
+and bounded journal on the encoded owner. Expanded remains the default; the
+compact path has no expanded fallback. Head, control, logical descriptor and
+roots remain unchanged. No encoding identity, route or schema is allocated.
+
+The exporter walks committed encoded values one at a time under prepaid scratch
+and output construction credit. Sparse mask changes come from changed observation
+keys; unchanged masks, including token-only body edits, stay omitted. Mesh retains
+sole responsibility for cell expansion after independent domain admission.
+Serializer-only scan bounds do not establish sparse total owner publication work.
+
+RLCD verifies 170 Observer inputs, 146 reported Mesh inputs, six protected inputs,
+seven artifacts, seven logs and three cold-screen reports. It independently runs
+all ten new export tests on Python 3.14.8 and 3.11.17 against both reported Mesh
+`05ad6fc` and current `f32218b`; all pass with GC disabled and no skips, and loaded
+producer modules match their immutable commits. Tests cover exact expanded/compact
+reconstruction, roots, warming, sparse journals, unchanged head/control bytes,
+fresh direct receiver confirmation, expected-old/root rollback and bounded frame/
+quota refusal. The producer's separate 196-focused/924-canonical gates retain
+their original execution provenance.
+
+The verified producer cold screen emits full compact frames of 142,313 / 687,515 /
+2,739,021 bytes at 100/500/2,000 identities, versus 168,077 / 826,477 / 3,297,477
+legacy bytes in the same fixtures. The ten-selected active frame is 19,545 bytes.
+These full fixtures have 710 / 3,510 / 14,010 membership cells, rather than nine
+fields per row. Only current cold full/active owner state is present: no predecessor,
+overlapping stage, slow peer, intake, relay, Reader or RSS measurement. This is
+source-frame size evidence, not accepted dense capacity, recovery or whole CPU
+improvement. Earlier CPU failures remain failed. Actual compact source/IPC dispatch,
+inclusive pipeline qualification and immutable installed pairing remain open;
+the selected a7/a23 tuple stays unchanged.
+
 ## Remaining qualification
 
 Run the actual expanded and compact paths through strict streaming schema and
