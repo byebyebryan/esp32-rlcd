@@ -750,6 +750,47 @@ and cancellation stress, aggregate resources/RSS, whole CPU, dense 2,000-row
 delivery/recovery, populated native providers, fixed SSH or immutable installed
 pairs. The producer CPU failures, a7/a23 selection and no-rollout boundary remain.
 
+### Actual-source controller lifecycle supplement
+
+Mesh evidence `1e37541d868c439a48628d99830e314bd87af360` adds lifecycle
+execution on unchanged runtime `a482abb` with Observer `e3441d0`.
+`docs/evidence/2026-10-17-controller/lifecycle.md` has SHA-256
+`014ccbba971d2f89d57c189c0d1be810657b2ab19e82dbcd009fe5809a917856`;
+its `lifecycle.json` has SHA-256
+`7d6f6554d33053d3169c1107b86a5571306a837f442161e8412624ee358916a8`.
+RLCD verifies 193 Mesh inputs, 211 Observer inputs, eight protected inputs,
+seven new artifacts and all 29 unchanged original artifacts. Under the shared
+CPU advisory lock, the two new methods pass all 20 scenarios independently on
+each Python 3.14.8/3.11.17 with GC disabled, retained errors, no failures/errors/
+skips and 77 loaded project pins verified. Their scalar outcomes match the
+saved results. The earlier 383/64/24 checks are not rerun or reattributed.
+
+Expanded/compact and full/active watches survive capsule end and a later
+40 ms capsule's expiry, then deliver a transaction, fresh head and exact DTO
+before stopping. Four-transaction batches plus their completion retain five
+consuming buffers and five distinct open, exact raw-length encoded credits
+through wire cancellation, repeated serve cancellation, public source close
+and held cleanup. The controlled partial-write failure verifies those five
+credits immediately before raising and zero buffers after unwind.
+Explicit server/source retirement marks
+all five refs revoked while their credits stay held; wire cancellation retires
+the acquisition while its consumed inputs unwind. After unwind, the bounded
+private buffer inventory is empty. Same-factory/source/ledger siblings obtain
+a baseline and fresh head; Reader six-counter and relay five-counter teardown
+assertions pass. The failed connection emits a partial prefix without LF,
+result or new proof. Caller-owned cache disconnect on EOF clears its claim.
+
+These are independent executions of the supplied test design. Writer-instance
+hooks, private nonce/native-fixture close and the bounded physical-buffer audit
+are disclosed instrumentation. Reader admission uses an oracle reserialization;
+original fragment identity retains its separate 24-scenario evidence. Separate
+fixture/client/oracle/owner/Reader/relay storage is not an aggregate resource
+measurement. This clears only the bounded lifecycle supplement; it does not
+exercise or close the stamped-header copy/close finding above, qualify an
+ordinary authenticated/selected Reader route, or satisfy the original CPU,
+32/64 MiB, RSS, dense delivery/recovery, populated native/fixed SSH and installed-
+pair gates. No runtime, schema/ID/artifact, selection, sibling or rollout change.
+
 ## Implementation and qualification
 
 Mesh may implement the agreed generic relay/controller and byte ownership;
