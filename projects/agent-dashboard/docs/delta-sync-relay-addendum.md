@@ -591,7 +591,7 @@ These were control-plane contract findings, not new runtime failures or changes 
 the accepted data/role/completion contracts. Their original R1 evidence remains
 unchanged; the R2 reconciliation follows.
 
-### Controller R2 reconciliation
+### Controller R2 plus R3 joint contract closure
 
 RLCD's coordinator contract review is clear for standalone Mesh
 `33cb57c98ca3062f139ea1fd0c68b15bd5abd8d6`,
@@ -659,13 +659,26 @@ All other receipt/carrier/clock/lifetime rules remain unchanged.
 RLCD verified 188 unchanged Mesh inputs, eight protected inputs, the original
 R1/R2 packet/vector tuple, accepted completion bounds, three owning source
 documents and the independent source-fix receipt. Only the supplement and its
-receipt changed; no runtime diff or repeated arithmetic/source tests. Observer's
-existing exact R2-plus-R3 confirmation remains the joint-signoff dependency.
+receipt changed; no runtime diff or repeated arithmetic/source tests.
 
-Once both owners agree, the existing G1 authorization covers dependent controller/carrier
-implementation without another general or coordinator approval. The source
-retirement-query fix has the bounded acceptance recorded above. Controller
-runtime correctness/lifetime and all original
+Observer accepts this exact R2-plus-R3 tuple at
+`d6364d1c3441b07436ca1e32789994aa2448be85`, with no remaining owning contract
+conflict. Its `docs/delta-sync-controller-agreement.md`, 4,072 bytes, has SHA-256
+`29bfb22e1259165148ac09e0f1f82e5d6ee8ac808e688422e7e76785f57bbd32`;
+its `controller-agreement.json`, 41,451 bytes, has SHA-256
+`341584bc02f2d79ee3ef1395d9a98d10d16f08bba97a1bf0d374dfa603373564`.
+RLCD verifies the exact agreement and tuple, 188 Mesh inputs, eight protected
+inputs and nine owning source references, including their unchanged source-base
+bytes. The four prior arithmetic outputs and logs retain their original
+provenance; Observer's saved 940-test, zero-skip and 195-Markdown check is verified
+without rerunning it. The Mesh runtime diff is empty and Observer's signoff
+changes only its agreement document and receipt.
+
+This records joint controller contract closure. The existing G1 authorization
+covers dependent controller/carrier implementation without another general or
+coordinator approval. The source retirement-query fix retains its bounded
+acceptance recorded above. Controller/carrier minting, parser, authenticated
+bootstrap, dispatcher/results, concurrency, actual I/O, correctness/lifetime and all original
 32/64 MiB, two-second/fifteen-second, dense CPU, deliverable 2,000-row recovery,
 RSS, populated native IPC/fixed SSH, immutable installed pair and end-to-end
 gates remain open. This review grants no API freeze, runtime or producer
