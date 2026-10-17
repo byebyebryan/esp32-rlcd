@@ -197,7 +197,7 @@ journal and source dispatch, schema/encoding freeze, inclusive memory/RSS,
 dense/cold/recovery CPU/bytes, deliverable 2,000-row recovery and populated
 IPC/fixed-SSH/immutable installed-pair acceptance remained open at that checkpoint.
 The following sections record later serializer and source progress. The separate
-source pin-tracking finding remains open; the later relay deadline correction
+source pin-tracking finding was still open at that checkpoint; the later relay deadline correction
 is [independently closed at source scope](delta-sync-relay-addendum.md#relay-deadline-and-failed-intake-correction).
 This codec checkpoint changes neither path. Current a7/a23 and protected routes
 stay selected.
@@ -277,8 +277,8 @@ This clears a component prerequisite for ongoing G1 integration. Private test
 nonce/native-byte pin and a test-assembled proof carrier remain disclosed; the
 tests do not exercise generic relay/controller forwarding or authenticate an
 installed route. Native fixture, oracle and Reader allocations are separate.
-The source's pruning AST is unchanged, so its consuming-ref fix through the
-agreed query remains separate and open. Aggregate resources/RSS, total CPU,
+That source's pruning AST is unchanged, so its consuming-ref fix through the
+agreed query remained separate and open at that checkpoint. Aggregate resources/RSS, total CPU,
 dense 2,000-row/cold recovery, populated providers/fixed SSH and immutable
 installed paired acceptance remain open. No ID/schema allocation, service,
 provider, selection, sibling or rollout action occurs.
@@ -322,9 +322,16 @@ owner, capture/oracle, relay and Reader allocations do not establish aggregate
 caps or RSS. Ordinary carrier/controller/authentication bootstrap, compact
 watch/held-drain/cancellation/expired-head composition, dense capacity/recovery,
 CPU, populated providers/fixed SSH and immutable installed-pair acceptance
-remain open. The unchanged source's pin-pruning finding also remains open.
+remain open. That composition used the earlier source with its open pin-pruning finding.
 This adds bounded pipeline evidence without selecting a route or promoting
 artifacts.
+
+The subsequent source retirement fix at Observer `e3441d0` / Mesh `6fce5ed0`
+passes these same three compact methods and all nine scenarios on both Python
+versions in RLCD's independent final-pair replay, with 73 loaded project modules
+verified per run. Its [tracking defect is independently closed at bounded source scope](delta-sync-relay-addendum.md#independent-source-fix-closure).
+That closure does not qualify controller execution, aggregate resources,
+performance, native providers or the immutable installed pair.
 
 ## Remaining qualification
 

@@ -321,7 +321,11 @@ Reader evidence; it does not fix the consuming-ref defect, qualify network
 controller dispatch, combine the separate ledgers into an aggregate budget,
 or establish dense/recovery, CPU/RSS, native or installed acceptance.
 
-## Open source pin-tracking finding
+## Source pin-tracking finding
+
+Status: independently closed at bounded source scope on Observer `e3441d0` /
+Mesh `6fce5ed0`. The reproduced defect and proposal checkpoints below retain
+their historical scope; the final fix and replay follow them.
 
 A distinct revocation gap is independently reproduced on Observer
 `3a751916dd0492e3003a96179bc2121bb628668b` with Mesh `be6470ed`.
@@ -459,11 +463,59 @@ or skips. Exact parent plus only final test overlays yields seven missing-method
 errors per version: evidence of absent capability, not an old source-contract
 failure. The producer's 60 focused and 355 canonical passes retain their saved
 execution scope; its earlier draft assertion failure is not hidden or relabeled.
-This clears the committed public-method prerequisite for dependent Observer
-adoption under existing G1. The source still needs callback adoption and final
-paired inspection/receive/close/cancellation/sibling and held-pin replay before
-the consuming-ref runtime finding can close. No broader producer or artifact
+This cleared the committed public-method prerequisite for dependent Observer
+adoption under existing G1. At that checkpoint, the source still needed callback
+adoption and final paired inspection/receive/close/cancellation/sibling and
+held-pin replay before the consuming-ref runtime finding could close. No broader producer or artifact
 acceptance is inferred.
+
+### Independent source-fix closure
+
+Observer commits the source fix at
+`e3441d017b94ee27f4dfccb5f1f3f30612435adf`, paired with immutable Mesh
+`6fce5ed0e997d021e7532051fe985c3693962c3e`. Its guide
+`docs/delta-sync-source-retirement.md` has SHA-256
+`fc97f2e280181abd4cfcae0bef78af6a218a3198fbd615e445fd833e3a5c1cc8`;
+`source-retirement.json` has SHA-256
+`b6701dc1cdf4412d5c287fdb8a6d1312cae051e9254c9262d269caf4aacca818`.
+The changed source file has SHA-256
+`3492c94d818eb29be8fd959288de17a8ec49701e90b7d64d118cff7a943f48d1`.
+
+The session captures the supported owner query before state reservation or I/O.
+It accepts exact bool, prunes only true, and retains available/consuming false
+refs for scoped revocation. No `nbytes` inference or private Mesh access remains.
+Batch close closes/untracks its own children without querying unrelated refs.
+The captured callback retires after own child/I/O cleanup; shared owners and
+sibling sessions remain usable.
+
+RLCD verified 213 Observer and 153 Mesh input pins, unchanged original/hardened
+overlays, saved canonical/component results and the separately preserved stale
+probe failures. Producer loaded reports contain 123 entries for 94 unique
+modules: 29 Mesh files also appear relative to the enclosing Observer workspace.
+All aliases were verified against their owning immutable Git bytes. The earlier
+unadapted replay's self hash is verified against its separately pinned original
+runner, rather than attributed to the final adapted script.
+
+On each Python 3.14.8 and 3.11.17, RLCD independently reproduces three failures
+and two controls in both original and hardened overlays on the prior `7213084`
+source. The fixed pair passes the original five cases and all nine source
+methods, including the same hardened five, strict capability/bool handling,
+callback retirement, batch cleanup and actual public-factory relay-input pin
+revocation. The named eight-method completion-retirement probe passes unchanged
+in default mode, preserving held drains, cancellations, sibling and credit
+assertions. The three compact Runtime/source/relay/Reader methods also pass all
+nine scenarios. That is 25 passing methods per Python version on the fixed pair,
+with GC disabled, no errors/skips and every loaded project module verified.
+The producer's 940 canonical and adapted 220-component passes retain their
+separate saved provenance; the earlier unmodified 220 runs' stale assertion
+failure is preserved.
+
+The consuming-ref tracking/revocation finding is closed for this exact source
+pair at bounded source scope. This does not grant aggregate 32/64 MiB, physical
+RSS/plateau, CPU, dense/cold/2,000-row recovery, ordinary controller/carrier or
+authentication, populated provider/fixed-SSH, immutable installed-pair or
+producer acceptance. Existing installed selections and protected workflows
+remain unchanged.
 
 ## Relay deadline and failed-intake correction
 
@@ -572,8 +624,9 @@ cleanup or resource accounting.
 
 Exact Observer agreement on these R2 bytes remains to be recorded. Once both
 owners agree, the existing G1 authorization covers dependent controller/carrier
-implementation without another general or coordinator approval. The separate
-source retirement-query implementation and all original correctness/lifetime,
+implementation without another general or coordinator approval. The source
+retirement-query fix has the bounded acceptance recorded above. Controller
+runtime correctness/lifetime and all original
 32/64 MiB, two-second/fifteen-second, dense CPU, deliverable 2,000-row recovery,
 RSS, populated native IPC/fixed SSH, immutable installed pair and end-to-end
 gates remain open. This review grants no API freeze, runtime or producer
