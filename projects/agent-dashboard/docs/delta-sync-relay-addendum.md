@@ -821,6 +821,21 @@ also passes the 24 basic and 20 lifecycle scenarios on each Python, 77 loaded
 pins per run. The saved 386-test canonical result is verified without rerunning.
 This closes m156's original copy interleavings only.
 
+Observer evidence `b8e25cad39ad741a987fd639d988da5717becad2` extends the
+existing basic/lifecycle runners to current source `84d284da` plus Mesh
+`14990c7`, without source/API adaptation. Its
+`docs/delta-sync-controller-copy-current-pair.md` has SHA-256
+`19cfeefd8b7f80ca5b0b0d1da7e3eaa595007f3d5588ec5e0dfa33f4a31f103e`;
+the 241,991-byte `copy-current-pair.json` has SHA-256
+`1ed8c76f689cf57c3da9ba4326af3ae5a2f574b5809e92a18d6c967f302ecf94`.
+RLCD verifies 225 current Mesh and 212 Observer inputs, all 35 upstream
+correction artifacts and their original source/protected pins. The saved four
+methods/44 scenarios pass per Python with GC disabled, no failures/errors/skips
+and all 78 imported project files verified per run. The saved owning check is
+942 tests, zero skips and 199 Markdown files. No tests are repeated for this
+receipt. Original-copy, 67-focused and 386-canonical evidence retain their
+earlier source tuple; the queued idle-frame edge below is outside this subset.
+
 **New pending-retirement callback finding m165 remains OPEN.** A public worker
 thread closes an idle frame; immediately afterward, the owner awaits carrier
 close before the queued frame-retirement callback runs. On `14990c7`, carrier
