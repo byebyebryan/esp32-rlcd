@@ -35,8 +35,31 @@ in `/home/bryan/code/mesh-plus`. This grants no permission to rewrite/prune
 pinned lineage, refs, artifacts, `dist/` or referenced `.cache/` contents.
 `mesh-plus-idle-profile-20261014` at `c7b1d475` and
 `mesh-plus-system-dashboard` at `fe7e700d` remain outside that clearance.
-No cleanup is performed by this review. Observer separately reports its own
-deferred/unqualified wrap; its exact final commit and clearance are pending.
+No cleanup is performed by this review.
+
+Observer's own deferred/default-off wrap is
+`79d07f40d177fe5f0c5a6d86a74511d02d2548b0`, descending from evidence
+`51b0f27559b2b1553ffb60d04992ba90e639d873`. Source inspection verifies that
+`Runtime.experimental_sync` defaults to the exact boolean `False` and rejects
+full/active sync before owner/cache access. No ordinary CLI enablement is added;
+disposable sync fixtures opt in explicitly. This guard is a new source change,
+not a reassignment of earlier pipeline or performance acceptance. Its 6,320-byte
+`docs/delta-sync-dark-feature.md` has SHA-256
+`47d8a4795ddeab9d655bfffdca5ca4a50dc29ded1b51ec6c2d065a84207b811e`.
+The owning 949-test/66-focused-per-Python wrap results are read/hash-checked,
+not rerun or promoted to producer qualification.
+
+Observer's external clearance is
+`/home/bryan/.cache/agent-observer-delta-sync-wrap-20261017/git-clearance.json`,
+SHA-256 `71e821454397fcd78434d4ca84a875412acf8426db21e2ac1eb446782218c27d`.
+RLCD verifies its pinned sidecars, all 18 snapshot refs in the Git bundle,
+bundle integrity and the exact `af2bc7bf`/`b6ce8428`/`51b0f275`/wrap ancestry.
+The cache archive matches all 57,645 inventoried files, 681,480,296 uncompressed
+bytes and four preserved symlink records, without extraction or modification.
+Retain the entire external recovery directory and the cache or its verified
+archive. Observer reports no pending children, Git operations or automatic
+continuation and releases only its own existing cleanup scope. Other Observer
+worktrees, published objects/artifacts and sibling owners remain excluded.
 
 This records producer state and scoped handoff facts. It does not complete
 G1/G2, grant acceptance, release RLCD's attribution HOLD or release another
