@@ -642,8 +642,25 @@ limit of 65,536 including LF. Every frame, container, buffer and transport copy
 still counts within the same shared resource and wire budgets. This corrects
 table wording and grants no new allowance or source/API change. The earlier
 coordinator review missed this row ambiguity; its two original receipt/ingress
-findings remain resolved. Observer's existing request to Mesh stands, and exact
-joint signoff awaits the corrected packet and owning confirmation.
+findings remain resolved.
+
+Mesh supplies the narrow R3 supplement at
+`5d8cb484f8eba9fb6ca8dce9421410434cedf37d`,
+`docs/delta-sync-controller-completion-r3.md`, 5,234 bytes, SHA-256
+`42375477c46c097ede85b3bbbe5cda5f03a89823fdd7358e1078064a0c34e1c2`.
+Its `controller-r3-review.json` has SHA-256
+`e545403d7fe9fd5c5bf0e2b5ec88771ee4d0d4693525b7f9ed0304ab5880d037`.
+Coordinator review is clear for exact R2 plus R3: only the changes row is
+replaced, with transaction-frame LF counted in its quota and the original
+completion bounded independently. Empty success still needs the exact original
+correlated completion and gives no current authority without a fresh proof.
+All other receipt/carrier/clock/lifetime rules remain unchanged.
+
+RLCD verified 188 unchanged Mesh inputs, eight protected inputs, the original
+R1/R2 packet/vector tuple, accepted completion bounds, three owning source
+documents and the independent source-fix receipt. Only the supplement and its
+receipt changed; no runtime diff or repeated arithmetic/source tests. Observer's
+existing exact R2-plus-R3 confirmation remains the joint-signoff dependency.
 
 Once both owners agree, the existing G1 authorization covers dependent controller/carrier
 implementation without another general or coordinator approval. The source
