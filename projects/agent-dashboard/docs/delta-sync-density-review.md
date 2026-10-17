@@ -532,6 +532,74 @@ rollback, epoch and both-version evidence. No runtime fix is accepted by this
 diagnostic. All original capacity/recovery/producer gates, closed findings,
 protected workflows and Git HOLD remain unchanged.
 
+### Baseline duplicate-registry and bucket lifetimes
+
+Mesh runtime `03a681f95a609b20eaa20134f7241d3d14d441a6`, evidence
+`d483351d302bdc090f62bcaa18029788b7ec75be`, separates compact baseline
+duplicate detection from per-index construction storage. Its 9,844-byte guide
+has SHA-256 `ef1a1852e51e8ba8ae17583d94555a6b39d7989e9754e29e8dfa1d466e0ac990`;
+the 27,806-byte receipt has SHA-256
+`dacd7a3b8f02214ac858c804dbe85bc2d83718bdd2c70f03a3d8858282a7c421`.
+RLCD verifies 262 before/262 after Mesh inputs, 212 Observer inputs, eight
+protected inputs, 55 new artifacts and the unchanged 52 field-reference/16
+reservation-trace artifacts. Observer remains `b6ce8428`; the saved 411-test
+canonical gate is verified without rerunning it.
+
+Compact baseline rows retain exact owned key/value Atoms, including canonical
+key buffers previously kept alive by the duplicate registry. Only after all
+schemas, duplicates and entry limits pass does the actual seen dictionary drop,
+followed by its credit. A new 8,192-byte registry reservation and separate
+256-byte bucket/128-byte row reservations fund storage before growth. Existing
+allowances are unchanged. Buckets preserve original construction order without
+a roster-sized name snapshot. Constructors retain or separately fund the built
+graph's keys before row owners retire; local aliases drop before bucket credit.
+Failure frames are sanitized before active/remaining buckets close. Caller
+patch/DTO credit remains through finish or rollback. Expanded, delta and rule
+paths, callbacks, authority, APIs and caps retain their prior behavior.
+
+RLCD independently executes the owning suites: 76 Mesh plus 64 Observer methods
+on each Python 3.14.8/3.11.17, GC disabled, with zero failures/errors/skips and
+41/75 imported files verified. The one-method final-test overlay on before
+`13f27e25` reproduces two expected storage assertions per Python after successful
+root/index parity, with 37 files verified. This establishes changed ownership
+topology, not an earlier output defect. Ten metadata census checkpoints per
+Python verify funding through 32 indexes/4,096 rows, including Reservation
+instance dictionaries and resize overlap; all 30 imported files match Git.
+Seen retirement preserves encoded credit. At 4,096 rows, metadata bounds change
+from 899,360 to 341,920 bytes on 3.14 and 833,832 to 309,152 on 3.11; credit
+changes from 1,593,344 to 540,672 bytes. These are metadata/ledger bounds, not
+whole-process memory or RSS savings.
+
+All twelve original one-ledger actual source/Reader screens reproduce, with
+80 imported files verified and six final zero counters each. Eight 100/500-row
+cases confirm baseline, two generations and fresh heads. Completed-case peaks
+are unchanged except packed 100/3.14 increases by 4,170 bytes. All four 2,000-row
+baselines still refuse `sync_decoded_capacity` before proof scratch: default
+heap peaks are 67,108,517/67,107,767 bytes and packed peaks are
+67,108,660/67,108,667. Failed-case peaks establish no usable headroom or saving.
+
+Both unchanged final packed-2,000 traces also reproduce one fatal reserve and
+the same weak error escaping `_field_patch`, `_patch` and `_finish`. Python
+3.14 still refuses a 256-byte packed `$fields` branch control at decoded
+11,574,350 + reserved 55,534,310 = 67,108,660 bytes before the request. Python
+3.11 passes its old ordered-index stop and now refuses a 256-byte `$fields`
+leaf control at decoded 9,974,708 + reserved 57,133,959 = 67,108,667. Would-totals
+67,108,916/67,108,923 exceed the unchanged 67,108,864-byte cap. Earlier traces
+retain their original source/phase attribution. Each replay verifies the
+original 79 loaded files plus the unchanged tracer itself, captured because
+RLCD runs it from the immutable Mesh export; final six counters are zero.
+Instrumented timing is excluded.
+
+This clears only the bounded baseline ownership/lifetime implementation.
+Packed grafted-control work remains separate. The full-only fixture, separate
+native account, private arena/nonce/proof/synthetic-clock scaffolding and
+independent execution of owning tests retain their stated limits. CPU failures,
+dense/full-active/peer capacity, delivered 2,000-row cold/recovery, inclusive
+physical heap/RSS, deadlines, ordinary authenticated SyncReader route,
+populated native/fixed-SSH and immutable installed-pair acceptance remain open.
+Old findings, selected a7/a23, protected workflows and Git HOLD are unchanged;
+no cap/estimate reduction, public contract or artifact/selection/rollout change.
+
 ## Shared normalization and ownership
 
 Mesh's original `docs/delta-sync-codec-proposal.md`, SHA-256
