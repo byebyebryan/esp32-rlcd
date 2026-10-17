@@ -422,6 +422,30 @@ GC-disabled accounting tests, including independent before/after replay of the
 original failures. This closes the interface-agreement step only; the source
 pin-tracking runtime finding remains open.
 
+Mesh implements the agreed public query at
+`6fce5ed0e997d021e7532051fe985c3693962c3e`, with evidence commit
+`2ec7bcf3a3422a68bd522502928a648954932e1d`. Its guide
+`docs/delta-sync-ref-retirement-g1.md` has SHA-256
+`1d9185992aa92bd46bf5baf9f79cebfecaaab3b314cb942a87f44c17c886334e`;
+`ref-retirement-g1-review.json` is 96,732 bytes, SHA-256
+`b7b007d80e85325e70173565852231d97a069a6ada25a6b88262d41a975aa7b9`.
+RLCD verified 188 current and 188 parent inputs, eight protected inputs,
+the exact agreement documents and retained logs/results. Code review confirms
+metadata-only owner/role/ref checks, healthy consuming versus logical retirement
+states, preserved physical pin credit and unchanged `nbytes`/consume behavior.
+
+RLCD independently ran the seven new cases on Python 3.14.8 and 3.11.17 with GC
+disabled, verifying all 31 loaded modules. Both fixed runs pass without errors
+or skips. Exact parent plus only final test overlays yields seven missing-method
+errors per version: evidence of absent capability, not an old source-contract
+failure. The producer's 60 focused and 355 canonical passes retain their saved
+execution scope; its earlier draft assertion failure is not hidden or relabeled.
+This clears the committed public-method prerequisite for dependent Observer
+adoption under existing G1. The source still needs callback adoption and final
+paired inspection/receive/close/cancellation/sibling and held-pin replay before
+the consuming-ref runtime finding can close. No broader producer or artifact
+acceptance is inferred.
+
 ## Relay deadline and failed-intake correction
 
 The head-deadline and source-error cleanup findings are now independently closed
