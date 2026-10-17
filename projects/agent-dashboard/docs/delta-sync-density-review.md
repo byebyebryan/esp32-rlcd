@@ -435,6 +435,63 @@ ordinary authenticated Reader route, populated native/fixed-SSH and installed
 pair acceptance. Old findings stay closed; no cap/estimate, API/schema/ID,
 backend promotion, artifact/selection, sibling, attribution cleanup or rollout.
 
+### Exact compact field-reference sharing
+
+Mesh runtime `13f27e25c46e1fd3da664975e964104a56fd6dbf`, evidence
+`30e20118790ab83f526b2436d0739b7f531b4ed1`, shares exact already-owned compact
+field keys. The 8,427-byte guide has SHA-256
+`b1fa910643a9865567d47f693389b25f49a366c3726009ac7eb11ba242614413`;
+the 12,982-byte receipt has SHA-256
+`87e6168181ff0dcbc703331af732d39eb7b0320b9169fc85ad6f3a208df54381`.
+RLCD verifies 262 before/262 after Mesh inputs, 212 Observer inputs, eight
+protected inputs, 52 new artifacts and all 56 prior owning-join artifacts.
+The saved 407-test canonical gate is verified without rerunning it.
+
+`field_ref` first validates the full host/identity/birth shape, then prepays
+canonical comparison bytes on both ledgers. It borrows the exact retired ref
+or the AFTER alias-view owner only after full identity and birth equality;
+an alias number alone cannot select a field key. Comparison aliases drop before
+their reservation closes. Unmatched refs and expanded admission retain the
+original separately owned path. The stage/before graph owns borrowed Atoms
+through their use; callback DTO credit, field-group allowances, roots, masks
+and all caps remain unchanged. No roster scan or admission authority is added.
+
+RLCD independently runs 72 Mesh and 64 Observer methods on each Python
+3.14.8/3.11.17, in separate processes with GC disabled and no errors/skips/
+failures. All 41/75 imported project files match Git. The one-method overlay
+on before `231a6313` reproduces two expected nonsharing assertions per Python,
+after successful native-tag/index parity, with 37 files verified. This is
+ownership topology evidence, not an earlier output or authority defect.
+
+All twelve unchanged source/Reader one-ledger screens reproduce, with 80
+imported files verified and six final zero counters each. All eight 100/500-row
+cases confirm baseline, two generations and fresh heads. Default peaks stay
+unchanged. Packed 100-row peaks are 13,673,500/13,718,740 bytes, lower by
+40,287/40,991; packed 500-row peaks are 28,527,235/28,742,075, lower by
+187,199/187,903. These are charged ledger bounds, not physical/RSS savings.
+All four 2,000-row baselines still reject `sync_decoded_capacity` before proof
+scratch. Packed peaks are 67,108,660/67,108,813 bytes; a failed case's changed
+peak establishes neither savings nor usable headroom.
+
+The separate original packed-2,000/3.14 scalar audit also reproduces complete
+18,000-token callback output, 2,000 generic field groups and final zero audit
+bins/counters. It records no failed `ledger.retain` call, so it does not localize
+the final allocator. The prior `_Decoded` failure remains evidence for `231a6313`,
+not this revision. Instrumented timing and safe-estimate/physical-topology
+claims are excluded. Three raw unittest log lines retain their pinned trailing
+spaces, documented separately in `474a89ad`; source, scripts, Markdown and JSON
+are unaffected by that evidence-format exception.
+
+This clears the bounded private sharing/lifetime source implementation only.
+The full-only fixture, separate native owner, test-owned packed arena and
+private nonce/proof/synthetic-clock scaffolding retain their prior exclusions.
+Dense/full-active/peer capacity, delivered 2,000-row cold/recovery, inclusive
+physical heap/RSS, CPU, deadlines, authenticated ordinary Reader route,
+populated native/fixed-SSH and immutable installed-pair gates remain open.
+Original CPU failures and old source/controller closures stay attached to
+their exact sources. Preserve a7/a23, protected workflows and Git HOLD; no
+public API/schema/ID/artifact selection, backend promotion or rollout.
+
 ## Shared normalization and ownership
 
 Mesh's original `docs/delta-sync-codec-proposal.md`, SHA-256
