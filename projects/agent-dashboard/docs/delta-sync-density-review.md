@@ -492,6 +492,46 @@ Original CPU failures and old source/controller closures stay attached to
 their exact sources. Preserve a7/a23, protected workflows and Git HOLD; no
 public API/schema/ID/artifact selection, backend promotion or rollout.
 
+### Python-specific final reservation sites
+
+Mesh's diagnostic-only `c6387b1f42081fc9d1258977fd040a43d3c5c21a`
+localizes the earlier untraced reserve failure on the same `13f27e25` /
+Observer `b6ce8428` sources. Its 5,814-byte guide has SHA-256
+`072789a990820ae7ddf6a97dc7b97f902fa4050982ff0b8d9645aa72be51e81f`;
+the 15,517-byte receipt has SHA-256
+`0d27945ee3aa7169773c3e14d7b06f83570cfe65f2e12254bea8a2e8ef6df1f0`.
+RLCD verifies 262 Mesh, 212 Observer and eight protected inputs, all 16
+diagnostic artifacts and 52 unchanged prior field-reference artifacts.
+
+RLCD independently repeats only the two final instrumented packed-2,000
+diagnostics, serially under the shared lock. Each has one reserve failure,
+GC disabled, 79 loaded files verified, the original heap/encoded peaks and
+outcome, and six final zero counters. Relative source-stack entries and exact
+weak-error propagation match; exploratory trace revisions remain separate.
+No unchanged functional/canonical or full capacity suite is repeated.
+
+| Python | Refused heap request | Decoded / reserved bytes | Would total | Fatal construction path |
+| --- | ---: | --- | ---: | --- |
+| 3.14.8 | 256 B | 11,574,350 / 55,534,310 | 67,108,916 B | `$fields` packed branch -> slot -> control, `_field_patch:759` |
+| 3.11.17 | 1,024 B | 9,669,914 / 57,438,091 | 67,109,029 B | Ordered baseline node, `apply_indexes:90`, before field processing |
+
+On 3.14 the exact weak error escapes `_field_patch`, `_patch` and `_finish`.
+On 3.11 the original error is deliberately sanitized: the tracer links its
+weak identity to the exact all-scalar failure tuple, then links the replacement
+weak error escaping `_patch` and `_finish`. It retains no errors, frames, roots
+or sampled locals. This establishes fatal propagation across replacement;
+Python 3.14's field-phase result must not be assigned to Python 3.11.
+
+Both requests exceed the unchanged 67,108,864-byte cap and correctly refuse.
+Near-cap arithmetic supplies no safe lower estimate, usable headroom, physical
+topology/RSS, leak or CPU conclusion. Trace storage is outside the measured
+ledger and instrumented timing is excluded. Earlier baseline seen/bucket
+retirement or already-grafted packed leaf-control retirement remain candidate
+ownership work under existing G1, requiring actual retained-owner, constructor/
+rollback, epoch and both-version evidence. No runtime fix is accepted by this
+diagnostic. All original capacity/recovery/producer gates, closed findings,
+protected workflows and Git HOLD remain unchanged.
+
 ## Shared normalization and ownership
 
 Mesh's original `docs/delta-sync-codec-proposal.md`, SHA-256
