@@ -169,7 +169,7 @@ no delivery prefix, retire their own session/refs, preserve a sibling channel
 and retain 1,024 bytes of unsealed receive credit until physical cleanup. This
 closes the bounded malformed-batch cleanup finding at source.
 
-The separate head-deadline refinement remains open on this runtime. The original
+The separate head-deadline refinement remained open on this runtime. The original
 clock probe still attempts a prefix write at 2,101 ms after a two-second head
 budget; the outer operation rejects and emits zero complete proof frames.
 This establishes no Reader authority bypass. The original nonrenewable deadline
@@ -233,6 +233,43 @@ pruning helper; the reproduced case uses inspection. Existing `nbytes`
 semantics and the shared ownership API are not changed by this finding.
 Its owning coordination and actual source-to-relay acceptance remain open;
 the previously closed watch-close and cache material-credit findings stay closed.
+
+## Relay deadline and failed-intake correction
+
+The head-deadline and source-error cleanup findings are now independently closed
+at bounded source scope on Mesh `f32218bffab8860d374964721e35384f66a86269`.
+The owning guide `docs/delta-sync-relay-deadline-g1.md` has SHA-256
+`0be8dcb7b13e7a3c1a9cf12a6ff538402b2f51268ad8c056f0f66eb8a0c21df2`.
+Evidence commit `028d90b63fed69bb1e095d8da44e2cce73a7e9a5` contains
+`docs/evidence/2026-10-16-delta-sync/relay-deadline-review.json`, SHA-256
+`bf0e529d9ad6b58cb22ebef3a7703254c2485390a04b45cf98638b3f941541e2`.
+
+One absolute head deadline is captured at public entry and checked through
+source/scanner/header handling, queued output locks and before each physical
+write. Pre-write expiry retires only that acquisition and preserves an
+independent watch's buffer/limits/credit. Failure after output starts closes the
+affected channel while retaining pins through physical cleanup and repeated
+cancellation. A source exception before returning any batch also initiates its
+own channel/session cleanup; the worker unwinds before awaiting that cleanup.
+
+RLCD verified 187 Mesh inputs against runtime and docs-only gate commit
+`cdb8cd0e3c5f11e65728d2de7c157e89ca26d819`, 211 immutable Observer inputs,
+eight protected paths and thirteen artifacts/logs. On Python 3.14.8 and 3.11.17,
+six final regression methods overlaid onto prior `171f21c` reproduce seven
+expected failing checks; the fixed runtime passes all 33 focused tests with
+cyclic GC disabled, retained errors and five final counters zero. The unchanged
+original probe moves from one write at 2,101 ms to no writes; neither run emits
+a complete expired proof. Its malformed baseline chain fails inside the source
+before returning a batch: five live tracked refs/open session before, zero
+tracked refs/closed session after. Returned count/type rejection already passed
+before and is not attributed to this correction.
+
+Six actual-Agent structural-codec fixture composition cases also pass on each
+Python version. The producer's docs-only gate passes 348 canonical tests with
+zero skips; its initial future-evidence-link failure remains preserved alongside
+the final passing log. These source checks do not close the separate consuming-
+ref pruning gap or qualify actual owned-source completion, controller grammar,
+aggregate resources/performance/native transport or an installed pair.
 
 ## Implementation and qualification
 

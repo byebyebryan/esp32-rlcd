@@ -171,8 +171,10 @@ This is bounded synthetic source integration. Actual compact native serializer,
 journal and source dispatch, schema/encoding freeze, inclusive memory/RSS,
 dense/cold/recovery CPU/bytes, deliverable 2,000-row recovery and populated
 IPC/fixed-SSH/immutable installed-pair acceptance remain open. The separate
-source pin-tracking and relay head-deadline findings also remain open; this
-checkpoint changes neither path. Current a7/a23 and protected routes stay selected.
+source pin-tracking finding remains open; the later relay deadline correction
+is [independently closed at source scope](delta-sync-relay-addendum.md#relay-deadline-and-failed-intake-correction).
+This codec checkpoint changes neither path. Current a7/a23 and protected routes
+stay selected.
 
 ## Remaining qualification
 
