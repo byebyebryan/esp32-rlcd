@@ -362,6 +362,21 @@ automatic receive still lose a consuming ref's revoker; terminal-history and
 no-inspection controls pass. Ordinary and relay input source files are identical
 between the reported `b57c217` and current Mesh pair.
 
+Observer's test-only refinement at `a10ed72b610a2edc2d551030471e153b171f1ff9`
+closes the requested assertion hardening. Its overlay has SHA-256
+`fa9fd6e95bc25c72cb328bb6ef01aa49e8bd78cf1f39721091550135184600bb`;
+`source-pin-helper-hardening.json` has SHA-256
+`b0b323cac3b7ddab2fd2a0f70a9bd553bfddeac8f836e31dbdb075a7c2918c6b`.
+The helper now proves the shared-owner reserve, sibling access and raw cleanup
+finished before accepting a pin-exit rejection. RLCD verified 210 Observer and
+152 Mesh inputs and independently replayed the unchanged new harness on both
+Python versions with GC disabled, verifying all 47 loaded modules. Injecting
+`sync_input_retired` inside the pin body incorrectly passes the old helper but
+fails the hardened end-of-body assertion. Both overlays still reproduce the
+same three runtime failures and two passing controls; all five final counters
+are zero. The original overlay, receipt and failed logs remain unchanged. This
+closes the test prerequisite only; the source pin-tracking defect remains open.
+
 Observer first proposed additive `revoked` status to distinguish logical
 retirement from a healthy consume and physical storage reclamation. The
 owner-bound query below supersedes that property proposal. No `nbytes` change,
