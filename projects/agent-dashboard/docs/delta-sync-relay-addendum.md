@@ -207,6 +207,45 @@ Both native-codec composition and source-pin diagnostic outputs exactly match
 the prior dual-version root replay. The latter remains an expected reproduction
 of an open revocation gap, not passing source-lifetime qualification.
 
+## Actual completion source and relay composition
+
+Observer implements the agreed optional method at
+`2f697d468eb3b0cb895276fd07cb746acbd23d37`. Its guide
+`docs/delta-sync-completed-changes.md` has SHA-256
+`59b671dd0ac8ec02df35c230afd1e51e912ecddf37aa043f146074f4fd313c51`;
+`docs/evidence/2026-10-16-delta-sync-source/completed-changes.json` is 46,894 bytes,
+SHA-256 `5b9a8b7f7385ba78a4cfd05af59cbf003802a902f46d0abc5f8890e308f71138`.
+The source-minted `CompletedChanges` retains original transaction refs and its
+original completion ticket, with a separate prepaid 4 KiB container lease.
+Consuming data cannot retire container/header metadata. Legacy `changes()`
+keeps its existing result shape.
+
+RLCD verified 168 Observer inputs, 93 reported Mesh inputs, six protected inputs,
+four artifacts, two agreement pins and four producer logs. It independently ran
+all 15 new completion tests and 24 existing source tests on Python 3.14.8 and
+3.11.17 against the reported Mesh `05ad6fc`, with GC disabled and zero skips.
+The producer's separate full gate reports 914 passing tests.
+
+RLCD also composed the actual owned source and Agent structural codec with
+deadline-corrected Mesh `f32218b`, verifying 188 Mesh inputs. Twelve cases pass
+on each Python version: full/active zero/one/four synthetic ServiceState changes,
+plus bad-terminal rejection, scope close and repeated cancellation during a
+blocked material drain in both views. Original material and whitespace-padded
+completion bytes survive; complete follows material drains. Invalid terminals
+emit no prefix, interrupted drains emit no completion, live input credit persists
+through cleanup and siblings remain usable. All five final relay counters are
+zero, and both version reports are byte-identical. Independently admitted
+received material remains unconfirmed until a fresh synthetic proof; public
+DTO exports then match the owner. That proof uses disclosed test-owned challenge
+setup, rather than a selected Reader/controller route.
+
+This clears the method-implementation prerequisite and adds bounded actual-source
+composition evidence. Disposable sockets, synthetic state and oracle-owned
+sink/server storage do not establish populated native, aggregate resource/RSS,
+CPU/bytes, dense/recovery or installed-pair acceptance. The consuming-ref pruning
+helper is unchanged, so the separate finding below remains open. No schema/ID,
+artifact, service, route or consumer selection changes.
+
 ## Open source pin-tracking finding
 
 A distinct revocation gap is independently reproduced on Observer
