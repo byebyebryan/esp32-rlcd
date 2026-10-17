@@ -180,6 +180,18 @@ two-allocation iterator failure reproduces before the fix. This corroborates
 the prior root source/lifetime checks without reattributing earlier `030da1f`
 results or claiming native, resource, performance or installed-pair acceptance.
 
+Mesh follow-up `b65cb2cbe2ef2355a7392b6ce69acc7a2478dd06` runs the same 171
+Observer cases on each Python version against deadline-corrected Mesh `f32218b`
+(docs-only gate checkpoint `cdb8cd0`). Its
+`docs/evidence/2026-10-16-delta-sync/observer-compact-review.json` is 81,308 bytes,
+SHA-256 `3a149e63e3e2981e345d351aa6ad1c289c83ce1f14d1955b9d1a35cd52012a87`.
+RLCD verified 188 Mesh inputs, 214 Observer inputs, 87 loaded modules, eight
+protected paths, four raw packet inputs and six retained logs against immutable
+commits. Both runs pass with GC disabled and no failures, errors or skips.
+This adds independently executed owning tests on the newer source pair; it
+does not add independent test design or populated native evidence. RLCD reused
+its prior codec and relay runtime checks for this documentation-only handoff.
+
 This is bounded synthetic source integration. Actual compact native serializer,
 journal and source dispatch, schema/encoding freeze, inclusive memory/RSS,
 dense/cold/recovery CPU/bytes, deliverable 2,000-row recovery and populated
