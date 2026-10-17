@@ -1,8 +1,8 @@
 # G1 density and representation review
 
-Status: **private storage prototype may proceed; shared interfaces remain under
-joint review**, 2026-10-17 UTC. This resolves the Mesh density-review request
-within the existing [G1 execution authorization](delta-sync-plan.md). It grants
+Status: **private storage and agreed shared normalization may proceed;
+qualification remains open**, 2026-10-17 UTC. This resolves the Mesh
+density-review request within the existing [G1 execution authorization](delta-sync-plan.md). It grants
 no producer acceptance, package allocation, route selection or rollout.
 
 ## Evidence and decision
@@ -57,15 +57,16 @@ Agent selection policy. A prototype fit is not installed-pair acceptance.
 
 ## Shared normalization and ownership
 
-Mesh's `docs/delta-sync-codec-proposal.md`, SHA-256
+Mesh's original `docs/delta-sync-codec-proposal.md`, SHA-256
 `4187fd9befabba300e2f8a36a653f4d2b564c1c0157cc9e35089cd09f47f9f56`,
-remains the concrete structural-codec proposal. Observer owns its pure Agent
-implementation and raw schemas; Mesh owns generic expansion, storage and roots.
-The four semantic callbacks retain their roles. Avoiding eager per-field public
-operation objects is supported in direction; the shared API still needs agreement.
+remains a historical input. The [accepted normalization agreement](delta-sync-codec-agreement.md)
+pins the standalone Mesh R2 `b9dd8c6` and Observer signoff `8a075bc7`.
+Observer owns its pure Agent implementation and raw schemas; Mesh owns generic
+expansion, storage and roots. The four semantic callbacks retain their roles.
+The agreed compact path avoids eager per-field public operation rosters.
 
-The owners must settle one readable contract packet before dependent shared
-codec changes, covering:
+Dependent shared implementation may proceed through that exact interface. Its
+implementation and remaining schema/qualification work must preserve:
 
 - The injected codec/descriptor and owned plan/iterator lifetimes, with explicit
   expanded versus compact negotiation and strict raw validation.
@@ -98,8 +99,8 @@ G0 material publishers retain their admission contract. A relay may
 own unadmitted bytes but exposes no material-admission or semantic capability;
 the Reader independently validates all material, roots and fresh-owner proof.
 
-Private storage work remains independent. Shared compact codec work still
-requires its concrete joint interface agreement. G1 freeze and G2
-promotion still require exact immutable paired artifacts and independent
+Private storage work remains independent. The compact normalization interface
+is also agreed; actual raw schema/encoding and execution gates remain. G1 freeze
+and G2 promotion still require exact immutable paired artifacts and independent
 correctness, native/IPC/fixed-SSH, capacity/resources and matched performance
 evidence. Preserve the selected a7/a23 tuple and all protected workflows.

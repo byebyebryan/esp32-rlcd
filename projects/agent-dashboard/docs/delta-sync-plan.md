@@ -89,9 +89,11 @@ roles, roll out sibling services or take provider/session/device actions.
 
 The [G1 density review](delta-sync-density-review.md) permits private packed
 storage work under the existing caps and public interfaces. It separates that
-work from compact codec agreement and source/input resource qualification.
-A1's role/API contract is closed; its implementation and the failed dense
-resource/CPU gates remain open.
+work from source/input resource qualification. The [compact normalization
+agreement](delta-sync-codec-agreement.md) records joint Mesh R2 `b9dd8c6` and
+Observer `8a075bc7` acceptance; dependent shared implementation may proceed.
+A1 and the normalization interface are agreed. Actual compact schema/encoding
+freeze, their implementations and the failed dense resource/CPU gates remain open.
 
 ## Accepted architecture and authority
 
