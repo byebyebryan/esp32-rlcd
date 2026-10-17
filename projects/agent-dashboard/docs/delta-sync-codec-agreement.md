@@ -82,9 +82,10 @@ retirement and atomic callback/root/capacity failure. Verify GC-disabled held
 errors, cancellation, live input/output pins and all copied scratch under the
 same shared 32 MiB encoded/64 MiB heap caps and original deadlines.
 
-The Mesh callback material-lifetime finding, failed dense CPU gate, deliverable
-2,000-row packed recovery, inclusive resource/RSS/plateau and matched cold/
-recovery CPU/bytes remain open. Actual populated IPC/fixed SSH, immutable
+The Mesh callback material-credit fix at `66b9c1e` is independently verified
+bounded source evidence. The failed dense CPU gate, deliverable 2,000-row packed
+recovery, inclusive resource/RSS/plateau and matched cold/recovery CPU/bytes
+remain open. Actual populated IPC/fixed SSH, immutable
 installed full/active/old-route pairing and later RLCD acceptance retain the
 [original gates](delta-sync-plan.md#ownership-and-execution-gates). Preserve
 a7/a23, full diagnostics, Tmux, 349, writer, ordinary providers and deferred

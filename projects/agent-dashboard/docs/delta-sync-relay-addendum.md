@@ -121,10 +121,11 @@ agreement, IDs/schema freeze, producer resource and performance acceptance, and
 later consumer gates remain separate.
 
 The Observer watch-close fix at `4254a97` is independently verified source
-prerequisite evidence. Mesh's input-owner authority fix at `e9f07c3` also passes
-the bounded authority regression, but reentrant callback material lifetime and
-accounting remain an open implementation finding. A1 closure does not accept
-those implementations or relax their physical-retirement requirements.
+prerequisite evidence. Mesh's input-owner authority fix at `e9f07c3` and
+callback material-credit fix at `66b9c1e` also pass their bounded regressions.
+The revoked graph stays charged through callback/confirmation unwind and
+retires outside the nonce operation. These source prerequisites do not grant
+aggregate resource, runtime or producer acceptance under A1.
 
 Tests must show Reader rejection of corrupt and self-consistent-but-domain-
 invalid material, wrong roots/receipts/bindings, replay and owner/clock changes;

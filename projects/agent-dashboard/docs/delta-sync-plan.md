@@ -95,6 +95,18 @@ Observer `8a075bc7` acceptance; dependent shared implementation may proceed.
 A1 and the normalization interface are agreed. Actual compact schema/encoding
 freeze, their implementations and the failed dense resource/CPU gates remain open.
 
+The bounded ownership prerequisites are independently verified at source:
+Observer watch-close revocation `4254a97`, Mesh input-owner authority revocation
+`e9f07c3`, and Mesh callback material-credit retirement `66b9c1e`. The latter
+keeps the revoked graph charged in its existing stage slot through confirmation
+and owned-input unwind, then retires it during material work or owning cleanup.
+The original probe and four targeted regressions pass on Python 3.14/3.11 with
+cyclic GC disabled. Mesh evidence is `b230f98`,
+`docs/evidence/2026-10-16-delta-sync/head-retirement.json`, SHA-256
+`29093c01c6a9b19b3248b93a4b876878e1025b939debd014cb6b466150250172`.
+These close the specific source findings; aggregate lifetime/resources, actual
+compact execution and all producer acceptance gates remain open.
+
 ## Accepted architecture and authority
 
 Cover the entire path:
