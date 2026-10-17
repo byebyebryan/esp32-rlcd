@@ -325,6 +325,27 @@ semantics and the shared ownership API are not changed by this finding.
 Its owning coordination and actual source-to-relay acceptance remain open;
 the previously closed watch-close and cache material-credit findings stay closed.
 
+Observer commits the current-source regression packet at
+`90b4292bee4a441d00e6dd22fe566e75211b656f`. The proposal document
+`docs/delta-sync-source-pin-revocation.md` has SHA-256
+`c5307671c03099004dfa4e4e20b06471277b51af57326b4910d381a631322918`;
+`source-pin-revocation.json` is 45,555 bytes, SHA-256
+`278e095b3143bb55a6cf58cadc048128b0b52db0f23cbed1932aea9836428141`.
+RLCD verifies 168 Observer inputs, 152 reported Mesh inputs, six protected inputs,
+four artifacts and retained logs. The unchanged five-case regression overlay
+also reproduces on current Mesh `f32218b` on both Python versions with GC
+disabled: three expected failures and two passing controls. Inspection and
+automatic receive still lose a consuming ref's revoker; terminal-history and
+no-inspection controls pass. Ordinary and relay input source files are identical
+between the reported `b57c217` and current Mesh pair.
+
+The proposed additive `revoked` status distinguishes logical retirement from a
+healthy consume and from physical storage reclamation. It fits the existing
+ownership direction, but exact public API agreement and implementation remain
+pending between the owners. No `nbytes` change, private graph access, healthy-pin
+revocation on inspection or early physical credit refund is accepted by this
+proposal review. These expected failures confirm an open gate, not a source fix.
+
 ## Relay deadline and failed-intake correction
 
 The head-deadline and source-error cleanup findings are now independently closed
