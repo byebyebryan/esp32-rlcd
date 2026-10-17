@@ -622,8 +622,30 @@ state and arithmetic checks; they do not qualify minted provenance, actual
 carrier storage, strict dispatcher/result parsing, concurrency, I/O, physical
 cleanup or resource accounting.
 
-Exact Observer agreement on these R2 bytes remains to be recorded. Once both
-owners agree, the existing G1 authorization covers dependent controller/carrier
+Observer's exact R2 review at
+`e31e0337a4a08732968e7bcaeb31491eb5555e27` finds the source/head/context,
+receipt-lifetime and carrier direction compatible, with one changes-row wording
+clarification before unconditional signoff. Its guide
+`docs/delta-sync-controller-r2-review.md` has SHA-256
+`afd9bf278cf1345d4c5783cd879134d032abb9c614149dcccf4e86c0a2056ae0`;
+the owning `controller-r2-review.json` has SHA-256
+`6467ddc497245c9d6dca05f68af5d321208a2b2c01f19d23617bbb8e89cf6691`.
+RLCD verifies 188 Mesh inputs, eight protected inputs, 213 Observer inputs,
+six source references and four saved arithmetic outputs without rerunning them.
+
+The row's `1..4 transactions` and `no extra terminal-control allowance` can
+misstate the existing source contract. `maxTransactions` is a cap in 1..4;
+the result is 0..cap, with zero only for equal base and target. `maxBytes`
+bounds transaction-frame bytes only, up to 8,388,608. The original completion
+retains its independent Agent limit of 16,384 bytes and nested Mesh control
+limit of 65,536 including LF. Every frame, container, buffer and transport copy
+still counts within the same shared resource and wire budgets. This corrects
+table wording and grants no new allowance or source/API change. The earlier
+coordinator review missed this row ambiguity; its two original receipt/ingress
+findings remain resolved. Observer's existing request to Mesh stands, and exact
+joint signoff awaits the corrected packet and owning confirmation.
+
+Once both owners agree, the existing G1 authorization covers dependent controller/carrier
 implementation without another general or coordinator approval. The source
 retirement-query fix has the bounded acceptance recorded above. Controller
 runtime correctness/lifetime and all original
