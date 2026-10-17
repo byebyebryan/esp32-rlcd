@@ -246,6 +246,28 @@ CPU/bytes, dense/recovery or installed-pair acceptance. The consuming-ref prunin
 helper is unchanged, so the separate finding below remains open. No schema/ID,
 artifact, service, route or consumer selection changes.
 
+Observer subsequently commits its two-IPC probe and historical failure at
+`5397f66707a0d1d578da9761758220579da7a73c`. Its manifest
+`completion-relay-join.json` is 72,901 bytes, SHA-256
+`87551d631b99945e5c3cfa0de34804f0d24f54c06fc02f587143ff53d4c7df7b`;
+the unchanged `verify_completion_relay_join.py` has SHA-256
+`c6b1add15621294d8ce77aa229f06b6c3127d01410b27e174549b124bf9f19a4`.
+The original pair uses older Mesh `b57c217`: six errors on each Python, at its
+unsupported completion `nativeBindingDigest` lookup. Those failed logs remain
+historical evidence. The existing `be6470ed` correction removes that lookup
+while preserving typed base/target/tag binding checks.
+
+RLCD verified 168 Observer inputs, 152 historical Mesh inputs, six protected
+inputs, three artifacts and the failed reports/loaded-module pins. It then ran
+the exact unchanged probe against both `be6470ed` and `f32218b`: all six full/
+active zero/one/four cases pass on each Python version, with original native
+fragments preserved over two disposable UNIX IPC paths and five final counters
+zero. Every loaded producer module matches its immutable commit. This adds
+passing controlled two-IPC completion evidence without modifying the source or
+reattributing the old failures. The probe uses a trusted test controller and
+does not exercise an independent Reader or fresh proof; the broader gates and
+separate pin-tracking finding remain open.
+
 ## Open source pin-tracking finding
 
 A distinct revocation gap is independently reproduced on Observer
