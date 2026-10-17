@@ -268,6 +268,36 @@ reattributing the old failures. The probe uses a trusted test controller and
 does not exercise an independent Reader or fresh proof; the broader gates and
 separate pin-tracking finding remain open.
 
+### Independent receiver proof
+
+Mesh evidence commit `75b8aae70fb560b8d9d2de53101b407a5d58940b` adds the
+actual source/scanner/relay and independent receiver cache on the same
+Observer `2f697d4` / Mesh `cdb8cd0` (`f32218b` runtime) pair. Its guide
+`docs/delta-sync-completed-relay-g1.md` has SHA-256
+`a53fc31581bbcb54d74ce9470d0469b4a064cec101f35b1b48e61240a5156063`;
+`completed-relay-review.json` is 86,603 bytes, SHA-256
+`e1d94203cacfda9adc6b6ea55f1978d37e9adb50241cdecbacd7704ab298c10f`.
+
+RLCD verified 188 Mesh inputs, 215 Observer inputs, eight Mesh and six producer
+protected inputs, 88 declared loaded modules, three producer packet files and
+eight result/log artifacts. Mesh reports 194 passing tests per Python version;
+RLCD independently reran only the eight new methods, preserving every assertion
+and teardown. Both Python 3.14.8 and 3.11.17 pass with GC disabled; all 66 modules
+loaded by that subset match their immutable commits. The unchanged 186 owning
+tests retain their separate execution evidence.
+
+Full/active zero/one/four chains preserve original native bytes across both
+UNIX sockets. Completion leaves material unconfirmed; a fresh head obtained
+through the actual source and relay passes normal cache confirmation, then
+public DTOs equal the owner. Additional cases cover native control limits,
+malformed terminal rejection, original recovery bytes, held drains, source close,
+cancellation and failed material/control writes. Relay and receiver teardown
+counters reach zero while sibling state survives. The trusted test controller
+and private nonce setup do not qualify the ordinary acquisition dispatcher or
+a selected Reader route. Batch cleanup passes independently of the still-open
+detached-head tracking gap. Dense/eight-MiB relay delivery, aggregate resources,
+performance, populated native/fixed SSH and installed-pair acceptance remain open.
+
 ## Open source pin-tracking finding
 
 A distinct revocation gap is independently reproduced on Observer
