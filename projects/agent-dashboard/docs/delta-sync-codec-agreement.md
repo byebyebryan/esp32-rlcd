@@ -333,6 +333,48 @@ verified per run. Its [tracking defect is independently closed at bounded source
 That closure does not qualify controller execution, aggregate resources,
 performance, native providers or the immutable installed pair.
 
+## Compact owner CPU diagnostic
+
+Observer source `f3e350772d2c3045849e3c48b60fb158943a3451` removes a redundant
+freeze/thaw round trip when encoding admitted compact row values. Its shallow
+adapter handles committed immutable objects; canonical sorting/Unicode/NaN
+settings and the existing row/encoded reservations stay unchanged. The guide
+`docs/delta-sync-compact-owner-cpu.md` has SHA-256
+`93fb9ef8d4bab7020f42c644bea482bba843f57e4ca966a09386b5430c4c8f36`;
+`compact-owner-cpu.json` has SHA-256
+`9caa9011cb6810280ffa1f030afdd457ff5e58295e8f80b45ac462ac7b3292ca`.
+
+RLCD verified 212 producer inputs, artifacts/logs and the saved serial ABBA
+samples, then independently recomputed their statistics, component sums,
+signature equality and source hashes. Compact modules are lazily imported
+during measured sync work; initially loaded hashes remain stable and all final
+module files match their respective before/after Git bytes. Exact 100-row cold
+full/active bytes, tags, hashes and membership counts match the prior export.
+No CPU benchmark was rerun. Under the shared CPU advisory lock, RLCD ran the
+unchanged 17 exporter/source methods and three compact relay methods on each
+Python version against immutable Mesh `6fce5ed0`: all 20 pass with GC disabled,
+no errors/skips and 81/73 loaded project modules verified respectively. The
+producer's 62 focused and 940 canonical results keep their saved provenance.
+
+The compact all-body median, including the semantic oracle, falls from
+742.87 to 625.34 ms at 500 rows and from 2,554.12 to 2,238.85 ms at 2,000 rows,
+with separate serial old/new ABBA controls for each before/after screen.
+The strict producer ceiling remains **FAIL**. Across twelve after generations,
+excluding each side's separately retained oracle, old/new combined-owner CPU
+totals are 2,214.209 / 7,318.117 ms at 500 rows (**+230.51%**) and
+9,090.413 / 26,391.901 ms at 2,000 rows (**+190.33%**), above the +25% ceiling.
+These compact screens retain their own workload/provenance and do not replace
+the earlier expanded-source CPU evidence.
+
+Fixtures contain 3,510 / 14,010 full membership cells, not nine fields on every
+row. The 2,000-row runs each record five baseline fallbacks and deliver no
+baseline, so they prove no recovery saving. Cold construction and instrumented
+profiling are separate; profile timings are excluded from ABBA. This is partial
+source progress only: delivered cold/recovery, actual IPC/publisher/Reader/SSH,
+aggregate 32/64 MiB, RSS, dense capacity, installed candidate and producer
+acceptance remain open. The source retirement fix is unchanged and closed;
+selected a7/a23, normal workflows, schemas/IDs and rollout remain unchanged.
+
 ## Remaining qualification
 
 Run the actual expanded and compact paths through strict streaming schema and
