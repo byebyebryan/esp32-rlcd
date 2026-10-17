@@ -55,6 +55,72 @@ full/active and selected-host aggregate cases, sparse work, CPU, heap/RSS and
 plateau under the original matrix. The two independent views do not redefine
 Agent selection policy. A prototype fit is not installed-pair acceptance.
 
+## Actual compact intake and Reader capacity
+
+**The 2,000-row Reader baseline capacity gate remains failed.** Mesh evidence
+`f0924e457230c49d04d3e5983476766d4c58a4af` uses unchanged Mesh runtime
+`d013d2afd14c3d6fa03a3fe377b62aff3ee5944b` and Observer
+`84d284dab04b68ae0e9070335d017e85564f2ba9`. Its
+`docs/evidence/2026-10-17-reader-capacity/README.md` has SHA-256
+`883ecb108793413bf7a474ee1c2ce49cfaaf62dba9240084761425352ead3f59`;
+the 8,829-byte `receipt.json` has SHA-256
+`34759770cf03bb0864bdf95e6fe7524cd781ad99db21050499245e5614a4c7b9`.
+RLCD verifies 260 Mesh, 211 Observer and eight protected inputs, 34 new
+artifacts and all 113 unchanged prior artifact pins.
+
+The disposable compact native Runtime feeds the supported owned source and
+independent Reader admission/fresh actual native heads. Source intake, raw
+refs/tickets, parser/header/container/schema scratch, normalization, indexes
+and retained Reader material share one original 32 MiB encoded / 64 MiB heap
+ledger. The native owner and fixture have separate ownership/accounts, so this
+is not an inclusive process heap or RSS measurement. The full-only native-shape
+fixture has 710/3,510/14,010 membership cells at 100/500/2,000 identities;
+it is not the dense nine-field workload. Each later generation changes one
+body while refreshing worker timing receipts across the fixture.
+
+RLCD independently replays all twelve immutable screens serially under the
+shared advisory lock on Python 3.14.8/3.11.17, with GC disabled and actual errors
+retained. All 78 imported project files verify per screen. The eight 100/500-row
+default/private-packed cases admit a baseline, stage two generations and confirm
+fresh heads. All four 2,000-row cases reject `sync_decoded_capacity` during
+baseline admission, before confirmation or the extra fixture proof scratch.
+Every screen finishes with six zero ledger counters. Scalar outcomes and peaks
+match the saved evidence:
+
+| Rows/backend | Python 3.14.8 accounted heap peak | Python 3.11.17 peak |
+| --- | ---: | ---: |
+| 500 default | 47,595,878 B | 48,055,254 B |
+| 500 private packed | 40,693,822 B | 41,153,198 B |
+| 2,000 default, refused | 67,095,909 B | 67,086,113 B |
+| 2,000 private packed, refused | 67,096,817 B | 67,086,261 B |
+
+These peaks remain below the unchanged 67,108,864-byte cap because the next
+decoded retain is refused. Encoded reservations stay below 32 MiB. The small
+successes do not establish 2,000-row delivery, predecessor/stage overlap,
+recovery, an end-to-end deadline or a performance gate.
+
+An independently replayed private scalar audit of packed 2,000-row admission
+matches 8,370,614 decoded bytes and 58,676,225 reserved bytes at the failed
+retain. Cumulative charges include 15,065,838 bytes/9,153 calls for Observer's
+field-token patch builder, 9,794,489 bytes/5,086 calls for its index puts,
+5,216,000 bytes for generic membership groups and 3,862,069 bytes for generic
+operation staging. All final scalar allocation bins and six ledger counters
+are zero; instrumented timing is excluded. Stage-budget charges grow until
+stage close. These figures identify charged workspaces, not unique physical
+storage, a leak or permission to reduce estimates.
+
+Observer owns its pure-profile patch representation/temporary lifetime review;
+Mesh owns generic normalization/group/alias/index lifetimes. Existing G1 covers
+that work while preserving exact tokens, roots, rollback, public contracts and
+full prepayment. No new shared API or accounting relaxation is assumed. The
+ordinary public Reader/selected authenticated route, simultaneous full/active,
+relay/controller buffers, slow peers/watch, aggregate resources/RSS/plateau,
+failed CPU, dense capacity, delivered cold/recovery, populated native/fixed SSH
+and immutable installed-pair gates remain open. Existing source-finding closures
+remain closed. Earlier canonical and CPU results retain their exact source
+tuples; this diagnostic supplies no native-provider, wheel or installed result.
+No backend promotion, selection or rollout occurs.
+
 ## Shared normalization and ownership
 
 Mesh's original `docs/delta-sync-codec-proposal.md`, SHA-256
