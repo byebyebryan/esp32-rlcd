@@ -414,6 +414,47 @@ contract closure and the source retirement closure stay closed. Git attribution
 cleanup remains on HOLD; no artifact/ID, selection, service/provider, sibling or
 rollout action accompanies this source review.
 
+### Bounded row-local reuse
+
+Observer `84d284dab04b68ae0e9070335d017e85564f2ba9` adds one record memo
+matched by exact side and full identity within a row, then clears it at the next
+row and before scratch release. Its container prepays another 256 heap bytes.
+Membership after masks use the exact committed edit bytes; removals have no
+after value and edits without retained bytes keep the original lookup path.
+This adds no roster cache, cross-generation reuse, API or format change.
+The guide `docs/delta-sync-compact-row-reuse.md` has SHA-256
+`0701b8fc4072d4c626288e37eaf21e2bf0fdeec0c8aff99cd4c06e8e8ae3b304`;
+its 251,162-byte `receipt.json` has SHA-256
+`346180d6bcd05960eb9140c5c63d7f4d2b50d9b5d6144b9a5c7f3b6330cfa958`.
+
+RLCD verifies 212 before/after Observer inputs, 225 selected Mesh inputs,
+128 artifacts, final ABBA samples, semantic signatures and stable source hashes.
+On immutable Mesh `a482abb`, all 64 focused methods pass independently on each
+Python 3.14.8/3.11.17 with GC disabled, zero failures/errors/skips and 86 loaded
+project pins verified. Four fresh before-`f7f7a55`/after captures preserve all
+18 full/active frames byte-for-byte on both versions, with 71 loaded pins each;
+an independent raw-ID computation passes every transaction. The saved 942-test,
+zero-skip and 198-Markdown gate retains its provenance. An initial root replay's
+four subprocess import failures came from its empty import path; that failed
+harness run is retained separately from the corrected immutable-path replay.
+
+The fresh twelve-generation, oracle-excluded old/new owner totals are
+2,310.133 / 6,134.985 ms at 500 rows (**+165.57%**) and
+9,230.158 / 22,475.622 ms at 2,000 rows (**+143.50%**). Both hard +25% ceilings
+remain **FAIL**. The 2,000-row runs each retain five baseline fallbacks and
+deliver no recovery baseline; the workload still has 3,510/14,010 full member
+cells rather than nine fields on every row. Instrumented map-entry reads fall
+from 30,696 to 18,456; profiler timing is excluded from ABBA. Draft 500-row
+samples and the source-edited, hash-guard-rejected 2,000-row draft remain
+separate from the final frozen screens. RLCD reruns no CPU benchmark.
+
+This clears the bounded source review only. The Mesh stamped-header copy
+lifetime finding remains open, with its owning correction acknowledged;
+controller/source-ref contracts stay closed. Aggregate resources/RSS, dense
+delivery/recovery, populated native/fixed SSH, immutable installed-pair and
+whole-producer gates remain open. Attribution cleanup stays on HOLD; selected
+a7/a23, schemas/IDs, normal workflows and rollout are unchanged.
+
 ## Remaining qualification
 
 Run the actual expanded and compact paths through strict streaming schema and
