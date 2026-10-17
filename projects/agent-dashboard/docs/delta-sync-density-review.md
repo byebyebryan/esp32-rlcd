@@ -383,8 +383,9 @@ screens, with 79 loaded files verified and final six counters zero. Its 500-row
 default peaks are 44,268,370/44,711,042 bytes; packed peaks are
 37,050,691/37,494,147. All four 2,000-row baselines still fail admission. The
 independent packed/3.14 scalar audit matches 11,763 tokens and `_Decoded`
-refusal in the profile callback before the new index phase, at 8,370,588 decoded
-+ 58,664,378 reserved bytes; all audit bins/final counters are zero. Root's initial nested
+refusal in the profile callback before the new index phase, with 8,370,588
+decoded and 58,664,378 reserved bytes; all audit bins/final counters are zero.
+Root's initial nested
 audit-lock launcher error is retained separately; completed suites/screens
 were verified and reused, with the corrected audit taking the sole lock.
 
