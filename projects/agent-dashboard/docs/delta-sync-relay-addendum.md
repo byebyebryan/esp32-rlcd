@@ -721,7 +721,7 @@ run. The saved owning check is 940 tests, zero skips and 197 Markdown files.
 These are independent executions of existing tests; RLCD verifies their evidence
 without repeating them. No Observer source/API change is required. The separate
 carrier copy/close edge below is not exercised by this subset; its bounded
-correction and remaining regression are recorded separately.
+correction and subsequent idle-retirement correction are recorded separately.
 
 **Original stamped-header finding m156: CLOSED at bounded source scope.**
 The before cases remain pinned to exact `a482abb`:
@@ -742,8 +742,9 @@ or admission authority. The existing R2/R4 copy convention requires immediate
 logical revocation, retaining the original frame/copy credit through physical
 unwind and rejecting a copy revoked before completion. Mesh's existing G1 owns
 that correction; no new contract or general approval is needed. The original
-interleavings are closed by the correction below; controller implementation
-review remains open on its separate pending-retirement callback regression.
+interleavings and the subsequent pending-retirement callback regression are
+closed by their separate bounded corrections below. Broader controller
+qualification remains open.
 Joint contract closure and the earlier source consuming-ref closure remain closed.
 
 These small synthetic Runtime/controller/Reader scenarios use trusted caller
@@ -794,7 +795,9 @@ ordinary authenticated/selected Reader route, or satisfy the original CPU,
 32/64 MiB, RSS, dense delivery/recovery, populated native/fixed SSH and installed-
 pair gates. No runtime, schema/ID/artifact, selection, sibling or rollout change.
 
-### Carrier copy correction and pending retirement
+<a id="carrier-copy-correction-and-pending-retirement"></a>
+
+### Carrier copy and idle retirement corrections
 
 Mesh runtime `14990c789f853441b51af81ea0919facf0aff320` corrects the
 original m156 interleavings. Evidence `50ac1b9e330865bd900b89fa92fbd3c30b5f0d2d`
@@ -836,7 +839,8 @@ and all 78 imported project files verified per run. The saved owning check is
 receipt. Original-copy, 67-focused and 386-canonical evidence retain their
 earlier source tuple; the queued idle-frame edge below is outside this subset.
 
-**New pending-retirement callback finding m165 remains OPEN.** A public worker
+**Pending-retirement callback finding m165: CLOSED at bounded source scope.**
+The before case remains pinned to `14990c7`. A public worker
 thread closes an idle frame; immediately afterward, the owner awaits carrier
 close before the queued frame-retirement callback runs. On `14990c7`, carrier
 cleanup clears its range storage, then the callback accesses those retired
@@ -849,11 +853,42 @@ real worker and short join controlling order; no copy hook or private source
 mutation. Actual callback exceptions are retained. This is a bounded cleanup
 regression, not a measured RSS/cap overrun, late wire output or authority claim.
 
-The existing Mesh G1 owns pending callback/storage/credit ordering, preserving
-the copy-pin correction, immediate revocation, bounded slots and siblings.
-No new ABI, contract or general approval is needed. Overall carrier/producer
-acceptance remains open on m165 and the original resource, CPU, delivery/recovery,
-native/fixed SSH, authenticated route and immutable installed-pair gates.
+Mesh runtime `d013d2afd14c3d6fa03a3fe377b62aff3ee5944b` corrects this ordering.
+Evidence `ab6f59e31a2300373cc754b6218b142780afd782` supplies
+`docs/evidence/2026-10-17-controller/idle-retirement.md`, SHA-256
+`acfa379b188850595279714c268707438e26c20b9b8178cbe0fc4b73ed4e9914`,
+and the 9,817-byte `idle-retirement.json`, SHA-256
+`c0408b1f9d83ae8f3396f95c6f8fbd1df78bc0f647000bc94d526b414aae7a02`.
+RLCD verifies 193 before/after Mesh inputs, 211 Observer inputs, eight protected
+inputs, 42 correction artifacts and all 71 unchanged prior artifacts. Only
+`control_carrier.py` and its tests change. Owner-loop close drains already
+queued idle frames; storage requires an empty frame inventory, and final
+retirement rechecks storage release. Stale callbacks are idempotent. Active
+copy pins, immediate revocation, two frame slots, one queued retirement per
+frame, caller copy credit and siblings remain covered.
+
+RLCD replays the unchanged public idle-frame probe, SHA-256
+`051e31f1fbecb3f4ef4fe76d5f32a7897fc80066f40d57088bba0bc27a97d1be`,
+before and after on Python 3.14.8/3.11.17 with GC disabled and 29 loaded pins
+per run. Before reproduces the callback error and 132,952 reserved heap bytes;
+after has no callback error, repeated close is safe, the sibling remains usable
+and all five final counters are zero. The unchanged original copy probe
+`b33788f8` passes both interleavings on both sources and Pythons, preserving
+copy credit, rejection after revocation and close joining physical unwind.
+The final two-frame test overlaid on `14990c7` reproduces one method/two failed
+checks per Python: callback errors and teardown credit, with no errors/skips
+and 30 loaded pins verified. All 68 focused tests pass on `d013d2a`, with 35
+loaded pins per run. The new source plus Observer `e3441d0` also passes the
+24 basic and 20 lifecycle scenarios per Python, with 77 loaded pins per run.
+The saved 387-test canonical result is verified without repeating it.
+
+This closes m165's source cleanup ordering only. Earlier copy/source/lifecycle
+evidence retains its exact source tuple; no API, wire, cap, deadline, schema/ID,
+artifact, selection, sibling or rollout change is made by this review.
+Trusted caller/private nonce/native-fixture and physical-inventory scaffolding,
+separate accounts and the original resource, CPU, delivery/recovery, populated
+native/fixed SSH, authenticated route and immutable installed-pair gates remain
+outside this bounded closure. Producer acceptance remains open.
 
 ## Implementation and qualification
 

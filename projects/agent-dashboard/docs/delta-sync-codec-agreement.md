@@ -448,9 +448,10 @@ from 30,696 to 18,456; profiler timing is excluded from ABBA. Draft 500-row
 samples and the source-edited, hash-guard-rejected 2,000-row draft remain
 separate from the final frozen screens. RLCD reruns no CPU benchmark.
 
-This clears the bounded source review only. The original Mesh stamped-header
-copy finding has [bounded closure](delta-sync-relay-addendum.md#carrier-copy-correction-and-pending-retirement);
-a new pending-retirement callback finding remains open. Controller/source-ref
+This clears the bounded source review only. The Mesh stamped-header copy and
+subsequent idle-retirement callback findings have
+[bounded closure](delta-sync-relay-addendum.md#carrier-copy-correction-and-pending-retirement).
+Controller/source-ref
 contracts stay closed. Aggregate resources/RSS, dense
 delivery/recovery, populated native/fixed SSH, immutable installed-pair and
 whole-producer gates remain open. Attribution cleanup stays on HOLD; selected
