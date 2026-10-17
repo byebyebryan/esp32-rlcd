@@ -347,6 +347,73 @@ executed `d013d2a` and newer `43013395` pairings above. Existing source closures
 CPU hard failures and all capacity, physical/RSS, recovery, authenticated-route,
 native/fixed-SSH and installed-pair gates retain their boundaries.
 
+### Compact index and rule workspaces
+
+Mesh runtime `231a631337bb8c4d5feb7cd7d7c8193ef29b5ffc`, evidence
+`103f3b3056d5f88d4e72e6556e7af6e8ff2e7aed`, separates compact index/rule
+scratch from caller-owned patch DTOs. Its guide SHA-256 is
+`de731f7d990095d30099b84650f64f44cf932ccf7f92542b5d90432835a20ad9`;
+the 6,954-byte receipt is
+`b34e41750f18f4708e10b92d5d69c9c75ffaeb866571229ab7ae8be7ff160ad7`.
+RLCD verifies 262 after/260 before Mesh inputs, 211 reported Observer inputs,
+eight protected inputs, 27 new artifacts and all 27 prior group artifacts.
+The saved 403-test canonical gate is verified without repeating it.
+
+Each workspace prepays 4,096 bytes, then 256 per duplicate marker/bulk bucket
+and 128 per bulk row before insertion or append. Ordered keys retain decoded
+Atoms; unordered keys retain owners of the exact canonical buffers. Bulk rows
+and local aliases drop after constructor/error cleanup and before seen owners
+and credit. Index work retires before field processing; reserved rules use a
+separate later workspace. Caller patch/DTO credit still lasts through finish or
+rollback. Expanded whole-patch prepayment stays intact. Compact field lists
+reject an exact record/field duplicate before append, bounding each list by
+descriptor fields; final changed bits still derive from old/new values.
+
+RLCD independently runs all 68 focused methods on each Python 3.14.8/3.11.17,
+GC disabled, with no failures/errors/skips and 41 loaded files verified. The
+one-method final overlay on old `43013395` reproduces one expected rejection-code
+assertion per Python, with 35 files verified: both sources reject invalid input,
+so this establishes no earlier authority bypass. Root adds 46 dictionary/list
+growth-bound checks per Python through 4,096 rows, ordered and unordered,
+including resize overlap and four quota refusals before mutation. All 30 loaded
+files match Git and final six counters are zero.
+
+The reported `84d284da` Observer pairing reproduces all eight saved source/Reader
+screens, with 79 loaded files verified and final six counters zero. Its 500-row
+default peaks are 44,268,370/44,711,042 bytes; packed peaks are
+37,050,691/37,494,147. All four 2,000-row baselines still fail admission. The
+independent packed/3.14 scalar audit matches 11,763 tokens and `_Decoded`
+refusal in the profile callback before the new index phase, at 8,370,588 decoded
++ 58,664,378 reserved bytes; all audit bins/final counters are zero. Root's initial nested
+audit-lock launcher error is retained separately; completed suites/screens
+were verified and reused, with the corrected audit taking the sole lock.
+
+RLCD separately pairs the already committed Observer `b6ce8428` with this Mesh
+source. All 64 Observer profile/codec/read/storage methods pass per Python,
+GC disabled, with 75 loaded files verified. Eight new intake screens retain
+the shared original 32/64 MiB ledger and 79 loaded-file checks. All 500-row
+baselines, two generations and fresh heads pass; all 2,000-row baseline
+admissions still reject `sync_decoded_capacity`, before proof scratch:
+
+| Observer `b6ce8428` / backend | Python 3.14.8 heap peak | Python 3.11.17 peak |
+| --- | ---: | ---: |
+| 500 / default | 35,932,113 B | 36,146,873 B |
+| 500 / packed | 28,714,434 B | 28,929,978 B |
+| 2,000 / default, refused | 67,108,005 B | 67,108,591 B |
+| 2,000 / packed, refused | 67,108,500 B | 67,108,813 B |
+
+Every screen ends with six zero counters. These are ledger peaks, not physical
+heap/RSS savings or available headroom. The newer default cases record a refused
+1,069,904-byte reservation; packed cases contain no reserve-wrapper failure,
+so no underlying allocator attribution is inferred from the public error.
+This clears the bounded private workspace source implementation only. Full-only
+3,510/14,010-cell fixtures, separate native-owner account, private arena/nonce/
+proof carrier and synthetic clock remain excluded from dense-nine-field,
+full/active/slow-peer, physical/RSS, CPU, deadlines, delivered cold/recovery,
+ordinary authenticated Reader route, populated native/fixed-SSH and installed
+pair acceptance. Old findings stay closed; no cap/estimate, API/schema/ID,
+backend promotion, artifact/selection, sibling, attribution cleanup or rollout.
+
 ## Shared normalization and ownership
 
 Mesh's original `docs/delta-sync-codec-proposal.md`, SHA-256
