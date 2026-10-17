@@ -4,8 +4,8 @@ Status: **joint interface agreement complete; dependent G1 implementation
 authorized**, 2026-10-17 UTC. Mesh, Observer and RLCD accept the exact R2
 public-intent and raw-reference contract below under Bryan's existing
 [execution authorization](delta-sync-plan.md). The complete Agent compact
-schema/encoding and runtime qualification remain open. Frozen G0 bytes and the
-separate [A1 relay agreement](delta-sync-relay-addendum.md) remain unchanged.
+schema/encoding freeze and runtime qualification remain open. Frozen G0 bytes
+and the separate [A1 relay agreement](delta-sync-relay-addendum.md) remain unchanged.
 
 ## Accepted inputs
 
@@ -67,11 +67,38 @@ pure Agent codec/profile facade, streaming restoration and owning native export
 through those public interfaces. Each owner stays in its repository and
 preserves concurrent work. No further general execution go-ahead is required.
 
-Observer still owns the complete Agent compact envelope, positions, schemas,
-encoding identity and joined raw-restoration vectors. Those remain unallocated;
-their exact compatibility and strict-schema vectors precede final schema/API
-freeze and immutable artifact qualification. This interface agreement does not
-allocate a package version or accept an actual raw schema.
+Observer owns the complete Agent compact envelope, positions, schemas, encoding
+identity and joined raw-restoration vectors. The candidate compatibility
+checkpoint below permits dependent implementation; schema/API freeze and
+immutable artifact qualification remain separate. This agreement allocates no
+encoding, schema identifier or package version.
+
+## Candidate wire compatibility
+
+Observer's concrete candidate is commit
+`c161090b0108e7102f77ed7936e6f41bcacb8f51`. Its exact inputs are:
+
+| Input | SHA-256 |
+| --- | --- |
+| `docs/delta-sync-compact-wire-proposal.md` | `585d4172400d628737ad68064ab8ecdd768fe7ef29456197c2671722f817c5c2` |
+| `agent_observer/contracts/sync-compact-frame.schema.json` | `cad76406eceab62bb5ba982f3472258b0f604d05dc890a865c7cd2acb43fb23e` |
+| `docs/evidence/2026-10-16-delta-sync-source/compact-raw-vectors.json` | `a45ad79025dd8ae606db52735d9c63fa018c6d9640f5b2e81f31b01f43c387b5` |
+| `docs/evidence/2026-10-16-delta-sync-source/verify_compact_raw_vectors.py` | `9d925a96aa661a2b5ef90a8e5529f15c8591e7949c204fdbe697b94ecc440850` |
+
+Mesh's attributed G1 coordination receipt `e-0760ef9f` confirms same-byte
+compatibility of the fixed raw positions and explicit single configured
+encoding/journal with R2/R4. This receipt is distinct from an accepted runtime
+commit or installed artifact. RLCD already independently reproduced the ten
+candidate tests on each Python version and the exact fixtures/verifier: eight
+baselines, ten transactions, 144 field tokens, seven lossless joined rows and
+eight model rejections. Mesh reports identical dual-version verifier output.
+The two alias-reuse cases are derived synthetic fixtures.
+
+The design compatibility condition for dependent Agent/G1 implementation is
+satisfied on these candidate bytes. The proposed `agent-observer.compact/1`
+identifier remains unallocated and the schema remains unfrozen. Actual streaming
+Agent admission, exporter/source dispatch and generic runtime qualification
+still require their original correctness, ownership and performance gates.
 
 ## Remaining qualification
 
