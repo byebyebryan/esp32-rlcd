@@ -192,10 +192,11 @@ This adds independently executed owning tests on the newer source pair; it
 does not add independent test design or populated native evidence. RLCD reused
 its prior codec and relay runtime checks for this documentation-only handoff.
 
-This is bounded synthetic source integration. Actual compact native serializer,
+This was bounded synthetic source integration. Actual compact native serializer,
 journal and source dispatch, schema/encoding freeze, inclusive memory/RSS,
 dense/cold/recovery CPU/bytes, deliverable 2,000-row recovery and populated
-IPC/fixed-SSH/immutable installed-pair acceptance remain open. The separate
+IPC/fixed-SSH/immutable installed-pair acceptance remained open at that checkpoint.
+The following sections record later serializer and source progress. The separate
 source pin-tracking finding remains open; the later relay deadline correction
 is [independently closed at source scope](delta-sync-relay-addendum.md#relay-deadline-and-failed-intake-correction).
 This codec checkpoint changes neither path. Current a7/a23 and protected routes
@@ -237,9 +238,50 @@ These full fixtures have 710 / 3,510 / 14,010 membership cells, rather than nine
 fields per row. Only current cold full/active owner state is present: no predecessor,
 overlapping stage, slow peer, intake, relay, Reader or RSS measurement. This is
 source-frame size evidence, not accepted dense capacity, recovery or whole CPU
-improvement. Earlier CPU failures remain failed. Actual compact source/IPC dispatch,
-inclusive pipeline qualification and immutable installed pairing remain open;
-the selected a7/a23 tuple stays unchanged.
+improvement. Earlier CPU failures remain failed. Actual compact source/IPC dispatch
+was still pending at that owner-output checkpoint; the source work follows.
+Inclusive pipeline qualification and immutable installed pairing remain open,
+and the selected a7/a23 tuple stays unchanged.
+
+## Explicit compact source and native dispatcher
+
+Observer implements the opt-in source at
+`7213084557ed4dd63361567bb75bd262b2e517bc`. Its guide
+`docs/delta-sync-compact-source.md` has SHA-256
+`72f9aa63c74ff86141bb03c9e877d724bd20eb542d721c4edcf41974858e02e7`;
+`compact-source.json` has SHA-256
+`069f9e181c2beb2b5dc7817d575e2a021c116c9538577975ab8279b0b5107b7e`.
+Pure `agent_observer.sync_compact_source.CachedCompactAgentSyncSource` retains
+the existing constructor and owned session/batch/head/watch surface. Explicit
+parser selection uses the compact structural scanner for material and the
+original parser for heads. It captures a static callable without a bound-parent
+cycle. Unowned compact byte operations reject before I/O; the expanded source
+remains strict and default. There is no sniffing or format fallback.
+
+RLCD verified 212 Observer inputs, 152 reported Mesh inputs, five artifacts,
+four unchanged raw-convention pins and retained logs/diagnostics. It independently
+ran only the seven new methods on Python 3.14.8 and 3.11.17 against both reported
+Mesh `f32218b` and query-enabled `6fce5ed0`: all 28 method executions pass with
+GC disabled, no skips and all 79 loaded modules verified per run. The producer's
+203-focused/931-canonical results keep their saved execution provenance.
+
+Synthetic state uses the actual disposable native Runtime dispatcher with
+collection disabled. Full/active zero/one/four chains preserve the exact frames
+returned by that dispatcher. Independent compact Reader admission/staging,
+fresh original source heads and final lossless DTO export pass. Other cases
+cover wrong-route rejection, a large opaque invalid body forwarded then rejected
+by the Reader, original head parsing without compact/schema work, import purity
+and watch-close revocation that preserves a prior baseline ticket.
+
+This clears a component prerequisite for ongoing G1 integration. Private test
+nonce/native-byte pin and a test-assembled proof carrier remain disclosed; the
+tests do not exercise generic relay/controller forwarding or authenticate an
+installed route. Native fixture, oracle and Reader allocations are separate.
+The source's pruning AST is unchanged, so its consuming-ref fix through the
+agreed query remains separate and open. Aggregate resources/RSS, total CPU,
+dense 2,000-row/cold recovery, populated providers/fixed SSH and immutable
+installed paired acceptance remain open. No ID/schema allocation, service,
+provider, selection, sibling or rollout action occurs.
 
 ## Remaining qualification
 
