@@ -377,6 +377,25 @@ same three runtime failures and two passing controls; all five final counters
 are zero. The original overlay, receipt and failed logs remain unchanged. This
 closes the test prerequisite only; the source pin-tracking defect remains open.
 
+Mesh supplies a named completion-lifetime probe revision at
+`835a43055bbb9f18d61c6a19ff1666f048640035`. Additive
+`verify_completed_relay_retirement.py` has SHA-256
+`e3f28fdb9421e4417d5fda47f3bae278c498b1d03b360b0789ba9fc6a1f839eb`;
+`completed-relay-retirement-probe.json` has SHA-256
+`9024332b85845e028cccc0d21beb30fcd38477f468fe29d7a223f742932ab427`.
+The historical probe remains byte-identical at SHA-256
+`7ffe624538930c634738a5b940da20e58a78306437822f080bee05692463803c`.
+RLCD independently verifies that only the blocked material-drain assertion
+changes from zero to five live consuming refs; the other seven methods and
+all drain, batch, credit, sibling, cancellation and teardown assertions remain.
+The revised eight-method probe reproduces exactly one `0 != 5` failure and
+seven passes on immutable Observer `7213084` / Mesh `6fce5ed0` on both Python
+versions, with GC disabled, no errors/skips and 66 loaded modules verified.
+This validates the probe against the defective source. Its default mode must
+pass all eight methods on the future committed fixed pair. Prior failed runs
+and separately named adaptations retain their own provenance; no source fix,
+component-suite pass or wider acceptance is inferred from this before replay.
+
 Observer first proposed additive `revoked` status to distinguish logical
 retirement from a healthy consume and physical storage reclamation. The
 owner-bound query below supersedes that property proposal. No `nbytes` change,
