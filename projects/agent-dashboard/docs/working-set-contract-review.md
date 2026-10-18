@@ -1,10 +1,10 @@
 # Working-set P1 client review
 
-2026-10-18. **Exact R1+R2 client contract accepted at bounded contract scope.**
-R2 completes the independent branch and coverage lifetimes. The preparatory
-helper's cutoff-range correction remains open; this signoff does not assert
-helper conformance or producer/runtime acceptance. No view is implemented or
-selected here, no identifier is allocated, and dark delta-sync remains deferred.
+2026-10-18. **Exact R1+R2+R3 client contract accepted; WS-P1-1 and WS-P1-2
+closed at wording/pure-helper scope.** R2 completes branch/coverage lifetimes;
+R3 clarifies coverage and fixes computed-cutoff bounds. This is not integrated
+producer/runtime acceptance. No view is selected here, no identifier is allocated,
+and dark delta-sync remains deferred.
 
 ## Exact reviewed packet
 
@@ -31,6 +31,19 @@ The announced R2 supplement is Observer
 All ten R2 manifest artifacts match immutable Git objects. Source, tests and
 `pyproject.toml` are byte-unchanged from R1. Original R1 bytes and the initial
 review at RLCD `26c0c48749e5f6f7658dc2177d5c1ae6cbed5c2f` remain provenance.
+
+The owning correction is Observer
+`645688f80eec90fb1a1e8df8ac127c5f458b88c8`:
+
+| Artifact | Exact bytes |
+| --- | --- |
+| `docs/working-set-contract-r3.md` | 3,981 bytes; SHA-256 `65815ad9997d00d8fc6c34fa56c9e920df9f13a13a25ff9b1a3e303ce8d7c797` |
+| `agent_observer/working_set_policy.py` | SHA-256 `1af48f051e4bbddc19ca24b7b4cb891431571c63ff8584b283b0b8b8b2b66519` |
+| `docs/evidence/2026-10-18-working-set/client-correction/receipt.json` | 8,004 bytes; SHA-256 `bc344073ad8c81339f534189cff4e1f9e1ec50adc9c0a9a1455da902628195b0` |
+
+All 29 correction artifacts match immutable Git objects. R1/R2, the original
+client diagnostic, and both preceding root reviews are byte-preserved. Only
+`working_set_policy.py` changes within the producer source package.
 
 ## R2 completion and exact client signoff
 
@@ -61,12 +74,42 @@ is also permitted; it does not erase that independent active claim. All required
 negative and census supports remain currentness dependencies, including for
 complete-empty. Delayed quiet replacements cannot bypass the facade's checks.
 
-These explicit union/coverage rules resolve the semantic concern in WS-P1-1
-below. The original blanket unknown-age sentence may conservatively reduce
-coverage; it cannot suppress proved active membership or convert unknown into
-absence. No remaining client contract conflict is identified in the exact
-R1+R2 tuple. Mesh's public SDK/profile review and source implementation gates
+These explicit union/coverage rules resolved the semantic concern in WS-P1-1
+at the R2 review. R3 now replaces the original blanket unknown-age sentence
+explicitly. No remaining client contract conflict is identified in the exact
+R1+R2+R3 tuple. Mesh's public SDK/profile review and source implementation gates
 remain their existing owning assignments.
+
+## R3 correction closure
+
+R3 adopts decision-dependent membership coverage: unknown recent age does not
+make an independently proved active row unresolved. The age field itself stays
+unknown. Exhaustive census, all other required selection supports and R2's
+sole-positive expiry downgrade remain required. WS-P1-1 is closed.
+
+The helper checks both computed deadlines against the inclusive signed-safe
+range before returning a time decision. If either is out of range, the result
+is unknown with reason `cutoff_out_of_range` and both bounds absent. It neither
+clamps nor preserves a usable sibling bound. Zero-window and valid signed
+negative cutoffs remain unchanged; independent active membership still wins.
+WS-P1-2 is closed at preparatory-helper scope.
+
+Independent execution of the unchanged owning runners on Python 3.14.8 and
+3.11.17 reproduces exactly two overflow failures and 13 passes on immutable
+58b04ac with only the final test file overlaid. Exact 645688f passes all 15
+tests per version, with GC disabled and zero errors/skips. The named original
+counterexample separately changes from true/out-of-range to unknown/no bounds
+on each version; its independent active result remains selected. Every loaded
+source/test/runner entry matches its exact Git object. Before policy/range
+runs contain four/three entries; after runs contain five/four, including their
+owning runner inside the final export.
+
+Private correction evidence is repository-root
+`.cache/observer-working-set-20261018/client-correction-645688f/review.json`,
+SHA-256 `7a1a98537c0c61799b3163bf597363b62c1293ace297abf9028a5c0ab3b19d0d`.
+The saved 964-test canonical result was verified, not rerun. Unchanged R1/R2
+arithmetic, actual clock/cache/timer/native/profile behavior and producer gates
+were not replayed or qualified by this correction review.
 
 ## Compatible client semantics
 
@@ -108,8 +151,8 @@ membership clock does not implicitly change that UI field or its authority.
 
 ## Initial R1 corrections and current disposition
 
-**WS-P1-1 — client semantics resolved by R2; editorial clarification remains
-useful.** R1 lines 173–180 require a proved decision for every identity, then say
+**WS-P1-1 — closed by R2 semantics and R3 explicit wording.** R1 lines 173–180
+require a proved decision for every identity, then say
 “Unknown age is partial.” The initial review flagged the missing distinction
 between selected membership and coverage availability. Eligible active rows with
 unknown age remain selected. A current exhaustive scope may prove all membership
@@ -117,15 +160,15 @@ decisions even when one selected row's age remains unavailable; R2 also permits
 conservative partial coverage without dropping that member. Excluded-kind rows
 and a disabled recent branch need no activity proof.
 
-Suggested replacement: “Unknown activity makes affected membership coverage
+R3's accepted replacement: “Unknown activity makes affected membership coverage
 partial when the selection decision cannot otherwise be proved. Independently
 proved active membership remains selected; unavailable activity and age fields
 remain unknown.” Preserve exhaustive census and all required current supports.
 
-**WS-P1-2 — open preparatory-helper conformance.** R1 lines
-94–98 require out-of-range cutoff arithmetic to make recent unknown. Exact
-`recent_activity()` currently returns `True`/`recent` with cutoffs beyond the
-signed safe-integer envelope. Both Python versions reproduce this input:
+**WS-P1-2 — closed on 645688f at preparatory-helper scope.** R1 lines 94–98
+require out-of-range cutoff arithmetic to make recent unknown. Before the fix,
+exact 58b04ac `recent_activity()` returned `True`/`recent` with cutoffs beyond
+the signed safe-integer envelope. Both Python versions reproduce this input:
 
 | Input/result | Value |
 | --- | ---: |
@@ -133,18 +176,17 @@ signed safe-integer envelope. Both Python versions reproduce this input:
 | L / U / now | 9,007,199,254,730,991 / 9,007,199,254,731,001 / 9,007,199,254,731,091 |
 | Current original receipt expiry | 9,007,199,254,740,990 |
 | W / activity T / Q | 1,700,000,000,000 / 1,699,999,999,000 / 259,200,000 |
-| Actual Dlo / Dhi | 9,007,199,513,929,990 / 9,007,199,513,930,002 |
+| Before Dlo / Dhi | 9,007,199,513,929,990 / 9,007,199,513,930,002 |
 
 All input integers are within the safe-integer bound; sample, support, service,
 boot and context joins match. Expected outcome is unknown with no usable
 out-of-range cutoff. This is preparatory-model conformance, not an integrated
 runtime failure or producer qualification result.
 
-The announced R2 is the identified coverage/lifetime completion. The existing
-owning helper correction request remains outstanding; it was not resent.
-The contract already requires unknown on overflow, so client contract signoff
-does not certify the unchanged preparatory helper. This creates no new general
-permission gate. Preserve all original R1 and failed-vector evidence.
+The R2 review kept the helper correction open; R3 now closes that existing
+request without a new assignment or general permission gate. Original R1 and
+failed-vector evidence remain preserved. The separate contract, helper and
+future integrated-runtime acceptance boundaries remain explicit.
 
 ## Verification and remaining scope
 
