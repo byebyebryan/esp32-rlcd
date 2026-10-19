@@ -68,7 +68,9 @@ partial.
 
 Header counts use the same 24-pixel font as the title and conversation rows.
 Counts above 99 use `99+`; overflow uses `+99+`. The title abbreviates when
-needed so all five totals and overflow fit without shrinking the numbers.
+needed so the four visible totals and overflow fit without shrinking the numbers.
+The header shows attention, ready, working and uncertain; recent-only threads
+remain in the list and feed accounting, without a separate clock or recent count.
 
 Fresh complete coverage may retire absent members only in its exact host,
 provider and namespace. A current exact child/system or other positive

@@ -1042,7 +1042,7 @@ static void test_motion_chrome_states(const char *directory)
     save_pbm(directory, "header-icons-overflow", whole_header);
 
     // Working-set counts retain the full-size font used by the title and rows.
-    // A normal five-count header must have digit ink below the old 12px line.
+    // The four visible counts must have digit ink below the old 12px line.
     const uint32_t ordinary_totals[] = {0, 6, 1, 4, 0};
     const dashboard_motion_render_t ordinary_working_set = {
         .roster = {.sessions = NULL, .count = 0, .feed_health = DASH_CURRENT},
@@ -1054,7 +1054,21 @@ static void test_motion_chrome_states(const char *directory)
     assert_band_equal(known_frame, ordinary_header, 0, 88, 0, 21);
     save_pbm(directory, "working-set-header-readable", ordinary_header);
 
-    // Five capped totals plus overflow still fit without shrinking the font.
+    // Recent-only membership stays in the feed but cannot change the header.
+    const uint32_t more_recent[] = {0, 6, 1, 500, 0};
+    dashboard_motion_render_t changed_header = ordinary_working_set;
+    changed_header.supplied_totals = more_recent;
+    uint8_t changed_frame[RLCD_FRAME_BYTES];
+    dashboard_draw_motion(changed_frame, &changed_header);
+    assert(memcmp(ordinary_header, changed_frame, RLCD_FRAME_BYTES) == 0);
+    // The remaining ? count must still use uncertainty, not the recent slot.
+    const uint32_t more_uncertain[] = {0, 6, 1, 4, 7};
+    changed_header.supplied_totals = more_uncertain;
+    dashboard_draw_motion(changed_frame, &changed_header);
+    assert(band_differs(ordinary_header, changed_frame,
+                        136, 392, 0, DASHBOARD_MOTION_BODY_TOP - 3));
+
+    // Four capped totals plus overflow still fit without shrinking the font.
     const uint32_t working_set_totals[] = {100, 100, 100, 100, 100};
     const dashboard_motion_render_t working_set = {
         .roster = {.sessions = NULL, .count = 0, .feed_health = DASH_CURRENT},

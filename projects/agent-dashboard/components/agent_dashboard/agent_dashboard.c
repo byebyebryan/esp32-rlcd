@@ -566,15 +566,6 @@ static void motion_state_symbol(uint8_t *frame, int x, int y,
                 rect(frame, x + col * scale, y + row * scale, scale, scale, white);
 }
 
-static void motion_recent_symbol(uint8_t *frame, int x, int y, int scale, bool white)
-{
-    static const uint8_t clock[6] = {0x0c, 0x12, 0x21, 0x25, 0x12, 0x0c};
-    for (int row = 0; row < 6; ++row)
-        for (int col = 0; col < 6; ++col)
-            if (clock[row] & (0x20u >> col))
-                rect(frame, x + col * scale, y + row * scale, scale, scale, white);
-}
-
 static bool duplicate_project(const dashboard_view_t *roster,
                               const char *project)
 {
@@ -663,7 +654,7 @@ static void draw_motion_chrome(uint8_t *frame,
         const int icon_gap = view->supplied_totals ? 2 : 4;
         const int group_gap = view->supplied_totals ? 4 : 12;
         const dashboard_work_t live_states[] = {
-            DASH_NEEDS_INPUT, DASH_SETTLED, DASH_WORKING, DASH_UNKNOWN, DASH_UNKNOWN,
+            DASH_NEEDS_INPUT, DASH_SETTLED, DASH_WORKING, DASH_UNKNOWN,
         };
         const dashboard_work_t legacy_states[] = {
             DASH_NEEDS_INPUT, DASH_SETTLED, DASH_WORKING, DASH_UNKNOWN,
@@ -691,14 +682,17 @@ static void draw_motion_chrome(uint8_t *frame,
         if (view->supplied_totals)
             for (size_t i = 0; i < 5; ++i) totals[i] = view->supplied_totals[i];
         if (!view->supplied_totals) totals[3] = totals[4];
-        const size_t groups = view->supplied_totals ? 5 : (totals[3] ? 4 : 3);
+        const size_t groups = view->supplied_totals ? 4 : (totals[3] ? 4 : 3);
         char values[5][24];
         int widths[5];
         int total_width = (int)(groups - 1) * group_gap;
         for (size_t i = 0; i < groups; ++i) {
-            if (view->supplied_totals && totals[i] > 99)
+            // Keep the five-category feed intact; recent-only membership has
+            // no header counter. The final displayed counter is uncertainty.
+            const size_t index = view->supplied_totals && i == 3 ? 4 : i;
+            if (view->supplied_totals && totals[index] > 99)
                 snprintf(values[i], sizeof(values[i]), "99+");
-            else snprintf(values[i], sizeof(values[i]), "%zu", totals[i]);
+            else snprintf(values[i], sizeof(values[i]), "%zu", totals[index]);
             widths[i] = ICON_WIDTH + icon_gap +
                         motion_text_width(values[i], false);
             total_width += widths[i];
@@ -718,10 +712,7 @@ static void draw_motion_chrome(uint8_t *frame,
         for (size_t i = 0; i < groups; ++i) {
             const dashboard_work_t state = view->supplied_totals
                                          ? live_states[i] : legacy_states[i];
-            if (view->supplied_totals && i == 3)
-                motion_recent_symbol(frame, x, 2, 3, false);
-            else
-                motion_state_symbol(frame, x, 2, state, DASH_CURRENT, 3, false);
+            motion_state_symbol(frame, x, 2, state, DASH_CURRENT, 3, false);
             motion_text(frame, x + ICON_WIDTH + icon_gap, 0,
                         values[i], false,
                         widths[i] - ICON_WIDTH - icon_gap, false);
