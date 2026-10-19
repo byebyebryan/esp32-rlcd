@@ -92,14 +92,19 @@ RLCD_PORT='/dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_94:A9:90:F
 Use `--seconds 60` for a bounded run, or Ctrl+C to stop. The bridge owns the serial
 port exclusively and closes its Mesh subscription on exit. It does not reset the
 board or create a background service. This first rollout pins the known RLCD
-identity; another board requires a reviewed identity change.
+identities. Starship uses the path above; Snap uses
+`/dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_94:A9:90:DE:D0:04-if00`.
+The bridge and bounded live capture accept only those exact identities; the
+separate 349 board is not eligible. Another board requires a reviewed identity
+change.
 
 ## Managed service
 
-The reliability pass installs a versioned host bundle and a Starship user service
+The reliability pass installs a versioned host bundle and a user service
 `rlcd-agent-dashboard.service`. Chezmoi owns the host selection, launcher, unit and
-startup link. Starship's existing user lingering allows startup with the user
-manager at boot. The service tolerates absent or busy USB hardware and retries
+startup link. Host-specific selection binds each physical host to its exact RLCD
+port. User lingering allows startup with the user manager at boot. The service
+tolerates absent or busy USB hardware and retries
 without taking another owner's port. A device hangup closes the old descriptor;
 reconnection uses fresh framing and bridge identity. Unexpected worker termination
 fails the owner visibly, and normal service stop releases its owned resources.

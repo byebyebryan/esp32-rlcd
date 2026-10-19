@@ -7,9 +7,13 @@ import json
 import os
 import re
 import subprocess
+import sys
 import termios
 import time
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "host"))
+from live_dashboard.serial import KNOWN_RLCD_DEVICE_NAMES
 
 
 def fields(line):
@@ -137,7 +141,7 @@ def main():
         parser.error("seconds must be 10..300")
     if (
         args.port.parent != Path("/dev/serial/by-id")
-        or "94:A9:90:F3:43:74" not in args.port.name
+        or args.port.name not in KNOWN_RLCD_DEVICE_NAMES
     ):
         parser.error("explicit known RLCD identity required")
     args.output.mkdir(parents=True, exist_ok=False)

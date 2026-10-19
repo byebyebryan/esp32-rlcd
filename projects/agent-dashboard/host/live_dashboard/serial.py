@@ -15,6 +15,12 @@ from .runtime import Failure
 from .wire import encode, parse_request
 
 
+KNOWN_RLCD_DEVICE_NAMES = frozenset({
+    "usb-Espressif_USB_JTAG_serial_debug_unit_94:A9:90:F3:43:74-if00",  # Starship
+    "usb-Espressif_USB_JTAG_serial_debug_unit_94:A9:90:DE:D0:04-if00",  # Snap
+})
+
+
 HEALTH_LIMITS = {
     "health": 4,
     "partial": 1,

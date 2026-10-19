@@ -14,7 +14,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "host"))
 from live_dashboard.mesh import Fleet
 from live_dashboard.projection import Projector
 from live_dashboard.runtime import Events, Failure, supervise
-from live_dashboard.serial import serve_serial
+from live_dashboard.serial import KNOWN_RLCD_DEVICE_NAMES, serve_serial
 from live_dashboard.wire import encode
 
 
@@ -115,8 +115,7 @@ def arguments():
     if not (args.roster or args.preview) and (
         args.port is None
         or args.port.parent != Path("/dev/serial/by-id")
-        or args.port.name
-        != "usb-Espressif_USB_JTAG_serial_debug_unit_94:A9:90:F3:43:74-if00"
+        or args.port.name not in KNOWN_RLCD_DEVICE_NAMES
     ):
         parser.error("explicit known RLCD serial identity required")
     return args
