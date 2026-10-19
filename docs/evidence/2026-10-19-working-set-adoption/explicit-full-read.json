@@ -1,0 +1,9 @@
+{
+  "diagnosticRows": 506,
+  "selectionCounts": {
+    "selected": 5,
+    "child": 297,
+    "parked": 204
+  },
+  "scope": "explicit cached full-history diagnostic; no fallback; raw identity/label output retained privately"
+}

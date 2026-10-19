@@ -1,0 +1,210 @@
+{
+  "candidate": {
+    "bootIdDigest": "e24a338846966fff95c4c1c92958443c",
+    "observationRevision": 2,
+    "sequence": 3,
+    "serviceIdDigest": "1e587a3dd6b786dcef27046439e4b84b",
+    "viewRevision": 2
+  },
+  "candidateInstall": {
+    "listenerInode": 88805960,
+    "mesh": {
+      "installPath": "/home/bryan/.local/share/agent-observer/0.7.0a7-a3983afc-ws72-m4f598719/lib/python3.14/site-packages",
+      "name": "mesh-plus",
+      "version": "0.1.0a23",
+      "wheelSha256": "4f5987191b8d1113f3aa0afced15c5179f458fa0f9b9044352f1fefd418736bd"
+    },
+    "meshCli": {
+      "device": 47,
+      "inode": 25533183,
+      "path": "/home/bryan/.local/share/agent-observer/0.7.0a7-a3983afc-ws72-m4f598719/bin/mesh-plus",
+      "sha256": "1330e1f9133aedb72251c77d16a9e42cf03bb3e63a6d64f85721ca502fbca368"
+    },
+    "observer": {
+      "installPath": "/home/bryan/.local/share/agent-observer/0.7.0a7-a3983afc-ws72-m4f598719/lib/python3.14/site-packages",
+      "name": "agent-observer",
+      "version": "0.7.0a7",
+      "wheelSha256": "a3983afc12cee4aec84dd53d2ec9e60edd1e97dd4250543d77344bcde0878ac5"
+    },
+    "observerServiceCli": {
+      "device": 47,
+      "inode": 25533387,
+      "path": "/home/bryan/.local/share/agent-observer/0.7.0a7-a3983afc-ws72-m4f598719/bin/agent-observer-service",
+      "sha256": "d5b19406d5adc453db864ecc1b1144494f766afd8b11341cfc62c683374e649f"
+    },
+    "parserPath": "/home/bryan/.local/share/agent-observer/0.7.0a7-a3983afc-ws72-m4f598719/lib/python3.14/site-packages/agent_observer/working_set_contract.py",
+    "peerExecutableDevice": 47,
+    "peerExecutableInode": 25531709,
+    "peerExecutablePath": "/home/bryan/.local/share/agent-observer/0.7.0a7-a3983afc-ws72-m4f598719/bin/python",
+    "peerExecutableSha256": "375532f83be620283ab780c14ca6bcc5907dc379d2b621de0c5d0a112cf5458b",
+    "peerUid": 1000,
+    "python": {
+      "device": 47,
+      "executablePath": "/home/bryan/.local/share/agent-observer/0.7.0a7-a3983afc-ws72-m4f598719/bin/python",
+      "inode": 25531709,
+      "path": "/home/bryan/.local/share/agent-observer/0.7.0a7-a3983afc-ws72-m4f598719/bin/python",
+      "prefix": "/home/bryan/.local/share/agent-observer/0.7.0a7-a3983afc-ws72-m4f598719",
+      "sha256": "375532f83be620283ab780c14ca6bcc5907dc379d2b621de0c5d0a112cf5458b",
+      "version": "3.14.8"
+    },
+    "serviceIncarnationDigest": "db10f594071343b6ad542edf0c694154",
+    "socketDevice": 64,
+    "socketInode": 18326,
+    "socketPath": "/run/user/1000/rlcd-ws-649of9u3/s"
+  },
+  "conditionalMembershipStatus": "none",
+  "counts": {
+    "candidateBodies": 10,
+    "candidateMembers": 10,
+    "candidateNonmembers": 0,
+    "candidateOmittedExpectedNegative": 394,
+    "candidateUncertain": 0,
+    "conditionalMemberships": 0,
+    "expectedMembers": 10,
+    "expectedNonmembers": 394,
+    "fieldUnresolvedIdentities": 0,
+    "independentlyProvenRecentMemberships": 5,
+    "membershipMatches": 404,
+    "membershipUnresolved": 0,
+    "membershipUnresolvedIdentities": 0,
+    "mismatchedIdentities": 0,
+    "nativeAfter": 404,
+    "nativeBefore": 404,
+    "nativeCensusStable": true,
+    "nativeComplete": true,
+    "projectedFieldComparedIdentities": 10,
+    "projectedFieldMismatchedIdentities": 0,
+    "projectedFieldUnrequestedNonmemberBodies": 0,
+    "projectedFieldUnresolvedIdentities": 0
+  },
+  "coverageLimits": [
+    "comparison is limited to stable rows bracketed by native-before and native-after",
+    "transient changes that begin and revert inside the bracket cannot be excluded",
+    "observed clock-prefix proof applies only to the bounded initial installed-service receipt sequence",
+    "frames outside that observed prefix remain conditional on the producer clock ceiling",
+    "omitted-row recency requires a complete joined clock census for current source components",
+    "native before/after census and row facts are read-only but can be incomplete or raced",
+    "no provider payload, prompts, responses, title, cwd or native identifier is emitted"
+  ],
+  "exitCode": 0,
+  "fieldCounts": {
+    "activity_match": 10,
+    "kind_checked": 10,
+    "kind_match": 10,
+    "runtime_checked": 10,
+    "runtime_match": 10
+  },
+  "fieldScope": {
+    "legacyFieldStatus": "retains full-row requirements for compact nonmembers",
+    "negativeFacts": {
+      "compactBodyOmissions": "unrequested",
+      "excludedChildOrSystem": [
+        "kind"
+      ],
+      "parked": [
+        "runtime",
+        "activity"
+      ]
+    },
+    "projectionStatusRequires": [
+      "membershipStatus=match",
+      "projectedFieldStatus=match",
+      "stable complete native census",
+      "complete candidate scope coverage",
+      "valid candidate binding"
+    ],
+    "selectedBodies": [
+      "runtime",
+      "kind",
+      "activity"
+    ]
+  },
+  "fieldStatus": "match",
+  "hostScope": "starship",
+  "identityDigests": [],
+  "membershipStatus": "match",
+  "mismatchCounts": {},
+  "native": {
+    "endpointDevice": 50,
+    "endpointInode": 343951,
+    "endpointPath": "/tmp/codex-daemon-1000/85ae4debcaebe343a44369336ac0a7ca5f115866a8bb635964a3a9b3e250bfd5",
+    "executableDevice": 47,
+    "executableInode": 24413331,
+    "executablePath": "/home/bryan/.codex/packages/app-server-daemon/releases/0.163.0-x86_64-unknown-linux-musl/bin/codex",
+    "executableSha256": "399ff69c431c066e40de318fba45c2b07f45a76b19939d247ee4828fc70c4215",
+    "peerUid": 1000,
+    "processIncarnationDigest": "3ae41635746ec91e48a48635bc65778c",
+    "version": "0.163.0"
+  },
+  "nativeOracle": {
+    "path": "/home/bryan/code/esp32-rlcd/.cache/working-set-adoption/20261019T183334Z/scope-leases-1eec6c6/evaluate-observation",
+    "reusedReadSubset": true,
+    "sha256": "b7b92588766f34c08498c756b12b20ce02976c21d244dfa4ecb6755f2c5e0191"
+  },
+  "oracle": "independent_codex_app_server_read_subset",
+  "oracleSha256": "b7b92588766f34c08498c756b12b20ce02976c21d244dfa4ecb6755f2c5e0191",
+  "ownedCleanup": {
+    "qualifier": {
+      "joined": true,
+      "pid": 3201743,
+      "returncode": 0
+    },
+    "service": {
+      "joined": true,
+      "pid": 3201761,
+      "returncode": 0
+    }
+  },
+  "privatePathRetired": true,
+  "projectedFieldStatus": "match",
+  "projectionStatus": "match",
+  "qualifierReturncode": 0,
+  "qualifierSha256": "bb35429a9923e17d5d9354bca008ba57f489d1fb41c4bbeb9020f241479b20c8",
+  "reasonCounts": {},
+  "schema": "agent-observer.working-set-native-qualification.v1",
+  "seconds": 3.148183946032077,
+  "sourceK": {
+    "candidateCeiling": 1791909246330,
+    "clockBracketAndComponentSampleJoins": "checked",
+    "currentComponentClockCensus": "complete",
+    "firstAcceptanceReason": "observed_clock_prefix_path_selected",
+    "firstAcceptanceSet": "not_used",
+    "independentCurrentClockLowerBound": 1791909246330,
+    "observedClockPrefix": {
+      "acceptedTransitions": 3,
+      "baselineCounters": {
+        "history": 0,
+        "runtime": 0
+      },
+      "finalCounters": {
+        "history": 1,
+        "runtime": 2
+      },
+      "finalMetadataFingerprint": "77303e6fa40460ff4889b1b387aea80fb40a22c7903f5a68cf02806dfab81e2d",
+      "frames": 3,
+      "reason": "observed_clock_prefix_recomputed",
+      "recomputedCeiling": 1791909246330,
+      "status": "recomputed"
+    },
+    "recomputedFirstAcceptanceCeiling": null,
+    "recomputedObservedClockPrefixCeiling": 1791909246330,
+    "status": "independently_recomputed_observed_clock_prefix"
+  },
+  "status": "match",
+  "timing": {
+    "candidateFrameEmittedAtMs": 1792436811917,
+    "candidateFrameEmittedBoottimeMs": 527566226,
+    "candidateFrameSequence": 3,
+    "externalBoottimeBracketMs": [
+      527564278,
+      527566836
+    ],
+    "externalWallBracketMs": [
+      1792436809968,
+      1792436812527
+    ],
+    "nativeAfterDurationMs": 461,
+    "nativeBeforeDurationMs": 525
+  },
+  "windowMs": 259200000
+}

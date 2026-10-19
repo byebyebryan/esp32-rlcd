@@ -1,0 +1,108 @@
+{
+  "scope": "live cached feed and USB/device admission; physical readability remains separate",
+  "bridge": "/home/bryan/.local/share/rlcd-agent-dashboard/d3fd7b8133f02567/scripts/live-dashboard.py",
+  "initial": {
+    "sent": 63,
+    "acknowledged": 26,
+    "healthyConfirmed": 26,
+    "lastView": {
+      "sequence": 63,
+      "request": 63,
+      "crc": "8ef4184a",
+      "rows": 11,
+      "hosts": [
+        {
+          "alias": "ST",
+          "status": 0,
+          "valid_ms": 3000,
+          "totals": [
+            0,
+            4,
+            1,
+            5,
+            0
+          ],
+          "total": 10
+        },
+        {
+          "alias": "SN",
+          "status": 0,
+          "valid_ms": 3000,
+          "totals": [
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          "total": 1
+        }
+      ]
+    },
+    "maxFrameUs": 19161,
+    "deadlineMisses": 0,
+    "minInternalHeap": 291003,
+    "minStackWatermark": 4776
+  },
+  "silence": {
+    "windowSeconds": 6,
+    "expired": {
+      "health": 2,
+      "partial": 1,
+      "rows": 11,
+      "attention": 0,
+      "waiting": 0,
+      "working": 0,
+      "recent": 0,
+      "uncertain": 11,
+      "frame_us": 17266,
+      "miss": 0,
+      "heap": 291003,
+      "stack": 4776
+    }
+  },
+  "recovery": {
+    "sent": 25,
+    "acknowledged": 25,
+    "healthyConfirmed": 25,
+    "lastView": {
+      "sequence": 25,
+      "request": 94,
+      "crc": "506026da",
+      "rows": 11,
+      "hosts": [
+        {
+          "alias": "ST",
+          "status": 0,
+          "valid_ms": 3000,
+          "totals": [
+            0,
+            4,
+            1,
+            5,
+            0
+          ],
+          "total": 10
+        },
+        {
+          "alias": "SN",
+          "status": 0,
+          "valid_ms": 3000,
+          "totals": [
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          "total": 1
+        }
+      ]
+    },
+    "maxFrameUs": 19187,
+    "deadlineMisses": 0,
+    "minInternalHeap": 291003,
+    "minStackWatermark": 4776
+  },
+  "passed": true
+}

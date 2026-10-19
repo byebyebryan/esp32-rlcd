@@ -1,0 +1,45 @@
+{
+  "environments": {
+    "311": {
+      "prefix": "/home/bryan/code/esp32-rlcd/.cache/working-set-adoption/20261019T183334Z/scope-leases-1eec6c6/venv-311",
+      "python": "/home/bryan/code/esp32-rlcd/.cache/working-set-adoption/20261019T183334Z/scope-leases-1eec6c6/venv-311/bin/python",
+      "pythonSha256": "08ad3f0a96b536082d6020a29830712c55346dca555f81a337c628f00369f57a",
+      "version": "3.11.17"
+    },
+    "314": {
+      "prefix": "/home/bryan/.local/share/agent-observer/0.7.0a7-a3983afc-ws72-m4f598719",
+      "python": "/home/bryan/.local/share/agent-observer/0.7.0a7-a3983afc-ws72-m4f598719/bin/python",
+      "pythonSha256": "375532f83be620283ab780c14ca6bcc5907dc379d2b621de0c5d0a112cf5458b",
+      "version": "3.14.8"
+    }
+  },
+  "offline": true,
+  "sources": {
+    "mesh": {
+      "archiveSha256": "70f77f07345136284361881542a84e544fa251220d5ca92201eedfad319af787",
+      "commit": "2fb502da35c0ef9865762c4dc4b486dd30b7e316",
+      "files": 1755,
+      "repo": "/home/bryan/code/mesh-plus-working-set"
+    },
+    "observer": {
+      "archiveSha256": "6571abade0b8f0b1674ec5cd11e6fa8c428df464444576373dbd378fbb40eb25",
+      "commit": "1eec6c6d8681a3e58bab742d5c130656ab00433c",
+      "files": 2592,
+      "repo": "/home/bryan/code/agent-observer-rlcd-adoption-20261019"
+    }
+  },
+  "wheels": {
+    "mesh": {
+      "bytes": 270646,
+      "packageFiles": 99,
+      "path": "/home/bryan/code/esp32-rlcd/.cache/working-set-adoption/20261019T183334Z/scope-leases-1eec6c6/wheels/mesh_plus-0.1.0a23-py3-none-any.whl",
+      "sha256": "4f5987191b8d1113f3aa0afced15c5179f458fa0f9b9044352f1fefd418736bd"
+    },
+    "observer": {
+      "bytes": 354019,
+      "packageFiles": 99,
+      "path": "/home/bryan/code/esp32-rlcd/.cache/working-set-adoption/20261019T183334Z/scope-leases-1eec6c6/wheels/agent_observer-0.7.0a7-py3-none-any.whl",
+      "sha256": "a3983afc12cee4aec84dd53d2ec9e60edd1e97dd4250543d77344bcde0878ac5"
+    }
+  }
+}

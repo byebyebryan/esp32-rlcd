@@ -1,0 +1,259 @@
+{
+  "wire": 2,
+  "selection": {
+    "bundle": ".local/share/rlcd-agent-dashboard/757d037d2ca3abb5",
+    "dependencies": {
+      "activeRead": 1,
+      "admission": 1,
+      "api": 4,
+      "mesh": "0.1.0a23",
+      "nativeVersion": 1,
+      "observer": "0.7.0a7",
+      "preparation": 1,
+      "profile": "agent-observer.mesh-active.v1",
+      "read": 2,
+      "sdk": 1,
+      "selection": 1,
+      "service": 4
+    },
+    "deviceWire": 2,
+    "enabledHosts": [
+      "starship",
+      "snap"
+    ],
+    "hosts": [
+      "starship",
+      "snap"
+    ],
+    "manifestSha256": "757d037d2ca3abb5249905b062cb2ddb10064cf31dd88fa08375c89ac04eca70",
+    "manifestVersion": 1,
+    "port": "/dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_94:A9:90:DE:D0:04-if00",
+    "python": ".local/share/agent-observer/0.7.0a7-5eafd4c1-active-feed/bin/python",
+    "sourceRevision": "55a2b54eb15261c61d99df3f87c444baf42ed6a7"
+  },
+  "managedUnit": "ActiveState=active\nSubState=running\nInvocationID=cff5696026f742f0b86a9104f6ac613f\nMainPID=4033229\nNRestarts=0\nExecStart={ path=/home/bryan/.local/share/agent-observer/0.7.0a7-5eafd4c1-active-feed/bin/python ; argv[]=/home/bryan/.local/share/agent-observer/0.7.0a7-5eafd4c1-active-feed/bin/python -I -B /home/bryan/.local/share/rlcd-agent-dashboard/757d037d2ca3abb5/scripts/live-dashboard.py --hosts starship snap --port /dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_94:A9:90:DE:D0:04-if00 ; ignore_errors=no ; start_time=[Mon 2026-10-19 12:27:02 PDT] ; stop_time=[n/a] ; pid=4033229 ; code=(null) ; status=0/0 }\n",
+  "managedRecoveryEvent": true,
+  "checkedAcknowledgements": [
+    {
+      "request": 160,
+      "crc": "702fffa6",
+      "rows": 1
+    },
+    {
+      "request": 161,
+      "crc": "db32a738",
+      "rows": 1
+    },
+    {
+      "request": 162,
+      "crc": "0060e933",
+      "rows": 1
+    },
+    {
+      "request": 163,
+      "crc": "56791045",
+      "rows": 1
+    },
+    {
+      "request": 164,
+      "crc": "90b1d28c",
+      "rows": 1
+    },
+    {
+      "request": 165,
+      "crc": "3bac8a12",
+      "rows": 1
+    },
+    {
+      "request": 166,
+      "crc": "e0fec419",
+      "rows": 1
+    },
+    {
+      "request": 167,
+      "crc": "80577681",
+      "rows": 1
+    },
+    {
+      "request": 168,
+      "crc": "88c7b677",
+      "rows": 1
+    },
+    {
+      "request": 169,
+      "crc": "1cf36fcf",
+      "rows": 1
+    },
+    {
+      "request": 170,
+      "crc": "0efdd8d3",
+      "rows": 1
+    },
+    {
+      "request": 171,
+      "crc": "75106dcb",
+      "rows": 1
+    }
+  ],
+  "health": [
+    {
+      "health": "0",
+      "partial": "1",
+      "rows": "1",
+      "attention": "0",
+      "waiting": "1",
+      "working": "0",
+      "unknown": "0",
+      "frame_us": "13454",
+      "miss": "0",
+      "heap": "292171",
+      "stack": "4776"
+    },
+    {
+      "health": "0",
+      "partial": "1",
+      "rows": "1",
+      "attention": "0",
+      "waiting": "1",
+      "working": "0",
+      "unknown": "0",
+      "frame_us": "13474",
+      "miss": "0",
+      "heap": "292171",
+      "stack": "4776"
+    },
+    {
+      "health": "0",
+      "partial": "1",
+      "rows": "1",
+      "attention": "0",
+      "waiting": "1",
+      "working": "0",
+      "unknown": "0",
+      "frame_us": "13452",
+      "miss": "0",
+      "heap": "292171",
+      "stack": "4776"
+    },
+    {
+      "health": "0",
+      "partial": "1",
+      "rows": "1",
+      "attention": "0",
+      "waiting": "1",
+      "working": "0",
+      "unknown": "0",
+      "frame_us": "13468",
+      "miss": "0",
+      "heap": "292171",
+      "stack": "4776"
+    },
+    {
+      "health": "0",
+      "partial": "1",
+      "rows": "1",
+      "attention": "0",
+      "waiting": "1",
+      "working": "0",
+      "unknown": "0",
+      "frame_us": "13456",
+      "miss": "0",
+      "heap": "292171",
+      "stack": "4776"
+    },
+    {
+      "health": "0",
+      "partial": "1",
+      "rows": "1",
+      "attention": "0",
+      "waiting": "1",
+      "working": "0",
+      "unknown": "0",
+      "frame_us": "13472",
+      "miss": "0",
+      "heap": "292171",
+      "stack": "4776"
+    },
+    {
+      "health": "0",
+      "partial": "1",
+      "rows": "1",
+      "attention": "0",
+      "waiting": "1",
+      "working": "0",
+      "unknown": "0",
+      "frame_us": "13453",
+      "miss": "0",
+      "heap": "292171",
+      "stack": "4776"
+    },
+    {
+      "health": "0",
+      "partial": "1",
+      "rows": "1",
+      "attention": "0",
+      "waiting": "1",
+      "working": "0",
+      "unknown": "0",
+      "frame_us": "13492",
+      "miss": "0",
+      "heap": "292171",
+      "stack": "4776"
+    },
+    {
+      "health": "0",
+      "partial": "1",
+      "rows": "1",
+      "attention": "0",
+      "waiting": "1",
+      "working": "0",
+      "unknown": "0",
+      "frame_us": "13482",
+      "miss": "0",
+      "heap": "292171",
+      "stack": "4776"
+    },
+    {
+      "health": "0",
+      "partial": "1",
+      "rows": "1",
+      "attention": "0",
+      "waiting": "1",
+      "working": "0",
+      "unknown": "0",
+      "frame_us": "13496",
+      "miss": "0",
+      "heap": "292171",
+      "stack": "4776"
+    },
+    {
+      "health": "0",
+      "partial": "1",
+      "rows": "1",
+      "attention": "0",
+      "waiting": "1",
+      "working": "0",
+      "unknown": "0",
+      "frame_us": "13483",
+      "miss": "0",
+      "heap": "292171",
+      "stack": "4776"
+    },
+    {
+      "health": "0",
+      "partial": "1",
+      "rows": "1",
+      "attention": "0",
+      "waiting": "1",
+      "working": "0",
+      "unknown": "0",
+      "frame_us": "13490",
+      "miss": "0",
+      "heap": "292171",
+      "stack": "4776"
+    }
+  ],
+  "nativeCurrentnessAccepted": false,
+  "scope": "exact old managed tuple/image restoration and repeated wire2 CRC/request/count ACK; native source health may remain partial",
+  "probeCorrection": "first helper incorrectly expected repeated recovery events; healthy per-frame ACKs refresh the recovery timer, so repeated ACKs are captured here using the unchanged installed verbose bridge"
+}

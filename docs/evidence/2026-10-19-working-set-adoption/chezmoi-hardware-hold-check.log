@@ -1,0 +1,70 @@
+
+[check] locate required validators
+
+[check] git whitespace
+[ok] git diff --check
+
+[check] host-aware transport and package matrix
+
+[check] desktop integration profiles
+[ok] desktop profiles, host isolation, theme ownership and preference preservation
+[ok] host mapping and package policy matrix
+[ok] scoped transcript hook and client retirement
+[ok] host-aware configuration and managed retired-target removals
+
+[check] shell, zsh, and Python syntax
+[ok] managed Bash/Zsh/Python syntax
+
+[check] Rofi application launcher
+[ok] managed Rofi theme, extension pins, and Niri picker/launcher ownership
+
+[check] Codex Plus externals and materialized skills
+[ok] pinned Codex Plus externals and materialized skills
+[ok] published runtime/source pins, immutable selection, supported/unknown hosts, host availability, preference preservation and explicit overrides and scoped live preservation
+[ok] independent config, routing, pins, WAL backup, history relocation, live-owner refusal, offline cutover and failure rollback
+
+[check] Yazi Markdown preview
+[ok] pinned Piper package and Glow preview rule
+
+[check] shared RTK and OpenCode configuration
+[ok] shared Codex/OpenCode RTK integration and layered OpenCode defaults
+
+[check] portable Codex configuration
+[ok] retired MCP removal and machine-local merge
+[ok] native-runtime pilot host scope and selective Claude preferences
+
+[check] DMS JSON and local override filtering
+[ok] DMS JSON and override filtering
+
+[check] Niri materialization and validation
+2026-10-19T19:36:22.563529Z DEBUG niri_config: loaded config from "config.kdl"
+2026-10-19T19:36:22.563559Z  INFO niri: config is valid
+2026-10-19T19:36:23.195236Z DEBUG niri_config: loaded config from "config.kdl"
+2026-10-19T19:36:23.195266Z  INFO niri: config is valid
+2026-10-19T19:36:23.641956Z DEBUG niri_config: loaded config from "config.kdl"
+2026-10-19T19:36:23.641984Z  INFO niri: config is valid
+[ok] materialized Niri config and create-mapped DMS includes validate
+
+[check] Observer operational selection render
+
+[check] SSH client configuration
+PASS: shared SSH defaults, local override preservation, conditional scopes and idempotence
+
+[check] native terminal notification formatting
+[ok] native terminal layout, original-window focus, structured alerts and focus suppression
+....
+----------------------------------------------------------------------
+Ran 4 tests in 0.000s
+
+OK
+
+[check] independent HTML report candidate
+[ok] report pins, supported/unknown host gates, optional MCP and local preference preservation
+[info] pass --artifact to qualify local archive extraction and isolated installation
+
+[check] RLCD dashboard wiring
+PASS: RLCD selection, exact per-host serial gates, rendered units/launchers/config/startup
+PASS: active source/profile, both host gates, rendered config/units; no endpoint/provider reads
+PASS: working-set profile/window/collector identity, effective source dispatch, both host gates and independent legacy roles
+
+[check] all checks passed

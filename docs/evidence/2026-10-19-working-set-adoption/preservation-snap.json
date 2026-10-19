@@ -1,0 +1,101 @@
+{
+  "host": "snap",
+  "stage": "rollback",
+  "protectedManagedTargetsExact": [
+    ".local/bin/rlcd-agent-dashboard",
+    ".config/rlcd-agent-dashboard/selection.json",
+    ".config/systemd/user/rlcd-agent-dashboard.service",
+    ".config/systemd/user/default.target.wants/rlcd-agent-dashboard.service",
+    ".local/bin/agent-observer",
+    ".local/bin/agent-observer-write",
+    ".local/bin/mesh-plus-active",
+    ".config/systemd/user/mesh-plus-agent.service",
+    ".config/systemd/user/mesh-plus-agent-active.service",
+    ".config/systemd/user/tmux-observer-owner@.service"
+  ],
+  "selectedTargetsMatchCanonical": [
+    ".local/bin/agent-observer-service",
+    ".config/systemd/user/agent-observer.service",
+    ".local/bin/mesh-plus",
+    ".config/mesh-plus/sources.toml",
+    ".local/bin/mesh-plus-working-set",
+    ".config/systemd/user/mesh-plus-agent-working-set.service",
+    ".config/systemd/user/default.target.wants/mesh-plus-agent-working-set.service"
+  ],
+  "protectedUnitIncarnationsExact": {
+    "mesh-plus-agent.service": {
+      "Id": "mesh-plus-agent.service",
+      "ActiveState": "active",
+      "SubState": "running",
+      "InvocationID": "9553ef50b4654177b5fc6b907ae0be55",
+      "MainPID": "1428945",
+      "NRestarts": "0"
+    },
+    "mesh-plus-agent-active.service": {
+      "Id": "mesh-plus-agent-active.service",
+      "ActiveState": "active",
+      "SubState": "running",
+      "InvocationID": "b54d9bf49a584de593fd4042787420ff",
+      "MainPID": "723865",
+      "NRestarts": "0"
+    },
+    "349d.service": {
+      "Id": "349d.service",
+      "ActiveState": "active",
+      "SubState": "running",
+      "InvocationID": "4238b26040c649eba67d4c89d0f360dc",
+      "MainPID": "3342772",
+      "NRestarts": "0"
+    },
+    "tmux-observer-owner@starship.service": {
+      "Id": "tmux-observer-owner@starship.service",
+      "ActiveState": "inactive",
+      "SubState": "dead",
+      "InvocationID": "",
+      "MainPID": "0",
+      "NRestarts": "0"
+    },
+    "tmux-observer-owner@snap.service": {
+      "Id": "tmux-observer-owner@snap.service",
+      "ActiveState": "active",
+      "SubState": "running",
+      "InvocationID": "ff60bbf6a92348d7b163de4e026bfd54",
+      "MainPID": "1821",
+      "NRestarts": "0"
+    }
+  },
+  "selection": {
+    "bundle": ".local/share/rlcd-agent-dashboard/757d037d2ca3abb5",
+    "dependencies": {
+      "activeRead": 1,
+      "admission": 1,
+      "api": 4,
+      "mesh": "0.1.0a23",
+      "nativeVersion": 1,
+      "observer": "0.7.0a7",
+      "preparation": 1,
+      "profile": "agent-observer.mesh-active.v1",
+      "read": 2,
+      "sdk": 1,
+      "selection": 1,
+      "service": 4
+    },
+    "deviceWire": 2,
+    "enabledHosts": [
+      "starship",
+      "snap"
+    ],
+    "hosts": [
+      "starship",
+      "snap"
+    ],
+    "manifestSha256": "757d037d2ca3abb5249905b062cb2ddb10064cf31dd88fa08375c89ac04eca70",
+    "manifestVersion": 1,
+    "port": "/dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_94:A9:90:DE:D0:04-if00",
+    "python": ".local/share/agent-observer/0.7.0a7-5eafd4c1-active-feed/bin/python",
+    "sourceRevision": "55a2b54eb15261c61d99df3f87c444baf42ed6a7"
+  },
+  "services": "Id=agent-observer.service\nActiveState=active\nSubState=running\nInvocationID=84a5bf9d399044eda3e7cd8030b3f8b8\nMainPID=4047160\nNRestarts=0\nExecStart={ path=/home/bryan/.local/share/agent-observer/0.7.0a7-a3983afc-ws72-m4f598719/bin/agent-observer-service ; argv[]=/home/bryan/.local/share/agent-observer/0.7.0a7-a3983afc-ws72-m4f598719/bin/agent-observer-service serve --host-scope snap --provider codex --codex-home /home/bryan/.codex --runtime-interval 30 --history-interval 120 --collection-timeout 10 --workspace-config /home/bryan/.config/agent-observer/workspace.json --socket /run/user/1000/agent-observer/read.sock --native-hints --hint-diagnostics /run/user/1000/agent-observer/hints.json --working-set-window-hours 72 ; ignore_errors=no ; start_time=[Mon 2026-10-19 12:30:06 PDT] ; stop_time=[n/a] ; pid=4047160 ; code=(null) ; status=0/0 }\nMemoryCurrent=29618176\nMemoryPeak=42967040\nCPUUsageNSec=5479104000\n\nId=mesh-plus-agent-working-set.service\nActiveState=active\nSubState=running\nInvocationID=811460fb040649be9fe01db5b2196e2f\nMainPID=4047206\nNRestarts=0\nExecStart={ path=/home/bryan/.local/bin/mesh-plus-working-set ; argv[]=/home/bryan/.local/bin/mesh-plus-working-set serve --source agent_working_set --socket /run/user/1000/mesh-plus-agent-working-set/read.sock ; ignore_errors=no ; start_time=[Mon 2026-10-19 12:30:07 PDT] ; stop_time=[n/a] ; pid=4047206 ; code=(null) ; status=0/0 }\nMemoryCurrent=20496384\nMemoryPeak=22618112\nCPUUsageNSec=276088000\n\nId=rlcd-agent-dashboard.service\nActiveState=active\nSubState=running\nInvocationID=a22486b651be4f0aacbb5c706aaa0949\nMainPID=4056445\nNRestarts=0\nExecStart={ path=/home/bryan/.local/share/agent-observer/0.7.0a7-5eafd4c1-active-feed/bin/python ; argv[]=/home/bryan/.local/share/agent-observer/0.7.0a7-5eafd4c1-active-feed/bin/python -I -B /home/bryan/.local/share/rlcd-agent-dashboard/757d037d2ca3abb5/scripts/live-dashboard.py --hosts starship snap --port /dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_94:A9:90:DE:D0:04-if00 ; ignore_errors=no ; start_time=[Mon 2026-10-19 12:32:18 PDT] ; stop_time=[n/a] ; pid=4056445 ; code=(null) ; status=0/0 }\nMemoryCurrent=26021888\nMemoryPeak=30715904\nCPUUsageNSec=3906197000\n",
+  "packageInventoryRecordVerified": true,
+  "scope": "scoped exact file/role/process preservation; physical/manual and whole producer gates separate"
+}

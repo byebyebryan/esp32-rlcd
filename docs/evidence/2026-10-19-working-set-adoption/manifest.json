@@ -1,0 +1,189 @@
+{
+  "scope": "sanitized adoption evidence; wheels, flash backups/readbacks and raw full roster stay private",
+  "files": {
+    "REPORT.md": {
+      "sha256": "4dfeb8a6906ad218fc1d10b7e121622f70e67296b8923c9b54fb830b33669c30",
+      "bytes": 10142
+    },
+    "apply_client.py": {
+      "sha256": "73b9ff0d49b03aea0fe07513e3e11253674896e4de3e03adf12dc7b7b3b5b076",
+      "bytes": 2707
+    },
+    "apply_client_reselect.py": {
+      "sha256": "6390f7854481b2b30be2d63d2d4d1e28a0353284291b610af5dee6140e46ce0b",
+      "bytes": 2730
+    },
+    "apply_producer.py": {
+      "sha256": "1b3e927cf715b4728b50a6aae2cb763e63fc5c4e8ac5ce19fad660f77357e5ae",
+      "bytes": 2857
+    },
+    "apply_producer_reselect.py": {
+      "sha256": "83ca44d8bbc453e8f666f3478e0aba1fdde5f123b236b4bdfd8ed3795789bccf",
+      "bytes": 2880
+    },
+    "build_firmware.py": {
+      "sha256": "d5c8b57813656f1b3de62ebdaa6f76c2ae725584ca56108487d766fc2abdbf1b",
+      "bytes": 3279
+    },
+    "build_pair.py": {
+      "sha256": "f7c4fadb440fda008cfdb6d2ba86c0d0d8b9dd9e083dbb1eacacb41e8c525f7b",
+      "bytes": 5895
+    },
+    "bundle.json": {
+      "sha256": "fc0366c7b9018d17b34df4f2a43fd35f01a3c64cb0d905811f40f05a4a8b7181",
+      "bytes": 1957
+    },
+    "chezmoi-hardware-hold-check.log": {
+      "sha256": "f2a13ef7670a9069860ffbaa392043bdbe9c0d955da25a404a60726ce9a7a170",
+      "bytes": 2983
+    },
+    "chezmoi-snap-working-set-client-check.log": {
+      "sha256": "76905c9eeaeffe20d3f4b135575d76ca1a97e270e3e9433e0f7c94b6b29dba76",
+      "bytes": 2983
+    },
+    "client-initial-health.json": {
+      "sha256": "0dc4796e5a7f2c08b320d885cf1577b4b217b3c681014bd6d34a48a68e14506d",
+      "bytes": 1168
+    },
+    "completion.json": {
+      "sha256": "9ba98ec4c4e859b2a0111a3b9701a991179271c670e42d4e14a83d9902a4e370",
+      "bytes": 766
+    },
+    "explicit-full-read.json": {
+      "sha256": "8ce2dd4d3654c323e0d22d41e3b271fd52e78c779e432a47c0e3cd7e6639a89a",
+      "bytes": 224
+    },
+    "fictional-device.json": {
+      "sha256": "6896a19c8bace834d71c2ad18257eb3bf26c63dbe84bc2dc91cc2b7a8cec4fd3",
+      "bytes": 2618
+    },
+    "final_audit.py": {
+      "sha256": "e367aa4f4e45c924342dc20e35568d4345f2ce65fe4dad6e462736adab0b9122",
+      "bytes": 3963
+    },
+    "firmware-build.json": {
+      "sha256": "9188df5b656dc9f0a3990d3520a42448a1c886c9751cdfccfd360587c65d687a",
+      "bytes": 871
+    },
+    "flash_pair.py": {
+      "sha256": "d2a48ca17124aca8e9fde6aba6f1b25129dba29ae5497d9c2ec49673cf09727c",
+      "bytes": 3742
+    },
+    "hardware-backup.json": {
+      "sha256": "7ca7dfdbfe6a9b7b4f1daae96e6a7b6cfa80ce6a4470225e8fc0df1a8545055c",
+      "bytes": 310
+    },
+    "hardware-new.json": {
+      "sha256": "b41a45ed26e77995dc6db6409ed372f6a8008191d7a8f709cb8773e9720814e7",
+      "bytes": 729
+    },
+    "hardware-old.json": {
+      "sha256": "8538c150cadb3b54bf47893d26773bf0101d3f13d7efc782067d537e0eab0445",
+      "bytes": 722
+    },
+    "installed-focused-311.json": {
+      "sha256": "2bbbeb61ee8e9e465cccad75c47a10c3eb69ebc877ef9163130da4b280531d59",
+      "bytes": 11801
+    },
+    "installed-focused-311.log": {
+      "sha256": "b07dd1bcd5b1131885f3147931433c25a0204ff46e3d63bed392488140eea88c",
+      "bytes": 19248
+    },
+    "installed-focused-314.json": {
+      "sha256": "1ada45d5d7cd0dbdc25ba4ce59a882e75be117779c18c8d82901caf3b7067783",
+      "bytes": 11770
+    },
+    "installed-focused-314.log": {
+      "sha256": "ad09892e782d44624db718279e72eb7e07ec5631d066f5850e3d0a9b15c9c677",
+      "bytes": 19248
+    },
+    "live-first.json": {
+      "sha256": "554367d10a8f6a9f0ffd234d59a66d0b33b596a8a7a922c158cfbbdbe77f270a",
+      "bytes": 2111
+    },
+    "managed-rollback-snap.json": {
+      "sha256": "b7f1589a2604cabb29a5bda5b2a1cac64b7a26c5bbc5f57208a0402343c4c2f6",
+      "bytes": 1446
+    },
+    "managed-rollback-starship.json": {
+      "sha256": "fffd9312bc12a1fe3b49790703ee69d6e3f50573cc2b64a0c460c33d9ff2603f",
+      "bytes": 1225
+    },
+    "native-snap.json": {
+      "sha256": "a8b97a3a21bf9d369a63947e98d4a6da7b553acc1ff6af6a4ab5d80f0f888862",
+      "bytes": 7781
+    },
+    "native-starship.json": {
+      "sha256": "eb51cdbc30de5e6b5289e0cb3b5a7bae6fa4baab8d6c988dd3cfed51c006ebc3",
+      "bytes": 7798
+    },
+    "old-service-rollback.json": {
+      "sha256": "99fbd1df0c3d60057561afb84c1f3968faf2764ab726b1b18fe0d5220ad0c82a",
+      "bytes": 6045
+    },
+    "pair.json": {
+      "sha256": "a32eaa9206afa561f87f7de9cf045d8f4033b7702873b6026571c055073dcc64",
+      "bytes": 1942
+    },
+    "preservation-snap.json": {
+      "sha256": "78a187374856416053affa6a4bed44af54bb5c5f3af201ab5ebc7dbdb76f026e",
+      "bytes": 5543
+    },
+    "preservation-starship.json": {
+      "sha256": "49508c32397ddc2be89d450d13121e083ffe87f73156a9a045a857cd8709ffef",
+      "bytes": 5765
+    },
+    "probe_old_rollback.py": {
+      "sha256": "02f76fe0b6e2ccc4985df3583603095a6457be7509180c3208bfe0a151a1caaa",
+      "bytes": 2848
+    },
+    "probe_route.py": {
+      "sha256": "f3e65998d87c8c7793d22eed6021e8ad4035fda7830299771f95203cd2079012",
+      "bytes": 6815
+    },
+    "rlcd-ws-check-docs.log": {
+      "sha256": "19006e7d86b07c3e1d1d8a2ed7f33449cf9d1071bddd077eb5f23e5bed6d7a91",
+      "bytes": 125
+    },
+    "rlcd-ws-scope-live-311.log": {
+      "sha256": "b89bcca79b639cc6a861b09a2d8ffed89517b584d6ec9d51b30c42a3085c1ba4",
+      "bytes": 10214
+    },
+    "rlcd-ws-scope-live-314.log": {
+      "sha256": "865c0aa947c41e43fe1b2b1da4888d14736080e14cb36aba2fb6eba1511b9326",
+      "bytes": 10214
+    },
+    "rlcd-ws-scope-motion.log": {
+      "sha256": "7e42cdce2077772becdc3faf686c8a7450b93cdfcd48098dfbe503ad23b034d7",
+      "bytes": 348
+    },
+    "rollback_managed.py": {
+      "sha256": "ce9d4d68f06a4c89d521abf037920dd87daa2f40bae4176cc53dbfb299b7922e",
+      "bytes": 4093
+    },
+    "route-scope-snap.json": {
+      "sha256": "697cbf195518a1f71518c87a6011d2f177c5cd2c15f9315c7e36bfa8d06fc7e4",
+      "bytes": 15902
+    },
+    "route-scope-starship.json": {
+      "sha256": "54051b95bd3f8b9b0bf7bb51fa0d14f315328f98abcb36b7b3af1c350508a025",
+      "bytes": 15892
+    },
+    "run_native.py": {
+      "sha256": "5b8359cadbf446ead926a20298c660d1fdd0cc9209e9fdb7aa24f4b408ed46c5",
+      "bytes": 7129
+    },
+    "test_installed_pair.py": {
+      "sha256": "7b181568525c5de310c732e1e87b46d4a0675903ee93f3e042ebac06869e0a1b",
+      "bytes": 2742
+    },
+    "usb-dock-disconnected.json": {
+      "sha256": "cb17f57c722355e36542434f271ff905e4be299d0ed26ccbfcdf1c1f4fb3df8b",
+      "bytes": 2714
+    },
+    "verify_pair.py": {
+      "sha256": "86b1c8e56d567746611c5891413164df88efa77444552a4ac2628123711f2539",
+      "bytes": 2807
+    }
+  }
+}

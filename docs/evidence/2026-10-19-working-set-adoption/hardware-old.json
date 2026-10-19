@@ -1,0 +1,14 @@
+{
+  "operation": "old",
+  "port": "/dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_94:A9:90:DE:D0:04-if00",
+  "mac": "94:a9:90:de:d0:04",
+  "349Touched": false,
+  "build": "/home/bryan/code/esp32-rlcd/projects/agent-dashboard/build-snap-live-20261019T164832Z",
+  "files": {
+    "bootloader/bootloader.bin": "e5249398e4c1a9aa41297d988f45a0d0244a88d9266ce977a6fd02ff4bca0c4f",
+    "partition_table/partition-table.bin": "5e71c3c890e04714daa03b21a0d23953a2dadf9fdf15eec02b886f7b6e9f8c81",
+    "rlcd-dashboard.bin": "243ca45f8a18f43d72e9ecb4357ec34f6340c759a0db305b2ab807e65261d4d2"
+  },
+  "allComponentsReadbackMatch": true,
+  "readbackSha256": "8d6138c30397a16746d46a2bcee6a534d74483eb1d75e65ccee595ddab06ca7d"
+}

@@ -1,6 +1,6 @@
 {
   "description": "Native initial rlcd_frame_draw_test pattern used by bring-up; no hardware access.",
-  "source_revision": "77d97596da387a7ed517430f6fd626c230932213",
+  "source_revision": "443f3dda947ca96d68d573f2ae3ac7159d9b6f20",
   "source_sha256": {
     "components/display_rlcd/include/rlcd_frame.h": "96ca04c42f8983a44b8c362bbedbd05f85e400ce617f4daebe80ba25ce4a155a",
     "components/display_rlcd/include/rlcd_panel.h": "638c1f9c89c7abda86e0e5c369db32125ff198986c205b4ee7733627f921fbfb",

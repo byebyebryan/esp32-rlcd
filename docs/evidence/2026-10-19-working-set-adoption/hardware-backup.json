@@ -1,0 +1,9 @@
+{
+  "operation": "backup",
+  "port": "/dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_94:A9:90:DE:D0:04-if00",
+  "mac": "94:a9:90:de:d0:04",
+  "349Touched": false,
+  "bytes": 16777216,
+  "sha256": "6b9bfd32f5da95ffbfa159c6cb42c4171cd15243242624d3b092f677a669d5a4",
+  "allOldComponentsMatch": true
+}

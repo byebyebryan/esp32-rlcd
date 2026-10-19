@@ -1,0 +1,21 @@
+{
+  "phase": "initial",
+  "invocation": "21dfa69b809043b088b3194b33192a84",
+  "health": {
+    "event": "device_health",
+    "health": 0,
+    "partial": 0,
+    "rows": 11,
+    "attention": 0,
+    "waiting": 4,
+    "working": 1,
+    "recent": 6,
+    "uncertain": 0,
+    "frame_us": 15097,
+    "miss": 0,
+    "heap": 291003,
+    "stack": 4776
+  },
+  "unit": "ActiveState=active\nSubState=running\nInvocationID=21dfa69b809043b088b3194b33192a84\nMainPID=4019525\nNRestarts=0\nExecStart={ path=/home/bryan/.local/share/agent-observer/0.7.0a7-a3983afc-ws72-m4f598719/bin/python ; argv[]=/home/bryan/.local/share/agent-observer/0.7.0a7-a3983afc-ws72-m4f598719/bin/python -I -B /home/bryan/.local/share/rlcd-agent-dashboard/d3fd7b8133f02567/scripts/live-dashboard.py --hosts starship snap --port /dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_94:A9:90:DE:D0:04-if00 ; ignore_errors=no ; start_time=[Mon 2026-10-19 12:24:02 PDT] ; stop_time=[n/a] ; pid=4019525 ; code=(null) ; status=0/0 }\nMemoryCurrent=33402880\nMemoryPeak=39333888\nCPUUsageNSec=1036274000\n",
+  "scope": "actual selected service/device health; not manual panel or whole-producer qualification"
+}

@@ -1,0 +1,692 @@
+{
+  "status": "pass",
+  "failureType": null,
+  "frames": 9,
+  "seconds": 25.15796986897476,
+  "proofNonces": {
+    "starship": 0,
+    "snap": 3
+  },
+  "samples": [
+    {
+      "elapsed": 1.008,
+      "hosts": {
+        "starship": {
+          "members": 10,
+          "active": 5,
+          "recentOnly": 5,
+          "parked": 5,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        },
+        "snap": {
+          "members": 1,
+          "active": 0,
+          "recentOnly": 1,
+          "parked": 1,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        }
+      }
+    },
+    {
+      "elapsed": 2.012,
+      "hosts": {
+        "starship": {
+          "members": 10,
+          "active": 5,
+          "recentOnly": 5,
+          "parked": 5,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        },
+        "snap": {
+          "members": 1,
+          "active": 0,
+          "recentOnly": 1,
+          "parked": 1,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        }
+      }
+    },
+    {
+      "elapsed": 3.016,
+      "hosts": {
+        "starship": {
+          "members": 10,
+          "active": 5,
+          "recentOnly": 5,
+          "parked": 5,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        },
+        "snap": {
+          "members": 1,
+          "active": 0,
+          "recentOnly": 1,
+          "parked": 1,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        }
+      }
+    },
+    {
+      "elapsed": 4.021,
+      "hosts": {
+        "starship": {
+          "members": 10,
+          "active": 5,
+          "recentOnly": 5,
+          "parked": 5,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        },
+        "snap": {
+          "members": 1,
+          "active": 0,
+          "recentOnly": 1,
+          "parked": 1,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        }
+      }
+    },
+    {
+      "elapsed": 5.025,
+      "hosts": {
+        "starship": {
+          "members": 10,
+          "active": 5,
+          "recentOnly": 5,
+          "parked": 5,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        },
+        "snap": {
+          "members": 1,
+          "active": 0,
+          "recentOnly": 1,
+          "parked": 1,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        }
+      }
+    },
+    {
+      "elapsed": 6.029,
+      "hosts": {
+        "starship": {
+          "members": 10,
+          "active": 5,
+          "recentOnly": 5,
+          "parked": 5,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        },
+        "snap": {
+          "members": 1,
+          "active": 0,
+          "recentOnly": 1,
+          "parked": 1,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        }
+      }
+    },
+    {
+      "elapsed": 7.033,
+      "hosts": {
+        "starship": {
+          "members": 10,
+          "active": 5,
+          "recentOnly": 5,
+          "parked": 5,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        },
+        "snap": {
+          "members": 1,
+          "active": 0,
+          "recentOnly": 1,
+          "parked": 1,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        }
+      }
+    },
+    {
+      "elapsed": 8.039,
+      "hosts": {
+        "starship": {
+          "members": 10,
+          "active": 5,
+          "recentOnly": 5,
+          "parked": 5,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        },
+        "snap": {
+          "members": 1,
+          "active": 0,
+          "recentOnly": 1,
+          "parked": 1,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        }
+      }
+    },
+    {
+      "elapsed": 9.043,
+      "hosts": {
+        "starship": {
+          "members": 10,
+          "active": 5,
+          "recentOnly": 5,
+          "parked": 5,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        },
+        "snap": {
+          "members": 1,
+          "active": 0,
+          "recentOnly": 1,
+          "parked": 1,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        }
+      }
+    },
+    {
+      "elapsed": 10.046,
+      "hosts": {
+        "starship": {
+          "members": 10,
+          "active": 5,
+          "recentOnly": 5,
+          "parked": 5,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        },
+        "snap": {
+          "members": 1,
+          "active": 0,
+          "recentOnly": 1,
+          "parked": 1,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        }
+      }
+    },
+    {
+      "elapsed": 11.051,
+      "hosts": {
+        "starship": {
+          "members": 10,
+          "active": 5,
+          "recentOnly": 5,
+          "parked": 5,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        },
+        "snap": {
+          "members": 1,
+          "active": 0,
+          "recentOnly": 1,
+          "parked": 1,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        }
+      }
+    },
+    {
+      "elapsed": 12.055,
+      "hosts": {
+        "starship": {
+          "members": 10,
+          "active": 5,
+          "recentOnly": 5,
+          "parked": 5,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        },
+        "snap": {
+          "members": 1,
+          "active": 0,
+          "recentOnly": 1,
+          "parked": 1,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        }
+      }
+    },
+    {
+      "elapsed": 13.061,
+      "hosts": {
+        "starship": {
+          "members": 10,
+          "active": 5,
+          "recentOnly": 5,
+          "parked": 5,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        },
+        "snap": {
+          "members": 1,
+          "active": 0,
+          "recentOnly": 1,
+          "parked": 1,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        }
+      }
+    },
+    {
+      "elapsed": 14.065,
+      "hosts": {
+        "starship": {
+          "members": 10,
+          "active": 5,
+          "recentOnly": 5,
+          "parked": 5,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        },
+        "snap": {
+          "members": 1,
+          "active": 0,
+          "recentOnly": 1,
+          "parked": 1,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        }
+      }
+    },
+    {
+      "elapsed": 15.069,
+      "hosts": {
+        "starship": {
+          "members": 10,
+          "active": 5,
+          "recentOnly": 5,
+          "parked": 5,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        },
+        "snap": {
+          "members": 1,
+          "active": 0,
+          "recentOnly": 1,
+          "parked": 1,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        }
+      }
+    },
+    {
+      "elapsed": 16.074,
+      "hosts": {
+        "starship": {
+          "members": 10,
+          "active": 5,
+          "recentOnly": 5,
+          "parked": 5,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        },
+        "snap": {
+          "members": 1,
+          "active": 0,
+          "recentOnly": 1,
+          "parked": 1,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        }
+      }
+    },
+    {
+      "elapsed": 17.078,
+      "hosts": {
+        "starship": {
+          "members": 10,
+          "active": 5,
+          "recentOnly": 5,
+          "parked": 5,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        },
+        "snap": {
+          "members": 1,
+          "active": 0,
+          "recentOnly": 1,
+          "parked": 1,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        }
+      }
+    },
+    {
+      "elapsed": 18.083,
+      "hosts": {
+        "starship": {
+          "members": 10,
+          "active": 5,
+          "recentOnly": 5,
+          "parked": 5,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        },
+        "snap": {
+          "members": 1,
+          "active": 0,
+          "recentOnly": 1,
+          "parked": 1,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        }
+      }
+    },
+    {
+      "elapsed": 19.087,
+      "hosts": {
+        "starship": {
+          "members": 10,
+          "active": 5,
+          "recentOnly": 5,
+          "parked": 5,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        },
+        "snap": {
+          "members": 1,
+          "active": 0,
+          "recentOnly": 1,
+          "parked": 1,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        }
+      }
+    },
+    {
+      "elapsed": 20.092,
+      "hosts": {
+        "starship": {
+          "members": 10,
+          "active": 5,
+          "recentOnly": 5,
+          "parked": 5,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        },
+        "snap": {
+          "members": 1,
+          "active": 0,
+          "recentOnly": 1,
+          "parked": 1,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        }
+      }
+    },
+    {
+      "elapsed": 21.096,
+      "hosts": {
+        "starship": {
+          "members": 10,
+          "active": 5,
+          "recentOnly": 5,
+          "parked": 5,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        },
+        "snap": {
+          "members": 1,
+          "active": 0,
+          "recentOnly": 1,
+          "parked": 1,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        }
+      }
+    },
+    {
+      "elapsed": 22.101,
+      "hosts": {
+        "starship": {
+          "members": 10,
+          "active": 5,
+          "recentOnly": 5,
+          "parked": 5,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        },
+        "snap": {
+          "members": 1,
+          "active": 0,
+          "recentOnly": 1,
+          "parked": 1,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        }
+      }
+    },
+    {
+      "elapsed": 23.105,
+      "hosts": {
+        "starship": {
+          "members": 10,
+          "active": 5,
+          "recentOnly": 5,
+          "parked": 5,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        },
+        "snap": {
+          "members": 1,
+          "active": 0,
+          "recentOnly": 1,
+          "parked": 1,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        }
+      }
+    },
+    {
+      "elapsed": 24.11,
+      "hosts": {
+        "starship": {
+          "members": 10,
+          "active": 5,
+          "recentOnly": 5,
+          "parked": 5,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        },
+        "snap": {
+          "members": 1,
+          "active": 0,
+          "recentOnly": 1,
+          "parked": 1,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        }
+      }
+    },
+    {
+      "elapsed": 25.114,
+      "hosts": {
+        "starship": {
+          "members": 10,
+          "active": 5,
+          "recentOnly": 5,
+          "parked": 5,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        },
+        "snap": {
+          "members": 1,
+          "active": 0,
+          "recentOnly": 1,
+          "parked": 1,
+          "uncertain": 0,
+          "completeScopes": 1,
+          "totalScopes": 1,
+          "delivery": "ready",
+          "viewState": "current"
+        }
+      }
+    }
+  ],
+  "disconnectedClaimsCleared": true,
+  "clientCpuSeconds": 0.395858,
+  "completedChildrenCpuSeconds": 0.009071,
+  "clientMaxRssKiB": 35556,
+  "scope": "actual configured IPC and fixed SSH; descriptive local-client/owned-completed-child resource sample, not whole native pipeline/cost or process memory cap"
+}

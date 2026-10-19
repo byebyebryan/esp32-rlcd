@@ -1,0 +1,314 @@
+{
+  "tests": 102,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "gcDisabled": true,
+  "modules": [
+    "test_mesh_working_set_profile",
+    "test_mesh_working_set_read",
+    "test_working_set_registered_sdk",
+    "test_working_set_runtime_retirement",
+    "test_working_set_clocks",
+    "test_working_set_worker_provenance",
+    "test_working_set_encoding_refusal",
+    "test_working_set_source",
+    "test_codex_snapshot",
+    "test_observation_evaluation",
+    "test_working_set_member_leases"
+  ],
+  "loadedModules": [
+    {
+      "module": "agent_observer",
+      "path": "agent_observer/__init__.py",
+      "sha256": "9df4617f6d49419caeebfd258545b9a95d7b08735d221ae3b792f1cb72a18a09"
+    },
+    {
+      "module": "agent_observer.bounded_json",
+      "path": "agent_observer/bounded_json.py",
+      "sha256": "846a8538de41525359a2147a1f5b71f3958f0028490fd0d23c4041de07b6c0e6"
+    },
+    {
+      "module": "agent_observer.contract_shape",
+      "path": "agent_observer/contract_shape.py",
+      "sha256": "7af867d262ca767aab68ac02ce79483b3ce128ff127a40c391f53882cde700fc"
+    },
+    {
+      "module": "agent_observer.contract",
+      "path": "agent_observer/contract.py",
+      "sha256": "93f14f4375a13d05aeaede24bf30538bd09f5e0d6e74a019793e69c64a81ea6b"
+    },
+    {
+      "module": "agent_observer.service_contract",
+      "path": "agent_observer/service_contract.py",
+      "sha256": "7cef03366f012d972b47ab0fddad611a9e2613e498214005c98e120ee57905d8"
+    },
+    {
+      "module": "agent_observer.workspace",
+      "path": "agent_observer/workspace.py",
+      "sha256": "4b8a63d362af880b6acd4326e767d32a800df3f5f6e1282e5c4d62d4263ac92e"
+    },
+    {
+      "module": "agent_observer.activity",
+      "path": "agent_observer/activity.py",
+      "sha256": "f8ad39a1992070347988b0b9c73710bc7acecd3336afb1cf47dcefcbd67bbff1"
+    },
+    {
+      "module": "agent_observer.observation_scheduler",
+      "path": "agent_observer/observation_scheduler.py",
+      "sha256": "e3850f0c2791e21600e57daca3d8af8756d7e072065afa0b69febcb690896dd6"
+    },
+    {
+      "module": "agent_observer.timing",
+      "path": "agent_observer/timing.py",
+      "sha256": "8748c4285271f39eb50cf9bb1d58074bf76fe276ebf522a05f588ab83ece942d"
+    },
+    {
+      "module": "agent_observer.observation_support",
+      "path": "agent_observer/observation_support.py",
+      "sha256": "7319a9b5e6c13f840905ae4e0835392dddc7ec81bb73edece0a5ffa5191fbc32"
+    },
+    {
+      "module": "agent_observer.active_contract",
+      "path": "agent_observer/active_contract.py",
+      "sha256": "c9e20d73523b4943328a3f66a6552d7a992d5ffc71a29faed473eb48184600bf"
+    },
+    {
+      "module": "agent_observer.active_feed",
+      "path": "agent_observer/active_feed.py",
+      "sha256": "93b154e4e187c9be67f6cc66ae3f783c1ec4ca4acccb4e90d0b3f908380a25de"
+    },
+    {
+      "module": "agent_observer.observation_evidence",
+      "path": "agent_observer/observation_evidence.py",
+      "sha256": "2e1c004aca8f68d41ec2f613006a0f6e522fac12be1416e7a4bc67904caef24c"
+    },
+    {
+      "module": "agent_observer.observation_engine",
+      "path": "agent_observer/observation_engine.py",
+      "sha256": "46296dcc9ebbe13ef7cafd808080cdac19cc93092a784b6c6b7986d57f880d79"
+    },
+    {
+      "module": "agent_observer.provider",
+      "path": "agent_observer/provider.py",
+      "sha256": "98243e7de42af101951b3ffba9de017a66f78483ecc70b651e5f3d48fe61c7b8"
+    },
+    {
+      "module": "agent_observer.service_state",
+      "path": "agent_observer/service_state.py",
+      "sha256": "e879590a0e11dbe6788621501cc563ea5d045cb1d13d7d6d0d32eb3e5208c4cf"
+    },
+    {
+      "module": "agent_observer.working_set_policy",
+      "path": "agent_observer/working_set_policy.py",
+      "sha256": "1af48f051e4bbddc19ca24b7b4cb891431571c63ff8584b283b0b8b8b2b66519"
+    },
+    {
+      "module": "agent_observer.working_set_supports",
+      "path": "agent_observer/working_set_supports.py",
+      "sha256": "20ba9d34d3af30a2766e9bbda4ff2ab449a324bc7a52b8e18451c94ec4fe05c2"
+    },
+    {
+      "module": "agent_observer.working_set_contract",
+      "path": "agent_observer/working_set_contract.py",
+      "sha256": "8f1499aa724c292f2d19aeb8995569f36d1c86ccec6967c4ed34583594ed9093"
+    },
+    {
+      "module": "agent_observer.working_set_decisions",
+      "path": "agent_observer/working_set_decisions.py",
+      "sha256": "104423810e003ecc812451faa9b9d8e730284c76a93d02fdd84c40149bb3f008"
+    },
+    {
+      "module": "agent_observer.working_set_ledger",
+      "path": "agent_observer/working_set_ledger.py",
+      "sha256": "48381ecc8b0e1c678aff05ea94ea7e4848137fb2493295cf0ab1c598e067b7aa"
+    },
+    {
+      "module": "mesh_plus",
+      "path": "mesh_plus/__init__.py",
+      "sha256": "d4c9f162318ab9942f47c730884001fafaeffc5ddfab1967ce961acd89eb268f"
+    },
+    {
+      "module": "mesh_plus.protocol",
+      "path": "mesh_plus/protocol.py",
+      "sha256": "5a53fa9bec8ffa7c0fe4ba0911dec6c38a2f4739d281be52775d0c56349125c3"
+    },
+    {
+      "module": "mesh_plus.evidence",
+      "path": "mesh_plus/evidence.py",
+      "sha256": "224dae58b30c28f142ea1fa0e31038c76704f383082b79989cfef3908ceb388c"
+    },
+    {
+      "module": "mesh_plus.state",
+      "path": "mesh_plus/state.py",
+      "sha256": "d95a9132cf89982072637383e8c96ac3b619e8ddf478e995f95585ba74907330"
+    },
+    {
+      "module": "mesh_plus.admission",
+      "path": "mesh_plus/admission.py",
+      "sha256": "2b703d4c84a0ae966fee8d4db637b01fc0fdb4971351d4484a85c6e18d2d85bb"
+    },
+    {
+      "module": "mesh_plus.transport",
+      "path": "mesh_plus/transport.py",
+      "sha256": "e5e589f84a0834a075e8ea3443acb7756ddb9f159cd4d12eaebeccee3856130c"
+    },
+    {
+      "module": "mesh_plus.bridge",
+      "path": "mesh_plus/bridge.py",
+      "sha256": "3dc93e85501d26f9d680c0eb6e73b83d611bdd9b1237648c1c720c813b26ac80"
+    },
+    {
+      "module": "mesh_plus.client",
+      "path": "mesh_plus/client.py",
+      "sha256": "b6bcc712080c62952861072c5f77d9b88208f28ef08e998efab55924613bd78e"
+    },
+    {
+      "module": "mesh_plus.catalog",
+      "path": "mesh_plus/catalog.py",
+      "sha256": "f8d52f8e8f73f84504b931bdd2970ab60eeac3b69fce22d3fde7d6bb8d6cdb1a"
+    },
+    {
+      "module": "mesh_plus.view",
+      "path": "mesh_plus/view.py",
+      "sha256": "9efa74e1f0b69a293b0f454be937d3580c5cd986e94fbe0edcd7a5a039bdbe6c"
+    },
+    {
+      "module": "mesh_plus.reader",
+      "path": "mesh_plus/reader.py",
+      "sha256": "f3ddd60f5a2510e3d689f044b0b7e66142835a86fe9faf07b3b832e2cfb54670"
+    },
+    {
+      "module": "mesh_plus.remote",
+      "path": "mesh_plus/remote.py",
+      "sha256": "eb2d4165e3b086ed298ba991a51d04309821b50e46dfc4702f0ab081e87c890b"
+    },
+    {
+      "module": "mesh_plus.configured_read",
+      "path": "mesh_plus/configured_read.py",
+      "sha256": "dc39f08d557b4ce6ca9f988eeb91e8749f363c8d930fe915cf801df82d77a32c"
+    },
+    {
+      "module": "mesh_plus.prepared",
+      "path": "mesh_plus/prepared.py",
+      "sha256": "333f179ebf6eeabf5528d9d938cdc7ef484fb2ffcf9ec41608e7f29719f77486"
+    },
+    {
+      "module": "mesh_plus._receipt_history",
+      "path": "mesh_plus/_receipt_history.py",
+      "sha256": "d5703497b3acfdea53318e7de1da828867ac68e937971c3c7640dbe76b5ab70a"
+    },
+    {
+      "module": "mesh_plus.publisher",
+      "path": "mesh_plus/publisher.py",
+      "sha256": "0dfbf1461a4555f3c0a9b02f8788cd85c9b7c8ae90087d11c84ea4c3a4188336"
+    },
+    {
+      "module": "mesh_plus.api",
+      "path": "mesh_plus/api.py",
+      "sha256": "8b63c94e7da9a886280b7a8ce5baa8ab26e010edc7284b6dbec4889db53353cc"
+    },
+    {
+      "module": "agent_observer.mesh_working_set_profile",
+      "path": "agent_observer/mesh_working_set_profile.py",
+      "sha256": "da003bca249a6a33bf145eb10280d1b6e674158f9e840ba04ed0222ebc0dcc7c"
+    },
+    {
+      "module": "agent_observer.mesh_working_set_publisher",
+      "path": "agent_observer/mesh_working_set_publisher.py",
+      "sha256": "f1830a32baed77055758dfe4345b27b7308383ed556bb9ea6a610a0c30fd315e"
+    },
+    {
+      "module": "agent_observer.mesh_working_set_read",
+      "path": "agent_observer/mesh_working_set_read.py",
+      "sha256": "201ed055bca77d3e8dd6f16df74a970b4c918aedc62c4286364917f3b2f4ed21"
+    },
+    {
+      "module": "agent_observer.native_artifacts",
+      "path": "agent_observer/native_artifacts.py",
+      "sha256": "743e30c5a67cf3f3d9b5cf7d1990859d9a0df8b725dcb4245fd73415fe54d773"
+    },
+    {
+      "module": "agent_observer._image_memo",
+      "path": "agent_observer/_image_memo.py",
+      "sha256": "e51920f262521b25d00812458f52b67474039334581426108703cfeb5604c331"
+    },
+    {
+      "module": "agent_observer.sync_contract",
+      "path": "agent_observer/sync_contract.py",
+      "sha256": "49e33c4216de6a951ddfb3c40731860fb510fa1a1cee9e94f43f5e1d99405236"
+    },
+    {
+      "module": "agent_observer.sync_commitment",
+      "path": "agent_observer/sync_commitment.py",
+      "sha256": "544fba79d3a05ac898a925432d0923de9eca31658481ae15e1118cc8c0be1ff5"
+    },
+    {
+      "module": "agent_observer.sync_native",
+      "path": "agent_observer/sync_native.py",
+      "sha256": "09609ea9f6aeb8980f4b767c7768baa22a33287b47c3eeeb09dac39e3462d04d"
+    },
+    {
+      "module": "agent_observer.service_runtime",
+      "path": "agent_observer/service_runtime.py",
+      "sha256": "faeb5f753a9c8d275acdd66d491d96da4e50b75c8c98772cd7ff9d82a6c61d39"
+    },
+    {
+      "module": "agent_observer.working_set_clocks",
+      "path": "agent_observer/working_set_clocks.py",
+      "sha256": "84651c63c266c7563873034c54b87ec25312fd5022e3cc3bacca580417f67a7c"
+    },
+    {
+      "module": "agent_observer.read_cache",
+      "path": "agent_observer/read_cache.py",
+      "sha256": "5cd1932a36badeede7729f72c0bc0d82cd1be64477d2618b026f2cc452e1a71d"
+    },
+    {
+      "module": "agent_observer.service_public",
+      "path": "agent_observer/service_public.py",
+      "sha256": "704cfe0065dfe2a8c86c27766f14f88916f55a827211762576efba05512ec41a"
+    },
+    {
+      "module": "agent_observer.mesh_source",
+      "path": "agent_observer/mesh_source.py",
+      "sha256": "bcbbba27b0296c2ff9792697b31c1b89410c407f15df71b522262313ba987fae"
+    },
+    {
+      "module": "agent_observer.mesh_working_set_source",
+      "path": "agent_observer/mesh_working_set_source.py",
+      "sha256": "e5b239a49e4d27f32d4f421290a251785dcdb62a7c9a43777f2ae1369b0b582a"
+    },
+    {
+      "module": "agent_observer.codex_endpoint",
+      "path": "agent_observer/codex_endpoint.py",
+      "sha256": "9fce9953f3658186f943c880972ce1416b1f420a3781c446ae2df14dd7c1e1fd"
+    },
+    {
+      "module": "agent_observer.observation_model",
+      "path": "agent_observer/observation_model.py",
+      "sha256": "21d05a226ecaeda8ee881cb89a9c7f44bc33057bccd6ae8f8005edb0e5613c6c"
+    },
+    {
+      "module": "agent_observer.codex_metadata",
+      "path": "agent_observer/codex_metadata.py",
+      "sha256": "97531ee14d20ec1396d57c924f97fa83c488ebb016aae2caa68fb1644a6b9a23"
+    },
+    {
+      "module": "agent_observer.codex_transport",
+      "path": "agent_observer/codex_transport.py",
+      "sha256": "bc18356e71ed831e72e3558bb03a5578c7e96eb4baa9e859047cee448f0f0807"
+    },
+    {
+      "module": "agent_observer.codex_snapshot",
+      "path": "agent_observer/codex_snapshot.py",
+      "sha256": "737f597d57f087430bf40566e04c9b6ac1f5e18e9c34c609e3c367d40fd1eac0"
+    },
+    {
+      "module": "agent_observer.working_set_feed",
+      "path": "agent_observer/working_set_feed.py",
+      "sha256": "bb8fb1e79d89d0f8e3a6d9b6c38e473fe6d7332acad13ba491eb3d548768eef6"
+    }
+  ],
+  "python": "/home/bryan/code/esp32-rlcd/.cache/working-set-adoption/20261019T183334Z/scope-leases-1eec6c6/venv-311/bin/python",
+  "scope": "installed package tests with immutable source test/oracle helpers; synthetic fixtures do not establish native deployment"
+}

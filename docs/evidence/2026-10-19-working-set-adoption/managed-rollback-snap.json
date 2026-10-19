@@ -1,0 +1,18 @@
+{
+  "restoredTargets": [
+    ".local/bin/agent-observer-service",
+    ".config/systemd/user/agent-observer.service",
+    ".local/bin/mesh-plus",
+    ".local/bin/mesh-plus-working-set",
+    ".config/mesh-plus/sources.toml",
+    ".config/systemd/user/mesh-plus-agent-working-set.service",
+    ".config/systemd/user/default.target.wants/mesh-plus-agent-working-set.service",
+    ".local/bin/rlcd-agent-dashboard",
+    ".config/rlcd-agent-dashboard/selection.json",
+    ".config/systemd/user/rlcd-agent-dashboard.service",
+    ".config/systemd/user/default.target.wants/rlcd-agent-dashboard.service"
+  ],
+  "allExact": true,
+  "clientLeftStoppedForFirmwarePair": true,
+  "collector": "ActiveState=active\nInvocationID=1b55066f65c649f6b851a794b3a3ed3f\nMainPID=4022356\nExecStart={ path=/home/bryan/.local/share/agent-observer/0.7.0a7-5eafd4c1-active-feed/bin/agent-observer-service ; argv[]=/home/bryan/.local/share/agent-observer/0.7.0a7-5eafd4c1-active-feed/bin/agent-observer-service serve --host-scope snap --provider codex --codex-home /home/bryan/.codex --runtime-interval 30 --history-interval 120 --collection-timeout 10 --workspace-config /home/bryan/.config/agent-observer/workspace.json --socket /run/user/1000/agent-observer/read.sock --native-hints --hint-diagnostics /run/user/1000/agent-observer/hints.json ; ignore_errors=no ; start_time=[Mon 2026-10-19 12:24:38 PDT] ; stop_time=[n/a] ; pid=4022356 ; code=(null) ; status=0/0 }\n"
+}

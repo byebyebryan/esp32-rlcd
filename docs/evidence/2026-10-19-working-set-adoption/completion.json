@@ -1,0 +1,14 @@
+{
+  "status": "pending_hardware_reselection",
+  "goalComplete": false,
+  "runtimeSource": "443f3dda947ca96d68d573f2ae3ac7159d9b6f20",
+  "observerSource": "1eec6c6d8681a3e58bab742d5c130656ab00433c",
+  "meshSource": "2fb502da35c0ef9865762c4dc4b486dd30b7e316",
+  "firstWire3RolloutPassed": true,
+  "wholePairedRollbackPassed": true,
+  "backends": "new qualified pair selected on Starship and Snap",
+  "snapClientAndFirmware": "verified prior wire2 pair while whole USB dock is absent",
+  "nextAction": "observe exact DE:D0:04 board returned; activate staged tuple only with matching verified wire3 readback; then final service/resource checks",
+  "manualPhysicalAndWholeProducerGatesAccepted": false,
+  "canonicalSafeHold": "683936d7bf18bf2d9fa13847b75fc2843da7bb57"
+}

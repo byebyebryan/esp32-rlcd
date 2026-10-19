@@ -1,0 +1,14 @@
+{
+  "restoredTargets": [
+    ".local/bin/agent-observer-service",
+    ".config/systemd/user/agent-observer.service",
+    ".local/bin/mesh-plus",
+    ".local/bin/mesh-plus-working-set",
+    ".config/mesh-plus/sources.toml",
+    ".config/systemd/user/mesh-plus-agent-working-set.service",
+    ".config/systemd/user/default.target.wants/mesh-plus-agent-working-set.service"
+  ],
+  "allExact": true,
+  "clientLeftStoppedForFirmwarePair": false,
+  "collector": "ActiveState=active\nInvocationID=187455d9c4eb44b09019fd58dc39410d\nMainPID=3230095\nExecStart={ path=/home/bryan/.local/share/agent-observer/0.7.0a7-5eafd4c1-active-feed/bin/agent-observer-service ; argv[]=/home/bryan/.local/share/agent-observer/0.7.0a7-5eafd4c1-active-feed/bin/agent-observer-service serve --host-scope starship --provider codex --codex-home /home/bryan/.codex --runtime-interval 20 --history-interval 60 --collection-timeout 10 --workspace-config /home/bryan/.config/agent-observer/workspace.json --socket /run/user/1000/agent-observer/read.sock --native-hints --hint-diagnostics /run/user/1000/agent-observer/hints.json ; ignore_errors=no ; start_time=[Mon 2026-10-19 12:24:39 PDT] ; stop_time=[n/a] ; pid=3230095 ; code=(null) ; status=0/0 }\n"
+}

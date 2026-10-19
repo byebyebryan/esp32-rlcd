@@ -1,0 +1,25 @@
+{
+  "source": "443f3dda947ca96d68d573f2ae3ac7159d9b6f20",
+  "build": "/home/bryan/code/esp32-rlcd/projects/agent-dashboard/build-snap-working-set-20261019T183334Z",
+  "idfVersion": "5.5.3",
+  "deviceWire": 3,
+  "sdkconfigSha256": "21195fd64798f857638982d8b68e61b3aed72d118ddfd1964cf53363ae0ed7d8",
+  "defaultConfigUnchanged": true,
+  "files": {
+    "bootloader/bootloader.bin": {
+      "offset": "0x0",
+      "bytes": 20832,
+      "sha256": "95e9725388d59f43a3afbba87fcd5e570c320eedcc555f5be2cd1a8b85b4bbe9"
+    },
+    "rlcd-dashboard.bin": {
+      "offset": "0x10000",
+      "bytes": 1243920,
+      "sha256": "b2dca61d4d2647aba0daa98c14394d23d60bfdbc6f71db103ef26c096afd28ae"
+    },
+    "partition_table/partition-table.bin": {
+      "offset": "0x8000",
+      "bytes": 3072,
+      "sha256": "5e71c3c890e04714daa03b21a0d23953a2dadf9fdf15eec02b886f7b6e9f8c81"
+    }
+  }
+}
