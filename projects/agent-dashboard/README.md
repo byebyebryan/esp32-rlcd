@@ -64,7 +64,9 @@ The [helper and failure refinement plan](docs/failure-refinement-plan.md) covers
 the observed title-helper rows and model-capacity failure presentation. Its
 [acceptance receipt](../../docs/evidence/2026-10-14-failure-refinement/REPORT.md)
 records independent producer and paired device rollout. Known
-current failed turns use an error cross and contribute to `!` attention counts.
+current failed turns in active sessions use an error cross and contribute to `!`
+attention counts. Recent-only terminal failures keep the cross without adding
+to active attention counts.
 A fresh active turn clears the preceding failure; unsupported observations keep `?`.
 
 The [owned admission checkpoint](../../docs/evidence/2026-10-15-owned-admission/REPORT.md)
@@ -86,6 +88,12 @@ records the current Snap wire-3 client/firmware, exact private package pair,
 both-host native comparisons, live expiry/recovery, and exercised paired rollback.
 Starship keeps its prior wire-2 device/client selection. Whole-producer and manual
 panel/reboot acceptance remain distinct from this scoped deployment.
+
+The latest Snap refinements show admitted [terminal results for unloaded threads](../../docs/evidence/2026-10-19-recent-status/REPORT.md),
+restore [readable header numbers](../../docs/evidence/2026-10-19-header-readability/REPORT.md),
+and [remove the separate recent counter](../../docs/evidence/2026-10-19-remove-recent-count/REPORT.md)
+while retaining recent conversations in the list. Each receipt preserves its
+original source, firmware and deployment evidence.
 
 ## Build and check
 
