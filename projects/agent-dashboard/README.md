@@ -42,7 +42,7 @@ transport. The bridge reconciles scoped membership, names and counts; firmware o
 admission, expiry, layout and animation. This application performs no provider
 actions. The [live contract](docs/live-integration.md) defines the boundaries.
 
-Starship runs a boot-enabled user service from a verified host bundle. It
+Starship and Snap each run a boot-enabled user service from a verified host bundle. It
 supervises subscription/serial workers, recovers from USB absence or disconnection,
 and keeps routine diagnostics quiet. The [release receipt](../../docs/evidence/2026-10-13-release-refinement/REPORT.md)
 records published source, installed runtime, checks and exercised rollback.
@@ -63,6 +63,9 @@ Mesh a23: selection and its cache live before service IPC, while the full invent
 remains available for diagnostics. The [active-feed receipt](../../docs/evidence/2026-10-16-active-feed/REPORT.md)
 records exact artifacts, scoped retirement, matched scaling, live service cost
 and paired rollback. Physical ACK/readability/reboot gates remain separate.
+The [Snap synchronization receipt](../../docs/evidence/2026-10-19-snap-sync/REPORT.md)
+records its live firmware readback, managed service and bounded physical ACK/
+expiry checks, plus the unresolved Starship native-source limitation.
 
 ## Build and check
 

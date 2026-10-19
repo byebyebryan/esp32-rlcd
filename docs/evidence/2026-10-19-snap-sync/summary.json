@@ -1,0 +1,120 @@
+{
+  "date": "2026-10-19",
+  "host": "snap",
+  "runtimeRevision": "55a2b54eb15261c61d99df3f87c444baf42ed6a7",
+  "managedRevision": "ac011724bcf87510b72366d72afeddb7ce476c9a",
+  "manifestSha256": "757d037d2ca3abb5249905b062cb2ddb10064cf31dd88fa08375c89ac04eca70",
+  "bundle": ".local/share/rlcd-agent-dashboard/757d037d2ca3abb5",
+  "dependencies": {
+    "activeRead": 1,
+    "admission": 1,
+    "api": 4,
+    "mesh": "0.1.0a23",
+    "nativeVersion": 1,
+    "observer": "0.7.0a7",
+    "preparation": 1,
+    "profile": "agent-observer.mesh-active.v1",
+    "read": 2,
+    "sdk": 1,
+    "selection": 1,
+    "service": 4
+  },
+  "port": "/dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_94:A9:90:DE:D0:04-if00",
+  "service": {
+    "ActiveState": "active",
+    "SubState": "running",
+    "InvocationID": "5f04a0be02854f7885c128297621b2a2",
+    "MainPID": "3367977",
+    "NRestarts": "0"
+  },
+  "enabled": "enabled",
+  "linger": "Linger=yes",
+  "firmware": {
+    "rlcd-dashboard.bin": {
+      "bytes": 1242640,
+      "sha256": "243ca45f8a18f43d72e9ecb4357ec34f6340c759a0db305b2ab807e65261d4d2"
+    },
+    "bootloader/bootloader.bin": {
+      "bytes": 20832,
+      "sha256": "e5249398e4c1a9aa41297d988f45a0d0244a88d9266ce977a6fd02ff4bca0c4f"
+    },
+    "partition_table/partition-table.bin": {
+      "bytes": 3072,
+      "sha256": "5e71c3c890e04714daa03b21a0d23953a2dadf9fdf15eec02b886f7b6e9f8c81"
+    }
+  },
+  "flashBackup": {
+    "file": "/home/bryan/.local/state/esp32-rlcd/backups/20261019T164832Z-snap-sync/flash-before.bin",
+    "bytes": 16777216,
+    "sha256": "86ede5a19ac73c727be611a805a2517b04028611b96a56c85afe10b9f62c6e0c",
+    "mac": "94:a9:90:de:d0:04",
+    "port": "/dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_94:A9:90:DE:D0:04-if00"
+  },
+  "readbackExact": {
+    "bootloader/bootloader.bin": true,
+    "partition_table/partition-table.bin": true,
+    "rlcd-dashboard.bin": true
+  },
+  "hardwareFixture": {
+    "scope": "fictional device input, no provider reads/actions",
+    "harness": "Unmodified capture-failure-case.py at runtime55a2b54; only module.PORT substituted for verified Snap RLCD; no source/producer claim.",
+    "passed": true,
+    "checks": {
+      "failureAcknowledged": true,
+      "retryAcknowledged": true,
+      "failureAttention": true,
+      "retryAttention": true,
+      "silenceExpiry": true
+    },
+    "matchingACKs": 8,
+    "contextClearedBeforeService": true
+  },
+  "softwareChecks": {
+    "stdlibNative": 47,
+    "installedPrepared": 7,
+    "installedActive": 9,
+    "installedSkipped": 0,
+    "hostConfigurationAndBundle": "passed"
+  },
+  "liveCompleteCapture": {
+    "scope": "live cached feed and USB/device admission; physical readability remains separate",
+    "bridge": "/home/bryan/.local/share/rlcd-agent-dashboard/757d037d2ca3abb5/scripts/live-dashboard.py",
+    "passed": false,
+    "error": "insufficient_live_admission"
+  },
+  "sourceStatus": {
+    "starship": "offline",
+    "snap": "current"
+  },
+  "deviceHealthSample": {
+    "event": "device_health",
+    "health": 0,
+    "partial": 1,
+    "rows": 0,
+    "attention": 0,
+    "waiting": 0,
+    "working": 0,
+    "unknown": 0,
+    "frame_us": 13296,
+    "miss": 0,
+    "heap": 292171,
+    "stack": 5320
+  },
+  "upstreamBlocker": "Starship cached Observer source: native_identity_mapping_conflict; no provider/native lifecycle action performed",
+  "udevRule": {
+    "path": "/etc/udev/rules.d/70-esp32-rlcd-snap.rules",
+    "sha256": "1c110e68d5ff1a71131e1d545c4f6afdd56887aea0a36e8d7a7b38a29179f177"
+  },
+  "protected349": {
+    "ActiveState": "active",
+    "SubState": "running",
+    "InvocationID": "4238b26040c649eba67d4c89d0f360dc",
+    "MainPID": "3342772",
+    "NRestarts": "0",
+    "port": "/dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_28:84:85:92:C4:3C-if00",
+    "note": "Separate maintenance/restart occurred during this window; this task issued no 349 stop/flash/config commands."
+  },
+  "backupDirectory": "/home/bryan/.local/state/esp32-rlcd/backups/20261019T164832Z-snap-sync",
+  "fullPrivateReceiptSha256": "2e78d148aff555dede25acff2217b330c4726bdd2a0f72946c8d1065e9991a72",
+  "scope": "Repository/service/firmware synchronization; no native-identity workaround, gated feature adoption, visual panel or host-power-cycle acceptance."
+}
