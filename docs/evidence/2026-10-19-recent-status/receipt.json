@@ -1,0 +1,63 @@
+{
+  "runtimeSource": "71726b08c439a27e3bb92fd33439a2a389409bb4",
+  "previousBundle": "d3fd7b8133f02567371cad18a14e0b45eb55d7f1ddf24bdcc867468bdbdd7808",
+  "currentBundle": "c638c29d0f7790179261609d3171cfa3140488daaccee065ea2c2d016ac9c19a",
+  "nativeObservation": {
+    "version": "0.163.0",
+    "threadLabel": "mesh-plus",
+    "loaded": false,
+    "status": "notLoaded",
+    "latestTurnStatus": "completed"
+  },
+  "before": {
+    "state": "parked",
+    "category": "recent"
+  },
+  "after": {
+    "label": "mesh-plus",
+    "state": "waiting",
+    "category": "recent"
+  },
+  "tests": {
+    "python3.14": 71,
+    "python3.11": 71,
+    "skips": 0,
+    "beforeNewRegressions": {
+      "expectedFailures": 2,
+      "errors": 0
+    }
+  },
+  "deployment": {
+    "status": "pass",
+    "clientInvocation": "92617c18ab8d4ecb8e8e23843a9bd385",
+    "health": {
+      "event": "device_health",
+      "health": 0,
+      "partial": 0,
+      "rows": 11,
+      "attention": 0,
+      "waiting": 6,
+      "working": 1,
+      "recent": 4,
+      "uncertain": 0,
+      "frame_us": 15233,
+      "miss": 0,
+      "heap": 291003,
+      "stack": 4776
+    },
+    "selectedBundle": "c638c29d0f7790179261609d3171cfa3140488daaccee065ea2c2d016ac9c19a",
+    "renderedTarget": {
+      "label": "mesh-plus",
+      "state": "waiting",
+      "category": "recent"
+    },
+    "protectedServiceIncarnationsUnchanged": true,
+    "unit": "ActiveState=active\nNRestarts=0\nExecStart={ path=/home/bryan/.local/share/agent-observer/0.7.0a7-a3983afc-ws72-m4f598719/bin/python ; argv[]=/home/bryan/.local/share/agent-observer/0.7.0a7-a3983afc-ws72-m4f598719/bin/python -I -B /home/bryan/.local/share/rlcd-agent-dashboard/c638c29d0f779017/scripts/live-dashboard.py --hosts starship snap --port /dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_94:A9:90:DE:D0:04-if00 ; ignore_errors=no ; start_time=[Mon 2026-10-19 15:26:52 PDT] ; stop_time=[n/a] ; pid=1099731 ; code=(null) ; status=0/0 }\n"
+  },
+  "firmwareChanged": false,
+  "testLogHashes": {
+    "tests-311.log": "ab5e3778b643276760b65ce3732a52bb55dba3e6ef9d7bd3634a30ebd10edb32",
+    "tests-314.log": "e23894dc4738ef5a9c423d59319f23d4eb2f86a12911b918b9c2cce480621dd5",
+    "before-regression.log": "6e0f0114034efe2d54e15b00186aa222895fc1871e58c1d98bdd87b1915e6c6a"
+  }
+}
