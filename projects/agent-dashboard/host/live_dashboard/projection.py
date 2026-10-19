@@ -16,8 +16,9 @@ CAPACITY = 32
 MAX_ROSTER = 65535
 MAX_VALID_MS = 3000
 MARGIN_MS = 100
-GROUP = {"blocked": 0, "error": 0, "waiting": 1, "working": 2, "unknown": 3}
-WORK = {"blocked": 1, "error": 4, "waiting": 2, "working": 0, "unknown": 5}
+GROUP = {"blocked": 0, "error": 0, "waiting": 1, "working": 2, "unknown": 3, "parked": 4}
+WORK = {"blocked": 1, "error": 4, "waiting": 2, "working": 0, "unknown": 5, "parked": 6}
+CATEGORY = {"active": 0, "recent": 1, "uncertain": 2}
 HEALTH = {"current": 0, "stale": 1, "unavailable": 2, "ambiguous": 3, "unsupported": 4}
 
 
@@ -34,6 +35,14 @@ def token_key(key):
     return hashlib.sha256(
         json.dumps(key, ensure_ascii=False, separators=(",", ":")).encode()
     ).hexdigest(), key
+
+
+def identity_key(identity):
+    """Return the complete public identity tuple used by member lease exports."""
+    return tuple(
+        identity[k]
+        for k in ("hostScope", "provider", "namespace", "nativeIdKind", "nativeId")
+    )
 
 
 def clean(value, limit=63):
@@ -59,21 +68,23 @@ def project_label(row):
     return project_name(row) or ("Codex #" + token(row["identity"])[0][:5])
 
 
-def exclusion(row):
+def exclusion(row, *, working_set=False):
     if row["kind"] in {"child", "system"}:
         return row["kind"]
     runtime = row["runtime"]
-    if runtime["health"] == "current" and runtime["value"] == "parked":
+    if not working_set and runtime["health"] == "current" and runtime["value"] == "parked":
         return "parked"
     return None
 
 
-def selection_reason(row):
+def selection_reason(row, *, working_set=False):
     if row["identity"]["provider"] != "codex":
         return "provider_excluded"
-    excluded = exclusion(row)
+    excluded = exclusion(row, working_set=working_set)
     if excluded:
         return excluded
+    if working_set:
+        return "selected"
     if row["runtime"]["health"] != "current":
         return "runtime_unavailable"
     if row["runtime"]["value"] != "running":
@@ -177,6 +188,8 @@ class Source:
     complete_scopes: set[tuple[str, str]] | None = None
     row_remaining_ms: dict[str, int] = field(default_factory=dict)
     sampled_by_id: dict[str, int | None] = field(default_factory=dict)
+    row_categories: dict[str, str] = field(default_factory=dict)
+    working_set: bool = False
 
 
 class Projector:
@@ -200,40 +213,59 @@ class Projector:
         for index, host in enumerate(self.hosts):
             source = sources.get(host, Source(host, "warming"))
             valid = min(MAX_VALID_MS, max(0, source.remaining_ms - MARGIN_MS))
-            ready = source.status in {"current", "partial"} and valid > 0
-            status = (
-                source.status
-                if ready
-                else "warming"
-                if source.status == "warming"
-                else "offline"
+            row_ready = source.status in {"current", "partial"}
+            ready = row_ready and valid > 0
+            status = source.status if ready else "partial" if row_ready else (
+                "warming" if source.status == "warming" else "offline"
             )
+            host_valid = valid if ready else 1 if row_ready else 0
             selected = {}
-            excluded_ids = set(source.excluded_ids) if ready else set()
-            if ready:
+            excluded_ids = set(source.excluded_ids) if row_ready else set()
+            if row_ready:
                 excluded_ids.update(
-                    token(r["identity"])[0] for r in source.rows if exclusion(r)
+                    token(r["identity"])[0]
+                    for r in source.rows
+                    if exclusion(r, working_set=source.working_set)
                 )
-            for row in source.rows if ready else []:
-                if selection_reason(row) != "selected":
+            for row in source.rows if row_ready else []:
+                if selection_reason(row, working_set=source.working_set) != "selected":
                     continue
                 identifier, key = token(row["identity"])
                 if identifier in self.keys and self.keys[identifier] != key:
                     raise ValueError("identity_collision")
                 self.keys[identifier] = key
                 state, health = presentation(row)
+                if source.working_set:
+                    runtime = row["runtime"]
+                    if runtime.get("health") == "current" and runtime.get("value") == "parked":
+                        state, health = "parked", "current"
+                    elif runtime.get("health") != "current" or runtime.get("value") not in {"running", "parked"}:
+                        state = "unknown"
+                        health = "current" if runtime.get("health") == "current" else runtime.get("health", "unavailable")
                 activity = row["activity"]
                 at = activity.get("at") if activity["health"] == "current" else None
                 sampled = source.sampled_by_id.get(identifier, source.sampled_at)
-                row_valid = min(valid, max(0, source.row_remaining_ms.get(identifier, source.remaining_ms) - MARGIN_MS))
+                row_remaining = max(
+                    0,
+                    source.row_remaining_ms.get(identifier, source.remaining_ms)
+                    - MARGIN_MS,
+                )
+                row_valid = min(
+                    MAX_VALID_MS,
+                    row_remaining if source.working_set else min(valid, row_remaining),
+                )
                 if at is not None and (sampled is None or at > sampled):
                     at = None
                 if row_valid <= 0:
                     state, health, at = "unknown", "stale", None
+                    category = "uncertain"
+                else:
+                    category = source.row_categories.get(identifier, "active")
                 selected[identifier] = {
                     "id": identifier,
                     "host": index,
                     "state": state,
+                    "category": category,
                     "health": HEALTH[health],
                     "valid_ms": row_valid,
                     "label": project_label(row),
@@ -247,7 +279,7 @@ class Projector:
             # Admitted parked/child/system metadata positively excludes prior context.
             for identifier, prior in self.previous.items():
                 absent_complete = (
-                    ready
+                    row_ready
                     and (source.status == "current" if source.complete_scopes is None
                          else self.keys[identifier][1:3] in source.complete_scopes)
                     and identifier not in source.admitted_ids
@@ -261,6 +293,7 @@ class Projector:
                     selected[identifier] = {
                         **prior,
                         "state": "unknown",
+                        "category": "uncertain",
                         "health": 1,
                         "valid_ms": 0,
                         "age": "?",
@@ -268,16 +301,21 @@ class Projector:
                     }
             if len(selected) > MAX_ROSTER:
                 raise ValueError("roster_capacity")
-            counts = [0, 0, 0, 0]
+            counts = [0, 0, 0, 0, 0]
             for row in selected.values():
-                counts[GROUP[row["state"]]] += 1
+                if row["category"] == "recent":
+                    counts[3] += 1
+                elif row["category"] == "uncertain" or row["state"] in {"unknown", "parked"}:
+                    counts[4] += 1
+                else:
+                    counts[GROUP[row["state"]]] += 1
             result.append(
                 {
                     "alias": ALIASES[host],
                     "status": {"current": 0, "partial": 1, "offline": 2, "warming": 3}[
                         status
                     ],
-                    "valid_ms": valid if ready else 0,
+                    "valid_ms": host_valid,
                     "totals": counts,
                     "total": sum(counts),
                 }
@@ -285,9 +323,10 @@ class Projector:
             candidates.extend(selected.values())
         candidates.sort(
             key=lambda r: (
-                GROUP[r["state"]],
-                r["activity"] is None,
-                r["activity"] or 0,
+                CATEGORY[r["category"]],
+                GROUP[r["state"]] if r["category"] == "active" else 0,
+                r["activity"] is None if r["category"] != "recent" else False,
+                -(r["activity"] or 0) if r["category"] == "recent" else (r["activity"] or 0),
                 self.ranks.get(r["id"], 2**32),
                 r["id"],
             )
@@ -344,7 +383,7 @@ class Projector:
         for source in sources:
             for row in source.rows:
                 identifier, _ = token(row["identity"])
-                reason = selection_reason(row)
+                reason = selection_reason(row, working_set=source.working_set)
                 match = selected.get(identifier)
                 if reason == "selected" and match is None:
                     reason = "source_unavailable"
@@ -377,6 +416,7 @@ class Projector:
                         "display_label": displayed["label"] if displayed else None,
                         "display_age": displayed["age"] if displayed else None,
                         "display_state": displayed["state"] if displayed else None,
+                        "display_category": displayed["category"] if displayed else None,
                         "display_position": index + 1 if index is not None else None,
                         "sent_to_device": index is not None and index < CAPACITY,
                         "visible": index is not None and index < 11,

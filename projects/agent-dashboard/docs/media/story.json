@@ -1,5 +1,5 @@
 {
-  "description": "Fictional conversations for the native gallery; no provider data.",
+  "description": "Fictional active-demo conversations for the native gallery; no provider data or recent-only membership.",
   "sessions": [
     {"host": "starship", "id": "demo-st-01", "title": "Firmware bring-up", "phase": "blocked", "age_seconds": 240},
     {"host": "starship", "id": "demo-st-02", "title": "Feed recovery", "phase": "waiting", "age_seconds": 82},

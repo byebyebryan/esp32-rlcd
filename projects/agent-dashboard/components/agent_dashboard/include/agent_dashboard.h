@@ -7,8 +7,12 @@
 // Local presentation model for a synthetic UI study, not an observer protocol.
 typedef enum {
     DASH_WORKING, DASH_NEEDS_INPUT, DASH_SETTLED, DASH_INTERRUPTED,
-    DASH_ERROR, DASH_UNKNOWN,
+    DASH_ERROR, DASH_UNKNOWN, DASH_PARKED = 6,
 } dashboard_work_t;
+
+typedef enum {
+    DASH_CATEGORY_ACTIVE, DASH_CATEGORY_RECENT, DASH_CATEGORY_UNCERTAIN,
+} dashboard_category_t;
 
 typedef enum {
     DASH_CURRENT, DASH_STALE, DASH_UNAVAILABLE, DASH_AMBIGUOUS,
@@ -22,6 +26,7 @@ typedef struct {
     const char *detail;   // Synthetic bounded reason/age label, not tool text.
     dashboard_work_t work;
     dashboard_health_t health;
+    dashboard_category_t category;
 } dashboard_session_t;
 
 typedef struct {

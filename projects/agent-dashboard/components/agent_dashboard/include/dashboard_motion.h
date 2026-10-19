@@ -36,6 +36,7 @@ typedef struct {
     const char *short_id;
     dashboard_work_t work;
     dashboard_health_t health;
+    dashboard_category_t category;
     bool state_age_known;
     uint64_t state_entered_ms;
     // Increment for every new state episode, including a repeated work label.
@@ -69,6 +70,7 @@ typedef struct {
     char short_id[DASHBOARD_MOTION_SHORT_ID_MAX + 1];
     dashboard_work_t work;
     dashboard_health_t health;
+    dashboard_category_t category;
     uint8_t row_height;
     bool admitted;
     bool state_age_known;
@@ -134,7 +136,7 @@ typedef struct {
     bool last_healthy_update_known;
     bool live_presentation;
     bool live_partial;
-    uint32_t live_totals[4];
+    uint32_t live_totals[5];
     size_t live_total;
     dashboard_session_t render_sessions[DASHBOARD_MOTION_CAPACITY];
     dashboard_session_t render_rows[DASHBOARD_MOTION_TRACK_CAPACITY];

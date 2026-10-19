@@ -1,12 +1,12 @@
-"""Device wire 2: bounded tagged ASCII, UTF-8 hex fields and CRC32."""
+"""Device wire 3: bounded tagged ASCII, UTF-8 hex fields and CRC32."""
 
 import binascii
 import re
 
-from .projection import WORK
+from .projection import CATEGORY, WORK
 
 MAX_BYTES = 16384
-REQUEST = re.compile(rb"RLCD\?2 ([0-9a-f]{16}) ([1-9][0-9]{0,9})\Z")
+REQUEST = re.compile(rb"RLCD\?3 ([0-9a-f]{16}) ([1-9][0-9]{0,9})\Z")
 
 
 def parse_request(line):
@@ -19,7 +19,7 @@ def parse_request(line):
 
 def encode(view, boot, request, bridge, sequence):
     fields = [
-        "RLCD!2",
+        "RLCD!3",
         boot,
         str(request),
         bridge,
@@ -42,6 +42,7 @@ def encode(view, boot, request, bridge, sequence):
             [
                 row["id"],
                 str(row["host"]),
+                str(CATEGORY[row["category"]]),
                 str(WORK[row["state"]]),
                 str(row["health"]),
                 str(row["valid_ms"]),

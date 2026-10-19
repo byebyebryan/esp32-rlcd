@@ -1,16 +1,16 @@
 # Agent dashboard operation
 
-The default firmware accepts a bounded USB feed from the host bridge. The bridge
-reads running Codex sessions on Starship and Snap through the accepted Observer
-active feed 1 / Mesh active Agent v1 interfaces; full API 4 / Service 4 remain diagnostic routes. ST and SN identify hosts. Age shows
-source-sampled time since conversation activity, rather than time spent blocked
-or waiting. Known system helpers and children are excluded. Current failed turns show an error
-cross and join blocked rows in the attention count; current phases or a fresh
-in-progress turn clear a preceding failure. Useful conversation titles lead
-row labels; repository names are fallbacks, with project context or short identity
-suffixes only when rendered names collide. The accepted row styles and animation
-remain. See the
-[live integration contract](live-integration.md) for policy, wire and expiry.
+The bridge's default reads the explicit Observer 72-hour working-set profile
+through Mesh on Starship and Snap. A member is eligible and either currently
+active or recently active; the active branch remains independent of the
+72-hour recent window. Recent parked and runtime-unknown rows remain visible
+without counting as working or waiting. The full-history `--roster` route is
+explicit and has no role in normal USB ticks. ST and SN identify hosts. Age is
+source-sampled time since conversation activity. Known system helpers and
+children are excluded. Current failed turns use an error cross and join blocked
+rows in attention; current phases or a fresh in-progress turn clear a preceding
+failure. The [live integration contract](live-integration.md) defines membership,
+priority, five totals, wire 3 and expiry.
 
 ## Verify the application
 
@@ -28,7 +28,7 @@ Live acquisition needs the accepted Observer/Mesh Python environment. On the
 RLCD host it is:
 
 ```sh
-RLCD_OBSERVER_PYTHON="$HOME/.local/share/agent-observer/0.7.0a7-5eafd4c1-active-feed/bin/python"
+RLCD_OBSERVER_PYTHON="$HOME/.local/share/agent-observer/0.7.0a7-26ab4376-ws72-m4f598719/bin/python"
 mkdir -p projects/agent-dashboard/build/live-preview
 "$RLCD_OBSERVER_PYTHON" projects/agent-dashboard/scripts/live-dashboard.py \
     --preview projects/agent-dashboard/build/live-preview/frame.txt
@@ -41,24 +41,27 @@ python3 projects/agent-dashboard/scripts/dashboard-preview.py \
 
 The preview uses firmware's C admission and renderer. Data stays in ignored local
 build output. Native checks require only a C compiler and Python's standard
-library. The bridge explicitly supplies the fixed active profile; generic Mesh
-Agent v1 does not admit this endpoint.
+library. The bridge explicitly supplies the fixed working-set profile; generic
+Mesh Agent v1 does not admit this endpoint. Use the matching installed Observer
+and Mesh wheel artifacts selected by the host bundle, not a same-version
+substitute.
 
-The bridge uses Observer a7 active read 1 and Mesh a23 preparation/admission 1.
-Reader and helper share an `ActiveAgentProfile`. The collector caches the fixed
-projection before service IPC, and normal device ticks inspect selected bodies,
-current scoped completeness and exact positive exclusions. Individual fields
-keep their original independent leases. Raw headers and uncertainty metadata
-supply no removal authority. Heartbeat/proof reads cannot renew evidence; gap,
-clock failure and disconnect revoke the helper. Bundle verification pins this
-capability tuple. Both hosts require the new collector and active source/publisher;
-a reader-only upgrade against the older collector cannot work.
+The bridge uses Observer a7's working-set read and member-lease interfaces and
+Mesh a23 preparation/admission. Reader and helper share a
+`WorkingSetAgentProfile`. Normal ticks inspect member bodies, exact scoped
+coverage and public lease exports. Each row's current membership/category and
+display claims follow their independent deadlines; a response heartbeat cannot
+renew them. Positive expiry or partial scope preserves prior identity context
+as uncertain; only an admitted negative or current complete census retires it.
+Bundle verification pins the profile, 72-hour window, read interfaces and exact
+Observer/Mesh wheel archive hashes. Both hosts need the working-set collector
+and source/publisher; a reader-only upgrade cannot enable the route.
 
 Run the optional installed-contract checks with the selected Python as well:
 
 ```sh
 "$RLCD_OBSERVER_PYTHON" -B projects/agent-dashboard/tests/test_prepared_fleet.py -v
-"$RLCD_OBSERVER_PYTHON" -B projects/agent-dashboard/tests/test_active_fleet.py -v
+"$RLCD_OBSERVER_PYTHON" -B projects/agent-dashboard/tests/test_working_set_consumer.py -v
 ```
 
 Inspect the full selected roster, label/identity mapping, hidden rows and exclusion
@@ -70,8 +73,8 @@ counts without opening USB:
 
 Add `--all` for saved/excluded row details. Diagnostics retain bounded Observer
 metadata only. The roster diagnostic deliberately materializes complete current
-bodies via the original full source; normal ticks use the projected active source
-and reconcile exact scopes before device truncation.
+bodies via the original full source. Normal ticks use the separate working-set
+source and reconcile exact scopes before device truncation.
 The roster's age meaning is explicitly conversation activity.
 The [refinement receipt](../../../docs/evidence/2026-10-13-dashboard-refinement/REPORT.md)
 records the classification, naming, installed tuple and device acceptance.
@@ -143,18 +146,22 @@ python3 projects/agent-dashboard/scripts/dashboard-bundle.py build \
 
 The returned manifest hash identifies an immutable directory containing the
 bridge, its helpers and font metrics source. The verifier rejects changed,
-missing, additional or symlinked payloads and an incompatible dependency tuple.
-Update the host selection and validate scoped chezmoi targets before service
-replacement; retain the previous bundle and exact selection for rollback.
+missing, additional or symlinked payloads, an incompatible capability tuple,
+and a same-version Observer or Mesh wheel with a different archive hash. Wheel
+hashes identify the installed artifacts; the producer acceptance gate separately
+checks source, wheel contents and repository parity. Update the host selection
+and validate scoped chezmoi targets before service replacement; retain the
+previous bundle and exact selection for rollback.
 
-The active-feed migration also selects the a7 collector and separately configured
-active source/publisher on both hosts. Its rollback restores that whole role tuple
-plus the Starship client; application-only rollback does not restore the earlier
-collector cost. Preserve the full `agent` source, Tmux factories and reader/writer
-links. Chezmoi's last-applied state can differ after exact backup restoration:
-verify all affected bytes/links against the retained backup before any scoped
-forced reselect. See the [active-feed receipt](../../../docs/evidence/2026-10-16-active-feed/REPORT.md)
-for accepted scope and deferred physical gates.
+The working-set rollout selects the a7 collector and separately configured
+working-set source/publisher on both hosts. Rollback restores that paired role
+tuple and the prior bridge/firmware bundle; application-only rollback does not
+restore the earlier collector route. Preserve the full `agent` source, Tmux
+factories and reader/writer links. Chezmoi's last-applied state can differ after
+exact backup restoration: verify affected bytes and links against the retained
+backup before any scoped forced reselect. The
+[active-feed receipt](../../../docs/evidence/2026-10-16-active-feed/REPORT.md)
+records the older wire 2 deployment and its separate rollback boundary.
 
 ## Expiry and captures
 
@@ -190,12 +197,22 @@ capture runs the source sibling. Both paths run with isolated Python imports;
 source success alone does not verify an installed bundle.
 
 
-The current device protocol is wire 2. Its `attention` health diagnostic and `!`
-header count blocked plus known failed rows. Bundle manifests record `deviceWire`;
-restore the archived wire-1 bridge and firmware together when rolling back.
+The current device protocol is wire 3. Its `attention` diagnostic and `!` header
+count blocked plus known failed rows. Per-host totals also report waiting,
+working, recent and uncertain; recent parked and runtime-unknown members are
+included in recent but never in attention, waiting or working. Bundle manifests
+record `deviceWire` and exact wheel archive hashes. The bridge rejects a mismatched
+capability or artifact digest.
 
-For a bounded fictional failure/retry/expiry proof after selecting wire 2, stop
-the RLCD service and run `python3 projects/agent-dashboard/scripts/capture-failure-case.py`.
-It owns the known RLCD port exclusively for sixteen seconds, exercises three
+For a bounded fictional failure/retry/expiry proof, stop the RLCD service and run:
+
+```sh
+python3 projects/agent-dashboard/scripts/capture-failure-case.py --port "$RLCD_PORT"
+```
+
+It owns the selected known RLCD port exclusively for sixteen seconds, exercises three
 failures and one retry, then stops replies to prove expiry. It performs no
-provider reads or actions. Restore the real bridge after this device check.
+provider reads or actions. The default port is the known Starship RLCD; pass
+Snap's exact known by-id path with `--port` when testing Snap. Restore the real
+bridge after this device check. Archived wire 2 rollback requires its matching
+bridge and firmware pair.

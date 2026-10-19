@@ -111,7 +111,7 @@ class Lifetime(unittest.IsolatedAsyncioTestCase):
         fleet.guard = Guard()
         fleet.request_id = "0" * 32
         fleet.profile = types.SimpleNamespace(descriptor=types.SimpleNamespace(profile_id="fixture"))
-        fleet.source = "agent-active"
+        fleet.source = "agent_working_set"
         fleet.full_roster = False
         fleet.events = Events(output)
 

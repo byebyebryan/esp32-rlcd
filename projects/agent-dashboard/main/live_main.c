@@ -25,7 +25,7 @@ void dashboard_run_live(void)
     snprintf(boot, sizeof(boot), "%08" PRIx32 "%08" PRIx32, esp_random(), esp_random());
     dashboard_feed_init(&feed, boot);
     dashboard_motion_init(&motion);
-    ESP_LOGI("rlcd_dashboard", "LIVE wire=2 capacity=32 hosts=2 age=sampled_activity fps=25");
+    ESP_LOGI("rlcd_dashboard", "LIVE wire=3 capacity=32 hosts=2 age=sampled_activity fps=25");
     size_t used = 0;
     bool discard = false, first = true, previous_moving = false;
     uint64_t request_at = 0, flash_step = UINT64_MAX;
@@ -79,11 +79,12 @@ void dashboard_run_live(void)
             if (changed || first || esp_timer_get_time() - started_us > 40000) {
                 char report[240];
                 int length = snprintf(report, sizeof(report),
-                    "RLCD_HEALTH health=%d partial=%d rows=%zu attention=%u waiting=%u working=%u unknown=%u"
+                    "RLCD_HEALTH health=%d partial=%d rows=%zu attention=%u waiting=%u working=%u recent=%u uncertain=%u"
                     " frame_us=%" PRId64 " miss=%d heap=%zu stack=%u\n",
                     motion.feed_health, motion.live_partial, motion.count,
                     (unsigned)motion.live_totals[0], (unsigned)motion.live_totals[1],
                     (unsigned)motion.live_totals[2], (unsigned)motion.live_totals[3],
+                    (unsigned)motion.live_totals[4],
                     esp_timer_get_time() - started_us, esp_timer_get_time() - started_us > 40000,
                     heap_caps_get_free_size(MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT),
                     (unsigned)uxTaskGetStackHighWaterMark(NULL));

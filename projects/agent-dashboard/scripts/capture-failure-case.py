@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
-"""Bounded wire-2 device proof with fictional inputs and no provider reads."""
+"""Bounded wire-3 device proof with fictional inputs and no provider reads."""
 
+import argparse
 import copy
 import json
 import secrets
@@ -12,19 +13,26 @@ from pathlib import Path
 APP = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(APP / "host"))
 from live_dashboard.projection import Projector, Source, token
-from live_dashboard.serial import Port, parse_health
+from live_dashboard.serial import KNOWN_RLCD_DEVICE_NAMES, Port, parse_health
 from live_dashboard.wire import encode, parse_request
 
-PORT = "/dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_94:A9:90:F3:43:74-if00"
+DEFAULT_PORT = Path(
+    "/dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_94:A9:90:F3:43:74-if00"
+)
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--port", type=Path, default=DEFAULT_PORT)
+    args = parser.parse_args()
+    if args.port.parent != Path("/dev/serial/by-id") or args.port.name not in KNOWN_RLCD_DEVICE_NAMES:
+        parser.error("explicit known RLCD identity required")
     case = json.loads((APP / "tests/fixtures/capacity-case.json").read_text())
     projector = Projector()
     bridge, sequence, pending = secrets.token_hex(8), 0, bytearray()
     sent, acknowledged, health = {}, [], []
     start = time.monotonic()
-    port = Port(PORT)
+    port = Port(args.port)
     try:
         # Ignore accumulated requests from earlier owners and silence windows.
         termios.tcflush(port.fd, termios.TCIFLUSH)
@@ -88,12 +96,14 @@ def main():
         "failureAttention": any(h["health"] == 0 and h["attention"] == 3 and h["working"] == 0 for h in health),
         "retryAttention": any(h["health"] == 0 and h["attention"] == 2 and h["working"] == 1 for h in health),
         # Diagnostics are emitted on transition; no later periodic report is promised.
-        "silenceExpiry": any(h["elapsed"] >= 8 and h["health"] == 2 and h["attention"] == 0
-                             and h["working"] == 0 and h["unknown"] == 3 for h in health),
+            "silenceExpiry": any(h["elapsed"] >= 8 and h["health"] == 2 and h["attention"] == 0
+                             and h["waiting"] == 0 and h["working"] == 0
+                             and h["recent"] == 0 and h["uncertain"] == 3 for h in health),
     }
     passed = all(checks.values())
     print(json.dumps({"passed": passed, "scope": "fictional device input, no provider reads/actions",
-                      "wire": 2, "checks": checks, "acknowledged": acknowledged, "health": health}))
+                      "wire": 3, "port": str(args.port), "checks": checks,
+                      "acknowledged": acknowledged, "health": health}))
     return 0 if passed else 1
 
 

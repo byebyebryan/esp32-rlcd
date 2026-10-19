@@ -32,7 +32,7 @@ async def main(args):
         await asyncio.wait_for(fleet.ready.wait(), 15)
         deadline = loop.time() + 10
         while (
-            any(s.status not in {"current", "partial"} for s in fleet.sources())
+            any(s.status != "current" for s in fleet.sources())
             and loop.time() < deadline
         ):
             await asyncio.sleep(0.1)

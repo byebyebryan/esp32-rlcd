@@ -27,7 +27,15 @@ static bool copy_checked(char *target, size_t target_size, const char *source,
 
 static bool valid_work(dashboard_work_t work)
 {
-    return work >= DASH_WORKING && work <= DASH_UNKNOWN;
+    return work == DASH_WORKING || work == DASH_NEEDS_INPUT ||
+           work == DASH_SETTLED || work == DASH_INTERRUPTED ||
+           work == DASH_ERROR || work == DASH_UNKNOWN || work == DASH_PARKED;
+}
+
+static bool valid_category(dashboard_category_t category)
+{
+    return category == DASH_CATEGORY_ACTIVE || category == DASH_CATEGORY_RECENT ||
+           category == DASH_CATEGORY_UNCERTAIN;
 }
 
 static bool valid_health(dashboard_health_t health)
@@ -50,6 +58,7 @@ static bool validate_snapshot(const dashboard_motion_snapshot_t *snapshot,
             (sample->provider && bounded_string_length(sample->provider, DASHBOARD_MOTION_PROVIDER_MAX) > DASHBOARD_MOTION_PROVIDER_MAX) ||
             (sample->short_id && bounded_string_length(sample->short_id, DASHBOARD_MOTION_SHORT_ID_MAX) > DASHBOARD_MOTION_SHORT_ID_MAX) ||
             !valid_work(sample->work) || !valid_health(sample->health) ||
+            !valid_category(sample->category) ||
             (sample->state_age_known && sample->state_entered_ms > now_ms)) return false;
         for (size_t earlier = 0; earlier < i; ++earlier)
             if (strcmp(sample->logical_id, snapshot->sessions[earlier].logical_id) == 0)
@@ -60,7 +69,10 @@ static bool validate_snapshot(const dashboard_motion_snapshot_t *snapshot,
 
 static int group_of(const dashboard_motion_track_t *track)
 {
-    if (track->health != DASH_CURRENT || track->work == DASH_UNKNOWN) return 3;
+    if (track->category == DASH_CATEGORY_RECENT) return 4;
+    if (track->category == DASH_CATEGORY_UNCERTAIN) return 5;
+    if (track->health != DASH_CURRENT || track->work == DASH_UNKNOWN ||
+        track->work == DASH_PARKED) return 3;
     if (track->work == DASH_NEEDS_INPUT || track->work == DASH_ERROR) return 0;
     if (track->work == DASH_SETTLED || track->work == DASH_INTERRUPTED) return 1;
     return 2;
@@ -260,6 +272,7 @@ static bool copy_sample(dashboard_motion_track_t *track,
                       DASHBOARD_MOTION_SHORT_ID_MAX, false)) return false;
     track->work = sample->work;
     track->health = sample->health;
+    track->category = sample->category;
     if (new_episode || age_became_known || sample->state_age_known != track->state_age_known) {
         track->state_age_known = sample->state_age_known;
         track->state_entered_ms = sample->state_entered_ms;
@@ -506,6 +519,7 @@ void dashboard_motion_render(dashboard_motion_t *motion, uint8_t *frame)
             .detail = age,
             .work = track->work,
             .health = track->health,
+            .category = track->category,
         };
     }
 
@@ -549,6 +563,7 @@ void dashboard_motion_render(dashboard_motion_t *motion, uint8_t *frame)
             .detail = motion->render_age[DASHBOARD_MOTION_CAPACITY + i],
             .work = track->work,
             .health = track->health,
+            .category = track->category,
         };
         motion->render_poses[i] = (dashboard_motion_render_row_t){
             .session = &motion->render_rows[i],
@@ -594,8 +609,9 @@ bool dashboard_motion_flashing(const dashboard_motion_t *motion)
     for (size_t i = 0; i < DASHBOARD_MOTION_TRACK_CAPACITY; ++i)
         if (motion->tracks[i].active && motion->tracks[i].admitted &&
             motion->tracks[i].health == DASH_CURRENT &&
-            (motion->tracks[i].work == DASH_NEEDS_INPUT ||
-             motion->tracks[i].work == DASH_ERROR)) return true;
+            (motion->tracks[i].category == DASH_CATEGORY_ACTIVE &&
+             (motion->tracks[i].work == DASH_NEEDS_INPUT ||
+              motion->tracks[i].work == DASH_ERROR))) return true;
     return false;
 }
 

@@ -19,16 +19,18 @@ static void state(uint64_t now)
     dashboard_motion_render(&motion, guarded + 1);
     assert(guarded[0] == 0x5b && guarded[RLCD_FRAME_BYTES + 1] == 0x5b);
     printf("{\"health\":%d,\"partial\":%s,\"rows\":%zu,\"visible\":%zu,\"total\":%zu,"
-           "\"totals\":[%u,%u,%u,%u],\"flashing\":%s,\"entries\":[",
+           "\"totals\":[%u,%u,%u,%u,%u],\"flashing\":%s,\"entries\":[",
            motion.feed_health, motion.live_partial ? "true" : "false", motion.count,
            motion.visible_count, motion.live_total,
            (unsigned)motion.live_totals[0], (unsigned)motion.live_totals[1],
            (unsigned)motion.live_totals[2], (unsigned)motion.live_totals[3],
+           (unsigned)motion.live_totals[4],
            dashboard_motion_flashing(&motion) ? "true" : "false");
     for (size_t i = 0; i < motion.count; ++i) {
         const dashboard_motion_track_t *track = &motion.tracks[motion.order[i]];
-        printf("%s{\"id\":\"%s\",\"work\":%d,\"health\":%d,\"age\":\"%s\"}",
-               i ? "," : "", track->logical_id, track->work, track->health, track->supplied_age);
+        printf("%s{\"id\":\"%s\",\"category\":%d,\"work\":%d,\"health\":%d,\"age\":\"%s\"}",
+               i ? "," : "", track->logical_id, track->category, track->work,
+               track->health, track->supplied_age);
     }
     puts("]}");
 }

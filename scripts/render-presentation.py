@@ -35,6 +35,7 @@ def digest(path):
 
 
 def dashboard_commands():
+    # This is a generic active-demo story, not a working-set membership fixture.
     sessions = json.loads(FIXTURE.read_text())["sessions"]
     projector = Projector()
     request, sequence = 0, 0
@@ -170,7 +171,7 @@ def main():
                 assert duration == count * SAMPLE_MS
         manifest = {
             "description": {
-                "agent-dashboard": "Fictional normalized records through production projection, wire 2 admission and C motion/rendering; virtual time.",
+                "agent-dashboard": "Fictional active-demo records through production projection, wire 3 admission and C motion/rendering; virtual time.",
                 "render-bench": "Unchanged benchmark draw_animation scene compiled with native board stubs; virtual time.",
                 "bringup": "Native initial rlcd_frame_draw_test pattern used by bring-up; no hardware access.",
             }[project],

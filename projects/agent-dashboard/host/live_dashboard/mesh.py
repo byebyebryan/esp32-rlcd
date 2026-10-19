@@ -4,7 +4,14 @@ import asyncio
 import os
 import secrets
 
-from .projection import Source, exclusion, token
+from .projection import (
+    MAX_VALID_MS,
+    MARGIN_MS,
+    Source,
+    exclusion,
+    identity_key,
+    token,
+)
 from .runtime import Events, Failure
 
 
@@ -15,10 +22,11 @@ class Fleet:
         if full_roster:
             from agent_observer.mesh_profile import AgentProfile
             self.profile = AgentProfile()
+            self.source = "agent"
         else:
-            from agent_observer.mesh_active_profile import ActiveAgentProfile
-            self.profile = ActiveAgentProfile()
-        self.source = "agent" if full_roster else "agent_active"
+            from agent_observer.mesh_working_set_profile import WorkingSetAgentProfile
+            self.profile = WorkingSetAgentProfile()
+            self.source = "agent_working_set"
         self.request_id = secrets.token_hex(16)
         self.guard = self.new_guard()
         self.ready = asyncio.Event()
@@ -32,8 +40,8 @@ class Fleet:
             return PreparedAgentWatch(
                 self.request_id, host_ids=self.hosts, profile=self.profile,
             )
-        from agent_observer.mesh_active_read import PreparedActiveAgentWatch
-        return PreparedActiveAgentWatch(
+        from agent_observer.mesh_working_set_read import PreparedWorkingSetAgentWatch
+        return PreparedWorkingSetAgentWatch(
             self.request_id, host_ids=self.hosts, profile=self.profile,
         )
 
@@ -52,9 +60,9 @@ class Fleet:
         by_host = {host: [] for host in self.hosts}
         for row in read.sessions:
             by_host[row["identity"]["hostScope"]].append(row)
-        membership = {host: (set(), set()) for host in self.hosts}
         if not self.full_roster:
-            return self.active_sources(read, now, by_host)
+            return self.working_set_sources(read, now, by_host)
+        membership = {host: (set(), set()) for host in self.hosts}
         # Full diagnostics keep every currently admitted body.
         for row in read.sessions:
             known, excluded = membership[row["identity"]["hostScope"]]
@@ -113,51 +121,160 @@ class Fleet:
             )
         return result
 
-    def active_sources(self, read, now, by_host):
+    def working_set_sources(self, read, now, by_host):
+        """Pair current member bodies to the public facade's exact lease identity."""
+        lease_fields = {
+            "activity", "kind", "lastUpdated", "latestTurn", "outcome",
+            "phase", "runtime", "savedIdentity", "workspace",
+        }
+        leases = {}
+        for lease in read.member_leases:
+            key = identity_key(lease["identity"])
+            if key in leases or set(lease["fieldExpiresAtMs"]) != lease_fields:
+                raise ValueError("mesh_member_lease_invalid")
+            leases[key] = lease
+
+        scopes_by_host = {host: [] for host in self.hosts}
+        scope_remaining_by_host = {host: [] for host in self.hosts}
+        for scope in read.scopes:
+            host = scope["hostScope"]
+            if host in scopes_by_host:
+                coverage = scope.get("coverage")
+                state = coverage.get("status") if isinstance(coverage, dict) else None
+                if state == "complete":
+                    expires_at = coverage.get("expiresAtMs")
+                    if type(expires_at) is int and expires_at > now:
+                        scope_remaining_by_host[host].append(expires_at - now)
+                    else:
+                        # A complete label without a live public scope lease
+                        # cannot authorize fleet counts or negative census.
+                        state = "partial"
+                scopes_by_host[host].append((scope, state))
+
+        for entry in read.uncertain:
+            host = entry["identity"]["hostScope"]
+            if host in by_host:
+                by_host[host].append({
+                    "identity": entry["identity"],
+                    "_membership": entry,
+                    "_membership_kind": "uncertain",
+                })
+        for entry in read.nonmembers:
+            host = entry["identity"]["hostScope"]
+            if host in by_host:
+                by_host[host].append({
+                    "identity": entry["identity"],
+                    "_membership": entry,
+                    "_membership_kind": "nonmember",
+                })
+
         result = []
-        for host in read.context["hosts"]:
-            identifier = host["hostId"]
-            scopes = [s for s in read.scopes if s["hostScope"] == identifier]
-            complete = {(s["provider"], s["namespace"]) for s in scopes
-                        if s["coverage"]["status"] == "complete"}
-            # Fields and scope coverage expire independently. A shorter history
-            # lease must not turn supported runtime membership into an outage.
-            receipts = {(r["sourceId"], r["component"]): r for r in host["receipts"]}
-            remaining = max((r["expiresAtMs"] - now for r in receipts.values()
-                             if r["health"] in {"current", "partial"}), default=0)
-            ready = (host["delivery"]["status"] == "ready"
-                     and host["viewState"] == "current" and remaining > 0)
-            status = ("current" if scopes and len(complete) == len(scopes) else "partial") if ready else "offline"
-            rows = by_host[identifier]
-            known = {token(row["identity"])[0] for row in rows}
-            # Only current members supply admitted identities. Uncertain
-            # metadata is informational; scoped coverage governs absence.
-            excluded = {token(e["identity"])[0] for e in read.nonmembers
-                        if e["identity"]["hostScope"] == identifier}
-            deadlines = {}
-            owner = host["owner"]
-            if owner is not None and owner["metadata"] is not None:
-                for scope in owner["metadata"]["scopes"]:
-                    for entry in scope["members"]:
-                        supports = entry["fieldSupports"]
-                        leases = []
-                        for ref in supports.values():
-                            if ref is None:
-                                continue
-                            receipt = receipts.get((ref["provider"] + ":" + ref["namespace"], ref["component"]))
-                            if (receipt is not None and receipt["accepted"] == ref["accepted"]
-                                    and receipt["health"] in {"current", "partial"}
-                                    and receipt["expiresAtMs"] > now):
-                                leases.append(receipt["expiresAtMs"] - now)
-                        deadlines[token(entry["identity"])[0]] = min(leases, default=0)
-            # The active DTO carries each row's original runtime observation,
-            # not the full snapshot's publication wall time. Cached proof and
-            # service emission must never advance this source sample anchor.
-            samples = {token(row["identity"])[0]: row["runtime"].get("observedAt")
-                       if row["runtime"].get("clock") == "sample" else None for row in rows}
-            result.append(Source(identifier, status, max(0, remaining), None, rows,
-                                 known, excluded, complete, deadlines, samples))
+        for host in self.hosts:
+            scopes = scopes_by_host[host]
+            states = [state for _, state in scopes]
+            if states and all(state == "complete" for state in states):
+                status = "current"
+            elif states and all(state in {"complete", "partial"} for state in states):
+                status = "partial"
+            elif any(state == "unavailable" for state in states):
+                status = "offline"
+            else:
+                status = "partial"
+
+            rows, admitted, excluded, complete = [], set(), set(), set()
+            remaining_by_id, sampled_by_id, categories = {}, {}, {}
+            for scope, state in scopes:
+                if state == "complete":
+                    complete.add((scope["provider"], scope["namespace"]))
+            for row in by_host[host]:
+                identity = row["identity"]
+                identifier, _ = token(identity)
+                admitted.add(identifier)
+                if row.get("_membership") is not None:
+                    if row["_membership_kind"] == "nonmember":
+                        excluded.add(identifier)
+                    continue
+                if row["kind"] in {"child", "system"} or identity["provider"] != "codex":
+                    excluded.add(identifier)
+                    continue
+                lease = leases.get(identity_key(identity))
+                if lease is None or lease["identity"] != identity:
+                    continue
+                field_expiry = lease["fieldExpiresAtMs"]
+                if not self._valid_lease(lease, field_expiry, row, now):
+                    continue
+                active = lease["activeExpiresAtMs"]
+                recent = lease["recentExpiresAtMs"]
+                if type(active) is int and active > now:
+                    category = "active"
+                elif type(recent) is int and recent > now:
+                    category = "recent"
+                else:
+                    continue
+
+                # The explicit row category is itself a positive-membership
+                # claim.  If both branches are live, an active row must lose
+                # its active authority at the active deadline even while its
+                # recent branch remains positive; a fresh read can then
+                # reclassify it as recent.
+                branch_deadline = lease[
+                    "activeExpiresAtMs" if category == "active" else "recentExpiresAtMs"
+                ]
+                deadline = min(lease["membershipExpiresAtMs"], branch_deadline)
+                for name in ("runtime", "phase", "outcome", "latestTurn", "activity", "workspace"):
+                    value = row.get(name)
+                    if isinstance(value, dict) and value.get("health") == "current":
+                        deadline = min(deadline, field_expiry[name])
+                remaining_by_id[identifier] = max(0, deadline - now)
+                sampled_by_id[identifier] = (
+                    row["runtime"].get("observedAt")
+                    if row["runtime"].get("clock") == "sample"
+                    else None
+                )
+                categories[identifier] = category
+                rows.append(row)
+
+            # Host totals describe whole-roster membership, so their authority
+            # ends with the first row proof that could change those totals.
+            remaining = min(
+                (*remaining_by_id.values(), *scope_remaining_by_host[host]),
+                default=MAX_VALID_MS + MARGIN_MS,
+            )
+            result.append(Source(
+                host, status, remaining, None, rows, admitted, excluded, complete,
+                remaining_by_id, sampled_by_id, categories, True,
+            ))
         return result
+
+    @staticmethod
+    def _valid_lease(lease, field_expiry, row, now):
+        membership = lease.get("membershipExpiresAtMs")
+        if type(membership) is not int or membership <= now:
+            return False
+        expected = {
+            "activity", "kind", "lastUpdated", "latestTurn", "outcome",
+            "phase", "runtime", "savedIdentity", "workspace",
+        }
+        if set(field_expiry) != expected:
+            return False
+        if any(value is not None and type(value) is not int for value in field_expiry.values()):
+            return False
+        for name in ("activeExpiresAtMs", "recentExpiresAtMs"):
+            value = lease.get(name)
+            if value is not None and (type(value) is not int or value <= now):
+                return False
+        if not any(
+            type(lease.get(name)) is int and lease[name] > now
+            for name in ("activeExpiresAtMs", "recentExpiresAtMs")
+        ):
+            return False
+        for name in ("runtime", "phase", "outcome", "latestTurn", "activity", "workspace"):
+            value = row.get(name)
+            if isinstance(value, dict) and value.get("health") == "current":
+                deadline = field_expiry[name]
+                if type(deadline) is not int or deadline <= now:
+                    return False
+        return True
 
     async def run(self):
         from mesh_plus.api import configured_reader
@@ -172,7 +289,7 @@ class Fleet:
                 socket = os.path.join(
                     os.environ.get("XDG_RUNTIME_DIR", f"/run/user/{os.getuid()}"),
                     "mesh-plus-agent/read.sock" if self.full_roster
-                    else "mesh-plus-agent-active/read.sock",
+                    else "mesh-plus-agent-working-set/read.sock",
                 )
                 reader = await configured_reader(
                     "agent",

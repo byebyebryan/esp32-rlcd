@@ -101,6 +101,25 @@ static uint32_t crc32(const char *data, size_t size)
     return ~crc;
 }
 
+static unsigned row_group(const dashboard_feed_row_t *row)
+{
+    if (row->category == DASH_CATEGORY_RECENT) return 4;
+    if (row->category == DASH_CATEGORY_UNCERTAIN) return 5;
+    if (row->work == DASH_NEEDS_INPUT || row->work == DASH_ERROR) return 0;
+    if (row->work == DASH_SETTLED || row->work == DASH_INTERRUPTED) return 1;
+    if (row->work == DASH_WORKING) return 2;
+    return 3;
+}
+
+static unsigned row_total_group(const dashboard_feed_row_t *row)
+{
+    if (row->category == DASH_CATEGORY_RECENT) return 3;
+    if (row->category == DASH_CATEGORY_UNCERTAIN) return 4;
+    if (row->health != DASH_CURRENT || row->work == DASH_UNKNOWN ||
+        row->work == DASH_PARKED) return 4;
+    return row_group(row);
+}
+
 void dashboard_feed_init(dashboard_feed_t *feed, const char *boot)
 {
     memset(feed, 0, sizeof(*feed));
@@ -112,7 +131,7 @@ int dashboard_feed_request(dashboard_feed_t *feed, uint64_t now_ms,
 {
     if (feed->request == UINT32_MAX) return -1;
     ++feed->request; feed->requested_ms = now_ms; feed->pending = true;
-    return snprintf(output, capacity, "RLCD?2 %s %u\n", feed->boot, (unsigned)feed->request);
+    return snprintf(output, capacity, "RLCD?3 %s %u\n", feed->boot, (unsigned)feed->request);
 }
 
 bool dashboard_feed_accept(dashboard_feed_t *feed, const char *line,
@@ -133,7 +152,7 @@ bool dashboard_feed_accept(dashboard_feed_t *feed, const char *line,
     field_t field; char boot[17]; uint32_t request, hosts, rows;
     dashboard_feed_view_t *view = &feed->candidate;
     memset(view, 0, sizeof(*view));
-    if (!take(&cursor, &field) || field.size != 6 || memcmp(field.data, "RLCD!2", 6) ||
+    if (!take(&cursor, &field) || field.size != 6 || memcmp(field.data, "RLCD!3", 6) ||
         !take(&cursor, &field) || !hex_string(field, boot, 16, false) || strcmp(boot, feed->boot) ||
         !number(&cursor, UINT32_MAX, &request) || request != feed->request ||
         !take(&cursor, &field) || !hex_string(field, view->bridge, 16, false) ||
@@ -151,34 +170,45 @@ bool dashboard_feed_accept(dashboard_feed_t *feed, const char *line,
             !number(&cursor, 3, &host->status) || !number(&cursor, DASH_FEED_VALID_MS, &host->valid_ms)) return false;
         for (size_t j = 0; j < i; ++j) if (!strcmp(host->alias, view->hosts[j].alias)) return false;
         uint32_t sum = 0;
-        for (size_t j = 0; j < 4; ++j) {
+        for (size_t j = 0; j < 5; ++j) {
             if (!number(&cursor, 65535, &host->totals[j])) return false;
             sum += host->totals[j];
         }
         if (!number(&cursor, 65535, &host->total) || sum != host->total ||
             ((host->status < 2) != (host->valid_ms > 0)) ||
-            (host->status >= 2 && (host->totals[0] || host->totals[1] || host->totals[2]))) return false;
+            (host->status >= 2 && (host->totals[0] || host->totals[1] ||
+             host->totals[2] || host->totals[3] || host->totals[4] != host->total))) return false;
         total += host->total;
     }
     if (rows > total) return false;
-    uint32_t selected[DASH_FEED_HOSTS][4] = {{0}};
+    uint32_t selected[DASH_FEED_HOSTS][5] = {{0}};
+    unsigned previous_group = 0;
     for (size_t i = 0; i < rows; ++i) {
         dashboard_feed_row_t *row = &view->rows[i];
         if (!take(&cursor, &field) || !hex_string(field, row->identity, 64, false) ||
-            !number(&cursor, hosts - 1, &row->host) || !number(&cursor, 5, &row->work) ||
-            (row->work != DASH_WORKING && row->work != DASH_NEEDS_INPUT && row->work != DASH_SETTLED && row->work != DASH_ERROR && row->work != DASH_UNKNOWN) ||
+            !number(&cursor, hosts - 1, &row->host) || !number(&cursor, 2, &row->category) ||
+            !number(&cursor, 6, &row->work) ||
+            (row->work != DASH_WORKING && row->work != DASH_NEEDS_INPUT && row->work != DASH_SETTLED && row->work != DASH_ERROR && row->work != DASH_UNKNOWN && row->work != DASH_PARKED) ||
             !number(&cursor, DASH_UNSUPPORTED, &row->health) ||
             !number(&cursor, DASH_FEED_VALID_MS, &row->valid_ms) ||
-            row->valid_ms > view->hosts[row->host].valid_ms ||
-            (row->valid_ms && row->valid_ms != view->hosts[row->host].valid_ms) ||
+            (row->valid_ms && view->hosts[row->host].status >= 2) ||
             !take(&cursor, &field) || field.size > DASH_FEED_LABEL_BYTES * 2 || field.size % 2 ||
             !hex_string(field, row->label, field.size / 2, true) || !utf8_label(row->label, field.size / 2) ||
             !take(&cursor, &field) || !age(field, row->age)) return false;
+        if (row->work == DASH_PARKED && (row->category != DASH_CATEGORY_RECENT || row->health != DASH_CURRENT || !row->valid_ms)) return false;
+        if (row->work != DASH_WORKING && row->work != DASH_NEEDS_INPUT &&
+            row->work != DASH_SETTLED && row->work != DASH_ERROR &&
+            row->work != DASH_UNKNOWN && row->work != DASH_PARKED) return false;
         if ((row->health != DASH_CURRENT || !row->valid_ms) && row->work != DASH_UNKNOWN) return false;
         if (row->health != DASH_CURRENT && strcmp(row->age, "?")) return false;
+        if (row->category == DASH_CATEGORY_UNCERTAIN &&
+            (row->valid_ms || row->health == DASH_CURRENT || row->work != DASH_UNKNOWN || strcmp(row->age, "?"))) return false;
         for (size_t j = 0; j < i; ++j) if (!strcmp(row->identity, view->rows[j].identity)) return false;
-        unsigned group = (row->work == DASH_NEEDS_INPUT || row->work == DASH_ERROR) ? 0 : row->work == DASH_SETTLED ? 1 : row->work == DASH_WORKING ? 2 : 3;
-        if (++selected[row->host][group] > view->hosts[row->host].totals[group]) return false;
+        const unsigned ordered_group = row_group(row);
+        if (i && ordered_group < previous_group) return false;
+        previous_group = ordered_group;
+        const unsigned total_group = row_total_group(row);
+        if (++selected[row->host][total_group] > view->hosts[row->host].totals[total_group]) return false;
     }
     if (cursor.next != cursor.end) return false;
     // A restarted/warming bridge has no retained identity context. Keep our
@@ -189,11 +219,12 @@ bool dashboard_feed_accept(dashboard_feed_t *feed, const char *line,
         for (size_t old = 0; old < feed->view.host_count; ++old) {
             if (strcmp(host->alias, feed->view.hosts[old].alias)) continue;
             host->total = feed->view.hosts[old].total;
-            host->totals[3] = host->total;
+            host->totals[4] = host->total;
             for (size_t j = 0; j < feed->view.row_count && view->row_count < DASHBOARD_MOTION_CAPACITY; ++j) {
                 if (feed->view.rows[j].host != old) continue;
                 dashboard_feed_row_t *row = &view->rows[view->row_count++];
                 *row = feed->view.rows[j]; row->host = (uint32_t)i;
+                row->category = DASH_CATEGORY_UNCERTAIN;
                 row->work = DASH_UNKNOWN; row->health = DASH_UNAVAILABLE;
                 row->valid_ms = 0; memcpy(row->age, "?\0\0\0", 4);
             }
@@ -218,22 +249,25 @@ bool dashboard_feed_tick(dashboard_feed_t *feed, dashboard_motion_t *motion, uin
     }
     const dashboard_feed_view_t *view = &feed->view;
     bool changed = feed->dirty, healthy = false, partial = false;
-    uint32_t totals[4] = {0}; size_t total = 0;
+    uint32_t totals[5] = {0}; size_t total = 0;
     bool live[DASH_FEED_HOSTS] = {false};
     for (size_t i = 0; i < view->host_count; ++i) {
         const dashboard_feed_host_t *host = &view->hosts[i];
         live[i] = host->status < 2 && now_ms >= feed->accepted_request_ms &&
                   now_ms - feed->accepted_request_ms < host->valid_ms;
         healthy |= live[i]; partial |= !live[i] || host->status != 0;
-        if (live[i]) for (size_t j = 0; j < 4; ++j) totals[j] += host->totals[j];
-        else totals[3] += host->total;
+        if (live[i]) for (size_t j = 0; j < 5; ++j) totals[j] += host->totals[j];
+        else totals[4] += host->total;
         total += host->total;
     }
     if (motion->live_partial != partial || memcmp(motion->live_totals, totals, sizeof(totals))) changed = true;
     for (size_t i = 0; i < view->row_count; ++i) {
         const dashboard_feed_row_t *row = &view->rows[i];
-        bool current = live[row->host] && row->valid_ms &&
+        bool current = view->hosts[row->host].status < 2 && row->valid_ms &&
+                       now_ms >= feed->accepted_request_ms &&
                        now_ms - feed->accepted_request_ms < row->valid_ms;
+        healthy |= current;
+        partial |= !current;
         const uint32_t health = current ? row->health : DASH_STALE;
         if (health != feed->effective_health[i]) changed = true;
         feed->effective_health[i] = health; feed->order[i] = (uint8_t)i;
@@ -242,16 +276,20 @@ bool dashboard_feed_tick(dashboard_feed_t *feed, dashboard_motion_t *motion, uin
             .provider = view->hosts[row->host].alias, .short_id = "",
             .work = current ? (dashboard_work_t)row->work : DASH_UNKNOWN,
             .health = (dashboard_health_t)health,
+            .category = current ? (dashboard_category_t)row->category : DASH_CATEGORY_UNCERTAIN,
         };
     }
     // Expired rows follow healthy groups, retaining their original tie order.
     for (size_t i = 1; i < view->row_count; ++i) {
         uint8_t candidate = feed->order[i]; size_t j = i;
-        unsigned work = feed->samples[candidate].work;
-        unsigned group = (work == DASH_NEEDS_INPUT || work == DASH_ERROR) ? 0 : work == DASH_SETTLED ? 1 : work == DASH_WORKING ? 2 : 3;
+        dashboard_feed_row_t ordering = {.category = (uint32_t)feed->samples[candidate].category,
+                                         .work = (uint32_t)feed->samples[candidate].work};
+        unsigned group = row_group(&ordering);
         while (j) {
-            work = feed->samples[feed->order[j - 1]].work;
-            unsigned previous = (work == DASH_NEEDS_INPUT || work == DASH_ERROR) ? 0 : work == DASH_SETTLED ? 1 : work == DASH_WORKING ? 2 : 3;
+            const dashboard_motion_sample_t *before = &feed->samples[feed->order[j - 1]];
+            ordering.category = (uint32_t)before->category;
+            ordering.work = (uint32_t)before->work;
+            unsigned previous = row_group(&ordering);
             if (previous <= group) break;
             feed->order[j] = feed->order[j - 1]; --j;
         }

@@ -1041,6 +1041,24 @@ static void test_motion_chrome_states(const char *directory)
     assert_band_white(whole_header, 0, RLCD_WIDTH, 288, RLCD_HEIGHT);
     save_pbm(directory, "header-icons-overflow", whole_header);
 
+    // Working-set mode has five semantic totals plus an overflow marker. Its
+    // compact count text keeps the largest labels inside the same header band.
+    const uint32_t working_set_totals[] = {100, 100, 100, 100, 100};
+    const dashboard_motion_render_t working_set = {
+        .roster = {.sessions = NULL, .count = 0, .feed_health = DASH_CURRENT},
+        .partial = true,
+        .overflow_count = 100,
+        .supplied_totals = working_set_totals,
+    };
+    uint8_t working_set_header[RLCD_FRAME_BYTES];
+    dashboard_draw_motion(working_set_header, &working_set);
+    assert_band_white(working_set_header, 0, 8, 0, DASHBOARD_MOTION_BODY_TOP - 3);
+    assert_band_white(working_set_header, 392, RLCD_WIDTH,
+                      0, DASHBOARD_MOTION_BODY_TOP - 3);
+    assert(band_has_ink(working_set_header, 8, 392,
+                        0, DASHBOARD_MOTION_BODY_TOP - 3));
+    save_pbm(directory, "working-set-header-overflow-cap", working_set_header);
+
     // Two-digit totals, uncertainty and overflow all fit without covering
     // AGENTS, clipping at the right edge or writing beyond the framebuffer.
     for (size_t i = 0; i < DASHBOARD_MOTION_CAPACITY; ++i)

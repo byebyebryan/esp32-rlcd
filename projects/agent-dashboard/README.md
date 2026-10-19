@@ -2,28 +2,33 @@
 
 ![Native dashboard render with fictional conversations, ST and SN host badges and sampled activity ages](docs/media/dashboard.png)
 
-Keep running Codex conversations visible across Starship and Snap. Blocked rows
-flash slowly, waiting rows stay inverse, and working rows remain normal. Useful
-conversation titles lead; host badges and activity ages keep the roster compact.
-When evidence expires, work styling and ages clear while uncertain identity
-context remains. Healthy hosts remain useful during a sibling outage.
+Keep running and recently active Codex conversations visible across Starship and
+Snap. Active membership is independent of the 72-hour recent window; recent
+parked and runtime-unknown sessions remain visible with neutral or unknown
+markers. Active blocked rows flash slowly, waiting rows stay inverse, and
+working rows remain normal. When evidence expires, current work styling and ages
+clear while uncertain identity context remains. Healthy hosts remain useful
+during a sibling outage.
 
 [Operate the live feed](docs/operations.md) · [Integration contract](docs/live-integration.md) · [Presentation media](docs/media/README.md)
 
 ## Display behavior
 
 The 400 × 300 monochrome view has eleven 24-pixel rows. Whole-roster counts include
-hidden conversations; the bridge transports up to 32 rows. Titles use project/cwd
-fallbacks and rendered collision handling. Known children, system helpers and
-parked sessions are excluded; running sessions of unknown kind remain eligible.
+hidden conversations; the bridge transports up to 32 rows after placing active
+rows ahead of recent rows. Titles use project/cwd fallbacks and rendered
+collision handling. Confirmed child and system rows are excluded. Recent parked
+and runtime-unknown rows count as recent, never as attention, waiting or working.
 
 Ages mean source-sampled time since conversation activity. They do not measure
 how long a conversation has been blocked or waiting. PARTIAL and FEED OFFLINE
 qualify source loss, and expired observations cannot retain current work claims.
 
-The following native story uses fictional records and virtual time. It exercises
-answered waits, row movement, one-host loss, feed expiry and recovery through the
-same projection, wire admission and C renderer as the live application.
+The generic native active demo uses fictional records and virtual time. It shows
+answered waits, row movement, one-host loss, feed expiry and recovery. Its
+current wire 3 images exercise admission and rendering, but contain no
+recent-only members; the working-set behavior is defined in the
+[integration contract](docs/live-integration.md).
 
 ![Native fictional dashboard story showing blocked-row flashing, reordered conversations, partial source loss, offline expiry and recovery](docs/media/dashboard-demo.gif)
 
@@ -31,16 +36,17 @@ same projection, wire admission and C renderer as the live application.
 
 ```mermaid
 flowchart LR
-    Observer[Observer cached active feed 1] --> Mesh[Mesh active Agent profile 1]
+    Observer[Observer 72-hour working-set profile] --> Mesh[Mesh working-set Agent profile]
     Mesh --> Bridge[Host bridge]
-    Bridge -->|USB wire 2| RLCD[RLCD firmware]
+    Bridge -->|USB wire 3| RLCD[RLCD firmware]
 ```
 
 Observer owns native discovery and classification. Mesh owns validated delivery
-and freshness. Observer applies the fixed running-conversation selector before
-transport. The bridge reconciles scoped membership, names and counts; firmware owns packet
-admission, expiry, layout and animation. This application performs no provider
-actions. The [live contract](docs/live-integration.md) defines the boundaries.
+and freshness. Observer applies the fixed eligible active-or-recent selector
+before transport. The bridge reconciles scoped membership, names and five totals;
+firmware owns packet admission, expiry, layout and animation. This application
+performs no provider actions. The [live contract](docs/live-integration.md)
+defines the boundaries.
 
 Starship and Snap each run a boot-enabled user service from a verified host bundle. It
 supervises subscription/serial workers, recovers from USB absence or disconnection,
@@ -58,14 +64,16 @@ A fresh active turn clears the preceding failure; unsupported observations keep 
 The [owned admission checkpoint](../../docs/evidence/2026-10-15-owned-admission/REPORT.md)
 adopts Observer a6/Mesh a22 with selected current bodies and complete membership
 summaries. Strict admission, per-row expiry, diagnostics and display policy remain.
-The [active-session feed plan](docs/active-feed-plan.md) now selects Observer a7 /
-Mesh a23: selection and its cache live before service IPC, while the full inventory
-remains available for diagnostics. The [active-feed receipt](../../docs/evidence/2026-10-16-active-feed/REPORT.md)
-records exact artifacts, scoped retirement, matched scaling, live service cost
-and paired rollback. Physical ACK/readability/reboot gates remain separate.
+The [active-session feed plan](docs/active-feed-plan.md) records the earlier
+active-only contract. The current bridge default uses Observer a7 / Mesh a23's
+explicit working-set profile and public membership leases; full history remains
+an explicit diagnostic. The [active-feed receipt](../../docs/evidence/2026-10-16-active-feed/REPORT.md)
+records the prior wire 2 rollout and paired rollback. Physical
+ACK/readability/reboot gates remain separate.
 The [Snap synchronization receipt](../../docs/evidence/2026-10-19-snap-sync/REPORT.md)
-records its live firmware readback, managed service and bounded physical ACK/
-expiry checks, plus the unresolved Starship native-source limitation.
+records that earlier rollout's firmware readback, managed service and bounded
+physical ACK/expiry checks; its Starship native-source limitation describes the
+state at the time of that receipt.
 
 ## Build and check
 

@@ -7,12 +7,12 @@ enum { DASH_FEED_BYTES = 16384, DASH_FEED_HOSTS = 2, DASH_FEED_VALID_MS = 3000,
 
 typedef struct {
     char alias[3];
-    uint32_t status, valid_ms, totals[4], total;
+    uint32_t status, valid_ms, totals[5], total;
 } dashboard_feed_host_t;
 
 typedef struct {
     char identity[65], label[DASH_FEED_LABEL_BYTES + 1], age[4];
-    uint32_t host, work, health, valid_ms;
+    uint32_t host, category, work, health, valid_ms;
 } dashboard_feed_row_t;
 
 typedef struct {

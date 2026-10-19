@@ -1,9 +1,11 @@
 # Agent dashboard presentation media
 
-These previews feed fictional normalized records through the production host
-projection and USB wire 2 encoder, then through firmware's C admission, expiry,
-motion and renderer. They use ST/SN host badges and the current live layout.
-They contain no provider conversation data.
+These current previews use the fictional active-demo story through the host
+projection, wire 3 admission, expiry, motion and renderer. They use ST/SN host
+badges and contain no provider conversation data. The story has no recent-only
+members, so these images do not demonstrate working-set membership or its
+recent-row category and totals. The live policy is documented in the
+[integration contract](../live-integration.md).
 
 | Asset | Content |
 | --- | --- |

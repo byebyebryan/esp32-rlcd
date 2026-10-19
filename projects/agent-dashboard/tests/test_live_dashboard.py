@@ -66,6 +66,7 @@ def frame(rows=None, hosts=None, sequence=1, request=1, bridge="1" * 16, boot="0
             {
                 "id": "a" * 64,
                 "host": 0,
+                "category": "active",
                 "state": "blocked",
                 "health": 0,
                 "valid_ms": 2900,
@@ -79,7 +80,7 @@ def frame(rows=None, hosts=None, sequence=1, request=1, bridge="1" * 16, boot="0
                 "alias": "ST",
                 "status": 0,
                 "valid_ms": 2900,
-                "totals": [1, 0, 0, 0],
+                "totals": [1, 0, 0, 0, 0],
                 "total": 1,
             }
         ]
@@ -111,7 +112,7 @@ class Projection(unittest.TestCase):
         view = Projector().project(capacity_sources(capacity_case()))
         self.assertEqual([r["state"] for r in view["rows"]], ["error"] * 3)
         self.assertEqual([h["total"] for h in view["hosts"]], [0, 3])
-        self.assertEqual(view["hosts"][1]["totals"], [3, 0, 0, 0])
+        self.assertEqual(view["hosts"][1]["totals"], [3, 0, 0, 0, 0])
         self.assertTrue(all(r["health"] == 0 and r["age"] == "30s" for r in view["rows"]))
 
     def test_failure_requires_current_specific_evidence(self):
@@ -162,16 +163,16 @@ class Projection(unittest.TestCase):
         rows = [row("blocked", state="blocked", at=1000), failed, row("waiting", state="waiting"), row("working")]
         view = Projector(["starship"]).project([source(rows)])
         self.assertEqual([r["state"] for r in view["rows"]], ["error", "blocked", "waiting", "working"])
-        self.assertEqual(view["hosts"][0]["totals"], [2, 1, 1, 0])
+        self.assertEqual(view["hosts"][0]["totals"], [2, 1, 1, 0, 0])
         for activity in ({"health": "stale", "at": 500}, {"health": "current", "at": 20000}):
             view = Projector(["starship"]).project([source([{**failed, "activity": activity}])])
             self.assertEqual((view["rows"][0]["state"], view["rows"][0]["age"]), ("error", "?"))
         p = Projector(["starship"])
         many = [{**failed, "identity": {**failed["identity"], "nativeId": str(i)}} for i in range(40)]
         view = p.project([source(many)])
-        self.assertEqual((len(view["rows"]), view["hosts"][0]["totals"]), (32, [40, 0, 0, 0]))
+        self.assertEqual((len(view["rows"]), view["hosts"][0]["totals"]), (32, [40, 0, 0, 0, 0]))
         view = p.project([source([{**many[-1], "kind": "system"}], status="partial")])
-        self.assertEqual(view["hosts"][0]["totals"], [0, 0, 0, 39])
+        self.assertEqual(view["hosts"][0]["totals"], [0, 0, 0, 0, 39])
         self.assertNotIn(token(many[-1]["identity"])[0], p.previous)
 
     def test_urgency_oldest_activity_and_stable_ties(self):
@@ -302,8 +303,8 @@ class Projection(unittest.TestCase):
         lost = p.project(
             [source([], status="offline", remaining=0), source([b], host="snap")]
         )
-        self.assertEqual(lost["hosts"][0]["totals"], [0, 0, 0, 1])
-        self.assertEqual(lost["hosts"][1]["totals"], [0, 0, 1, 0])
+        self.assertEqual(lost["hosts"][0]["totals"], [0, 0, 0, 0, 1])
+        self.assertEqual(lost["hosts"][1]["totals"], [0, 0, 1, 0, 0])
         self.assertEqual(lost["rows"][1]["age"], "?")
         diagnostic = p.explain(
             [source([], status="offline", remaining=0), source([b], host="snap")],
@@ -336,7 +337,7 @@ class Projection(unittest.TestCase):
             p.project([source([], status="offline", remaining=0)])["hosts"][0][
                 "totals"
             ],
-            [0, 0, 0, 50],
+            [0, 0, 0, 0, 50],
         )
 
     def test_whole_roster_survives_partial_loss_and_positive_exclusion(self):
@@ -344,9 +345,9 @@ class Projection(unittest.TestCase):
         rows = [row(str(i), label="session " + str(i)) for i in range(40)]
         p.project([source(rows)])
         partial = p.project([source(rows[:5], status="partial")])
-        self.assertEqual(partial["hosts"][0]["totals"], [0, 0, 5, 35])
+        self.assertEqual(partial["hosts"][0]["totals"], [0, 0, 5, 0, 35])
         lost = p.project([source([], status="offline", remaining=0)])
-        self.assertEqual(lost["hosts"][0]["totals"], [0, 0, 0, 40])
+        self.assertEqual(lost["hosts"][0]["totals"], [0, 0, 0, 0, 40])
         self.assertEqual(len(p.explain([], lost)["rows"]), 40)
         self.assertEqual(
             sum(r["sent_to_device"] for r in p.explain([], lost)["rows"]), 32
@@ -355,7 +356,7 @@ class Projection(unittest.TestCase):
             rows[index]["kind"] = kind
         rows[39]["runtime"]["value"] = "parked"
         excluded = p.project([source(rows[:5] + rows[37:], status="partial")])
-        self.assertEqual(excluded["hosts"][0]["totals"], [0, 0, 5, 32])
+        self.assertEqual(excluded["hosts"][0]["totals"], [0, 0, 5, 0, 32])
         again = p.project([source(rows[:5] + rows[37:], status="partial")])
         self.assertEqual(again["hosts"], excluded["hosts"])
         final = p.project([source(rows[:5])])
@@ -370,12 +371,12 @@ class Projection(unittest.TestCase):
             [source([a], status="offline", remaining=0), source([b], host="snap")]
         )
         self.assertEqual(stale["hosts"][0]["total"], 1)
-        self.assertEqual(stale["hosts"][1]["totals"], [0, 0, 1, 0])
+        self.assertEqual(stale["hosts"][1]["totals"], [0, 0, 1, 0, 0])
         fresh = row("new")
         growth = p.project(
             [source([fresh], status="partial"), source([b], host="snap")]
         )
-        self.assertEqual(growth["hosts"][0]["totals"], [0, 0, 1, 1])
+        self.assertEqual(growth["hosts"][0]["totals"], [0, 0, 1, 0, 1])
         with (
             patch("live_dashboard.projection.MAX_ROSTER", 2),
             self.assertRaisesRegex(ValueError, "roster_capacity"),
@@ -406,11 +407,11 @@ class Projection(unittest.TestCase):
         c["identity"]["namespace"] = "other"
         self.assertEqual(len({token(r["identity"])[0] for r in (a, b, c)}), 3)
         self.assertEqual(
-            parse_request(b"RLCD?2 " + b"0" * 16 + b" 1\r\n"), ("0" * 16, 1)
+            parse_request(b"RLCD?3 " + b"0" * 16 + b" 1\r\n"), ("0" * 16, 1)
         )
-        self.assertIsNone(parse_request(b"RLCD?1 " + b"0" * 16 + b" 1\n"))
+        self.assertIsNone(parse_request(b"RLCD?2 " + b"0" * 16 + b" 1\n"))
         for number in (b"0", b"01", b"4294967296", b"-1"):
-            self.assertIsNone(parse_request(b"RLCD?2 " + b"0" * 16 + b" " + number))
+            self.assertIsNone(parse_request(b"RLCD?3 " + b"0" * 16 + b" " + number))
 
     def test_suffix_cannot_collide_with_an_existing_label(self):
         a, b = row("a"), row("b")
@@ -459,25 +460,25 @@ class NativeAdmission(unittest.TestCase):
         expired = self.at(3000)
         self.assertFalse(expired["flashing"])
         self.assertEqual(expired["health"], 2)
-        self.assertEqual(expired["totals"], [0, 0, 0, 1])
+        self.assertEqual(expired["totals"], [0, 0, 0, 0, 1])
         self.assertEqual(expired["entries"][0]["age"], "?")
 
     def test_capacity_case_error_admission_retry_and_expiry(self):
         case = capacity_case()
         p = Projector()
-        self.assertIn(b"RLCD?2 ", self.request(0))
+        self.assertIn(b"RLCD?3 ", self.request(0))
         view = p.project(capacity_sources(case))
         failed = self.send(encode(view, "0" * 16, 1, "1" * 16, 1))
-        self.assertEqual(failed["totals"], [3, 0, 0, 0])
+        self.assertEqual(failed["totals"], [3, 0, 0, 0, 0])
         self.assertEqual([r["work"] for r in failed["entries"]], [4, 4, 4])
         self.assertTrue(failed["flashing"])
         case["normalizedFailedRows"][0] = case["normalizedRetry"]
         self.request(100)
         retry = self.send(encode(p.project(capacity_sources(case)), "0" * 16, 2, "1" * 16, 2))
-        self.assertEqual(retry["totals"], [2, 0, 1, 0])
+        self.assertEqual(retry["totals"], [2, 0, 1, 0, 0])
         self.assertEqual(retry["entries"][-1]["work"], 0)
         expired = self.at(3100)
-        self.assertEqual(expired["totals"], [0, 0, 0, 3])
+        self.assertEqual(expired["totals"], [0, 0, 0, 0, 3])
         self.assertFalse(expired["flashing"])
         self.assertTrue(all(r["work"] == 5 and r["age"] == "?" for r in expired["entries"]))
 
@@ -490,19 +491,24 @@ class NativeAdmission(unittest.TestCase):
         ])
         self.request(0)
         payload = encode(view, "0" * 16, 1, "1" * 16, 1)
-        for bad in (alter(payload, 0, b"RLCD!1"), alter(alter(payload, 18, b"0"), 19, b"1"),
-                    alter(payload, 26, b"1"), payload[:-10] + b"\t00000000\n"):
+        for bad in (
+            alter(payload, 0, b"RLCD!2"),
+            alter(payload, 18, b"3001"),
+            alter(payload, 17, b"2"),
+            alter(payload, 29, b"5"),
+            payload[:-10] + b"\t00000000\n",
+        ):
             self.send(bad, False)
         state = self.send(payload)
-        self.assertEqual(state["totals"], [1, 0, 1, 0])
+        self.assertEqual(state["totals"], [1, 0, 1, 0, 0])
         expired = self.at(1000)
         self.assertTrue(expired["partial"])
-        self.assertEqual(expired["totals"], [0, 0, 1, 1])
+        self.assertEqual(expired["totals"], [0, 0, 1, 0, 1])
         self.assertFalse(expired["flashing"])
         self.assertEqual([r["work"] for r in expired["entries"]], [0, 5])
 
     def test_request_anchor_shortens_delayed_response(self):
-        payload = alter(alter(frame(), 9, b"1000"), 19, b"1000")
+        payload = alter(alter(frame(), 9, b"1000"), 21, b"1000")
         self.request(100)
         self.at(900)
         self.send(payload)
@@ -510,13 +516,13 @@ class NativeAdmission(unittest.TestCase):
         self.assertEqual(self.at(1100)["health"], 2)
 
     def test_response_already_expired_on_arrival_never_flashes(self):
-        payload = alter(alter(frame(), 9, b"100"), 19, b"100")
+        payload = alter(alter(frame(), 9, b"100"), 21, b"100")
         self.request(0)
         self.at(900)
         state = self.send(payload)
         self.assertEqual(state["health"], 2)
         self.assertFalse(state["flashing"])
-        self.assertEqual(state["totals"], [0, 0, 0, 1])
+        self.assertEqual(state["totals"], [0, 0, 0, 0, 1])
 
     def test_duplicate_old_nonce_delayed_and_sequence_rejection(self):
         self.request(0)
@@ -535,6 +541,7 @@ class NativeAdmission(unittest.TestCase):
             {
                 "id": c * 64,
                 "host": i,
+                "category": "active",
                 "state": state,
                 "health": 0,
                 "valid_ms": ttl,
@@ -551,14 +558,14 @@ class NativeAdmission(unittest.TestCase):
                 "alias": "ST",
                 "status": 0,
                 "valid_ms": 1000,
-                "totals": [1, 0, 0, 0],
+                "totals": [1, 0, 0, 0, 0],
                 "total": 1,
             },
             {
                 "alias": "SN",
                 "status": 0,
                 "valid_ms": 2900,
-                "totals": [0, 0, 1, 0],
+                "totals": [0, 0, 1, 0, 0],
                 "total": 1,
             },
         ]
@@ -567,9 +574,48 @@ class NativeAdmission(unittest.TestCase):
         state = self.at(1000)
         self.assertEqual(state["health"], 0)
         self.assertTrue(state["partial"])
-        self.assertEqual(state["totals"], [0, 0, 1, 1])
+        self.assertEqual(state["totals"], [0, 0, 1, 0, 1])
         self.assertFalse(state["flashing"])
         self.assertEqual(state["entries"][0]["id"], "b" * 64)
+
+    def test_recent_parked_and_unknown_rows_share_recent_total_without_attention(self):
+        parked, unknown = row("parked", runtime="parked"), row("unknown", runtime="unknown")
+        rows = [parked, unknown]
+        ids = {token(r["identity"])[0] for r in rows}
+        categories = {token(parked["identity"])[0]: "recent",
+                      token(unknown["identity"])[0]: "recent"}
+        source = Source("starship", "current", 5000, 10000, rows, ids, set(),
+                        {("codex", "store")}, {identifier: 5000 for identifier in ids},
+                        {identifier: 10000 for identifier in ids}, categories, True)
+        view = Projector(["starship"]).project([source])
+        self.assertEqual(view["hosts"][0]["totals"], [0, 0, 0, 2, 0])
+        self.request(0)
+        state = self.send(encode(view, "0" * 16, 1, "1" * 16, 1))
+        self.assertEqual(state["totals"], [0, 0, 0, 2, 0])
+        self.assertFalse(state["flashing"])
+        self.assertEqual([(r["category"], r["work"]) for r in state["entries"]],
+                         [(1, 6), (1, 5)])
+
+    def test_row_positive_lease_survives_expired_whole_roster_totals(self):
+        rows = [{"id": "a" * 64, "host": 0, "category": "active",
+                 "state": "blocked", "health": 0, "valid_ms": 900,
+                 "label": "project", "age": "5s"}]
+        hosts = [{"alias": "ST", "status": 1, "valid_ms": 1,
+                  "totals": [1, 0, 0, 0, 0], "total": 1}]
+        self.request(0)
+        self.send(frame(rows, hosts))
+        still_leased = self.at(100)
+        self.assertEqual(still_leased["health"], 0)
+        self.assertTrue(still_leased["partial"])
+        self.assertEqual(still_leased["totals"], [0, 0, 0, 0, 1])
+        self.assertEqual(still_leased["entries"][0]["category"], 0)
+        self.assertEqual(still_leased["entries"][0]["work"], 1)
+        self.assertTrue(still_leased["flashing"])
+        expired = self.at(900)
+        self.assertEqual(expired["health"], 2)
+        self.assertEqual(expired["entries"][0]["category"], 2)
+        self.assertEqual(expired["totals"], [0, 0, 0, 0, 1])
+        self.assertFalse(expired["flashing"])
 
     def test_atomic_malformed_bounds_checksum_and_utf8(self):
         self.request(0)
@@ -582,13 +628,13 @@ class NativeAdmission(unittest.TestCase):
             alter(base, 6, b"33"),
             alter(base, 9, b"3001"),
             alter(base, 17, b"3"),
-            alter(base, 19, b"1"),
+            alter(base, 21, b"3001"),
             alter(base, 20, b"c0af"),
             alter(base, 20, b"ed a080"),
             alter(base, 20, b"41" * 64),
             alter(base, 21, b"1\x00"),
             alter(base, 14, b"4294967296"),
-            base.replace(b"RLCD!2", b"OTHER1"),
+            base.replace(b"RLCD!3", b"OTHER1"),
         ]
         for payload in cases:
             with self.subTest(payload=payload[:20]):
@@ -604,7 +650,7 @@ class NativeAdmission(unittest.TestCase):
         self.assertEqual(state["rows"], 32)
         self.assertEqual(state["visible"], 11)
         self.assertEqual(state["total"], 50)
-        self.assertEqual(state["totals"], [50, 0, 0, 0])
+        self.assertEqual(state["totals"], [50, 0, 0, 0, 0])
 
     def test_partial_roster_beyond_capacity_reaches_device_as_uncertainty(self):
         p = Projector(["starship"])
@@ -623,10 +669,10 @@ class NativeAdmission(unittest.TestCase):
         )
         self.assertEqual(state["total"], 40)
         self.assertEqual(state["rows"], 32)
-        self.assertEqual(state["totals"], [0, 0, 5, 35])
+        self.assertEqual(state["totals"], [0, 0, 5, 0, 35])
         self.assertTrue(state["partial"])
         expired = self.at(3100)
-        self.assertEqual(expired["totals"], [0, 0, 0, 40])
+        self.assertEqual(expired["totals"], [0, 0, 0, 0, 40])
 
     def test_warming_bridge_retains_device_context_until_positive_empty(self):
         self.request(0)
@@ -637,13 +683,13 @@ class NativeAdmission(unittest.TestCase):
                 "alias": "ST",
                 "status": 3,
                 "valid_ms": 0,
-                "totals": [0, 0, 0, 0],
+                "totals": [0, 0, 0, 0, 0],
                 "total": 0,
             }
         ]
         state = self.send(frame([], offline, request=2, bridge="2" * 16))
         self.assertEqual(state["rows"], 1)
-        self.assertEqual(state["totals"], [0, 0, 0, 1])
+        self.assertEqual(state["totals"], [0, 0, 0, 0, 1])
         self.assertFalse(state["flashing"])
         self.request(200)
         ready = [
@@ -651,7 +697,7 @@ class NativeAdmission(unittest.TestCase):
                 "alias": "ST",
                 "status": 0,
                 "valid_ms": 2900,
-                "totals": [0, 0, 0, 0],
+                "totals": [0, 0, 0, 0, 0],
                 "total": 0,
             }
         ]
@@ -668,14 +714,14 @@ class NativeAdmission(unittest.TestCase):
                 "alias": "ST",
                 "status": 2,
                 "valid_ms": 0,
-                "totals": [0, 0, 0, 0],
+                "totals": [0, 0, 0, 0, 0],
                 "total": 0,
             },
             {
                 "alias": "SN",
                 "status": 0,
                 "valid_ms": 2900,
-                "totals": [0, 0, 1, 0],
+                "totals": [0, 0, 1, 0, 0],
                 "total": 1,
             },
         ]
@@ -683,6 +729,7 @@ class NativeAdmission(unittest.TestCase):
             {
                 "id": "a" * 64,
                 "host": 1,
+                "category": "active",
                 "state": "working",
                 "health": 0,
                 "valid_ms": 2900,

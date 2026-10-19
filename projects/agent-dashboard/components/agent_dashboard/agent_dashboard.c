@@ -551,16 +551,27 @@ static void motion_state_symbol(uint8_t *frame, int x, int y,
     static const uint8_t waiting[6] = {0, 0, 0x02, 0x14, 0x08, 0};
     static const uint8_t error[6] = {0, 0x12, 0x0c, 0x0c, 0x12, 0};
     static const uint8_t unknown[6] = {0, 0x0c, 0x02, 0x04, 0, 0x04};
+    static const uint8_t parked[6] = {0, 0, 0, 0x3e, 0, 0};
     const uint8_t *bits = unknown;
     if (health == DASH_CURRENT) {
         if (work == DASH_WORKING) bits = working;
         else if (work == DASH_NEEDS_INPUT) bits = blocked;
         else if (work == DASH_ERROR) bits = error;
         else if (work == DASH_SETTLED || work == DASH_INTERRUPTED) bits = waiting;
+        else if (work == DASH_PARKED) bits = parked;
     }
     for (int row = 0; row < 6; ++row)
         for (int col = 0; col < 6; ++col)
             if (bits[row] & (0x20u >> col))
+                rect(frame, x + col * scale, y + row * scale, scale, scale, white);
+}
+
+static void motion_recent_symbol(uint8_t *frame, int x, int y, int scale, bool white)
+{
+    static const uint8_t clock[6] = {0x0c, 0x12, 0x21, 0x25, 0x12, 0x0c};
+    for (int row = 0; row < 6; ++row)
+        for (int col = 0; col < 6; ++col)
+            if (clock[row] & (0x20u >> col))
                 rect(frame, x + col * scale, y + row * scale, scale, scale, white);
 }
 
@@ -610,9 +621,10 @@ static void draw_motion_row(uint8_t *frame, const dashboard_motion_render_row_t 
     const int y = row->y;
     const dashboard_health_t health = view->roster.feed_health == DASH_CURRENT
                                     ? s->health : view->roster.feed_health;
-    const bool blocked = health == DASH_CURRENT &&
+    const bool active = s->category == DASH_CATEGORY_ACTIVE;
+    const bool blocked = active && health == DASH_CURRENT &&
                          (s->work == DASH_NEEDS_INPUT || s->work == DASH_ERROR);
-    const bool waiting = health == DASH_CURRENT &&
+    const bool waiting = active && health == DASH_CURRENT &&
                          (s->work == DASH_SETTLED || s->work == DASH_INTERRUPTED);
     // One complete cycle per second, shared by all blocked rows.
     const bool highlighted = waiting || (blocked &&
@@ -647,32 +659,49 @@ static void draw_motion_chrome(uint8_t *frame,
         snprintf(summary, sizeof(summary), "FEED %s", health_label(roster->feed_health));
         motion_text(frame, 8, 0, summary, false, 384, false);
     } else {
-        enum { ICON_WIDTH = 18, ICON_GAP = 4, GROUP_GAP = 12 };
-        const dashboard_work_t states[] = {
+        enum { ICON_WIDTH = 18 };
+        const int icon_gap = view->supplied_totals ? 2 : 4;
+        const int group_gap = view->supplied_totals ? 4 : 12;
+        const bool compact_counts = view->supplied_totals != NULL;
+        const dashboard_work_t live_states[] = {
+            DASH_NEEDS_INPUT, DASH_SETTLED, DASH_WORKING, DASH_UNKNOWN, DASH_UNKNOWN,
+        };
+        const dashboard_work_t legacy_states[] = {
             DASH_NEEDS_INPUT, DASH_SETTLED, DASH_WORKING, DASH_UNKNOWN,
         };
-        size_t totals[4] = {0};
+        size_t totals[5] = {0};
         for (size_t i = 0; i < roster->count; ++i) {
             const dashboard_session_t *session = &roster->sessions[i];
-            if (session->health != DASH_CURRENT || session->work == DASH_UNKNOWN) {
+            if (session->category == DASH_CATEGORY_RECENT) {
                 ++totals[3];
+                continue;
+            }
+            if (session->category == DASH_CATEGORY_UNCERTAIN) {
+                ++totals[4];
+                continue;
+            }
+            if (session->health != DASH_CURRENT || session->work == DASH_UNKNOWN) {
+                ++totals[4];
                 continue;
             }
             if (session->work == DASH_NEEDS_INPUT || session->work == DASH_ERROR) ++totals[0];
             else if (session->work == DASH_SETTLED || session->work == DASH_INTERRUPTED) ++totals[1];
             else if (session->work == DASH_WORKING) ++totals[2];
+            else if (session->work == DASH_PARKED) ++totals[4];
         }
         if (view->supplied_totals)
-            for (size_t i = 0; i < 4; ++i) totals[i] = view->supplied_totals[i];
-        const size_t groups = totals[3] ? 4 : 3;
-        char values[4][24];
-        int widths[4];
-        int total_width = (int)(groups - 1) * GROUP_GAP;
+            for (size_t i = 0; i < 5; ++i) totals[i] = view->supplied_totals[i];
+        if (!view->supplied_totals) totals[3] = totals[4];
+        const size_t groups = view->supplied_totals ? 5 : (totals[3] ? 4 : 3);
+        char values[5][24];
+        int widths[5];
+        int total_width = (int)(groups - 1) * group_gap;
         for (size_t i = 0; i < groups; ++i) {
             if (view->supplied_totals && totals[i] > 99)
                 snprintf(values[i], sizeof(values[i]), "99+");
             else snprintf(values[i], sizeof(values[i]), "%zu", totals[i]);
-            widths[i] = ICON_WIDTH + ICON_GAP + motion_text_width(values[i], false);
+            widths[i] = ICON_WIDTH + icon_gap +
+                        motion_text_width(values[i], compact_counts);
             total_width += widths[i];
         }
         char overflow[24] = "";
@@ -680,7 +709,7 @@ static void draw_motion_chrome(uint8_t *frame,
             if (view->supplied_totals && view->overflow_count > 99)
                 snprintf(overflow, sizeof(overflow), "+99+");
             else snprintf(overflow, sizeof(overflow), "+%zu", view->overflow_count);
-            total_width += GROUP_GAP + motion_text_width(overflow, false);
+            total_width += group_gap + motion_text_width(overflow, compact_counts);
         }
         int x = 392 - total_width;
         const char *title = view->partial ? "PARTIAL" : "AGENTS";
@@ -688,14 +717,20 @@ static void draw_motion_chrome(uint8_t *frame,
             title = view->partial ? "?" : "AG";
         motion_text(frame, 8, 0, title, false, view->supplied_totals ? x - 16 : 128, false);
         for (size_t i = 0; i < groups; ++i) {
-            motion_state_symbol(frame, x, 2, states[i], DASH_CURRENT, 3, false);
-            motion_text(frame, x + ICON_WIDTH + ICON_GAP, 0,
-                        values[i], false, widths[i] - ICON_WIDTH - ICON_GAP, false);
-            x += widths[i] + GROUP_GAP;
+            const dashboard_work_t state = view->supplied_totals
+                                         ? live_states[i] : legacy_states[i];
+            if (view->supplied_totals && i == 3)
+                motion_recent_symbol(frame, x, 2, 3, false);
+            else
+                motion_state_symbol(frame, x, 2, state, DASH_CURRENT, 3, false);
+            motion_text(frame, x + ICON_WIDTH + icon_gap, 0,
+                        values[i], compact_counts,
+                        widths[i] - ICON_WIDTH - icon_gap, false);
+            x += widths[i] + group_gap;
         }
         if (overflow[0])
-            motion_text(frame, x, 0, overflow, false,
-                        motion_text_width(overflow, false), false);
+            motion_text(frame, x, 0, overflow, compact_counts,
+                        motion_text_width(overflow, compact_counts), false);
     }
     // Keep two white scanlines between the divider and the first packed row.
     rect(frame, 8, DASHBOARD_MOTION_BODY_TOP - 3, 384, 1, false);
@@ -706,7 +741,7 @@ void dashboard_draw_motion(uint8_t *frame, const dashboard_motion_render_t *view
     draw_motion_chrome(frame, view);
     if (view->row_count == 0) {
         const char *empty = view->roster.feed_health == DASH_CURRENT
-                          ? "NO ACTIVE SESSIONS" : "FEED UNAVAILABLE";
+                          ? "NO SESSIONS" : "FEED UNAVAILABLE";
         motion_text(frame, 200 - motion_text_width(empty, false) / 2, 140,
                     empty, false, 384, false);
     }

@@ -116,6 +116,7 @@ def silence(args):
             and not r.get("attention")
             and not r.get("waiting")
             and not r.get("working")
+            and not r.get("recent")
         ]
         if not expired:
             raise ValueError("device_did_not_revoke_during_silence")
