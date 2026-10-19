@@ -1,0 +1,92 @@
+{
+  "changedPixelsConfinedToHeader": true,
+  "textFontPixelsBefore": 12,
+  "textFontPixelsAfter": 24,
+  "bodyPixelsIdentical": true,
+  "source": "29fe5b441270c8dc8aac5a1ca33f55ee39e929ec",
+  "nativeTests": {
+    "motion": "pass",
+    "liveTests": 71,
+    "skips": 0,
+    "previousRendererNewReadabilityAssertion": "fails as expected"
+  },
+  "previewHashes": {
+    "before.png": "6b741e68facd91c4c8752e5ee1b9bf63016f0d5ef35b375d93d11c7ec5a43a40",
+    "working-set-header-readable.png": "abd79741c6960fa344f47d81018705c41b93b8af07a7beacceb3591c259c32ad",
+    "working-set-header-overflow-cap.png": "ca59cc3ad83f4cecb4876fe7e2a6eada6bf3f62e5996908914930a0f793aa4d7",
+    "after.png": "644a5a0f7c2755a4032f86fe514030dcae264014aa5d6b18c109860b6488bbb2"
+  },
+  "flash": {
+    "source": "29fe5b441270c8dc8aac5a1ca33f55ee39e929ec",
+    "boardMac": "94:a9:90:de:d0:04",
+    "backup": {
+      "bytes": 16777216,
+      "sha256": "ae923c7e37c78fc7418982edff05d7c8df11c815fab914b472b2b52fc2d31f9b",
+      "allCurrentComponentsMatch": true
+    },
+    "application": {
+      "offset": "0x10000",
+      "bytes": 1243904,
+      "sha256": "4d579a4473b6b3318871a962a1441cc84185c53056a8acb0c385a8fdb55f7930"
+    },
+    "readbackSha256": "1e19cfc5a4e2ab78390bb9587b041233f94aa432fb72831ccc6e0f5fcbe7cc69",
+    "onlyApplicationWritten": true,
+    "bootloaderAndPartitionUnchanged": true,
+    "allComponentReadbacksMatch": true,
+    "protectedServiceIncarnationsUnchanged": true,
+    "349Touched": false
+  },
+  "health": {
+    "status": "pass",
+    "clientInvocation": "434aca94e0b440c8b9592b1574b3dcc7",
+    "health": {
+      "event": "device_health",
+      "health": 0,
+      "partial": 0,
+      "rows": 10,
+      "attention": 0,
+      "waiting": 5,
+      "working": 1,
+      "recent": 4,
+      "uncertain": 0,
+      "frame_us": 14504,
+      "miss": 0,
+      "heap": 291003,
+      "stack": 4776
+    },
+    "protectedServicesUnchanged": true,
+    "selectedHostBundleUnchanged": true,
+    "unit": "ActiveState=active\nNRestarts=0\nExecStart={ path=/home/bryan/.local/share/agent-observer/0.7.0a7-a3983afc-ws72-m4f598719/bin/python ; argv[]=/home/bryan/.local/share/agent-observer/0.7.0a7-a3983afc-ws72-m4f598719/bin/python -I -B /home/bryan/.local/share/rlcd-agent-dashboard/c638c29d0f779017/scripts/live-dashboard.py --hosts starship snap --port /dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_94:A9:90:DE:D0:04-if00 ; ignore_errors=no ; start_time=[Mon 2026-10-19 15:41:43 PDT] ; stop_time=[n/a] ; pid=1169727 ; code=(null) ; status=0/0 }\n",
+    "scope": "application readback and actual USB ACK/health; manual panel observation remains distinct"
+  },
+  "build": {
+    "source": "29fe5b441270c8dc8aac5a1ca33f55ee39e929ec",
+    "build": "/home/bryan/code/esp32-rlcd/projects/agent-dashboard/build-snap-header-fix-20261019",
+    "idfVersion": "5.5.3",
+    "deviceWire": 3,
+    "sdkconfigSha256": "21195fd64798f857638982d8b68e61b3aed72d118ddfd1964cf53363ae0ed7d8",
+    "defaultConfigUnchanged": true,
+    "files": {
+      "bootloader/bootloader.bin": {
+        "offset": "0x0",
+        "bytes": 20832,
+        "sha256": "199423edd4434e6330441cf94178d6a28cfd8b7b4cea35e6492f43325573f52b"
+      },
+      "rlcd-dashboard.bin": {
+        "offset": "0x10000",
+        "bytes": 1243904,
+        "sha256": "4d579a4473b6b3318871a962a1441cc84185c53056a8acb0c385a8fdb55f7930"
+      },
+      "partition_table/partition-table.bin": {
+        "offset": "0x8000",
+        "bytes": 3072,
+        "sha256": "5e71c3c890e04714daa03b21a0d23953a2dadf9fdf15eec02b886f7b6e9f8c81"
+      }
+    }
+  },
+  "logs": {
+    "motion.log": "7e42cdce2077772becdc3faf686c8a7450b93cdfcd48098dfbe503ad23b034d7",
+    "live.log": "84f0d6a812bd6f70149415ef5e0f8236905a52c5e47dd0ed6bb51697f6337c88",
+    "before-regression.log": "04d7aed70d39906680432cf925689eee2bab0333b75da4fee0099dab265247b2"
+  }
+}

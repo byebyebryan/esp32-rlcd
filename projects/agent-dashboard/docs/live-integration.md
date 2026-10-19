@@ -66,6 +66,10 @@ prefix. A row may keep a longer individual lease after the aggregate totals
 expire; firmware then preserves that row while qualifying the host totals as
 partial.
 
+Header counts use the same 24-pixel font as the title and conversation rows.
+Counts above 99 use `99+`; overflow uses `+99+`. The title abbreviates when
+needed so all five totals and overflow fit without shrinking the numbers.
+
 Fresh complete coverage may retire absent members only in its exact host,
 provider and namespace. A current exact child/system or other positive
 nonmember decision may retire its identity. Partial omissions, positive expiry,
