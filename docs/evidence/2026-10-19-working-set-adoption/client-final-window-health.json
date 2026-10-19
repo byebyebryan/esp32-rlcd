@@ -1,0 +1,23 @@
+{
+  "invocation": "8e383c7638164a25a8376af6a36fac50",
+  "latestHealth": {
+    "event": "device_health",
+    "health": 0,
+    "partial": 0,
+    "rows": 11,
+    "attention": 0,
+    "waiting": 5,
+    "working": 1,
+    "recent": 5,
+    "uncertain": 0,
+    "frame_us": 19185,
+    "miss": 0,
+    "heap": 291003,
+    "stack": 4776
+  },
+  "healthReports": 6,
+  "observedDeadlineMisses": 0,
+  "errorEvents": [],
+  "ackRecoveryEvents": 1,
+  "scope": "whole final managed invocation to this observation; periodic/transition firmware diagnostics, no physical readability claim"
+}

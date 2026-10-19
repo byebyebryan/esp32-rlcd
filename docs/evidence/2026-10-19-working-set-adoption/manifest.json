@@ -1,9 +1,13 @@
 {
-  "scope": "sanitized adoption evidence; wheels, flash backups/readbacks and raw full roster stay private",
+  "scope": "sanitized adoption evidence; wheels/flash backups/readbacks/raw full roster stay private",
   "files": {
     "REPORT.md": {
-      "sha256": "4dfeb8a6906ad218fc1d10b7e121622f70e67296b8923c9b54fb830b33669c30",
-      "bytes": 10142
+      "sha256": "5dc4a73bccb94a08ff2d75f463444b501d147e978d85cbe2beb85607eacba3b5",
+      "bytes": 12584
+    },
+    "activation.json": {
+      "sha256": "638f979c9558e4db286e2e124d5127036e67fb1b6a0456653bc08cd4160f7a9b",
+      "bytes": 1806
     },
     "apply_client.py": {
       "sha256": "73b9ff0d49b03aea0fe07513e3e11253674896e4de3e03adf12dc7b7b3b5b076",
@@ -33,6 +37,10 @@
       "sha256": "fc0366c7b9018d17b34df4f2a43fd35f01a3c64cb0d905811f40f05a4a8b7181",
       "bytes": 1957
     },
+    "chezmoi-final-activation-check.log": {
+      "sha256": "db5eba887319bc2cf30548e540011eaeea0ba5be9873e64ba08ee56ae17a42bf",
+      "bytes": 2983
+    },
     "chezmoi-hardware-hold-check.log": {
       "sha256": "f2a13ef7670a9069860ffbaa392043bdbe9c0d955da25a404a60726ce9a7a170",
       "bytes": 2983
@@ -41,13 +49,25 @@
       "sha256": "76905c9eeaeffe20d3f4b135575d76ca1a97e270e3e9433e0f7c94b6b29dba76",
       "bytes": 2983
     },
+    "client-final-health.json": {
+      "sha256": "13f02f4e982cf49716e3a4200f41bf1babe0205b2e1ee4d47cde92bc7ba4ada3",
+      "bytes": 1166
+    },
+    "client-final-window-health.json": {
+      "sha256": "e0ba1ac7c6bbb68593bca6bbde7b464befe2f8a97b2f7d743849fde2443c2608",
+      "bytes": 568
+    },
     "client-initial-health.json": {
       "sha256": "0dc4796e5a7f2c08b320d885cf1577b4b217b3c681014bd6d34a48a68e14506d",
       "bytes": 1168
     },
+    "completion-audit.json": {
+      "sha256": "80100cc4556aa653c2b8cd2ecbfebbca0f70a6cc8dec5a42ebfcb59a41a0dfc5",
+      "bytes": 4452
+    },
     "completion.json": {
-      "sha256": "9ba98ec4c4e859b2a0111a3b9701a991179271c670e42d4e14a83d9902a4e370",
-      "bytes": 766
+      "sha256": "187407111d085f63ab4477155f9671313fdcd48fe88b6a30159e9f31190ca377",
+      "bytes": 1328
     },
     "explicit-full-read.json": {
       "sha256": "8ce2dd4d3654c323e0d22d41e3b271fd52e78c779e432a47c0e3cd7e6639a89a",
@@ -61,6 +81,10 @@
       "sha256": "e367aa4f4e45c924342dc20e35568d4345f2ce65fe4dad6e462736adab0b9122",
       "bytes": 3963
     },
+    "final_audit_resumed.py": {
+      "sha256": "f73b6270fe890b4fe15507171f9933338db22d93497404a644213fa2e454a6be",
+      "bytes": 3974
+    },
     "firmware-build.json": {
       "sha256": "9188df5b656dc9f0a3990d3520a42448a1c886c9751cdfccfd360587c65d687a",
       "bytes": 871
@@ -73,6 +97,10 @@
       "sha256": "7ca7dfdbfe6a9b7b4f1daae96e6a7b6cfa80ce6a4470225e8fc0df1a8545055c",
       "bytes": 310
     },
+    "hardware-new-final.json": {
+      "sha256": "858fb5c007abb9b16c40e28cb05f49d73adbc1388cd55f39d43d011036f1d904",
+      "bytes": 735
+    },
     "hardware-new.json": {
       "sha256": "b41a45ed26e77995dc6db6409ed372f6a8008191d7a8f709cb8773e9720814e7",
       "bytes": 729
@@ -80,6 +108,10 @@
     "hardware-old.json": {
       "sha256": "8538c150cadb3b54bf47893d26773bf0101d3f13d7efc782067d537e0eab0445",
       "bytes": 722
+    },
+    "hardware-resume-before.json": {
+      "sha256": "6252d54200eba04dd391d1bd97df81a01678c183ba42d09e82c770a794978c2f",
+      "bytes": 204
     },
     "installed-focused-311.json": {
       "sha256": "2bbbeb61ee8e9e465cccad75c47a10c3eb69ebc877ef9163130da4b280531d59",
@@ -109,9 +141,17 @@
       "sha256": "fffd9312bc12a1fe3b49790703ee69d6e3f50573cc2b64a0c460c33d9ff2603f",
       "bytes": 1225
     },
+    "native-snap-final.json": {
+      "sha256": "0afed9fea1ed2ef6567e564560feb97cfb2c7440fdddcf95fbc955fca9346736",
+      "bytes": 7777
+    },
     "native-snap.json": {
       "sha256": "a8b97a3a21bf9d369a63947e98d4a6da7b553acc1ff6af6a4ab5d80f0f888862",
       "bytes": 7781
+    },
+    "native-starship-final.json": {
+      "sha256": "02dea92ce235d8a09c597bad5f19242a2891549012b2893cf518637bcf0fdd8e",
+      "bytes": 7798
     },
     "native-starship.json": {
       "sha256": "eb51cdbc30de5e6b5289e0cb3b5a7bae6fa4baab8d6c988dd3cfed51c006ebc3",
@@ -125,9 +165,17 @@
       "sha256": "a32eaa9206afa561f87f7de9cf045d8f4033b7702873b6026571c055073dcc64",
       "bytes": 1942
     },
+    "preservation-snap-final.json": {
+      "sha256": "0b9132443e8e5abf4703edb19fe8f2a8c581396115b5401a69bca7545c29ab78",
+      "bytes": 5772
+    },
     "preservation-snap.json": {
       "sha256": "78a187374856416053affa6a4bed44af54bb5c5f3af201ab5ebc7dbdb76f026e",
       "bytes": 5543
+    },
+    "preservation-starship-final.json": {
+      "sha256": "d745ebb52178580bde59cd3065308fff98a64543e188160234e8452c25afa225",
+      "bytes": 5766
     },
     "preservation-starship.json": {
       "sha256": "49508c32397ddc2be89d450d13121e083ffe87f73156a9a045a857cd8709ffef",
@@ -140,6 +188,18 @@
     "probe_route.py": {
       "sha256": "f3e65998d87c8c7793d22eed6021e8ad4035fda7830299771f95203cd2079012",
       "bytes": 6815
+    },
+    "resource-snap-final.json": {
+      "sha256": "0da4d98ef21b49958bbaaddf7a65e2b339f75647a0095cc090268f8019ae70cb",
+      "bytes": 45369
+    },
+    "resource-starship-final.json": {
+      "sha256": "d95abcb560d1350735abeabf4e526d163227f471a57aba060e92620b2aabdb3d",
+      "bytes": 45462
+    },
+    "resource_window.py": {
+      "sha256": "9285b6e6ba36d3cda4dd570aeb8ff95336ee7bec505c47dd4fb1c91ac33e162e",
+      "bytes": 2435
     },
     "rlcd-ws-check-docs.log": {
       "sha256": "19006e7d86b07c3e1d1d8a2ed7f33449cf9d1071bddd077eb5f23e5bed6d7a91",

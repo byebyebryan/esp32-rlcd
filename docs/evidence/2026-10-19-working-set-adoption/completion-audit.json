@@ -1,0 +1,96 @@
+{
+  "scope": "requested scoped adoption, no universal producer or manual physical acceptance",
+  "requirements": [
+    {
+      "id": "immutable-pair",
+      "requirement": "Rebuild and identify compatible installed Observer74 producer base/Mesh2fb pair",
+      "result": "proved",
+      "evidence": "pair.json; bundle.json; final preservation package/RECORD checks; native producer unchanged by additive facade diff"
+    },
+    {
+      "id": "both-native",
+      "requirement": "Independently compare passive native membership/coverage on both hosts",
+      "result": "proved",
+      "evidence": "native-starship-final.json; native-snap-final.json; complete stable404/102, no unresolved/mismatched membership/fields"
+    },
+    {
+      "id": "view-semantics",
+      "requirement": "Explicit active OR recent72h, parked/unknown handling, full-history explicit, truthful coverage/context expiry",
+      "result": "proved",
+      "evidence": "68consumer tests perPython;102installed methods perPython; member/scope lease tests; code443; explicit-full-read.json"
+    },
+    {
+      "id": "device-presentation",
+      "requirement": "Paired wire3 parser/rendering, five totals/categories, early expiry and full-roster limits",
+      "result": "proved",
+      "evidence": "ASAN/UBSAN live tests; motion tests; native media/bounds checks; bundle.json; firmware-build.json"
+    },
+    {
+      "id": "ordinary-route",
+      "requirement": "Actual configured IPC/fixed-SSH read and fresh proof scope",
+      "result": "proved",
+      "evidence": "route-scope-starship.json; route-scope-snap.json; managed client exact source/profile selection"
+    },
+    {
+      "id": "resources",
+      "requirement": "Observe actual operating cost/resources within stated scope",
+      "result": "proved",
+      "evidence": "resource-snap-final.json; resource-starship-final.json; descriptive65s selected cgroups, exclusions explicit"
+    },
+    {
+      "id": "deploy",
+      "requirement": "Select immutable host bundle and matching firmware on exact SnapRLCD",
+      "result": "proved",
+      "evidence": "activation.json; hardware-new-final.json; client-final-health.json; client-final-window-health.json"
+    },
+    {
+      "id": "recovery",
+      "requirement": "Actual live admission, silence expiry and new-bridge recovery",
+      "result": "proved",
+      "evidence": "live-first.json; fictional-device.json; per-frame CRC/request/count checks"
+    },
+    {
+      "id": "rollback",
+      "requirement": "Verified scoped managed/firmware/client rollback and successful final reselection",
+      "result": "proved",
+      "evidence": "hardware-backup.json; managed-rollback-*.json; hardware-old.json; old-service-rollback.json; final readback/client/preservation receipts"
+    },
+    {
+      "id": "preservation",
+      "requirement": "Preserve old packages/pins and full/active/Tmux/writer/349/Starship device/concurrent owner work",
+      "result": "proved",
+      "evidence": "final preservation receipts; unchanged protected unit incarnations; isolated worktrees; no cleanup/prune or unselected firmware operations"
+    },
+    {
+      "id": "publication",
+      "requirement": "Publish reviewable source, configuration and evidence; align Snap checkout",
+      "result": "proved",
+      "evidence": "runtime443/source-evidence5fc; Observer facade1eec branch; canonical636a90a published; final evidence commit and CI verified after publication"
+    },
+    {
+      "id": "boundaries",
+      "requirement": "Keep whole-producer and manual physical gates distinct, no unresolved native promotion",
+      "result": "proved",
+      "evidence": "REPORT acceptance boundary; final independent comparison no unresolved identities; delta remains dark; no producer release/schema-ID allocation claim"
+    }
+  ],
+  "producerBase": "74bc2012ef27e65dc6aad9e3ae48bd9c400d4df2",
+  "facade": "1eec6c6d8681a3e58bab742d5c130656ab00433c",
+  "producerDiff": [
+    "agent_observer/mesh_working_set_read.py",
+    "docs/working-set-client-candidate.md",
+    "tests/test_working_set_member_leases.py",
+    "tests/test_working_set_registered_sdk.py"
+  ],
+  "manualChecksSeparate": [
+    "panel readability/contrast",
+    "physical unplug/replug under final firmware",
+    "cold host reboot"
+  ],
+  "broaderGatesNotPromoted": [
+    "dense/burst/slow-peer capacity",
+    "inclusive physical32/64MiB/RSS plateau",
+    "whole-producer CPU/cost/native qualification",
+    "dark delta gates"
+  ]
+}

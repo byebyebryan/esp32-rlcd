@@ -75,6 +75,12 @@ records that earlier rollout's firmware readback, managed service and bounded
 physical ACK/expiry checks; its Starship native-source limitation describes the
 state at the time of that receipt.
 
+The [working-set adoption receipt](../../docs/evidence/2026-10-19-working-set-adoption/REPORT.md)
+records the current Snap wire-3 client/firmware, exact private package pair,
+both-host native comparisons, live expiry/recovery, and exercised paired rollback.
+Starship keeps its prior wire-2 device/client selection. Whole-producer and manual
+panel/reboot acceptance remain distinct from this scoped deployment.
+
 ## Build and check
 
 After [toolchain setup](../../docs/setup.md), run from the repository root:

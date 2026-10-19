@@ -162,6 +162,10 @@ exact backup restoration: verify affected bytes and links against the retained
 backup before any scoped forced reselect. The
 [active-feed receipt](../../../docs/evidence/2026-10-16-active-feed/REPORT.md)
 records the older wire 2 deployment and its separate rollback boundary.
+The [working-set receipt](../../../docs/evidence/2026-10-19-working-set-adoption/REPORT.md)
+pins Snap's current wire-3 selection and matching image; Starship's device/client
+stays on its prior wire-2 pair. It records the full backup, old tuple restoration,
+final readback, native comparison and bounded service/resource observations.
 
 ## Expiry and captures
 

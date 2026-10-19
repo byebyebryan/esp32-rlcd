@@ -1,0 +1,48 @@
+{
+  "host": "snap",
+  "status": "active",
+  "reason": "exact board returned; prior rollback image independently reverified; all-component wire3 readback matches pinned first deployment",
+  "port": "/dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_94:A9:90:DE:D0:04-if00",
+  "selection": {
+    "enabledHosts": [
+      "snap"
+    ],
+    "bundle": ".local/share/rlcd-agent-dashboard/d3fd7b8133f02567",
+    "manifestSha256": "d3fd7b8133f02567371cad18a14e0b45eb55d7f1ddf24bdcc867468bdbdd7808",
+    "sourceRevision": "443f3dda947ca96d68d573f2ae3ac7159d9b6f20",
+    "python": ".local/share/agent-observer/0.7.0a7-a3983afc-ws72-m4f598719/bin/python",
+    "dependencies": {
+      "admission": 1,
+      "api": 4,
+      "memberLease": 1,
+      "mesh": "0.1.0a23",
+      "nativeVersion": 1,
+      "observer": "0.7.0a7",
+      "preparation": 1,
+      "profile": "agent-observer.mesh-working-set.v1",
+      "read": 2,
+      "scopeLease": 1,
+      "sdk": 1,
+      "selection": 1,
+      "service": 4,
+      "windowMs": 259200000,
+      "workingSetRead": 1
+    },
+    "artifacts": {
+      "meshWheelSha256": "4f5987191b8d1113f3aa0afced15c5179f458fa0f9b9044352f1fefd418736bd",
+      "observerWheelSha256": "a3983afc12cee4aec84dd53d2ec9e60edd1e97dd4250543d77344bcde0878ac5"
+    },
+    "deviceWire": 3
+  },
+  "requires": [
+    "exact by-id board 94:A9:90:DE:D0:04 present",
+    "wire3 all-component flash readback matches pinned build",
+    "scoped client preimage comparison before activation"
+  ],
+  "activationEvidence": {
+    "runtimeSource": "443f3dda947ca96d68d573f2ae3ac7159d9b6f20",
+    "applicationSha256": "b2dca61d4d2647aba0daa98c14394d23d60bfdbc6f71db103ef26c096afd28ae",
+    "readbackSha256": "1cf25b1d0ecbd6585c635f8d3fa1bdf2d974ec51457b67def1bf55bed38703bd",
+    "boardMac": "94:a9:90:de:d0:04"
+  }
+}

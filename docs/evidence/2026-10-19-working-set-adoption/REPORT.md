@@ -1,11 +1,10 @@
 # Snap working-set adoption
 
-The explicit active-plus-recent 72-hour view is implemented and its first Snap
-rollout passes live device checks. Final reselection is pending a disconnected
-USB dock; the device is left on the verified wire-2 rollback firmware and client. Active membership is
-independent of recency; recent parked sessions use a neutral dash and the recent
-clock total. Unknown runtime stays unknown. Child/system rows remain excluded.
-Full-history diagnostics remain an explicit cached read, without a fallback.
+Snap now uses the explicit active-plus-recent 72-hour view through the selected
+wire-3 client and verified matching firmware. Active membership is independent
+of recency; recent parked sessions use a neutral dash and the recent clock total.
+Unknown runtime stays unknown. Child/system rows remain excluded. Full-history
+diagnostics remain an explicit cached read, without a fallback.
 
 ## Pinned implementation
 
@@ -17,7 +16,7 @@ Full-history diagnostics remain an explicit cached read, without a fallback.
 | Mesh candidate | `2fb502da35c0ef9865762c4dc4b486dd30b7e316` |
 | Immutable host bundle | `d3fd7b8133f02567371cad18a14e0b45eb55d7f1ddf24bdcc867468bdbdd7808` |
 | Snap application image | `b2dca61d4d2647aba0daa98c14394d23d60bfdbc6f71db103ef26c096afd28ae` |
-| First deployed client configuration | dotfiles `f78d722`; current canonical client is held at wire 2 |
+| Final managed configuration | dotfiles `636a90a`; exact active candidate in [activation record](activation.json) |
 
 [Package receipt](pair.json) and [bundle manifest](bundle.json) bind the full
 wheel hashes. These are private candidate builds retaining the a7/a23 labels;
@@ -30,8 +29,8 @@ The normal source is `agent_working_set`, with the public working-set profile,
 configured local IPC and fixed SSH to the other host. One shared native collector
 per host enables the working-set projection alongside unchanged full/active
 contracts. Tmux, historical writer, normal provider workflows and dark delta
-remain independent. Only Snap's client/firmware is in scope for the paired wire-3 migration. Starship's
-wire-2 client selection and device are preserved.
+remain independent. Only Snap's client/firmware is in scope for the paired wire-3
+migration. Starship's wire-2 client selection and device are preserved.
 
 ## Expiry and presentation
 
@@ -73,6 +72,12 @@ claim to demonstrate recent-only membership.
   Both comparisons have zero unresolved/mismatched membership or compared fields;
   private qualification services/processes are joined and removed. No native
   daemon/session/provider action is taken.
+- Fresh final [Starship](native-starship-final.json) and [Snap](native-snap-final.json)
+  comparisons after resume again match all 404/102 identities and compared fields,
+  with complete stable censuses and no unresolved/mismatched membership. Native
+  state has legitimately changed: Snap's member is now active, so the final live
+  aggregate is six active plus five recent rows. Both private qualification owners
+  are joined with zero return codes; the ordinary daemon is never signalled.
 - Actual configured [Starship route](route-scope-starship.json) and
   [Snap route](route-scope-snap.json) pass 25-second IPC/fixed-SSH reads with three
   distinct remote fresh proofs each, complete scopes and no uncertain members.
@@ -122,24 +127,63 @@ first dry-run asks about this goal's known manual rollback; the final helper
 uses explicit force only after the byte-for-byte preimage comparison, preserving
 both diagnostic and final logs.
 
-At 12:30:20, Snap's [whole USB dock disconnects](usb-dock-disconnected.json),
-including both display serial identities and other dock devices. The final flash
-preflight rejects the absent exact RLCD identity before a write. No other board
-is substituted. The matching wire-2 rollback service remains selected and enabled
-while the new backend pair is ready. Canonical dotfiles `683936d` also retain
-this wire-2 client and records the new wire-3 tuple in a separate staged candidate;
-a routine configuration apply cannot create a protocol mismatch. Final wire-3
-reselection and post-reselection health/resource verification require the exact
-dock/board to return. This goal is not complete.
+At 12:30:20, Snap's [whole USB dock disconnected](usb-dock-disconnected.json),
+including both display identities and other dock devices. The flash preflight
+rejected the absent exact identity before a write. Dotfiles `683936d` retained the
+matching old wire-2 client while the candidate stayed pinned. No hub reset or
+substitute board was used. That safe-hold history and its receipts remain intact.
 
-[Starship preservation](preservation-starship.json) verifies ten untouched managed
-targets and six protected unit incarnations. [Snap preservation](preservation-snap.json)
-verifies ten rollback/protected targets and five protected unit incarnations,
-including 349, full/active publishers and Tmux. Both installed package inventories
-and RECORD hashes still match. Snap's matching rollback client remains enabled
-with user linger, and the producer/working-set selections match canonical config.
-The USB disappearance is recorded as an external observation; it grants no
-clearance to reset a hub, substitute another board or touch unrelated devices.
+After the user resumed, both exact devices returned. A fresh
+[read-only preflight](hardware-resume-before.json) proved all three prior wire-2
+images were still byte-identical. [Final wire-3 readback](hardware-new-final.json)
+then matched the first deployment's bootloader, partition table, application and
+whole readback digest. Dotfiles `636a90a` activates only the matching Snap client
+with the exact old-file preimage guards. The [managed service](client-final-health.json)
+is active, enabled with user linger, and has zero restarts. Its
+[post-window health](client-final-window-health.json) reports eleven rows, six
+active/five recent, complete scope, zero uncertainty, no acknowledgement errors
+and zero recorded frame-deadline misses. Data counts are snapshots, not fixed
+expected roster sizes.
+
+Final [Starship preservation](preservation-starship-final.json) verifies ten
+untouched targets, seven selected producer targets and six protected unit
+incarnations. Final [Snap preservation](preservation-snap-final.json) verifies six
+untouched targets, eleven selected producer/client targets and five protected
+unit incarnations, including 349, full/active publishers and Tmux. Both installed
+package inventories/RECORD hashes still match. Starship's device/client stays on
+its exact old wire-2 selection. Private wheels, full flash backup, old images,
+rollback bundles, native/source evidence and original producer worktrees remain
+preserved.
+
+## Descriptive operating window
+
+The [Snap](resource-snap-final.json) and [Starship](resource-starship-final.json)
+65-second samples cover the selected systemd cgroups under normal concurrent
+load. All invocations remain stable with zero restarts. Memory below is end-of-
+window current / unit lifetime peak, not a unique physical/RSS sum or an admission
+ledger limit.
+
+| Host / unit | CPU, percent of one core | Current / lifetime peak, MiB |
+| --- | ---: | ---: |
+
+| snap / collector | 1.015% | 31.34 / 44.42 |
+| snap / working-set publisher | 0.200% | 19.52 / 21.57 |
+| snap / RLCD client | 3.688% | 32.72 / 37.40 |
+| starship / collector | 1.876% | 40.82 / 56.53 |
+| starship / working-set publisher | 0.000% | 19.56 / 21.22 |
+| starship / RLCD client | 0.602% | 43.73 / 47.14 |
+
+Starship's RLCD row measures its preserved old active client. Remote SSH server/
+bridge processes and the native daemon outside these units are excluded; the
+publisher row does not include those remote bridge processes. These observations
+establish behavior for the current small view, not the producer CPU ceiling,
+dense/burst capacity, inclusive 32/64 MiB physical ownership, or an RSS plateau.
+
+The [completion audit](completion-audit.json) maps the requested outcome to its
+actual evidence. The [receipt](completion.json) identifies the final active pair;
+all source/configuration changes are published, with normal fast-forward Snap
+checkouts. Firmware runtime remains the pinned `443f3dd`; later commits contain
+only evidence/media-provenance updates.
 
 ## Acceptance boundary
 
