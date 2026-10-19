@@ -1,0 +1,83 @@
+{
+  "source": "df89736842857dc0606775ffaf4cf92b63284339",
+  "dashboardTests": 71,
+  "skips": 0,
+  "motionChecks": "pass",
+  "recentCountDoesNotAffectFrame": true,
+  "uncertainCountStillChangesHeader": true,
+  "hostAndWireUnchanged": true,
+  "logHashes": {
+    "live.log": "d88bbb0bf3a32f486200c81d651a46b4ef2ac9617f4626562ea89d8f6cf79059",
+    "motion.log": "7e42cdce2077772becdc3faf686c8a7450b93cdfcd48098dfbe503ad23b034d7"
+  },
+  "flash": {
+    "source": "df89736842857dc0606775ffaf4cf92b63284339",
+    "boardMac": "94:a9:90:de:d0:04",
+    "backup": {
+      "bytes": 1309440,
+      "sha256": "1e19cfc5a4e2ab78390bb9587b041233f94aa432fb72831ccc6e0f5fcbe7cc69",
+      "allCurrentComponentsMatch": true,
+      "existingFullBackup": "/home/bryan/.local/state/rlcd-header-fix-20261019/flash-before.bin",
+      "existingFullBackupSha256": "ae923c7e37c78fc7418982edff05d7c8df11c815fab914b472b2b52fc2d31f9b"
+    },
+    "application": {
+      "offset": "0x10000",
+      "bytes": 1243760,
+      "sha256": "bb27fd5331373dd21382c2781be89171ae9e7bfb85611a50d9de4bd877ffa8ab"
+    },
+    "readbackSha256": "8b5a6c76fb836351174974ecb9e2fe9347911dd982320c37ff77bdcd73067137",
+    "onlyApplicationWritten": true,
+    "bootloaderAndPartitionUnchanged": true,
+    "allComponentReadbacksMatch": true,
+    "protectedServiceIncarnationsUnchanged": true,
+    "349Touched": false
+  },
+  "health": {
+    "status": "pass",
+    "clientInvocation": "cad1996308f1407c87494918fee85cae",
+    "health": {
+      "event": "device_health",
+      "health": 0,
+      "partial": 0,
+      "rows": 10,
+      "attention": 0,
+      "waiting": 4,
+      "working": 1,
+      "recent": 5,
+      "uncertain": 0,
+      "frame_us": 18633,
+      "miss": 0,
+      "heap": 291003,
+      "stack": 4776
+    },
+    "protectedServicesUnchanged": true,
+    "selectedHostBundleUnchanged": true,
+    "unit": "ActiveState=active\nNRestarts=0\nExecStart={ path=/home/bryan/.local/share/agent-observer/0.7.0a7-a3983afc-ws72-m4f598719/bin/python ; argv[]=/home/bryan/.local/share/agent-observer/0.7.0a7-a3983afc-ws72-m4f598719/bin/python -I -B /home/bryan/.local/share/rlcd-agent-dashboard/c638c29d0f779017/scripts/live-dashboard.py --hosts starship snap --port /dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_94:A9:90:DE:D0:04-if00 ; ignore_errors=no ; start_time=[Mon 2026-10-19 16:35:55 PDT] ; stop_time=[n/a] ; pid=1376163 ; code=(null) ; status=0/0 }\n",
+    "scope": "application readback and actual USB ACK/health; manual panel observation remains distinct"
+  },
+  "build": {
+    "source": "df89736842857dc0606775ffaf4cf92b63284339",
+    "build": "/home/bryan/code/esp32-rlcd/projects/agent-dashboard/build-snap-header-no-recent-20261019",
+    "idfVersion": "5.5.3",
+    "deviceWire": 3,
+    "sdkconfigSha256": "21195fd64798f857638982d8b68e61b3aed72d118ddfd1964cf53363ae0ed7d8",
+    "defaultConfigUnchanged": true,
+    "files": {
+      "bootloader/bootloader.bin": {
+        "offset": "0x0",
+        "bytes": 20832,
+        "sha256": "4e669153f8be7c82faabbde01209ba37598a25b6d75537c2421ac70f899e530f"
+      },
+      "rlcd-dashboard.bin": {
+        "offset": "0x10000",
+        "bytes": 1243760,
+        "sha256": "bb27fd5331373dd21382c2781be89171ae9e7bfb85611a50d9de4bd877ffa8ab"
+      },
+      "partition_table/partition-table.bin": {
+        "offset": "0x8000",
+        "bytes": 3072,
+        "sha256": "5e71c3c890e04714daa03b21a0d23953a2dadf9fdf15eec02b886f7b6e9f8c81"
+      }
+    }
+  }
+}

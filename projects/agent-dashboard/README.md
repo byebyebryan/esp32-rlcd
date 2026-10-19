@@ -19,6 +19,8 @@ hidden conversations; the bridge transports up to 32 rows after placing active
 rows ahead of recent rows. Titles use project/cwd fallbacks and rendered
 collision handling. Confirmed child and system rows are excluded. Recent parked
 and runtime-unknown rows count as recent, never as attention, waiting or working.
+The header shows attention, ready, working and uncertain counts; recent threads
+stay in the list without a separate recent counter.
 For an unloaded recent thread, a current completed latest turn shows the ready
 check, and a current failed latest turn shows the error cross. These describe
 the last turn, not a running thread. Unproved or interrupted results keep the

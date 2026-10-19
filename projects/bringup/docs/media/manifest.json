@@ -1,11 +1,11 @@
 {
   "description": "Native initial rlcd_frame_draw_test pattern used by bring-up; no hardware access.",
-  "source_revision": "29fe5b441270c8dc8aac5a1ca33f55ee39e929ec",
+  "source_revision": "df89736842857dc0606775ffaf4cf92b63284339",
   "source_sha256": {
     "components/display_rlcd/include/rlcd_frame.h": "96ca04c42f8983a44b8c362bbedbd05f85e400ce617f4daebe80ba25ce4a155a",
     "components/display_rlcd/include/rlcd_panel.h": "638c1f9c89c7abda86e0e5c369db32125ff198986c205b4ee7733627f921fbfb",
     "components/display_rlcd/rlcd_frame.c": "ddd85b4833a7b7db34dca0d8759838ff7b88ed9860d30d0aab4ac834b83d4c35",
-    "projects/agent-dashboard/components/agent_dashboard/agent_dashboard.c": "5de0846b43dbe94180fbb3cf946b5aa50dcbae98521c3f43602f47f10644bf2d",
+    "projects/agent-dashboard/components/agent_dashboard/agent_dashboard.c": "7ac4f66db01a182b69808828b2c4e09baec49a877eb3fa8a53fcf26b91baafbe",
     "projects/agent-dashboard/components/agent_dashboard/agent_dashboard_motion.c": "8688ec0270339106a850d7e64f036bb26356d7968a3d6069284f99c9ba39c855",
     "projects/agent-dashboard/components/agent_dashboard/dashboard_feed.c": "5879bccdba8d184db2033cdabfd04f7b784a0a6bd6515a15bcda301be78b0a59",
     "projects/agent-dashboard/components/agent_dashboard/fusion_pixel_12_zh_hans.c": "0dd98e8d9c1236f9de9a201f942c04c7e36cedf7c27a82c1d3aade94574778f3",
@@ -29,7 +29,7 @@
     "tools/native_presentation/stubs/freertos/idf_additions.h": "fcd200e8cca7a0b8a6ce45c3decb72f2b347d69ddb267278857384feff9425d0",
     "tools/native_presentation/stubs/freertos/task.h": "ceef766effb92b66f8722065f69115d521b0f9908a2711d8c6d7957245c79768"
   },
-  "native_executable_sha256": "1e1f8f806fecb46acb9c217b6dfc8dfd6659dd63c6fc1a154829564cb30e2239",
+  "native_executable_sha256": "f1755acaf1f8aa1d43ca8912c92a8fcd2f75351c95a1479d17e623d6c428b2ad",
   "pillow_version": "12.0.0",
   "screen_size": [
     400,
