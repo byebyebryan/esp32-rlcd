@@ -662,7 +662,6 @@ static void draw_motion_chrome(uint8_t *frame,
         enum { ICON_WIDTH = 18 };
         const int icon_gap = view->supplied_totals ? 2 : 4;
         const int group_gap = view->supplied_totals ? 4 : 12;
-        const bool compact_counts = view->supplied_totals != NULL;
         const dashboard_work_t live_states[] = {
             DASH_NEEDS_INPUT, DASH_SETTLED, DASH_WORKING, DASH_UNKNOWN, DASH_UNKNOWN,
         };
@@ -701,7 +700,7 @@ static void draw_motion_chrome(uint8_t *frame,
                 snprintf(values[i], sizeof(values[i]), "99+");
             else snprintf(values[i], sizeof(values[i]), "%zu", totals[i]);
             widths[i] = ICON_WIDTH + icon_gap +
-                        motion_text_width(values[i], compact_counts);
+                        motion_text_width(values[i], false);
             total_width += widths[i];
         }
         char overflow[24] = "";
@@ -709,7 +708,7 @@ static void draw_motion_chrome(uint8_t *frame,
             if (view->supplied_totals && view->overflow_count > 99)
                 snprintf(overflow, sizeof(overflow), "+99+");
             else snprintf(overflow, sizeof(overflow), "+%zu", view->overflow_count);
-            total_width += group_gap + motion_text_width(overflow, compact_counts);
+            total_width += group_gap + motion_text_width(overflow, false);
         }
         int x = 392 - total_width;
         const char *title = view->partial ? "PARTIAL" : "AGENTS";
@@ -724,13 +723,13 @@ static void draw_motion_chrome(uint8_t *frame,
             else
                 motion_state_symbol(frame, x, 2, state, DASH_CURRENT, 3, false);
             motion_text(frame, x + ICON_WIDTH + icon_gap, 0,
-                        values[i], compact_counts,
+                        values[i], false,
                         widths[i] - ICON_WIDTH - icon_gap, false);
             x += widths[i] + group_gap;
         }
         if (overflow[0])
-            motion_text(frame, x, 0, overflow, compact_counts,
-                        motion_text_width(overflow, compact_counts), false);
+            motion_text(frame, x, 0, overflow, false,
+                        motion_text_width(overflow, false), false);
     }
     // Keep two white scanlines between the divider and the first packed row.
     rect(frame, 8, DASHBOARD_MOTION_BODY_TOP - 3, 384, 1, false);

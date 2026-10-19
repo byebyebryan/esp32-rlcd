@@ -1041,8 +1041,20 @@ static void test_motion_chrome_states(const char *directory)
     assert_band_white(whole_header, 0, RLCD_WIDTH, 288, RLCD_HEIGHT);
     save_pbm(directory, "header-icons-overflow", whole_header);
 
-    // Working-set mode has five semantic totals plus an overflow marker. Its
-    // compact count text keeps the largest labels inside the same header band.
+    // Working-set counts retain the full-size font used by the title and rows.
+    // A normal five-count header must have digit ink below the old 12px line.
+    const uint32_t ordinary_totals[] = {0, 6, 1, 4, 0};
+    const dashboard_motion_render_t ordinary_working_set = {
+        .roster = {.sessions = NULL, .count = 0, .feed_health = DASH_CURRENT},
+        .supplied_totals = ordinary_totals,
+    };
+    uint8_t ordinary_header[RLCD_FRAME_BYTES];
+    dashboard_draw_motion(ordinary_header, &ordinary_working_set);
+    assert(band_has_ink(ordinary_header, 380, 392, 12, 20));
+    assert_band_equal(known_frame, ordinary_header, 0, 88, 0, 21);
+    save_pbm(directory, "working-set-header-readable", ordinary_header);
+
+    // Five capped totals plus overflow still fit without shrinking the font.
     const uint32_t working_set_totals[] = {100, 100, 100, 100, 100};
     const dashboard_motion_render_t working_set = {
         .roster = {.sessions = NULL, .count = 0, .feed_health = DASH_CURRENT},
@@ -1057,6 +1069,7 @@ static void test_motion_chrome_states(const char *directory)
                       0, DASHBOARD_MOTION_BODY_TOP - 3);
     assert(band_has_ink(working_set_header, 8, 392,
                         0, DASHBOARD_MOTION_BODY_TOP - 3));
+    assert(band_has_ink(working_set_header, 380, 392, 12, 20));
     save_pbm(directory, "working-set-header-overflow-cap", working_set_header);
 
     // Two-digit totals, uncertainty and overflow all fit without covering
