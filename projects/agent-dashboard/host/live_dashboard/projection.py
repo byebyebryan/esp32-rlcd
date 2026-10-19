@@ -122,6 +122,19 @@ def presentation(row):
     return "unknown", health
 
 
+def parked_presentation(row):
+    """Show an admitted terminal result without claiming a live work phase."""
+    outcome = row.get("outcome") or {}
+    latest = row.get("latestTurn") or {}
+    if outcome.get("health") == latest.get("health") == "current":
+        status = (latest.get("value") or {}).get("status")
+        if status == outcome.get("value") == "completed":
+            return "waiting", "current"
+        if status == outcome.get("value") == "failed":
+            return "error", "current"
+    return "parked", "current"
+
+
 def age_label(milliseconds):
     if milliseconds is None or milliseconds < 0:
         return "?"
@@ -238,7 +251,7 @@ class Projector:
                 if source.working_set:
                     runtime = row["runtime"]
                     if runtime.get("health") == "current" and runtime.get("value") == "parked":
-                        state, health = "parked", "current"
+                        state, health = parked_presentation(row)
                     elif runtime.get("health") != "current" or runtime.get("value") not in {"running", "parked"}:
                         state = "unknown"
                         health = "current" if runtime.get("health") == "current" else runtime.get("health", "unavailable")

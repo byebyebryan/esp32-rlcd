@@ -596,6 +596,29 @@ class NativeAdmission(unittest.TestCase):
         self.assertEqual([(r["category"], r["work"]) for r in state["entries"]],
                          [(1, 6), (1, 5)])
 
+    def test_recent_terminal_glyphs_keep_recent_counts_and_expire(self):
+        rows = []
+        for status in ("completed", "failed"):
+            item = row(status, runtime="parked")
+            item["phase"] = None
+            item["outcome"] = {"health": "current", "value": status}
+            item["latestTurn"] = {"health": "current", "value": {"status": status}}
+            rows.append(item)
+        ids = {token(r["identity"])[0] for r in rows}
+        src = Source("starship", "current", 3000, 10000, rows, ids, set(),
+                     {("codex", "store")}, {identifier: 3000 for identifier in ids},
+                     {identifier: 10000 for identifier in ids},
+                     {identifier: "recent" for identifier in ids}, True)
+        view = Projector(["starship"]).project([src])
+        self.request(0)
+        state = self.send(encode(view, "0" * 16, 1, "1" * 16, 1))
+        self.assertEqual(state["totals"], [0, 0, 0, 2, 0])
+        self.assertEqual([(r["category"], r["work"]) for r in state["entries"]],
+                         [(1, 2), (1, 4)])
+        self.assertFalse(state["flashing"])
+        expired = self.at(3000)
+        self.assertTrue(all(r["work"] == 5 for r in expired["entries"]))
+
     def test_row_positive_lease_survives_expired_whole_roster_totals(self):
         rows = [{"id": "a" * 64, "host": 0, "category": "active",
                  "state": "blocked", "health": 0, "valid_ms": 900,

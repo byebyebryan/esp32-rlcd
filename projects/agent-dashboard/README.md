@@ -4,7 +4,7 @@
 
 Keep running and recently active Codex conversations visible across Starship and
 Snap. Active membership is independent of the 72-hour recent window; recent
-parked and runtime-unknown sessions remain visible with neutral or unknown
+parked and runtime-unknown sessions remain visible with terminal, neutral or unknown
 markers. Active blocked rows flash slowly, waiting rows stay inverse, and
 working rows remain normal. When evidence expires, current work styling and ages
 clear while uncertain identity context remains. Healthy hosts remain useful
@@ -19,6 +19,10 @@ hidden conversations; the bridge transports up to 32 rows after placing active
 rows ahead of recent rows. Titles use project/cwd fallbacks and rendered
 collision handling. Confirmed child and system rows are excluded. Recent parked
 and runtime-unknown rows count as recent, never as attention, waiting or working.
+For an unloaded recent thread, a current completed latest turn shows the ready
+check, and a current failed latest turn shows the error cross. These describe
+the last turn, not a running thread. Unproved or interrupted results keep the
+neutral dash; expired evidence clears the result.
 
 Ages mean source-sampled time since conversation activity. They do not measure
 how long a conversation has been blocked or waiting. PARTIAL and FEED OFFLINE

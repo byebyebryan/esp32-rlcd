@@ -108,6 +108,46 @@ class InstalledProfile(unittest.TestCase):
 
 
 class WorkingSetAdapter(unittest.TestCase):
+    def test_parked_terminal_result_is_visible_without_becoming_active(self):
+        row = session("completed", runtime="parked", phase="unknown")
+        row["phase"] = None
+        row["outcome"] = {"health": "current", "value": "completed"}
+        row["latestTurn"] = {"health": "current", "value": {"status": "completed"}}
+        lease = member_lease(row, recent=14000, phase=None)
+        lease["fieldExpiresAtMs"].update(outcome=12000, latestTurn=13000)
+        source, = adapter(public_read([row], [lease]), hosts=("starship",))
+        view = Projector(["starship"]).project([source])
+        self.assertEqual(view["rows"][0]["state"], "waiting")
+        self.assertEqual(view["rows"][0]["category"], "recent")
+        self.assertEqual(view["rows"][0]["valid_ms"], 1900)
+        self.assertEqual(view["hosts"][0]["totals"], [0, 0, 0, 1, 0])
+
+        row["outcome"]["value"] = "failed"
+        row["latestTurn"]["value"]["status"] = "failed"
+        source, = adapter(public_read([row], [lease]), hosts=("starship",))
+        view = Projector(["starship"]).project([source])
+        self.assertEqual(view["rows"][0]["state"], "error")
+        self.assertEqual(view["hosts"][0]["totals"], [0, 0, 0, 1, 0])
+
+    def test_parked_result_requires_current_agreeing_terminal_evidence(self):
+        for outcome_health, turn_health, outcome, status in (
+            ("stale", "current", "completed", "completed"),
+            ("current", "stale", "completed", "completed"),
+            ("current", "current", "completed", "in_progress"),
+            ("current", "current", "completed", "failed"),
+            ("current", "current", "cancelled", "interrupted"),
+        ):
+            with self.subTest(case=(outcome_health, turn_health, outcome, status)):
+                row = session("terminal", runtime="parked", phase="waiting")
+                row["outcome"] = {"health": outcome_health, "value": outcome}
+                row["latestTurn"] = {"health": turn_health, "value": {"status": status}}
+                source = Source("starship", "current", 5000, rows=[row],
+                                row_categories={token(row["identity"])[0]: "recent"},
+                                working_set=True)
+                view = Projector(["starship"]).project([source])
+                self.assertEqual(view["rows"][0]["state"], "parked")
+                self.assertEqual(view["hosts"][0]["totals"], [0, 0, 0, 1, 0])
+
     def test_exact_member_lease_uses_independent_branch_and_field_deadlines(self):
         old_active = session("old-active", phase="blocked", at=1000)
         recent_parked = session("parked", runtime="parked", phase="unknown", at=7000)
