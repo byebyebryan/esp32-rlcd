@@ -14,6 +14,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "host"))
 from live_dashboard.mesh import Fleet
 from live_dashboard.profiles import ProfileFleet, ProfileProjector, load_routes
 from live_dashboard.projection import Projector
+from live_dashboard.context import ContextStore, default_context_path, route_binding
 from live_dashboard.runtime import Events, Failure, supervise
 from live_dashboard.serial import KNOWN_RLCD_DEVICE_NAMES, serve_serial
 from live_dashboard.wire import encode
@@ -32,6 +33,7 @@ async def main(args):
         if args.profiles_config else Fleet(args.hosts, events, full_roster=args.roster)
     )
     projector = (ProfileProjector if args.profiles_config else Projector)(fleet.hosts)
+    context_store = None
 
     async def preview():
         await asyncio.wait_for(fleet.ready.wait(), 15)
@@ -66,11 +68,53 @@ async def main(args):
 
     events.emit("bridge_started")
     try:
-        consumer = (
-            preview()
-            if args.preview or args.roster or args.inspect
-            else serve_serial(args.port, fleet, projector, events, verbose=args.verbose)
-        )
+        if args.preview or args.roster or args.inspect:
+            consumer = preview()
+        else:
+            if args.profiles_config:
+                routes = [
+                    {
+                        "host": route.host,
+                        "profile": route.profile,
+                        "label": route.label,
+                        "codex_home": route.codex_home,
+                        "source": route.source,
+                        "socket": route.socket,
+                    }
+                    for route in fleet.routes
+                ]
+            else:
+                socket = getattr(fleet, "socket", None) or os.path.join(
+                    os.environ.get("XDG_RUNTIME_DIR", f"/run/user/{os.getuid()}"),
+                    "mesh-plus-agent/read.sock"
+                    if getattr(fleet, "full_roster", False)
+                    else "mesh-plus-agent-working-set/read.sock",
+                )
+                routes = [
+                    {
+                        "host": host,
+                        "profile": "full" if fleet.full_roster else "working_set",
+                        "label": "Default",
+                        "codex_home": None,
+                        "source": fleet.source,
+                        "socket": socket,
+                    }
+                    for host in fleet.hosts
+                ]
+            path = args.state_path or default_context_path(args.port)
+            context_store = ContextStore(
+                path, route_binding(args.port, fleet.hosts, routes), fleet.hosts
+            )
+            restored = context_store.open()
+            projector.restore_context(restored.rows, restored.initialized_hosts)
+            consumer = serve_serial(
+                args.port,
+                fleet,
+                projector,
+                events,
+                verbose=args.verbose,
+                context_store=context_store,
+            )
         await supervise(fleet.run(), consumer, stop)
         events.emit("bridge_stopped")
     except Failure as error:
@@ -81,6 +125,8 @@ async def main(args):
             os._exit(1)
         raise
     finally:
+        if context_store is not None:
+            context_store.close()
         if timer is not None:
             timer.cancel()
         for name in (signal.SIGTERM, signal.SIGINT):
@@ -102,6 +148,8 @@ def arguments():
     parser.add_argument("--verbose", action="store_true")
     parser.add_argument("--profiles-config", type=Path,
                         help="private explicit home-profile route manifest")
+    parser.add_argument("--state-path", type=Path,
+                        help="private bridge restart-context file (live serial only)")
     parser.add_argument("--profile", action="append", default=[],
                         help="select one configured home profile; repeat to combine")
     parser.add_argument(
@@ -129,6 +177,8 @@ def arguments():
         parser.error("--roster is a standalone cached read")
     if args.preview and args.port:
         parser.error("--preview is a standalone cached read")
+    if args.state_path and (args.roster or args.preview or args.inspect):
+        parser.error("--state-path is only available to the live serial bridge")
     if not (args.roster or args.preview or args.inspect) and (
         args.port is None
         or args.port.parent != Path("/dev/serial/by-id")

@@ -30,6 +30,23 @@ profile's row leases. Its old rows become uncertain context. Complete-empty or
 negative coverage affects only the admitted namespace. Refreshing, closing or
 reconnecting one route cannot renew or reset another route's clock state.
 
+The live host bridge persists bounded restart context in a private per-device
+file under `~/.local/state/rlcd-agent-dashboard`. It retains complete native
+identity keys, display label/project, physical host, row order and `ST`/`SN`/`SW`
+badge, bound to the exact selected routes, home paths, source IDs and sockets.
+It stores no lease, phase, outcome, status, validity or age. Restored rows start
+unknown and uncertain with zero validity and no age; only a current Reader
+admission can make a row current again. Fresh complete coverage or an exact
+parked/excluded identity still retires only its own namespace.
+
+If the file is missing, corrupt or bound to a different device/route set, each
+physical host is fenced as warming until it has a fresh current complete census
+for every configured profile. Other physical hosts can initialize independently.
+A previously valid complete context lets healthy profiles remain current while
+a sibling profile is unavailable. `--state-path PATH` selects a private file
+for live serial operation and is not used by `--preview`, `--inspect` or
+`--roster`.
+
 Stopping the bridge closes all owned watches; ordinary route failures retry
 independently. Failure to clean up an owned worker reaches the supervisor. The
 default invocation without `--profiles-config` retains its previous route and

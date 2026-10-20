@@ -13,6 +13,15 @@ rows in attention; current phases or a fresh in-progress turn clear a preceding
 failure. The [live integration contract](live-integration.md) defines membership,
 priority, five totals, wire 4 and expiry.
 
+The live bridge keeps bounded restart context in a private per-device file under
+`~/.local/state/rlcd-agent-dashboard`. The cache preserves identity, label/project,
+host, row order and badge only; restored rows have no current state, validity or
+age until Reader admission supports them. A missing, corrupt or route-mismatched
+cache fences each physical host until its configured profiles provide a fresh
+complete census. Healthy physical hosts initialize independently. Use
+`--state-path PATH` to select another private file for live serial operation.
+Preview, inspect and roster commands do not open or change this cache.
+
 ## Verify the application
 
 Build and run the native checks:

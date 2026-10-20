@@ -8,6 +8,8 @@ sessions. Unloaded recent history is excluded. Blocked rows flash slowly,
 waiting rows stay inverse, and working rows remain normal. When evidence expires,
 work styling and ages clear while uncertain context for previously loaded
 sessions remains. Healthy hosts stay useful during a sibling outage.
+The host bridge keeps bounded identity context across process restarts, while
+restored rows remain uncertain until current Reader evidence returns.
 
 [Operate the live feed](docs/operations.md) · [Integration contract](docs/live-integration.md) · [Presentation media](docs/media/README.md)
 

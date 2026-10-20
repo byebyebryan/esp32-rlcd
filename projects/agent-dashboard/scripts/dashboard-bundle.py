@@ -13,6 +13,7 @@ INPUTS = (
     "scripts/live-dashboard.py",
     "scripts/dashboard-bundle.py",
     "host/live_dashboard/__init__.py",
+    "host/live_dashboard/context.py",
     "host/live_dashboard/mesh.py",
     "host/live_dashboard/profiles.py",
     "host/live_dashboard/projection.py",

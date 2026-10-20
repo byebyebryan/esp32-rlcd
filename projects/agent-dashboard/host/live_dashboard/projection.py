@@ -204,8 +204,91 @@ class Projector:
         self.ranks = {}
         self.keys = {}
         self.roster = []
+        self.initialized_hosts = set()
+        self.context_enabled = False
+
+    def restore_context(self, rows, initialized_hosts=()):
+        """Restore bounded identity metadata without restoring source claims."""
+        self.previous = {}
+        self.ranks = {}
+        self.keys = {}
+        for record in rows:
+            host = record["host"]
+            if host not in self.hosts:
+                raise ValueError("context_host_selection")
+            identifier, key = token_key(record["identity"])
+            if identifier in self.keys and self.keys[identifier] != key:
+                raise ValueError("identity_collision")
+            self.keys[identifier] = key
+            self.ranks[identifier] = record["order"]
+            self.previous[identifier] = {
+                "id": identifier,
+                "host": self.hosts.index(host),
+                "label": record["label"],
+                "project": record["project"],
+            }
+        if set(initialized_hosts) - set(self.hosts):
+            raise ValueError("context_host_selection")
+        self.initialized_hosts = set(initialized_hosts)
+        self.context_enabled = True
+
+    def _complete_census(self, source):
+        if source.status != "current":
+            return False
+        profile_statuses = getattr(source, "profile_statuses", None)
+        if profile_statuses is not None:
+            complete_profiles = getattr(source, "complete_profiles", set())
+            return bool(profile_statuses) and set(profile_statuses) == complete_profiles
+        if source.working_set:
+            return bool(source.complete_scopes)
+        return source.complete_scopes is None or bool(source.complete_scopes)
+
+    def _gate_uninitialized_hosts(self, sources):
+        sources = list(sources)
+        by_host = {source.host: source for source in sources}
+        gated = []
+        for source in sources:
+            if source.host in self.initialized_hosts:
+                gated.append(source)
+            elif self._complete_census(source):
+                self.initialized_hosts.add(source.host)
+                gated.append(source)
+            else:
+                gated.append(Source(source.host, "warming"))
+        # A configured host with no current source still needs an explicit
+        # warming entry so the normal per-host projection remains stable.
+        for host in self.hosts:
+            if host not in by_host and host not in self.initialized_hosts:
+                gated.append(Source(host, "warming"))
+        return gated
+
+    def context_state(self):
+        """Export only validated identity/presentation fields for durable storage."""
+        rows = []
+        for order, row in enumerate(self.roster):
+            identifier = row["id"]
+            key = self.keys.get(identifier)
+            if key is None:
+                raise ValueError("context_identity_missing")
+            host = self.hosts[row["host"]]
+            rows.append(
+                {
+                    "identity": list(key),
+                    "host": host,
+                    "order": order,
+                    "label": row["label"],
+                    "project": row.get("project"),
+                    "badge": self.context_badge(identifier, host),
+                }
+            )
+        return frozenset(self.initialized_hosts), rows
+
+    def context_badge(self, identifier, host):
+        return ALIASES[host]
 
     def project(self, sources):
+        if self.context_enabled:
+            sources = self._gate_uninitialized_hosts(sources)
         sources = {s.host: s for s in sources}
         result, candidates = [], []
         for index, host in enumerate(self.hosts):

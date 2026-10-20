@@ -151,8 +151,6 @@ class Fleet:
         expected = getattr(self, "expected_homes", {})
         if not expected or context is None:
             return not expected
-        from agent_observer.public import store_namespace
-
         matched = False
         for host in context["hosts"]:
             if expected_host is not None and host["hostId"] != expected_host:
@@ -160,6 +158,8 @@ class Fleet:
             owner = host.get("owner")
             if owner is None:
                 continue
+            from agent_observer.public import store_namespace
+
             identifier = host["hostId"]
             service = owner["service"]
             sources = service["sources"]

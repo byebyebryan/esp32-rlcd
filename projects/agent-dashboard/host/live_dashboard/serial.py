@@ -138,6 +138,7 @@ async def serve_serial(
     events,
     *,
     verbose=False,
+    context_store=None,
     output=None,
     opener=Port,
     retry_initial=1,
@@ -272,6 +273,12 @@ async def serve_serial(
                                 }
                                 else "projection_failed"
                             ) from None
+                        if context_store is not None:
+                            try:
+                                initialized, rows = projector.context_state()
+                                context_store.save(initialized, rows)
+                            except Exception:  # noqa: BLE001 - never emit an undurable identity change
+                                raise Failure("context_save_failed") from None
                         checksum = response[-9:-1].decode()
                         acknowledged[sequence] = (
                             checksum,

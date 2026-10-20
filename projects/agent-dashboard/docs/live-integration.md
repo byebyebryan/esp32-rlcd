@@ -133,7 +133,19 @@ Firmware checks expiry during silence without another packet. Expired rows
 stop flashing and lose current work and age claims; uncertain identity context
 can remain visible. If a host expires, healthy sibling rows remain available.
 
-The host's retained identity cache is bounded and never grants native facts.
+The host's retained identity cache is bounded and survives bridge process
+restarts in a private per-device file under `~/.local/state/rlcd-agent-dashboard`.
+It contains only complete native identity keys, host, label/project, row order,
+presentation badge, exact route binding and per-host initialization markers.
+It never stores or restores leases, phase, outcome, current status, validity or
+age. Every restored row starts unknown and uncertain with zero validity and no
+age. Current Reader admission alone can make it current; current same-namespace
+complete coverage and exact parked/excluded IDs still retire it. A missing,
+corrupt or wrong-binding cache fences each uninitialized physical host as warming
+until that host has a fresh current complete census for every configured profile.
+Other physical hosts initialize independently. Preview, inspect and roster reads
+do not open or modify this state.
+
 The bridge supervises subscription and serial workers, retries expected source
 loss with lease revocation, and treats unexpected worker exit or cleanup failure
 as an owner failure after bounded cleanup. Missing or busy hardware is retried;

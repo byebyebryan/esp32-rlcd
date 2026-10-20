@@ -8,6 +8,7 @@ import select
 import signal
 import subprocess
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -46,16 +47,22 @@ class PortLifetime(unittest.TestCase):
     def test_sigterm_of_real_supervisor_releases_port(self):
         master, slave = pty.openpty()
         path = os.ttyname(slave)
+        state_directory = tempfile.TemporaryDirectory()
+        self.addCleanup(state_directory.cleanup)
+        context_path = str(Path(state_directory.name) / "context.json")
         code = """import asyncio,importlib.util,sys,types
 spec=importlib.util.spec_from_file_location("bridge",sys.argv[1])
 m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
 from live_dashboard.projection import Source
 class Fleet:
- def __init__(self,hosts,*args,**kwargs):self.hosts=hosts
+ def __init__(self,hosts,*args,**kwargs):
+  self.hosts=hosts;self.source="agent_working_set";self.full_roster=False;self.socket=None
  async def run(self):await asyncio.Event().wait()
  def sources(self):return [Source("starship","current",10000,10000)]
 m.Fleet=Fleet
-asyncio.run(m.main(types.SimpleNamespace(hosts=["starship"],seconds=0,preview=None,roster=False,inspect=False,profiles_config=None,profile=[],port=sys.argv[2],verbose=False)))
+from live_dashboard.context import route_binding as bind
+m.route_binding=lambda device,hosts,routes:bind("/dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_94:A9:90:F3:43:74-if00",hosts,routes)
+asyncio.run(m.main(types.SimpleNamespace(hosts=["starship"],seconds=0,preview=None,roster=False,inspect=False,profiles_config=None,profile=[],port=sys.argv[2],verbose=False,state_path=sys.argv[3])))
 """
         app = Path(__file__).resolve().parents[1]
         child = subprocess.Popen(
@@ -66,21 +73,31 @@ asyncio.run(m.main(types.SimpleNamespace(hosts=["starship"],seconds=0,preview=No
                 code,
                 str(app / "scripts/live-dashboard.py"),
                 path,
+                context_path,
             ],
             stdout=subprocess.DEVNULL,
             stderr=subprocess.PIPE,
         )
         try:
-            self.assertTrue(select.select([child.stderr], [], [], 2)[0])
-            # Send repeatedly until its private tty has been configured.
+            startup = bytearray()
+            while b'"event": "serial_connected"' not in startup:
+                self.assertTrue(select.select([child.stderr], [], [], 2)[0])
+                startup.extend(child.stderr.readline())
+            # Wait for the bridge's request after it configures the private tty.
             response = bytearray()
-            for _ in range(20):
-                os.write(master, b"RLCD?4 " + b"0" * 16 + b" 1\n")
+            for request in range(1, 21):
+                os.write(master, b"RLCD?4 " + b"0" * 16 + b" " + str(request).encode() + b"\n")
                 if select.select([master], [], [], 0.05)[0]:
                     response.extend(os.read(master, 4096))
                 if b"RLCD!4\t" in response:
                     break
-            self.assertIn(b"RLCD!4\t", response)
+            if b"RLCD!4\t" not in response:
+                child.send_signal(signal.SIGTERM)
+                child.wait(timeout=2)
+                self.fail(
+                    "bridge did not answer the PTY request; stderr="
+                    + child.stderr.read().decode("utf-8", "replace")
+                )
             child.send_signal(signal.SIGTERM)
             self.assertEqual(child.wait(timeout=2), 0)
             reopened = Port(path)

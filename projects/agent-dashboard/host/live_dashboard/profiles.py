@@ -9,7 +9,7 @@ import unicodedata
 from dataclasses import dataclass, field
 from pathlib import Path, PurePosixPath
 
-from .projection import ALIASES, Projector, Source, identity_key, token
+from .projection import ALIASES, Projector, Source, identity_key, token, token_key
 from .runtime import Events, Failure
 
 MAX_CONFIG_BYTES = 65536
@@ -31,6 +31,7 @@ class ProfileRoute:
 class ProfileSource(Source):
     row_aliases: dict[str, str] = field(default_factory=dict)
     profile_statuses: dict[str, str] = field(default_factory=dict)
+    complete_profiles: set[str] = field(default_factory=set)
 
 
 class ProfileProjector(Projector):
@@ -39,6 +40,15 @@ class ProfileProjector(Projector):
     def __init__(self, hosts=("starship", "snap")):
         super().__init__(hosts)
         self.row_aliases = {}
+
+    def restore_context(self, rows, initialized_hosts=()):
+        super().restore_context(rows, initialized_hosts)
+        self.row_aliases = {
+            token_key(record["identity"])[0]: record["badge"] for record in rows
+        }
+
+    def context_badge(self, identifier, host):
+        return self.row_aliases.get(identifier, ALIASES[host])
 
     def project(self, sources):
         for source in sources:
@@ -150,6 +160,7 @@ def combine_sources(hosts, inputs):
             continue
         rows, admitted, excluded, complete, keys = [], set(), set(), set(), set()
         remaining, sampled, categories, labels, statuses = {}, {}, {}, {}, {}
+        complete_profiles = set()
         healthy = []
         for route, source in profiles:
             if source.host != route.host or route.profile in statuses:
@@ -165,6 +176,8 @@ def combine_sources(hosts, inputs):
             admitted.update(source.admitted_ids)
             excluded.update(source.excluded_ids)
             complete.update(source.complete_scopes or ())
+            if source.status == "current" and len(source.complete_scopes or ()) == 1:
+                complete_profiles.add(route.profile)
             for row in source.rows:
                 key = identity_key(row["identity"])
                 if key in keys or key[0] != host:
@@ -189,7 +202,7 @@ def combine_sources(hosts, inputs):
         combined.append(ProfileSource(
             host, status, min((s.remaining_ms for s in healthy), default=0),
             None, rows, admitted, excluded, complete, remaining, sampled,
-            categories, True, labels, statuses,
+            categories, True, labels, statuses, complete_profiles,
         ))
     return combined
 
