@@ -41,8 +41,41 @@ Pillow environment, described in [presentation media](media/README.md).
 
 [CI](../.github/workflows/checks.yml) runs these native/documentation checks and
 regenerates the gallery in Debug and Release modes. It compares PNG/GIF bytes
-with the committed assets. These checks leave firmware build, flashed-image
-identity and physical acceptance as separate evidence.
+with the committed assets.
+
+## Firmware compile checks
+
+CI also builds five fresh ESP32-S3 firmware variants with the official
+[ESP-IDF Docker image](https://docs.espressif.com/projects/esp-idf/en/v5.5.2/esp32/api-guides/tools/idf-docker-image.html), pinned by immutable OCI index digest
+`sha256:8ccd4d2ce413889c6c2bba57e986c670302094efb91c913c6091152e317a7805`.
+The matrix covers `bringup`, `render-bench`, `dashboard-live`,
+`dashboard-static`, and `dashboard-motion`. Static mode explicitly selects
+`CONFIG_RLCD_DASHBOARD_STATIC=y` and disables live mode; motion mode disables
+both dashboard options. Each variant gets a new `sdkconfig` and build
+directory, and the check verifies the selected Kconfig values plus the app,
+bootloader and partition binaries.
+
+From an ESP-IDF v5.5.3 environment, build all variants into a retained temporary
+directory, or select one variant and an empty output path:
+
+```sh
+./scripts/check-firmware.sh
+./scripts/check-firmware.sh dashboard-static --output-root .cache/firmware-ci
+```
+
+The default command is the local `scripts/idf.sh` wrapper. To use an already
+activated ESP-IDF environment directly, set `RLCD_IDF_COMMAND` to the executable
+`idf.py` path. The check rejects any version other than 5.5.3 and refuses to
+reuse a non-empty output root. The GitHub container job sources
+`$IDF_PATH/export.sh` in its Bash step because container jobs bypass the image
+entrypoint, then sets `RLCD_IDF_COMMAND` to `$IDF_PATH/tools/idf.py`.
+
+These builds establish source-level compilation for the five configurations.
+They do not establish an installed host bundle, a flashed-image identity, a
+running service, or physical display acceptance. Starship and Snap each have a
+separate RLCD board and serial owner; foreground captures require exclusive
+ownership of the selected board. The sibling ESP32-349 remains a separate
+device and service.
 
 ## Build and operate
 
@@ -54,8 +87,9 @@ Build with an explicit project path:
 
 The application guides own flashing and host dependencies. For live dashboard
 maintenance, follow [operation](../projects/agent-dashboard/docs/operations.md):
-the Starship service owns the RLCD serial port, and foreground captures require
-exclusive ownership. The sibling ESP32-349 has a separate device and service.
+the board's service owns its RLCD serial port, and foreground captures require
+exclusive ownership. Starship and Snap have separate RLCD boards. The sibling
+ESP32-349 has a separate device and service.
 
 Keep dated evidence intact. Current source, generated media, built firmware,
 installed host bundles and physical observations have separate provenance.
