@@ -7,6 +7,7 @@ No native provider, ordinary user service, Mesh installation or firmware is run.
 import asyncio
 import copy
 import hashlib
+import importlib.util
 import json
 import os
 import tempfile
@@ -14,11 +15,8 @@ import threading
 import time
 import unittest
 from contextlib import ExitStack
+from dataclasses import dataclass
 from pathlib import Path
-
-import agent_observer
-from mesh_plus.api import Bridge, Client, Endpoint, Reader
-from mesh_plus.transport import IPCServer, connect_ipc
 
 APP = Path(__file__).resolve().parents[1]
 if str(APP / "host") not in os.sys.path:
@@ -31,31 +29,63 @@ from live_dashboard.profiles import (  # noqa: E402
 )
 from live_dashboard.projection import identity_key, token  # noqa: E402
 
-from agent_observer.contract import store_namespace  # noqa: E402
-from agent_observer.home_profiles import load_home_profiles  # noqa: E402
-from agent_observer.mesh_working_set_publisher import (  # noqa: E402
-    make_working_set_publisher,
+SDK_AVAILABLE = os.environ.get("RLCD_RUN_PUBLIC_INTEGRATION") == "1" and all(
+    importlib.util.find_spec(name) is not None
+    for name in ("agent_observer", "mesh_plus")
 )
-from agent_observer.service_runtime import Runtime  # noqa: E402
-from agent_observer.service_state import ServiceState  # noqa: E402
+if SDK_AVAILABLE:
+    from mesh_plus.api import Bridge, Client, Endpoint, Reader  # noqa: E402
+    from mesh_plus.transport import IPCServer, connect_ipc  # noqa: E402
+
+    from agent_observer.contract import store_namespace  # noqa: E402
+    from agent_observer.mesh_working_set_publisher import (  # noqa: E402
+        make_working_set_publisher,
+    )
+    from agent_observer.service_runtime import Runtime  # noqa: E402
+    from agent_observer.service_state import ServiceState  # noqa: E402
 
 
 HOST = "snap"
 THREAD_ID = "00000000-0000-4000-8000-000000000123"
 WINDOW_MS = 72 * 60 * 60 * 1000
-FIXTURE = (
-    Path(agent_observer.__file__).resolve().parents[1]
-    / "tests/fixtures/service-v4/view.json"
-)
+FIXTURE = APP / "tests/fixtures/service-v4/view.json"
 
 
-def _config_text(default_home, work_home):
-    return (
-        'version = 1\nhost = "snap"\n\n'
-        '[profiles.default]\nlabel = "Default"\n'
-        f"codex_home = {json.dumps(str(default_home))}\n\n"
-        '[profiles.work]\nlabel = "Work"\n'
-        f"codex_home = {json.dumps(str(work_home))}\n"
+@dataclass(frozen=True)
+class _ObserverRoute:
+    host: str
+    profile_id: str
+    label: str
+    codex_home: str
+    namespace: str
+    mesh_source: str
+    collector_socket: Path
+    publisher_runtime_dir: Path
+    publisher_socket: Path
+    window_ms: int = WINDOW_MS
+
+
+def _observer_route(runtime_dir, profile_id, label, codex_home):
+    if profile_id == "default":
+        collector_name = "agent-observer"
+        publisher_name = "mesh-plus-agent-working-set"
+        mesh_source = "agent_working_set"
+    else:
+        collector_name = f"agent-observer-profile-{profile_id}"
+        publisher_name = f"mesh-plus-agent-working-set-{profile_id}"
+        mesh_source = f"agent_working_set_{profile_id}"
+    home = str(codex_home)
+    namespace = store_namespace("codex", home, "explicit", os.geteuid())
+    return _ObserverRoute(
+        host=HOST,
+        profile_id=profile_id,
+        label=label,
+        codex_home=home,
+        namespace=namespace,
+        mesh_source=mesh_source,
+        collector_socket=runtime_dir / collector_name / "read.sock",
+        publisher_runtime_dir=runtime_dir / publisher_name,
+        publisher_socket=runtime_dir / publisher_name / "read.sock",
     )
 
 
@@ -182,15 +212,10 @@ class _PublicProfileHarness:
         self.runtime_dir.mkdir(mode=0o700)
         self.default_home = self.root / "codex-default"
         self.work_home = self.root / "codex-work"
-        self.config = self.root / "profiles.toml"
-        self.config.write_text(
-            _config_text(self.default_home, self.work_home), encoding="utf-8"
+        self.observer_routes = (
+            _observer_route(self.runtime_dir, "default", "Default", self.default_home),
+            _observer_route(self.runtime_dir, "work", "Work", self.work_home),
         )
-        self.config.chmod(0o600)
-        manifest = load_home_profiles(
-            self.config, uid=os.getuid(), runtime_dir=self.runtime_dir
-        )
-        self.observer_routes = manifest.routes
         consumer_document = {
             "version": 1,
             "routes": [
@@ -202,7 +227,7 @@ class _PublicProfileHarness:
                     "source": route.mesh_source,
                     "socket": str(route.publisher_socket),
                 }
-                for route in manifest.routes
+                for route in self.observer_routes
             ],
         }
         self.routes = parse_routes(consumer_document, hosts=[HOST])
@@ -324,6 +349,11 @@ class _PublicProfileHarness:
         self.temporary.cleanup()
 
 
+@unittest.skipUnless(
+    SDK_AVAILABLE,
+    "strict Observer/Mesh integration runs only through "
+    "scripts/test-dashboard-integration.sh",
+)
 class PublicHomeProfileIntegrationTest(unittest.IsolatedAsyncioTestCase):
     async def test_same_host_same_native_id_survives_with_plain_titles_and_independent_expiry_close(self):
         harness = _PublicProfileHarness()

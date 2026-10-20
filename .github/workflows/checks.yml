@@ -12,7 +12,11 @@ jobs:
         with:
           python-version: '3.13'
       - run: ./scripts/check-frame.sh
-      - run: ./projects/agent-dashboard/scripts/test-live-dashboard.sh
+      - name: Run dependency-free dashboard checks
+        run: ./projects/agent-dashboard/scripts/test-live-dashboard.sh
+      # The strict installed Observer/Mesh gate is documented in
+      # projects/agent-dashboard/docs/testing.md. Hosted SDK qualification waits
+      # for a publicly reachable compatible Mesh source revision.
       - run: ./projects/agent-dashboard/scripts/test-dashboard-motion.sh
       - run: python3 scripts/check-docs.py
 

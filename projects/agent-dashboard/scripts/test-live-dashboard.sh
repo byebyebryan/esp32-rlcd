@@ -3,7 +3,8 @@ set -euo pipefail
 RLCD_SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 RLCD_APP_ROOT="$(cd "$RLCD_SCRIPT_DIR/.." && pwd)"
 RLCD_REPO_ROOT="$(cd "$RLCD_APP_ROOT/../.." && pwd)"
-RLCD_OUTPUT_DIR="$RLCD_APP_ROOT/build/native-live"
+RLCD_OUTPUT_DIR="${RLCD_TEST_OUTPUT_DIR:-$RLCD_APP_ROOT/build/native-live}"
+RLCD_PYTHON="${PYTHON:-python3}"
 mkdir -p "$RLCD_OUTPUT_DIR"
 "${CC:-cc}" -std=c11 -O1 -g -Wall -Wextra -Werror -fsanitize=address,undefined \
     -I "$RLCD_REPO_ROOT/components/display_rlcd/include" \
@@ -15,11 +16,5 @@ mkdir -p "$RLCD_OUTPUT_DIR"
     "$RLCD_APP_ROOT/components/agent_dashboard/fusion_pixel_12_zh_hans.c" \
     "$RLCD_REPO_ROOT/components/display_rlcd/rlcd_frame.c" \
     -o "$RLCD_OUTPUT_DIR/feed"
-RLCD_FEED_TEST="$RLCD_OUTPUT_DIR/feed" python3 "$RLCD_APP_ROOT/tests/test_live_dashboard.py" -v
-python3 "$RLCD_APP_ROOT/tests/test_runtime.py" -v
-python3 "$RLCD_APP_ROOT/tests/test_serial.py" -v
-python3 "$RLCD_APP_ROOT/tests/test_bundle.py" -v
-python3 "$RLCD_APP_ROOT/tests/test_prepared_fleet.py" -v
-python3 "$RLCD_APP_ROOT/tests/test_working_set_consumer.py" -v
-python3 "$RLCD_APP_ROOT/tests/test_home_profiles.py" -v
-python3 "$RLCD_APP_ROOT/tests/test_home_profiles_public.py" -v
+RLCD_FEED_TEST="$RLCD_OUTPUT_DIR/feed" "$RLCD_PYTHON" -m unittest discover \
+    -s "$RLCD_APP_ROOT/tests" -p 'test_*.py' -v
