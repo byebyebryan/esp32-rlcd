@@ -362,6 +362,8 @@ class PublicHomeProfileIntegrationTest(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(len(projected["rows"]), 2)
             self.assertTrue(all(row["label"].startswith("Fixture Codex 2") for row in projected["rows"]))
             self.assertEqual(len({row["label"] for row in projected["rows"]}), 2)
+            self.assertEqual({row["badge"] for row in projected["rows"]}, {"SN", "SW"})
+            self.assertEqual(len(projected["hosts"]), 1)
 
             work_snapshot = harness._raw_host("work")
             expiry = [receipt["expiresAtMs"] for receipt in work_snapshot["receipts"]
@@ -375,6 +377,7 @@ class PublicHomeProfileIntegrationTest(unittest.IsolatedAsyncioTestCase):
             after_close, = harness.sources()
             after_close_view = ProfileProjector([HOST]).project([after_close])
             self.assertEqual([row["label"] for row in after_close_view["rows"]], ["Fixture Codex 2"])
+            self.assertEqual(after_close_view["rows"][0]["badge"], "SN")
         finally:
             await harness.close()
 

@@ -6,12 +6,12 @@ active or recently active; the active branch remains independent of the
 72-hour recent window. The display adds a loaded-only filter: current running
 runtime is required; unloaded recent history is excluded. Lost evidence for a
 previously loaded session retains uncertain context instead of inventing an unload. The full-history `--roster` route is
-explicit and has no role in normal USB ticks. ST and SN identify hosts. Age is
+explicit and has no role in normal USB ticks. ST and SN identify physical hosts; SW marks Snap Work rows. Age is
 source-sampled time since conversation activity. Known system helpers and
 children are excluded. Current failed turns use an error cross and join blocked
 rows in attention; current phases or a fresh in-progress turn clear a preceding
 failure. The [live integration contract](live-integration.md) defines membership,
-priority, five totals, wire 3 and expiry.
+priority, five totals, wire 4 and expiry.
 
 ## Verify the application
 
@@ -29,7 +29,7 @@ Live acquisition needs the accepted Observer/Mesh Python environment. On the
 RLCD host it is:
 
 ```sh
-RLCD_OBSERVER_PYTHON="$HOME/.local/share/agent-observer/0.7.0a7-26ab4376-ws72-m4f598719/bin/python"
+RLCD_OBSERVER_PYTHON="$HOME/.local/share/agent-observer/0.7.0a7-a3983afc-ws72-m4f598719/bin/python"
 mkdir -p projects/agent-dashboard/build/live-preview
 "$RLCD_OBSERVER_PYTHON" projects/agent-dashboard/scripts/live-dashboard.py \
     --preview projects/agent-dashboard/build/live-preview/frame.txt
@@ -206,7 +206,7 @@ capture runs the source sibling. Both paths run with isolated Python imports;
 source success alone does not verify an installed bundle.
 
 
-The current device protocol is wire 3. Its `attention` diagnostic and `!` header
+The current device protocol is wire 4. Its `attention` diagnostic and `!` header
 count blocked plus known failed rows. Per-host totals also report waiting,
 working, recent and uncertain; recent stays zero because unloaded history is
 excluded from this view. Bundle manifests
@@ -223,5 +223,5 @@ It owns the selected known RLCD port exclusively for sixteen seconds, exercises 
 failures and one retry, then stops replies to prove expiry. It performs no
 provider reads or actions. The default port is the known Starship RLCD; pass
 Snap's exact known by-id path with `--port` when testing Snap. Restore the real
-bridge after this device check. Archived wire 2 rollback requires its matching
+bridge after this device check. Archived wire 2 or wire 3 rollback requires its matching
 bridge and firmware pair.

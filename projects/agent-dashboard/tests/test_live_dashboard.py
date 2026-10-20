@@ -407,11 +407,12 @@ class Projection(unittest.TestCase):
         c["identity"]["namespace"] = "other"
         self.assertEqual(len({token(r["identity"])[0] for r in (a, b, c)}), 3)
         self.assertEqual(
-            parse_request(b"RLCD?3 " + b"0" * 16 + b" 1\r\n"), ("0" * 16, 1)
+            parse_request(b"RLCD?4 " + b"0" * 16 + b" 1\r\n"), ("0" * 16, 1)
         )
         self.assertIsNone(parse_request(b"RLCD?2 " + b"0" * 16 + b" 1\n"))
+        self.assertIsNone(parse_request(b"RLCD?3 " + b"0" * 16 + b" 1\n"))
         for number in (b"0", b"01", b"4294967296", b"-1"):
-            self.assertIsNone(parse_request(b"RLCD?3 " + b"0" * 16 + b" " + number))
+            self.assertIsNone(parse_request(b"RLCD?4 " + b"0" * 16 + b" " + number))
 
     def test_suffix_cannot_collide_with_an_existing_label(self):
         a, b = row("a"), row("b")
@@ -463,10 +464,30 @@ class NativeAdmission(unittest.TestCase):
         self.assertEqual(expired["totals"], [0, 0, 0, 0, 1])
         self.assertEqual(expired["entries"][0]["age"], "?")
 
+    def test_snap_work_badge_preserves_two_host_totals_and_expired_context(self):
+        rows = [
+            {"id": character * 64, "host": host, "badge": badge,
+             "category": "active", "state": "working", "health": 0,
+             "valid_ms": 2900, "label": "Plain title " + character, "age": "5s"}
+            for character, host, badge in (("a", 0, "ST"), ("b", 1, "SN"), ("c", 1, "SW"))
+        ]
+        hosts = [{"alias": alias, "status": 0, "valid_ms": 2900,
+                  "totals": [0, 0, count, 0, 0], "total": count}
+                 for alias, count in (("ST", 1), ("SN", 2))]
+        self.request(0)
+        accepted = self.send(frame(rows, hosts))
+        self.assertEqual([r["badge"] for r in accepted["entries"]], ["ST", "SN", "SW"])
+        self.assertEqual(accepted["totals"], [0, 0, 3, 0, 0])
+        expired = self.at(2900)
+        self.assertEqual([r["badge"] for r in expired["entries"]], ["ST", "SN", "SW"])
+        self.assertEqual(expired["totals"], [0, 0, 0, 0, 3])
+        with self.assertRaisesRegex(ValueError, "device_row_badge"):
+            frame([{**rows[0], "badge": "SW"}], [hosts[0]])
+
     def test_capacity_case_error_admission_retry_and_expiry(self):
         case = capacity_case()
         p = Projector()
-        self.assertIn(b"RLCD?3 ", self.request(0))
+        self.assertIn(b"RLCD?4 ", self.request(0))
         view = p.project(capacity_sources(case))
         failed = self.send(encode(view, "0" * 16, 1, "1" * 16, 1))
         self.assertEqual(failed["totals"], [3, 0, 0, 0, 0])
@@ -495,7 +516,7 @@ class NativeAdmission(unittest.TestCase):
             alter(payload, 0, b"RLCD!2"),
             alter(payload, 18, b"3001"),
             alter(payload, 17, b"2"),
-            alter(payload, 29, b"5"),
+            alter(payload, 30, b"5"),
             payload[:-10] + b"\t00000000\n",
         ):
             self.send(bad, False)
@@ -508,7 +529,7 @@ class NativeAdmission(unittest.TestCase):
         self.assertEqual([r["work"] for r in expired["entries"]], [0, 5])
 
     def test_request_anchor_shortens_delayed_response(self):
-        payload = alter(alter(frame(), 9, b"1000"), 21, b"1000")
+        payload = alter(alter(frame(), 9, b"1000"), 22, b"1000")
         self.request(100)
         self.at(900)
         self.send(payload)
@@ -516,7 +537,7 @@ class NativeAdmission(unittest.TestCase):
         self.assertEqual(self.at(1100)["health"], 2)
 
     def test_response_already_expired_on_arrival_never_flashes(self):
-        payload = alter(alter(frame(), 9, b"100"), 21, b"100")
+        payload = alter(alter(frame(), 9, b"100"), 22, b"100")
         self.request(0)
         self.at(900)
         state = self.send(payload)
@@ -654,13 +675,17 @@ class NativeAdmission(unittest.TestCase):
             alter(base, 6, b"33"),
             alter(base, 9, b"3001"),
             alter(base, 17, b"3"),
-            alter(base, 21, b"3001"),
-            alter(base, 20, b"c0af"),
-            alter(base, 20, b"ed a080"),
-            alter(base, 20, b"41" * 64),
-            alter(base, 21, b"1\x00"),
+            alter(base, 18, b"5357"),  # SW may label only Snap, not Starship.
+            alter(base, 18, b"53574b"),
+            alter(base, 19, b"3"),
+            alter(base, 22, b"3001"),
+            alter(base, 23, b"c0af"),
+            alter(base, 23, b"ed a080"),
+            alter(base, 23, b"41" * 64),
+            alter(base, 24, b"1\x00"),
             alter(base, 14, b"4294967296"),
-            base.replace(b"RLCD!3", b"OTHER1"),
+            base.replace(b"RLCD!4", b"OTHER1"),
+            alter(base, 0, b"RLCD!3"),
         ]
         for payload in cases:
             with self.subTest(payload=payload[:20]):

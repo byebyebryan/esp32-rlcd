@@ -75,12 +75,12 @@ asyncio.run(m.main(types.SimpleNamespace(hosts=["starship"],seconds=0,preview=No
             # Send repeatedly until its private tty has been configured.
             response = bytearray()
             for _ in range(20):
-                os.write(master, b"RLCD?3 " + b"0" * 16 + b" 1\n")
+                os.write(master, b"RLCD?4 " + b"0" * 16 + b" 1\n")
                 if select.select([master], [], [], 0.05)[0]:
                     response.extend(os.read(master, 4096))
-                if b"RLCD!3\t" in response:
+                if b"RLCD!4\t" in response:
                     break
-            self.assertIn(b"RLCD!3\t", response)
+            self.assertIn(b"RLCD!4\t", response)
             child.send_signal(signal.SIGTERM)
             self.assertEqual(child.wait(timeout=2), 0)
             reopened = Port(path)
@@ -121,13 +121,13 @@ class Reconnect(unittest.IsolatedAsyncioTestCase):
 
         class FakePort:
             def __init__(self):
-                self.queue = [b"RLCD?3 " + b"0" * 16 + b" 1\n"]
+                self.queue = [b"RLCD?4 " + b"0" * 16 + b" 1\n"]
                 self.request = 0
 
             def read(self):
                 if self.queue:
                     line = self.queue.pop(0)
-                    if line.startswith(b"RLCD?3 "):
+                    if line.startswith(b"RLCD?4 "):
                         self.request += 1
                     return line
                 finished.set()
@@ -138,7 +138,7 @@ class Reconnect(unittest.IsolatedAsyncioTestCase):
                 self.queue.append(b"RLCD_ACK seq=" + f[4] + b" rows=" + f[6]
                                   + b" request=" + f[2] + b" crc=" + f[-1] + b"\n")
                 if self.request == 1:
-                    self.queue.append(b"RLCD?3 " + b"0" * 16 + b" 2\n")
+                    self.queue.append(b"RLCD?4 " + b"0" * 16 + b" 2\n")
                 return len(payload)
 
             def close(self):
@@ -173,7 +173,7 @@ class Reconnect(unittest.IsolatedAsyncioTestCase):
             class FakePort:
                 def __init__(self):
                     self.queue = [
-                        (0, b"RLCD?3 " + b"0" * 16 + b" 1\n"),
+                        (0, b"RLCD?4 " + b"0" * 16 + b" 1\n"),
                         (1, health_line()),
                         (2, health_line(working=0, waiting=1)),
                         (3, health_line(miss="invalid")),
@@ -239,7 +239,7 @@ class Reconnect(unittest.IsolatedAsyncioTestCase):
 
             class FakePort:
                 def __init__(self):
-                    self.queue = [b"RLCD?3 " + b"0" * 16 + b" 1\n"]
+                    self.queue = [b"RLCD?4 " + b"0" * 16 + b" 1\n"]
 
                 def read(self):
                     return self.queue.pop(0) if self.queue else b""
@@ -289,7 +289,7 @@ class Reconnect(unittest.IsolatedAsyncioTestCase):
             def __init__(self, number):
                 self.number = number
                 boot = str(number) * 16
-                self.queue = [b"ignored boot log\n", f"RLCD?3 {boot} ".encode(), b"1\n"]
+                self.queue = [b"ignored boot log\n", f"RLCD?4 {boot} ".encode(), b"1\n"]
                 self.closed = False
 
             def read(self):

@@ -29,18 +29,38 @@ class ProfileRoute:
 
 @dataclass
 class ProfileSource(Source):
-    row_profiles: dict[str, str] = field(default_factory=dict)
+    row_aliases: dict[str, str] = field(default_factory=dict)
     profile_statuses: dict[str, str] = field(default_factory=dict)
 
 
 class ProfileProjector(Projector):
-    """Keep titles plain; expose profile health separately in diagnostics."""
+    """Keep native hosts/titles and attach presentation-only profile badges."""
+
+    def __init__(self, hosts=("starship", "snap")):
+        super().__init__(hosts)
+        self.row_aliases = {}
+
+    def project(self, sources):
+        for source in sources:
+            self.row_aliases.update(getattr(source, "row_aliases", {}))
+        view = super().project(sources)
+        # Keep a badge while a row is retained as uncertain context. Prune it
+        # with the bounded roster, without changing native keys or host totals.
+        self.row_aliases = {
+            row["id"]: self.row_aliases.get(row["id"], ALIASES[self.hosts[row["host"]]])
+            for row in self.roster
+        }
+        for row in view["rows"]:
+            row["badge"] = self.row_aliases[row["id"]]
+        return view
 
     def explain(self, sources, view, *, include_all=False):
         result = super().explain(sources, view, include_all=include_all)
         result["profiles"] = {
             source.host: dict(getattr(source, "profile_statuses", {})) for source in sources
         }
+        for row in result["rows"]:
+            row["display_host"] = self.row_aliases.get(row["display_id"])
         return result
 
 
@@ -156,8 +176,10 @@ def combine_sources(hosts, inputs):
                 sampled[identifier] = source.sampled_by_id.get(identifier, source.sampled_at)
                 if identifier in source.row_categories:
                     categories[identifier] = source.row_categories[identifier]
-                if len(profiles) > 1 or route.profile != "default":
-                    labels[identifier] = route.label
+                labels[identifier] = (
+                    "SW" if route.host == "snap" and route.profile == "work"
+                    else ALIASES[route.host]
+                )
         if healthy:
             status = "current" if all(s == "current" for s in statuses.values()) else "partial"
         elif all(s == "warming" for s in statuses.values()):

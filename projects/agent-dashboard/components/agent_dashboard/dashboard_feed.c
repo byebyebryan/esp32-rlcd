@@ -131,7 +131,7 @@ int dashboard_feed_request(dashboard_feed_t *feed, uint64_t now_ms,
 {
     if (feed->request == UINT32_MAX) return -1;
     ++feed->request; feed->requested_ms = now_ms; feed->pending = true;
-    return snprintf(output, capacity, "RLCD?3 %s %u\n", feed->boot, (unsigned)feed->request);
+    return snprintf(output, capacity, "RLCD?4 %s %u\n", feed->boot, (unsigned)feed->request);
 }
 
 bool dashboard_feed_accept(dashboard_feed_t *feed, const char *line,
@@ -152,7 +152,7 @@ bool dashboard_feed_accept(dashboard_feed_t *feed, const char *line,
     field_t field; char boot[17]; uint32_t request, hosts, rows;
     dashboard_feed_view_t *view = &feed->candidate;
     memset(view, 0, sizeof(*view));
-    if (!take(&cursor, &field) || field.size != 6 || memcmp(field.data, "RLCD!3", 6) ||
+    if (!take(&cursor, &field) || field.size != 6 || memcmp(field.data, "RLCD!4", 6) ||
         !take(&cursor, &field) || !hex_string(field, boot, 16, false) || strcmp(boot, feed->boot) ||
         !number(&cursor, UINT32_MAX, &request) || request != feed->request ||
         !take(&cursor, &field) || !hex_string(field, view->bridge, 16, false) ||
@@ -186,7 +186,11 @@ bool dashboard_feed_accept(dashboard_feed_t *feed, const char *line,
     for (size_t i = 0; i < rows; ++i) {
         dashboard_feed_row_t *row = &view->rows[i];
         if (!take(&cursor, &field) || !hex_string(field, row->identity, 64, false) ||
-            !number(&cursor, hosts - 1, &row->host) || !number(&cursor, 2, &row->category) ||
+            !number(&cursor, hosts - 1, &row->host) ||
+            !take(&cursor, &field) || !hex_string(field, row->badge, 2, true) ||
+            (strcmp(row->badge, view->hosts[row->host].alias) &&
+             (strcmp(view->hosts[row->host].alias, "SN") || strcmp(row->badge, "SW"))) ||
+            !number(&cursor, 2, &row->category) ||
             !number(&cursor, 6, &row->work) ||
             (row->work != DASH_WORKING && row->work != DASH_NEEDS_INPUT && row->work != DASH_SETTLED && row->work != DASH_ERROR && row->work != DASH_UNKNOWN && row->work != DASH_PARKED) ||
             !number(&cursor, DASH_UNSUPPORTED, &row->health) ||
@@ -273,7 +277,7 @@ bool dashboard_feed_tick(dashboard_feed_t *feed, dashboard_motion_t *motion, uin
         feed->effective_health[i] = health; feed->order[i] = (uint8_t)i;
         feed->samples[i] = (dashboard_motion_sample_t){
             .logical_id = row->identity, .project = row->label,
-            .provider = view->hosts[row->host].alias, .short_id = "",
+            .provider = row->badge, .short_id = "",
             .work = current ? (dashboard_work_t)row->work : DASH_UNKNOWN,
             .health = (dashboard_health_t)health,
             .category = current ? (dashboard_category_t)row->category : DASH_CATEGORY_UNCERTAIN,

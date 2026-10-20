@@ -1,7 +1,7 @@
 # Agent dashboard presentation media
 
 These current previews use the fictional active-demo story through the host
-projection, wire 3 admission, expiry, motion and renderer. They use ST/SN host
+projection, wire 4 admission, expiry, motion and renderer. They use ST/SN host
 badges and contain no provider conversation data. The story has no recent-only
 members, so these images do not demonstrate working-set membership or its
 recent-row category and totals. The live policy is documented in the

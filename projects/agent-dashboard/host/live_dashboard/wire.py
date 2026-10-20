@@ -1,4 +1,4 @@
-"""Device wire 3: bounded tagged ASCII, UTF-8 hex fields and CRC32."""
+"""Device wire 4: bounded tagged ASCII, per-row badges and CRC32."""
 
 import binascii
 import re
@@ -6,7 +6,7 @@ import re
 from .projection import CATEGORY, WORK
 
 MAX_BYTES = 16384
-REQUEST = re.compile(rb"RLCD\?3 ([0-9a-f]{16}) ([1-9][0-9]{0,9})\Z")
+REQUEST = re.compile(rb"RLCD\?4 ([0-9a-f]{16}) ([1-9][0-9]{0,9})\Z")
 
 
 def parse_request(line):
@@ -19,7 +19,7 @@ def parse_request(line):
 
 def encode(view, boot, request, bridge, sequence):
     fields = [
-        "RLCD!3",
+        "RLCD!4",
         boot,
         str(request),
         bridge,
@@ -38,10 +38,15 @@ def encode(view, boot, request, bridge, sequence):
             ]
         )
     for row in view["rows"]:
+        host_alias = view["hosts"][row["host"]]["alias"]
+        badge = row.get("badge", host_alias)
+        if badge != host_alias and not (host_alias == "SN" and badge == "SW"):
+            raise ValueError("device_row_badge")
         fields.extend(
             [
                 row["id"],
                 str(row["host"]),
+                badge.encode().hex(),
                 str(CATEGORY[row["category"]]),
                 str(WORK[row["state"]]),
                 str(row["health"]),

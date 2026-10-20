@@ -5,7 +5,10 @@ Each route has an independent public Reader, prepared guard and receipt/clock
 lifetime. Rows retain their full host/provider/namespace/native-kind/native-ID
 identity. Session titles stay plain, without a profile prefix. Same native UUIDs
 in different home namespaces remain distinct, and matching titles use the
-existing collision suffix. Profile health remains available in diagnostics.
+existing collision suffix. Starship Default displays `ST`, Snap Default `SN`,
+and Snap Work `SW`. These are row display badges; Work remains part of Snap
+for identity, totals and source admission. An uncertain Work row retains `SW`.
+Profile health remains available in diagnostics.
 
 Pass a private, owned JSON file with `--profiles-config PATH`. Its version 1
 object contains `routes`, each with exact fields `host`, `profile`, `label`,
@@ -30,8 +33,8 @@ reconnecting one route cannot renew or reset another route's clock state.
 Stopping the bridge closes all owned watches; ordinary route failures retry
 independently. Failure to clean up an owned worker reaches the supervisor. The
 default invocation without `--profiles-config` retains its previous route and
-projection. No firmware, generic Mesh API or native wire contract changes are
-required.
+projection. The `SW` badge uses the paired wire-4 bridge/firmware extension;
+no generic Mesh API or native Observer wire contract changes are required.
 
 Validation includes the existing native wire/serial/supervisor/bundle suite,
 profile configuration and composition cases, and actual disposable Observer

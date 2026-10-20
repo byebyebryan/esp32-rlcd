@@ -81,21 +81,21 @@ uncertain. There is no context timeout or fallback negative inference. Healthy
 hosts remain useful when a sibling fails, and a missing host cannot make the
 whole fleet appear complete.
 
-## Device wire 3
+## Device wire 4
 
 USB carries ASCII LF-delimited protocol records alongside boot and diagnostic
 logs. Only tagged records enter the protocol. A device request is:
 
 ```text
-RLCD?3 <16 lowercase hex boot nonce> <positive request number>
+RLCD?4 <16 lowercase hex boot nonce> <positive request number>
 ```
 
 Responses are tab-separated ASCII with this field order:
 
 ```text
-RLCD!3 boot request bridge sequence host_count row_count
+RLCD!4 boot request bridge sequence host_count row_count
   [alias_hex status valid_ms attention waiting working recent uncertain total] per host
-  [identity_sha256 host_index category work health valid_ms label_hex age] per row
+  [identity_sha256 host_index badge_hex category work health valid_ms label_hex age] per row
   crc32
 ```
 
@@ -110,8 +110,14 @@ and 3 warming.
 Limits are 16 KiB per response, 32 rows, two configured hosts, 63 UTF-8 label
 bytes and 65,535 selected identities per host. All fields, counts, enums,
 encodings, duplicate identities and checksums validate before mutation.
-Truncated, excessive or malformed lines are discarded. Wire 2 records are
-rejected by the wire 3 firmware and bridge.
+Truncated, excessive or malformed lines are discarded. Wire 2 and wire 3 records
+are rejected by the wire 4 firmware and bridge.
+
+The per-row badge is normally its physical host alias (`ST` or `SN`). `SW` is
+allowed only for a Snap row and denotes the trusted `work` profile. It changes
+only the left-hand display badge. Native identities, the two physical host
+slots, per-host totals, expiry and row ordering remain unchanged. The receiver
+checks the badge/host association before mutation.
 
 Firmware requests the latest view every second. A response must match the
 current boot/request and arrive within that request's one-second window; each
@@ -141,10 +147,10 @@ identity, configured host routes, bundle installation, device ACK/silence /
 recovery, and physical readability are separate acceptance gates. Preview,
 serial ACK and readback do not establish physical readability.
 
-The current bridge and firmware require the paired wire 3 contract. Archived
-wire 2 bundles and firmware remain immutable; rollback must select that matching
-pair and restore its collector, source/publisher routing and client selections.
-Do not combine a wire 2 bridge with wire 3 firmware or vice versa. The earlier
+The current bridge and firmware require the paired wire 4 contract. Archived
+wire 2 and wire 3 bundles and firmware remain immutable; rollback must select
+a matching bridge/firmware pair and its source/client selections. Do not mix
+wire versions. A wire-4 badge rollback does not require a producer restart. The earlier
 [active-feed receipt](../../../docs/evidence/2026-10-16-active-feed/REPORT.md)
 records the prior wire 2 rollout and its own rollback evidence. Tmux, 349,
 ordinary native sessions and historical writers remain independent.

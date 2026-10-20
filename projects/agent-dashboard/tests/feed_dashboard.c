@@ -28,9 +28,9 @@ static void state(uint64_t now)
            dashboard_motion_flashing(&motion) ? "true" : "false");
     for (size_t i = 0; i < motion.count; ++i) {
         const dashboard_motion_track_t *track = &motion.tracks[motion.order[i]];
-        printf("%s{\"id\":\"%s\",\"category\":%d,\"work\":%d,\"health\":%d,\"age\":\"%s\"}",
+        printf("%s{\"id\":\"%s\",\"category\":%d,\"work\":%d,\"health\":%d,\"age\":\"%s\",\"badge\":\"%s\"}",
                i ? "," : "", track->logical_id, track->category, track->work,
-               track->health, track->supplied_age);
+               track->health, track->supplied_age, track->provider);
     }
     puts("]}");
 }

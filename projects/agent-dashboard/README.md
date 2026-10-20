@@ -26,7 +26,7 @@ qualify source loss, and expired observations cannot retain current work claims.
 
 The generic native active demo uses fictional records and virtual time. It shows
 answered waits, row movement, one-host loss, feed expiry and recovery. Its
-current wire 3 images exercise admission and rendering, but contain no
+current wire 4 images exercise admission and rendering, but contain no
 recent-only members; the working-set behavior is defined in the
 [integration contract](docs/live-integration.md).
 
@@ -38,7 +38,7 @@ recent-only members; the working-set behavior is defined in the
 flowchart LR
     Observer[Observer 72-hour working-set profile] --> Mesh[Mesh working-set Agent profile]
     Mesh --> Bridge[Host bridge]
-    Bridge -->|USB wire 3| RLCD[RLCD firmware]
+    Bridge -->|USB wire 4| RLCD[RLCD firmware]
 ```
 
 Observer owns native discovery and classification. Mesh owns validated delivery
@@ -74,7 +74,8 @@ records the prior wire 2 rollout and paired rollback. Physical
 ACK/readability/reboot gates remain separate.
 
 The optional [Codex home profile routes](docs/home-profiles.md) combine separately
-admitted Default and Work feeds without changing native identities or wire 3.
+admitted Default and Work feeds without changing native identities. The wire-4
+row badge shows Snap Work as `SW`, with plain session titles.
 The configured union is the default; a startup profile filter is available.
 The [Snap synchronization receipt](../../docs/evidence/2026-10-19-snap-sync/REPORT.md)
 records that earlier rollout's firmware readback, managed service and bounded
@@ -86,7 +87,7 @@ records the initial Snap wire-3 client/firmware, exact private package pair,
 both-host native comparisons, live expiry/recovery, and exercised paired rollback.
 The [Starship synchronization receipt](../../docs/evidence/2026-10-19-starship-sync/REPORT.md)
 records its later move to the same verified host bundle and firmware components.
-Both devices now use wire 3. Whole-producer and manual panel/reboot acceptance
+Those receipts record the prior wire-3 selection. Whole-producer and manual panel/reboot acceptance
 remain distinct from these scoped deployments.
 
 An earlier Snap refinement showed [terminal results for unloaded threads](../../docs/evidence/2026-10-19-recent-status/REPORT.md),

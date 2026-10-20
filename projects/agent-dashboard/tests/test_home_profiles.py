@@ -119,6 +119,8 @@ class Composition(unittest.TestCase):
         self.assertTrue(all(r["host"] == 0 for r in view["rows"]))
         self.assertEqual({r["label"] for r in view["rows"]},
                          {"First session", "yearly-recap-review"})
+        self.assertEqual({r["label"]: r["badge"] for r in view["rows"]},
+                         {"First session": "SN", "yearly-recap-review": "SW"})
         self.assertEqual(first["title"], "First session")
         self.assertEqual(second["title"], "yearly-recap-review")
 
@@ -135,6 +137,13 @@ class Composition(unittest.TestCase):
         self.assertEqual(by_id[token(work["identity"])[0]]["state"], "working")
         self.assertGreater(by_id[token(work["identity"])[0]]["valid_ms"], 0)
         self.assertEqual(by_id[token(default["identity"])[0]]["state"], "unknown")
+        self.assertEqual(by_id[token(default["identity"])[0]]["badge"], "SN")
+        self.assertEqual(by_id[token(work["identity"])[0]]["badge"], "SW")
+
+        work_lost = [both[0], (route("work"), source(status="offline"))]
+        uncertain = projector.project(combine_sources(["snap"], work_lost))
+        work_context = next(r for r in uncertain["rows"] if r["id"] == token(work["identity"])[0])
+        self.assertEqual((work_context["state"], work_context["badge"]), ("unknown", "SW"))
 
         empty = [(route(), source()), both[1]]
         view = projector.project(combine_sources(["snap"], empty))
