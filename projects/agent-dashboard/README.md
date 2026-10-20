@@ -84,10 +84,12 @@ physical ACK/expiry checks; its Starship native-source limitation describes the
 state at the time of that receipt.
 
 The [working-set adoption receipt](../../docs/evidence/2026-10-19-working-set-adoption/REPORT.md)
-records the current Snap wire-3 client/firmware, exact private package pair,
+records the initial Snap wire-3 client/firmware, exact private package pair,
 both-host native comparisons, live expiry/recovery, and exercised paired rollback.
-Starship keeps its prior wire-2 device/client selection. Whole-producer and manual
-panel/reboot acceptance remain distinct from this scoped deployment.
+The [Starship synchronization receipt](../../docs/evidence/2026-10-19-starship-sync/REPORT.md)
+records its later move to the same verified host bundle and firmware components.
+Both devices now use wire 3. Whole-producer and manual panel/reboot acceptance
+remain distinct from these scoped deployments.
 
 The latest Snap refinements show admitted [terminal results for unloaded threads](../../docs/evidence/2026-10-19-recent-status/REPORT.md),
 restore [readable header numbers](../../docs/evidence/2026-10-19-header-readability/REPORT.md),

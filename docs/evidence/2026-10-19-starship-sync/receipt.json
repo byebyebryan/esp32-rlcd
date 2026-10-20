@@ -1,0 +1,924 @@
+{
+  "artifacts": {
+    "source": "50ee79e0b344d84ba94ff584a6a7bc53944d4db3",
+    "firmwareSource": "df89736842857dc0606775ffaf4cf92b63284339",
+    "onlyDocumentationDiffersFromFirmwareSource": true,
+    "hostBundleFilesEqualCurrentSource": true,
+    "files": {
+      "bootloader.bin": {
+        "sha256": "95e9725388d59f43a3afbba87fcd5e570c320eedcc555f5be2cd1a8b85b4bbe9",
+        "bytes": 20832
+      },
+      "partition-table.bin": {
+        "sha256": "5e71c3c890e04714daa03b21a0d23953a2dadf9fdf15eec02b886f7b6e9f8c81",
+        "bytes": 3072
+      },
+      "rlcd-dashboard.bin": {
+        "sha256": "bb27fd5331373dd21382c2781be89171ae9e7bfb85611a50d9de4bd877ffa8ab",
+        "bytes": 1243760
+      }
+    }
+  },
+  "flash": {
+    "boardMac": "94:a9:90:f3:43:74",
+    "port": "/dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_94:A9:90:F3:43:74-if00",
+    "backup": {
+      "bytes": 16777216,
+      "sha256": "8b37cf686974a5456f483e4f27f719f98afaa02eae04456540648e4525f7fbd4",
+      "boardMac": "94:a9:90:f3:43:74",
+      "partitionUnchanged": true,
+      "oldAppPartitionSha256": "6207e87c5db32f7d74edf7523ba0b55baa31b1c891b95252e5779b71766ca8c7"
+    },
+    "applicationSha256": "bb27fd5331373dd21382c2781be89171ae9e7bfb85611a50d9de4bd877ffa8ab",
+    "bootloaderSha256": "95e9725388d59f43a3afbba87fcd5e570c320eedcc555f5be2cd1a8b85b4bbe9",
+    "partitionSha256": "5e71c3c890e04714daa03b21a0d23953a2dadf9fdf15eec02b886f7b6e9f8c81",
+    "firmwareSource": "df89736842857dc0606775ffaf4cf92b63284339",
+    "readbackSha256": "9d10c0ad58d8a08a00088b3327c288dbaae1c2637de2aa5d12d63f00f11c7b1f",
+    "allComponentsReadbackMatch": true,
+    "protectedServiceIncarnationsUnchanged": true,
+    "349Touched": false,
+    "hostActivationPendingAtFlashReceipt": true
+  },
+  "route": {
+    "status": "pass",
+    "failureType": null,
+    "frames": 11,
+    "seconds": 25.149416601052508,
+    "proofNonces": {
+      "starship": 0,
+      "snap": 4
+    },
+    "samples": [
+      {
+        "elapsed": 1.007,
+        "hosts": {
+          "starship": {
+            "members": 10,
+            "active": 7,
+            "recentOnly": 3,
+            "parked": 3,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          },
+          "snap": {
+            "members": 0,
+            "active": 0,
+            "recentOnly": 0,
+            "parked": 0,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          }
+        }
+      },
+      {
+        "elapsed": 2.011,
+        "hosts": {
+          "starship": {
+            "members": 10,
+            "active": 7,
+            "recentOnly": 3,
+            "parked": 3,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          },
+          "snap": {
+            "members": 0,
+            "active": 0,
+            "recentOnly": 0,
+            "parked": 0,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          }
+        }
+      },
+      {
+        "elapsed": 3.015,
+        "hosts": {
+          "starship": {
+            "members": 10,
+            "active": 7,
+            "recentOnly": 3,
+            "parked": 3,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          },
+          "snap": {
+            "members": 0,
+            "active": 0,
+            "recentOnly": 0,
+            "parked": 0,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          }
+        }
+      },
+      {
+        "elapsed": 4.019,
+        "hosts": {
+          "starship": {
+            "members": 10,
+            "active": 7,
+            "recentOnly": 3,
+            "parked": 3,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          },
+          "snap": {
+            "members": 0,
+            "active": 0,
+            "recentOnly": 0,
+            "parked": 0,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          }
+        }
+      },
+      {
+        "elapsed": 5.024,
+        "hosts": {
+          "starship": {
+            "members": 10,
+            "active": 7,
+            "recentOnly": 3,
+            "parked": 3,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          },
+          "snap": {
+            "members": 0,
+            "active": 0,
+            "recentOnly": 0,
+            "parked": 0,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          }
+        }
+      },
+      {
+        "elapsed": 6.028,
+        "hosts": {
+          "starship": {
+            "members": 10,
+            "active": 7,
+            "recentOnly": 3,
+            "parked": 3,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          },
+          "snap": {
+            "members": 0,
+            "active": 0,
+            "recentOnly": 0,
+            "parked": 0,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          }
+        }
+      },
+      {
+        "elapsed": 7.032,
+        "hosts": {
+          "starship": {
+            "members": 10,
+            "active": 7,
+            "recentOnly": 3,
+            "parked": 3,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          },
+          "snap": {
+            "members": 0,
+            "active": 0,
+            "recentOnly": 0,
+            "parked": 0,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          }
+        }
+      },
+      {
+        "elapsed": 8.038,
+        "hosts": {
+          "starship": {
+            "members": 10,
+            "active": 7,
+            "recentOnly": 3,
+            "parked": 3,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          },
+          "snap": {
+            "members": 0,
+            "active": 0,
+            "recentOnly": 0,
+            "parked": 0,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          }
+        }
+      },
+      {
+        "elapsed": 9.042,
+        "hosts": {
+          "starship": {
+            "members": 10,
+            "active": 7,
+            "recentOnly": 3,
+            "parked": 3,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          },
+          "snap": {
+            "members": 0,
+            "active": 0,
+            "recentOnly": 0,
+            "parked": 0,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          }
+        }
+      },
+      {
+        "elapsed": 10.047,
+        "hosts": {
+          "starship": {
+            "members": 10,
+            "active": 7,
+            "recentOnly": 3,
+            "parked": 3,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          },
+          "snap": {
+            "members": 0,
+            "active": 0,
+            "recentOnly": 0,
+            "parked": 0,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          }
+        }
+      },
+      {
+        "elapsed": 11.051,
+        "hosts": {
+          "starship": {
+            "members": 10,
+            "active": 7,
+            "recentOnly": 3,
+            "parked": 3,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          },
+          "snap": {
+            "members": 0,
+            "active": 0,
+            "recentOnly": 0,
+            "parked": 0,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          }
+        }
+      },
+      {
+        "elapsed": 12.055,
+        "hosts": {
+          "starship": {
+            "members": 10,
+            "active": 7,
+            "recentOnly": 3,
+            "parked": 3,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          },
+          "snap": {
+            "members": 0,
+            "active": 0,
+            "recentOnly": 0,
+            "parked": 0,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          }
+        }
+      },
+      {
+        "elapsed": 13.059,
+        "hosts": {
+          "starship": {
+            "members": 10,
+            "active": 7,
+            "recentOnly": 3,
+            "parked": 3,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          },
+          "snap": {
+            "members": 0,
+            "active": 0,
+            "recentOnly": 0,
+            "parked": 0,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          }
+        }
+      },
+      {
+        "elapsed": 14.063,
+        "hosts": {
+          "starship": {
+            "members": 10,
+            "active": 7,
+            "recentOnly": 3,
+            "parked": 3,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          },
+          "snap": {
+            "members": 0,
+            "active": 0,
+            "recentOnly": 0,
+            "parked": 0,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          }
+        }
+      },
+      {
+        "elapsed": 15.068,
+        "hosts": {
+          "starship": {
+            "members": 10,
+            "active": 7,
+            "recentOnly": 3,
+            "parked": 3,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          },
+          "snap": {
+            "members": 0,
+            "active": 0,
+            "recentOnly": 0,
+            "parked": 0,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          }
+        }
+      },
+      {
+        "elapsed": 16.071,
+        "hosts": {
+          "starship": {
+            "members": 10,
+            "active": 7,
+            "recentOnly": 3,
+            "parked": 3,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          },
+          "snap": {
+            "members": 0,
+            "active": 0,
+            "recentOnly": 0,
+            "parked": 0,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          }
+        }
+      },
+      {
+        "elapsed": 17.076,
+        "hosts": {
+          "starship": {
+            "members": 10,
+            "active": 7,
+            "recentOnly": 3,
+            "parked": 3,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          },
+          "snap": {
+            "members": 0,
+            "active": 0,
+            "recentOnly": 0,
+            "parked": 0,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          }
+        }
+      },
+      {
+        "elapsed": 18.08,
+        "hosts": {
+          "starship": {
+            "members": 10,
+            "active": 7,
+            "recentOnly": 3,
+            "parked": 3,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          },
+          "snap": {
+            "members": 0,
+            "active": 0,
+            "recentOnly": 0,
+            "parked": 0,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          }
+        }
+      },
+      {
+        "elapsed": 19.085,
+        "hosts": {
+          "starship": {
+            "members": 10,
+            "active": 7,
+            "recentOnly": 3,
+            "parked": 3,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          },
+          "snap": {
+            "members": 0,
+            "active": 0,
+            "recentOnly": 0,
+            "parked": 0,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          }
+        }
+      },
+      {
+        "elapsed": 20.089,
+        "hosts": {
+          "starship": {
+            "members": 10,
+            "active": 7,
+            "recentOnly": 3,
+            "parked": 3,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          },
+          "snap": {
+            "members": 0,
+            "active": 0,
+            "recentOnly": 0,
+            "parked": 0,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          }
+        }
+      },
+      {
+        "elapsed": 21.093,
+        "hosts": {
+          "starship": {
+            "members": 10,
+            "active": 7,
+            "recentOnly": 3,
+            "parked": 3,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          },
+          "snap": {
+            "members": 0,
+            "active": 0,
+            "recentOnly": 0,
+            "parked": 0,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          }
+        }
+      },
+      {
+        "elapsed": 22.096,
+        "hosts": {
+          "starship": {
+            "members": 10,
+            "active": 7,
+            "recentOnly": 3,
+            "parked": 3,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          },
+          "snap": {
+            "members": 0,
+            "active": 0,
+            "recentOnly": 0,
+            "parked": 0,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          }
+        }
+      },
+      {
+        "elapsed": 23.1,
+        "hosts": {
+          "starship": {
+            "members": 10,
+            "active": 7,
+            "recentOnly": 3,
+            "parked": 3,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          },
+          "snap": {
+            "members": 0,
+            "active": 0,
+            "recentOnly": 0,
+            "parked": 0,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          }
+        }
+      },
+      {
+        "elapsed": 24.104,
+        "hosts": {
+          "starship": {
+            "members": 10,
+            "active": 7,
+            "recentOnly": 3,
+            "parked": 3,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          },
+          "snap": {
+            "members": 0,
+            "active": 0,
+            "recentOnly": 0,
+            "parked": 0,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          }
+        }
+      },
+      {
+        "elapsed": 25.108,
+        "hosts": {
+          "starship": {
+            "members": 10,
+            "active": 7,
+            "recentOnly": 3,
+            "parked": 3,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          },
+          "snap": {
+            "members": 0,
+            "active": 0,
+            "recentOnly": 0,
+            "parked": 0,
+            "uncertain": 0,
+            "completeScopes": 1,
+            "totalScopes": 1,
+            "delivery": "ready",
+            "viewState": "current"
+          }
+        }
+      }
+    ],
+    "disconnectedClaimsCleared": true,
+    "clientCpuSeconds": 0.42660099999999995,
+    "completedChildrenCpuSeconds": 0.009019000000000001,
+    "clientMaxRssKiB": 36600,
+    "scope": "actual configured IPC and fixed SSH; descriptive local-client/owned-completed-child resource sample, not whole native pipeline/cost or process memory cap"
+  },
+  "liveCapture": {
+    "scope": "live cached feed and USB/device admission; physical readability remains separate",
+    "bridge": "/home/bryan/.local/share/rlcd-agent-dashboard/c638c29d0f779017/scripts/live-dashboard.py",
+    "initial": {
+      "sent": 19,
+      "acknowledged": 16,
+      "healthyConfirmed": 15,
+      "lastView": {
+        "sequence": 19,
+        "request": 19,
+        "crc": "778a50a3",
+        "rows": 11,
+        "hosts": [
+          {
+            "alias": "ST",
+            "status": 0,
+            "valid_ms": 3000,
+            "totals": [
+              0,
+              6,
+              1,
+              4,
+              0
+            ],
+            "total": 11
+          },
+          {
+            "alias": "SN",
+            "status": 0,
+            "valid_ms": 3000,
+            "totals": [
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "total": 0
+          }
+        ]
+      },
+      "maxFrameUs": 18799,
+      "deadlineMisses": 0,
+      "minInternalHeap": 291003,
+      "minStackWatermark": 4776
+    },
+    "silence": {
+      "windowSeconds": 6,
+      "expired": {
+        "health": 2,
+        "partial": 1,
+        "rows": 11,
+        "attention": 0,
+        "waiting": 0,
+        "working": 0,
+        "recent": 0,
+        "uncertain": 11,
+        "frame_us": 17065,
+        "miss": 0,
+        "heap": 291003,
+        "stack": 4776
+      }
+    },
+    "recovery": {
+      "sent": 15,
+      "acknowledged": 15,
+      "healthyConfirmed": 15,
+      "lastView": {
+        "sequence": 15,
+        "request": 40,
+        "crc": "e8f34e39",
+        "rows": 11,
+        "hosts": [
+          {
+            "alias": "ST",
+            "status": 0,
+            "valid_ms": 3000,
+            "totals": [
+              0,
+              6,
+              1,
+              4,
+              0
+            ],
+            "total": 11
+          },
+          {
+            "alias": "SN",
+            "status": 0,
+            "valid_ms": 3000,
+            "totals": [
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "total": 0
+          }
+        ]
+      },
+      "maxFrameUs": 18834,
+      "deadlineMisses": 0,
+      "minInternalHeap": 291003,
+      "minStackWatermark": 4776
+    },
+    "passed": true
+  },
+  "managedHealth": {
+    "status": "pass",
+    "clientInvocation": "202799f889af4e33b68c6a30d397e172",
+    "health": {
+      "event": "device_health",
+      "health": 0,
+      "partial": 0,
+      "rows": 11,
+      "attention": 0,
+      "waiting": 6,
+      "working": 1,
+      "recent": 4,
+      "uncertain": 0,
+      "frame_us": 18773,
+      "miss": 0,
+      "heap": 291003,
+      "stack": 4776
+    },
+    "protectedServicesUnchanged": true,
+    "selection": {
+      "artifacts": {
+        "meshWheelSha256": "4f5987191b8d1113f3aa0afced15c5179f458fa0f9b9044352f1fefd418736bd",
+        "observerWheelSha256": "a3983afc12cee4aec84dd53d2ec9e60edd1e97dd4250543d77344bcde0878ac5"
+      },
+      "bundle": ".local/share/rlcd-agent-dashboard/c638c29d0f779017",
+      "dependencies": {
+        "admission": 1,
+        "api": 4,
+        "memberLease": 1,
+        "mesh": "0.1.0a23",
+        "nativeVersion": 1,
+        "observer": "0.7.0a7",
+        "preparation": 1,
+        "profile": "agent-observer.mesh-working-set.v1",
+        "read": 2,
+        "scopeLease": 1,
+        "sdk": 1,
+        "selection": 1,
+        "service": 4,
+        "windowMs": 259200000,
+        "workingSetRead": 1
+      },
+      "deviceWire": 3,
+      "enabledHosts": [
+        "starship"
+      ],
+      "hosts": [
+        "starship",
+        "snap"
+      ],
+      "manifestSha256": "c638c29d0f7790179261609d3171cfa3140488daaccee065ea2c2d016ac9c19a",
+      "manifestVersion": 1,
+      "port": "/dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_94:A9:90:F3:43:74-if00",
+      "python": ".local/share/agent-observer/0.7.0a7-a3983afc-ws72-m4f598719/bin/python",
+      "sourceRevision": "71726b08c439a27e3bb92fd33439a2a389409bb4"
+    },
+    "unit": "ActiveState=active\nNRestarts=0\nExecStart={ path=/home/bryan/.local/share/agent-observer/0.7.0a7-a3983afc-ws72-m4f598719/bin/python ; argv[]=/home/bryan/.local/share/agent-observer/0.7.0a7-a3983afc-ws72-m4f598719/bin/python -I -B /home/bryan/.local/share/rlcd-agent-dashboard/c638c29d0f779017/scripts/live-dashboard.py --hosts starship snap --port /dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_94:A9:90:F3:43:74-if00 ; ignore_errors=no ; start_time=[Mon 2026-10-19 17:52:58 PDT] ; stop_time=[n/a] ; pid=3525875 ; code=(null) ; status=0/0 }\n",
+    "scope": "exact-board component readback and actual USB ACK/health; manual panel and reboot observation remain distinct"
+  },
+  "protectedManagedTargets": [
+    "collector",
+    "full publisher",
+    "active publisher",
+    "working-set publisher",
+    "Tmux selections",
+    "349",
+    "Snap device/client selection"
+  ],
+  "logHashes": {
+    "mac.log": "0587174359b4d002cef7970ae1b042c22c2aa418b799339e4c0f07d9fbd57f69",
+    "flash-id.log": "42e7c2eaeb08535181552348b2eca504b6509892b1ffba28b9b0e4bc7f1077bc",
+    "backup.log": "ca08589e40bece95fb59bb944f7233f919e34102c04f34d2f98202d968ea526b",
+    "wire3-write.log": "7959514432376b42b76425efdd6b3318bbbff4369d2448e2f779d96257e637d0",
+    "wire3-readback.log": "6507a23a39a55d700e2069ef72a8cad4976b0403e1f6e925ba5d2290e2909530",
+    "capture-driver.log": "8e6964f7c48cffa604e9ee789d22a03fddc48bdbdf1aba322d337627bf43bba4",
+    "client-diff.log": "364e530b6e4994837d30b1b3c4149a5592766ed9692d11e0e3d0c221ca2f0561",
+    "client-dry-run.log": "364e530b6e4994837d30b1b3c4149a5592766ed9692d11e0e3d0c221ca2f0561",
+    "client-apply.log": "364e530b6e4994837d30b1b3c4149a5592766ed9692d11e0e3d0c221ca2f0561",
+    "live-capture/initial.log": "e8d2efeaa7b2daa2be35cce6d83ba13e5a4bf6c9fae34087030555b1a82b271c",
+    "live-capture/silence.log": "0b3c638a28a0c5381974b07aa8311f01e613b8314391099a9c7a056bcddb6f68",
+    "live-capture/recovery.log": "03d15ff2cecf6a8ba232b6d18331e45492fe46a5e1d8ff2c6348aaa000d3382a"
+  }
+}

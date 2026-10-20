@@ -163,9 +163,13 @@ backup before any scoped forced reselect. The
 [active-feed receipt](../../../docs/evidence/2026-10-16-active-feed/REPORT.md)
 records the older wire 2 deployment and its separate rollback boundary.
 The [working-set receipt](../../../docs/evidence/2026-10-19-working-set-adoption/REPORT.md)
-pins Snap's current wire-3 selection and matching image; Starship's device/client
-stays on its prior wire-2 pair. It records the full backup, old tuple restoration,
+pins Snap's initial wire-3 selection and matching image. It records the full backup, old tuple restoration,
 final readback, native comparison and bounded service/resource observations.
+The [Starship synchronization receipt](../../../docs/evidence/2026-10-19-starship-sync/REPORT.md)
+records Starship's matching wire-3 client/device selection, full flash backup,
+component readback and live expiry/recovery. Its collector and publisher roles
+were already selected and remain unchanged. Client rollback restores that host's
+old bridge selection and matching firmware; it does not require a producer restart.
 
 ## Expiry and captures
 
