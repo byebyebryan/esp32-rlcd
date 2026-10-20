@@ -1,6 +1,6 @@
 {
   "description": "Unchanged benchmark draw_animation scene compiled with native board stubs; virtual time.",
-  "source_revision": "dde543b8092bb1e6687a1ece9c6ac262c2538ef2",
+  "source_revision": "1b2717f8e48feef54b3e39a93e07f79da3c9b452",
   "source_sha256": {
     "components/display_rlcd/include/rlcd_frame.h": "96ca04c42f8983a44b8c362bbedbd05f85e400ce617f4daebe80ba25ce4a155a",
     "components/display_rlcd/include/rlcd_panel.h": "638c1f9c89c7abda86e0e5c369db32125ff198986c205b4ee7733627f921fbfb",
@@ -15,7 +15,7 @@
     "projects/agent-dashboard/components/agent_dashboard/include/fusion_font.h": "623bf5a77e946acc82ce664e9602a9890d392809faff9824b85ca797c0d38b48",
     "projects/agent-dashboard/components/agent_dashboard/include/fusion_font_12.h": "ff7f1fe7d6bdf6e583ca38f58c1df92037cafedd535eb419625fcb05fc0c9bee",
     "projects/agent-dashboard/docs/media/story.json": "70ba46ba0e3306e99f97d7a225648dfb00c853374ff731ad096c0a393830582f",
-    "projects/agent-dashboard/host/live_dashboard/projection.py": "a3a1b36eece4428ef98cbffbd145d196d382fe856a8b5652a59a312f1742fcc4",
+    "projects/agent-dashboard/host/live_dashboard/projection.py": "9057c3db8b90926894503e61d750bd0e93a12165b5dd9688a55e3c3064e47c5f",
     "projects/agent-dashboard/host/live_dashboard/wire.py": "26e4244b246ca42250ad060626d8a96178335c8350e70c126b590abdbd71bcea",
     "projects/bringup/main/main.c": "219295cbc2770f574a5e87ff699771e11e9fb69dc34484a065de16f31780683c",
     "projects/render-bench/main/main.c": "56bd04289188a45f66329c49a021d19c33b7f3abb0011fcd9e2d383d62ba05ed",
@@ -29,7 +29,7 @@
     "tools/native_presentation/stubs/freertos/idf_additions.h": "fcd200e8cca7a0b8a6ce45c3decb72f2b347d69ddb267278857384feff9425d0",
     "tools/native_presentation/stubs/freertos/task.h": "ceef766effb92b66f8722065f69115d521b0f9908a2711d8c6d7957245c79768"
   },
-  "native_executable_sha256": "47a3c2d952ce71cf322bc8078fe0ffeae648b656d8cfe500989056992c6eb999",
+  "native_executable_sha256": "417793a830fdb774a54f67e8dd86cc140dc5d3521026b52d06b0a587aa45c41c",
   "pillow_version": "12.0.0",
   "screen_size": [
     400,

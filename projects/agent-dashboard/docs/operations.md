@@ -67,12 +67,15 @@ Bundle verification pins the profile, 72-hour window, read interfaces and exact
 Observer/Mesh wheel archive hashes. Both hosts need the working-set collector
 and source/publisher; a reader-only upgrade cannot enable the route.
 
-Run the optional installed-contract checks with the selected Python as well:
+Run the strict public integration gate with that installed Python:
 
 ```sh
-"$RLCD_OBSERVER_PYTHON" -B projects/agent-dashboard/tests/test_prepared_fleet.py -v
-"$RLCD_OBSERVER_PYTHON" -B projects/agent-dashboard/tests/test_working_set_consumer.py -v
+PYTHON="$RLCD_OBSERVER_PYTHON" ./projects/agent-dashboard/scripts/test-dashboard-integration.sh
 ```
+
+This gate requires all three two-home cases to pass without skips and rejects
+sibling checkout imports. The [test guide](testing.md) separates this installed
+acceptance from the dependency-free core and older optional SDK fixture suites.
 
 Inspect the full selected roster, label/identity mapping, hidden rows and exclusion
 counts without opening USB:

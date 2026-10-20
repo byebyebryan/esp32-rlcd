@@ -79,6 +79,8 @@ The optional [Codex home profile routes](docs/home-profiles.md) combine separate
 admitted Default and Work feeds without changing native identities. The wire-4
 row badge shows Snap Work as `SW`, with plain session titles.
 The configured union is the default; a startup profile filter is available.
+The [restart recovery receipt](docs/evidence/2026-10-20-restart-context/REPORT.md)
+records the later host-only fix and both-device partial-startup checks.
 The [Snap synchronization receipt](../../docs/evidence/2026-10-19-snap-sync/REPORT.md)
 records that earlier rollout's firmware readback, managed service and bounded
 physical ACK/expiry checks; its Starship native-source limitation describes the
