@@ -51,11 +51,11 @@ spec=importlib.util.spec_from_file_location("bridge",sys.argv[1])
 m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
 from live_dashboard.projection import Source
 class Fleet:
- def __init__(self,*args,**kwargs):pass
+ def __init__(self,hosts,*args,**kwargs):self.hosts=hosts
  async def run(self):await asyncio.Event().wait()
  def sources(self):return [Source("starship","current",10000,10000)]
 m.Fleet=Fleet
-asyncio.run(m.main(types.SimpleNamespace(hosts=["starship"],seconds=0,preview=None,roster=False,port=sys.argv[2],verbose=False)))
+asyncio.run(m.main(types.SimpleNamespace(hosts=["starship"],seconds=0,preview=None,roster=False,inspect=False,profiles_config=None,profile=[],port=sys.argv[2],verbose=False)))
 """
         app = Path(__file__).resolve().parents[1]
         child = subprocess.Popen(

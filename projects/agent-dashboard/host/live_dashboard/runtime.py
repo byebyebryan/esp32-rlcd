@@ -19,7 +19,7 @@ class Events:
 
     def emit(self, event, *, interval=0, **fields):
         now = self.clock()
-        key = (event, fields.get("reason"), fields.get("host"))
+        key = (event, fields.get("reason"), fields.get("host"), fields.get("profile"))
         if interval and now - self.last.get(key, float("-inf")) < interval:
             return
         self.last[key] = now

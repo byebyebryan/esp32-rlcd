@@ -16,7 +16,8 @@ from .runtime import Events, Failure
 
 
 class Fleet:
-    def __init__(self, hosts, events=None, *, full_roster=False):
+    def __init__(self, hosts, events=None, *, full_roster=False, source=None,
+                 socket=None, expected_homes=None):
         self.hosts = list(hosts)
         self.full_roster = full_roster
         if full_roster:
@@ -27,6 +28,12 @@ class Fleet:
             from agent_observer.mesh_working_set_profile import WorkingSetAgentProfile
             self.profile = WorkingSetAgentProfile()
             self.source = "agent_working_set"
+        if source is not None:
+            self.source = source
+        self.socket = socket
+        self.expected_homes = dict(expected_homes or {})
+        if set(self.expected_homes) - set(self.hosts):
+            raise ValueError("profile_host_scope")
         self.request_id = secrets.token_hex(16)
         self.guard = self.new_guard()
         self.ready = asyncio.Event()
@@ -61,7 +68,7 @@ class Fleet:
         for row in read.sessions:
             by_host[row["identity"]["hostScope"]].append(row)
         if not self.full_roster:
-            return self.working_set_sources(read, now, by_host)
+            return self._bound_sources(self.working_set_sources(read, now, by_host), context)
         membership = {host: (set(), set()) for host in self.hosts}
         # Full diagnostics keep every currently admitted body.
         for row in read.sessions:
@@ -119,7 +126,48 @@ class Fleet:
                     excluded,
                 )
             )
+        return self._bound_sources(result, context)
+
+    def _bound_sources(self, sources, context):
+        result = []
+        for source in sources:
+            try:
+                if not self._check_configured_homes(context, expected_host=source.host):
+                    raise ValueError("profile_home_binding")
+            except (ValueError, KeyError, TypeError):
+                self.events.emit("mesh_profile_unavailable", interval=30,
+                                 host=source.host, reason="profile_home_binding")
+                source = Source(source.host, "offline")
+            result.append(source)
         return result
+
+    def _check_configured_homes(self, context, *, expected_host=None):
+        """A configured profile label never substitutes for native provenance."""
+        expected = getattr(self, "expected_homes", {})
+        if not expected or context is None:
+            return not expected
+        from agent_observer.public import store_namespace
+
+        matched = False
+        for host in context["hosts"]:
+            if expected_host is not None and host["hostId"] != expected_host:
+                continue
+            owner = host.get("owner")
+            if owner is None:
+                continue
+            identifier = host["hostId"]
+            service = owner["service"]
+            sources = service["sources"]
+            if (identifier not in expected or len(sources) != 1
+                    or sources[0]["provider"] != "codex"
+                    or sources[0]["configHome"] != expected[identifier]
+                    or sources[0]["configHomeKind"] != "explicit"
+                    or sources[0]["namespace"] != store_namespace(
+                        "codex", expected[identifier], "explicit", service["uid"]
+                    )):
+                raise ValueError("profile_home_binding")
+            matched = True
+        return matched
 
     def working_set_sources(self, read, now, by_host):
         """Pair current member bodies to the public facade's exact lease identity."""
@@ -286,7 +334,7 @@ class Fleet:
             authority = LibraryMeshAuthority()
             try:
                 self.closed = False
-                socket = os.path.join(
+                socket = getattr(self, "socket", None) or os.path.join(
                     os.environ.get("XDG_RUNTIME_DIR", f"/run/user/{os.getuid()}"),
                     "mesh-plus-agent/read.sock" if self.full_roster
                     else "mesh-plus-agent-working-set/read.sock",

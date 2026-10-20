@@ -12,6 +12,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "host"))
 from live_dashboard.mesh import Fleet
+from live_dashboard.profiles import ProfileFleet, ProfileProjector, load_routes
 from live_dashboard.projection import Projector
 from live_dashboard.runtime import Events, Failure, supervise
 from live_dashboard.serial import KNOWN_RLCD_DEVICE_NAMES, serve_serial
@@ -25,8 +26,12 @@ async def main(args):
     for name in (signal.SIGTERM, signal.SIGINT):
         loop.add_signal_handler(name, stop.set)
     timer = loop.call_later(args.seconds, stop.set) if args.seconds else None
-    fleet = Fleet(args.hosts, events, full_roster=args.roster)
-    projector = Projector(args.hosts)
+    fleet = (
+        ProfileFleet(args.hosts, load_routes(args.profiles_config, hosts=args.hosts,
+                                           selected=args.profile), events)
+        if args.profiles_config else Fleet(args.hosts, events, full_roster=args.roster)
+    )
+    projector = (ProfileProjector if args.profiles_config else Projector)(fleet.hosts)
 
     async def preview():
         await asyncio.wait_for(fleet.ready.wait(), 15)
@@ -38,7 +43,7 @@ async def main(args):
             await asyncio.sleep(0.1)
         sources = fleet.sources()
         view = projector.project(sources)
-        if args.roster:
+        if args.roster or args.inspect:
             print(
                 json.dumps(
                     projector.explain(sources, view, include_all=args.all),
@@ -63,7 +68,7 @@ async def main(args):
     try:
         consumer = (
             preview()
-            if args.preview or args.roster
+            if args.preview or args.roster or args.inspect
             else serve_serial(args.port, fleet, projector, events, verbose=args.verbose)
         )
         await supervise(fleet.run(), consumer, stop)
@@ -95,11 +100,17 @@ def arguments():
         "--seconds", type=float, default=0, help="bounded run; zero runs until stopped"
     )
     parser.add_argument("--verbose", action="store_true")
+    parser.add_argument("--profiles-config", type=Path,
+                        help="private explicit home-profile route manifest")
+    parser.add_argument("--profile", action="append", default=[],
+                        help="select one configured home profile; repeat to combine")
     parser.add_argument(
         "--roster",
         action="store_true",
         help="explain cached roster without opening USB",
     )
+    parser.add_argument("--inspect", action="store_true",
+                        help="explain the current dashboard selection without opening USB")
     parser.add_argument(
         "--all", action="store_true", help="include excluded/saved rows in --roster"
     )
@@ -108,11 +119,17 @@ def arguments():
         parser.error("seconds must be finite and nonnegative")
     if args.all and not args.roster:
         parser.error("--all requires --roster")
+    if args.profile and not args.profiles_config:
+        parser.error("--profile requires --profiles-config")
+    if args.profiles_config and args.roster:
+        parser.error("full diagnostics use each profile's Observer service socket")
+    if args.inspect and (args.roster or args.port or args.preview):
+        parser.error("--inspect is a standalone selected-feed read")
     if args.roster and (args.port or args.preview):
         parser.error("--roster is a standalone cached read")
     if args.preview and args.port:
         parser.error("--preview is a standalone cached read")
-    if not (args.roster or args.preview) and (
+    if not (args.roster or args.preview or args.inspect) and (
         args.port is None
         or args.port.parent != Path("/dev/serial/by-id")
         or args.port.name not in KNOWN_RLCD_DEVICE_NAMES

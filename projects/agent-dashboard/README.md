@@ -72,6 +72,10 @@ explicit working-set profile and public membership leases, with a loaded-only
 consumer filter; full history remains an explicit diagnostic. The [active-feed receipt](../../docs/evidence/2026-10-16-active-feed/REPORT.md)
 records the prior wire 2 rollout and paired rollback. Physical
 ACK/readability/reboot gates remain separate.
+
+The optional [Codex home profile routes](docs/home-profiles.md) combine separately
+admitted Default and Work feeds without changing native identities or wire 3.
+The configured union is the default; a startup profile filter is available.
 The [Snap synchronization receipt](../../docs/evidence/2026-10-19-snap-sync/REPORT.md)
 records that earlier rollout's firmware readback, managed service and bounded
 physical ACK/expiry checks; its Starship native-source limitation describes the

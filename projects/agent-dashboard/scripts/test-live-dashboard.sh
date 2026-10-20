@@ -21,3 +21,5 @@ python3 "$RLCD_APP_ROOT/tests/test_serial.py" -v
 python3 "$RLCD_APP_ROOT/tests/test_bundle.py" -v
 python3 "$RLCD_APP_ROOT/tests/test_prepared_fleet.py" -v
 python3 "$RLCD_APP_ROOT/tests/test_working_set_consumer.py" -v
+python3 "$RLCD_APP_ROOT/tests/test_home_profiles.py" -v
+python3 "$RLCD_APP_ROOT/tests/test_home_profiles_public.py" -v
