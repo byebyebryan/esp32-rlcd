@@ -106,6 +106,8 @@ class Configuration(unittest.TestCase):
 class Composition(unittest.TestCase):
     def test_same_native_uuid_in_two_namespaces_survives_union_and_wire_limit(self):
         first, second = row(), row("work")
+        first["title"] = "First session"
+        second["title"] = "yearly-recap-review"
         combined, = combine_sources(["snap"], [
             (route(), source(first)),
             (route("work"), source(second, namespace="work")),
@@ -115,8 +117,10 @@ class Composition(unittest.TestCase):
         self.assertEqual(len(view["rows"]), 2)
         self.assertEqual(len({r["id"] for r in view["rows"]}), 2)
         self.assertTrue(all(r["host"] == 0 for r in view["rows"]))
-        self.assertTrue(any("[Work]" in r["label"] for r in view["rows"]))
-        self.assertTrue(any("[Default]" in r["label"] for r in view["rows"]))
+        self.assertEqual({r["label"] for r in view["rows"]},
+                         {"First session", "yearly-recap-review"})
+        self.assertEqual(first["title"], "First session")
+        self.assertEqual(second["title"], "yearly-recap-review")
 
     def test_one_profile_outage_keeps_other_current_and_context_scoped(self):
         default, work = row(), row("work")

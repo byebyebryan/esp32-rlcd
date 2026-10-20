@@ -325,7 +325,7 @@ class _PublicProfileHarness:
 
 
 class PublicHomeProfileIntegrationTest(unittest.IsolatedAsyncioTestCase):
-    async def test_same_host_same_native_id_survives_with_labels_and_independent_expiry_close(self):
+    async def test_same_host_same_native_id_survives_with_plain_titles_and_independent_expiry_close(self):
         harness = _PublicProfileHarness()
         try:
             await harness.start()
@@ -360,8 +360,8 @@ class PublicHomeProfileIntegrationTest(unittest.IsolatedAsyncioTestCase):
             self.assertTrue(all(row["title"] == "Fixture Codex 2" for row in rows))
             projected = ProfileProjector([HOST]).project([combined])
             self.assertEqual(len(projected["rows"]), 2)
-            self.assertTrue(any(row["label"].startswith("[Default] ") for row in projected["rows"]))
-            self.assertTrue(any(row["label"].startswith("[Work] ") for row in projected["rows"]))
+            self.assertTrue(all(row["label"].startswith("Fixture Codex 2") for row in projected["rows"]))
+            self.assertEqual(len({row["label"] for row in projected["rows"]}), 2)
 
             work_snapshot = harness._raw_host("work")
             expiry = [receipt["expiresAtMs"] for receipt in work_snapshot["receipts"]
@@ -374,8 +374,7 @@ class PublicHomeProfileIntegrationTest(unittest.IsolatedAsyncioTestCase):
             harness.fleets["work"].guard.disconnect()
             after_close, = harness.sources()
             after_close_view = ProfileProjector([HOST]).project([after_close])
-            self.assertTrue(any(row["label"].startswith("[Default] ") for row in after_close_view["rows"]))
-            self.assertFalse(any(row["label"].startswith("[Work] ") for row in after_close_view["rows"]))
+            self.assertEqual([row["label"] for row in after_close_view["rows"]], ["Fixture Codex 2"])
         finally:
             await harness.close()
 
@@ -403,7 +402,7 @@ class PublicHomeProfileIntegrationTest(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(combined.rows[0]["identity"]["namespace"], route_namespace(default_route(harness)))
             projected = ProfileProjector([HOST]).project([combined])
             self.assertEqual(len(projected["rows"]), 1)
-            self.assertTrue(projected["rows"][0]["label"].startswith("[Default] "))
+            self.assertEqual(projected["rows"][0]["label"], "Fixture Codex 2")
         finally:
             await harness.close()
 
@@ -421,7 +420,7 @@ class PublicHomeProfileIntegrationTest(unittest.IsolatedAsyncioTestCase):
             projected = ProfileProjector([HOST]).project([combined])
             self.assertEqual(len(projected["rows"]), 1)
             self.assertEqual(projected["rows"][0]["id"], token(combined.rows[0]["identity"])[0])
-            self.assertTrue(projected["rows"][0]["label"].startswith("[Default] "))
+            self.assertEqual(projected["rows"][0]["label"], "Fixture Codex 2")
         finally:
             await harness.close()
 

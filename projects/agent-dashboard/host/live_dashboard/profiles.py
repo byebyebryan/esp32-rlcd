@@ -6,10 +6,10 @@ import os
 import re
 import stat
 import unicodedata
-from dataclasses import dataclass, field, replace
+from dataclasses import dataclass, field
 from pathlib import Path, PurePosixPath
 
-from .projection import ALIASES, Projector, Source, identity_key, project_label, token
+from .projection import ALIASES, Projector, Source, identity_key, token
 from .runtime import Events, Failure
 
 MAX_CONFIG_BYTES = 65536
@@ -34,22 +34,7 @@ class ProfileSource(Source):
 
 
 class ProfileProjector(Projector):
-    """Add configured display labels without modifying admitted native records."""
-
-    def project(self, sources):
-        presentation = []
-        for source in sources:
-            labels = getattr(source, "row_profiles", {})
-            rows = []
-            for row in source.rows:
-                label = labels.get(token(row["identity"])[0])
-                # These temporary rows are presentation inputs only. Original
-                # source bodies and the public Reader DTOs stay unchanged.
-                rows.append(row if label is None else {
-                    **row, "title": "[" + label + "] " + project_label(row),
-                })
-            presentation.append(replace(source, rows=rows))
-        return super().project(presentation)
+    """Keep titles plain; expose profile health separately in diagnostics."""
 
     def explain(self, sources, view, *, include_all=False):
         result = super().explain(sources, view, include_all=include_all)
