@@ -1,6 +1,6 @@
 {
   "description": "Native initial rlcd_frame_draw_test pattern used by bring-up; no hardware access.",
-  "source_revision": "df89736842857dc0606775ffaf4cf92b63284339",
+  "source_revision": "e118bd2e1db385b08119d0e59ecb85c82de181a0",
   "source_sha256": {
     "components/display_rlcd/include/rlcd_frame.h": "96ca04c42f8983a44b8c362bbedbd05f85e400ce617f4daebe80ba25ce4a155a",
     "components/display_rlcd/include/rlcd_panel.h": "638c1f9c89c7abda86e0e5c369db32125ff198986c205b4ee7733627f921fbfb",
@@ -15,7 +15,7 @@
     "projects/agent-dashboard/components/agent_dashboard/include/fusion_font.h": "623bf5a77e946acc82ce664e9602a9890d392809faff9824b85ca797c0d38b48",
     "projects/agent-dashboard/components/agent_dashboard/include/fusion_font_12.h": "ff7f1fe7d6bdf6e583ca38f58c1df92037cafedd535eb419625fcb05fc0c9bee",
     "projects/agent-dashboard/docs/media/story.json": "70ba46ba0e3306e99f97d7a225648dfb00c853374ff731ad096c0a393830582f",
-    "projects/agent-dashboard/host/live_dashboard/projection.py": "590b8ea173dce9bedc65938d7179cf65d3ae6ec8d4c987071fb576743b11271c",
+    "projects/agent-dashboard/host/live_dashboard/projection.py": "0dc78853a97a6db6ea90a01a1957ebb005bf14c485fb50de1a9ba7295ef9b038",
     "projects/agent-dashboard/host/live_dashboard/wire.py": "f6f42ac69a130d83aafb68a62c858c7cc3b5beca45e77a77bc60ff556ebea219",
     "projects/bringup/main/main.c": "219295cbc2770f574a5e87ff699771e11e9fb69dc34484a065de16f31780683c",
     "projects/render-bench/main/main.c": "56bd04289188a45f66329c49a021d19c33b7f3abb0011fcd9e2d383d62ba05ed",
@@ -29,7 +29,7 @@
     "tools/native_presentation/stubs/freertos/idf_additions.h": "fcd200e8cca7a0b8a6ce45c3decb72f2b347d69ddb267278857384feff9425d0",
     "tools/native_presentation/stubs/freertos/task.h": "ceef766effb92b66f8722065f69115d521b0f9908a2711d8c6d7957245c79768"
   },
-  "native_executable_sha256": "f1755acaf1f8aa1d43ca8912c92a8fcd2f75351c95a1479d17e623d6c428b2ad",
+  "native_executable_sha256": "0eb04473427246ecba4ec106c93f8daae9f31c2efd9e601e915182d60c459410",
   "pillow_version": "12.0.0",
   "screen_size": [
     400,

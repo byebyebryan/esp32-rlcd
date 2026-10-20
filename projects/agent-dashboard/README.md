@@ -95,7 +95,8 @@ An earlier Snap refinement showed [terminal results for unloaded threads](../../
 restored [readable header numbers](../../docs/evidence/2026-10-19-header-readability/REPORT.md),
 and [removed the separate recent counter](../../docs/evidence/2026-10-19-remove-recent-count/REPORT.md)
 while retaining recent conversations in the list. Unloaded rows now use the
-neutral dash so their last completed turn is not mistaken for current readiness.
+[neutral dash](../../docs/evidence/2026-10-19-inactive-status/REPORT.md) so their
+last completed turn is not mistaken for current readiness.
 Each receipt preserves its
 original source, firmware and deployment evidence.
 

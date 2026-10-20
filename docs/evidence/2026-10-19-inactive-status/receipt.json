@@ -1,0 +1,85 @@
+{
+  "runtimeSource": "e118bd2e1db385b08119d0e59ecb85c82de181a0",
+  "bundleManifestSha256": "271ef152d3c4e15534895af2fd82b1d9a2be1726ed891a20e5e0c0e4aa442472",
+  "previousBundleManifestSha256": "c638c29d0f7790179261609d3171cfa3140488daaccee065ea2c2d016ac9c19a",
+  "policy": {
+    "currentRunningWaiting": "ready",
+    "currentParked": "neutral regardless of historical turn result",
+    "unknownRuntime": "unknown"
+  },
+  "liveProjection": {
+    "pass": true,
+    "counts": {
+      "ready": 5,
+      "parked": 5
+    },
+    "codexBefore": "waiting",
+    "codexAfter": "parked",
+    "codexCategory": "recent",
+    "allReadyRowsRequireCurrentRunningWaiting": true
+  },
+  "checks": {
+    "dashboardPython314": {
+      "passed": 72,
+      "skipped": 0
+    },
+    "dashboardPython311": {
+      "passed": 72,
+      "skipped": 0
+    },
+    "nativeFrame": "pass",
+    "presentationAssets": "unchanged; input manifests regenerated",
+    "managedSelectionAndArtifacts": "pass"
+  },
+  "deployments": {
+    "starship": {
+      "invocation": "b82ec38d385a4c3c93550b515d9c93e8",
+      "deviceHealth": {
+        "event": "device_health",
+        "health": 0,
+        "partial": 0,
+        "rows": 11,
+        "attention": 0,
+        "waiting": 5,
+        "working": 1,
+        "recent": 5,
+        "uncertain": 0,
+        "frame_us": 18829,
+        "miss": 0,
+        "heap": 291003,
+        "stack": 4776
+      },
+      "protectedServicesUnchanged": true
+    },
+    "snap": {
+      "invocation": "0b745de75c73462ba0f357d2fc174147",
+      "deviceHealth": {
+        "event": "device_health",
+        "health": 0,
+        "partial": 0,
+        "rows": 11,
+        "attention": 0,
+        "waiting": 5,
+        "working": 1,
+        "recent": 5,
+        "uncertain": 0,
+        "frame_us": 18812,
+        "miss": 0,
+        "heap": 291003,
+        "stack": 4776
+      },
+      "protectedServicesUnchanged": true
+    }
+  },
+  "firmwareChanged": false,
+  "producerPackagesChanged": false,
+  "noProviderActions": true,
+  "scope": "passive native/current working-set reads, projection/native-wire checks and managed USB ACK health; no new manual panel or reboot observation",
+  "privateEvidenceHashes": {
+    "tests-311.log": "eddfe4a0f407189af5980825d421fcdf7c896ab34949897035abd71c5fdbdaa2",
+    "live-status-check.json": "e1fa42ac27c8a1cf72995f2f338ce6aee454e1ea280c7cd977bdc88ef5336872",
+    "before.json": "8d68dc5d56c8f3c2af5d7c8ed3d7bed6b02b8a3c89d127c05a91677bb25376a5",
+    "after.json": "099943b8fb1d9970859016e8f7483828f4b6fa8172e9affb0b68002e9ce6ed37",
+    "snap-after.json": "c22d7d5fa7d7d47f1d024650cac7b7b8915080f652cff49892ee6ab15ec21b64"
+  }
+}
