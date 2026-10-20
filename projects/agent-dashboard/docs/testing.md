@@ -17,16 +17,26 @@ PYTHON=/home/bryan/.local/share/agent-observer/0.7.0a7-a3983afc-ws72-m4f598719/b
 The gate requires the selected Python environment to contain installed
 `agent_observer` and `mesh_plus` packages. It rejects packages loaded from a
 source checkout or outside that interpreter's prefix, checks that the
-working-set profile constructs and its prepared admission guard is available,
-then runs the three public two-home cases. Any skip, missing case, API mismatch,
-or assertion failure exits nonzero. It does not modify `PYTHONPATH` or import an
-Observer/Mesh sibling checkout. The test uses only synthetic fixture data and
-disposable Unix sockets.
+working-set profile, public frame composition, and prepared admission guard are
+available, then runs twelve required cases: nine installed working-set fleet
+lifecycle cases and the three public two-home cases. Any skip, missing case,
+API mismatch, or assertion failure exits nonzero. It does not modify
+`PYTHONPATH` or import an Observer/Mesh sibling checkout. The tests use
+synthetic fixture data and disposable Unix sockets where needed.
 
 The public two-home cases are excluded from ordinary discovery even when an SDK
 happens to be installed; only the strict command opts them in. To direct the
 native harness output elsewhere, set `RLCD_TEST_OUTPUT_DIR` when running
 `test-live-dashboard.sh`.
+
+The nine fleet cases use the installed Observer `ServiceState` working-set
+frames and Mesh's public reader composition and admission APIs. They cover
+selected-view parity with explicit full diagnostics, complete-empty and partial
+scope expiry, independent activity and runtime support, rejected receipt
+replacement, exact exclusion beyond the 32-row display limit, namespace and
+sibling isolation, stream control failures, and reconnect cleanup. Ordinary
+dependency-free discovery labels these installed cases as optional skips; the
+strict command requires all nine to execute.
 
 The three cases cover two distinct Codex home namespaces on one host with the
 same native ID, independent expiry and close, rejection of a valid frame bound

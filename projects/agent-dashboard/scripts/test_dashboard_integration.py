@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run the required installed Observer/Mesh two-home integration gate."""
+"""Run the required installed Observer/Mesh working-set integration gate."""
 
 import importlib.util
 import os
@@ -9,9 +9,12 @@ from pathlib import Path
 
 
 APP_ROOT = Path(__file__).resolve().parents[1]
-TEST_PATH = APP_ROOT / "tests" / "test_home_profiles_public.py"
+TEST_PATHS = (
+    ("dashboard_home_profiles_public", APP_ROOT / "tests" / "test_home_profiles_public.py"),
+    ("dashboard_working_set_fleet", APP_ROOT / "tests" / "test_working_set_fleet.py"),
+)
 WORKING_SET_PROFILE = "agent-observer.mesh-working-set.v1"
-EXPECTED_CASES = 3
+EXPECTED_CASES = 12
 
 
 def fail(message, *, status=2):
@@ -37,6 +40,7 @@ try:
     from agent_observer.mesh_working_set_profile import WorkingSetAgentProfile
     from agent_observer.mesh_working_set_read import PreparedWorkingSetAgentWatch
     from mesh_plus.api import Reader
+    from agent_observer.service_state import ServiceState
 except Exception as error:
     fail(
         "the selected Observer/Mesh environment is missing a required integration "
@@ -59,6 +63,10 @@ for package, path in package_paths.items():
 
 if not callable(getattr(Reader, "watch_admitted", None)):
     fail("Mesh Reader.watch_admitted is unavailable")
+if not callable(getattr(Reader, "compose_admitted", None)):
+    fail("Mesh Reader.compose_admitted is unavailable")
+if not callable(getattr(ServiceState, "working_set_frame", None)):
+    fail("Observer ServiceState.working_set_frame is unavailable")
 
 try:
     profile = WorkingSetAgentProfile()
@@ -86,29 +94,35 @@ print(
     f"Mesh {getattr(mesh_plus, '__version__', 'unknown')}: "
     f"{package_paths['mesh_plus']}"
 )
-print("PASS: working-set profile construction and prepared admission are available")
+print("PASS: working-set profile, public frame composition, and prepared admission are available")
 
 os.environ["RLCD_RUN_PUBLIC_INTEGRATION"] = "1"
-spec = importlib.util.spec_from_file_location("dashboard_home_profiles_public", TEST_PATH)
-if spec is None or spec.loader is None:
-    fail(f"cannot load integration test module: {TEST_PATH}")
-module = importlib.util.module_from_spec(spec)
-sys.modules[spec.name] = module
-try:
-    spec.loader.exec_module(module)
-except Exception as error:
-    fail(
-        "the integration test could not import its required public APIs "
-        f"({type(error).__name__}: {error})"
-    )
+modules = []
+for module_name, test_path in TEST_PATHS:
+    spec = importlib.util.spec_from_file_location(module_name, test_path)
+    if spec is None or spec.loader is None:
+        fail(f"cannot load integration test module: {test_path}")
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
+    try:
+        spec.loader.exec_module(module)
+    except Exception as error:
+        fail(
+            "the integration test could not import its required public APIs "
+            f"({type(error).__name__}: {error})"
+        )
+    modules.append(module)
 
-suite = unittest.defaultTestLoader.loadTestsFromModule(module)
+suite = unittest.TestSuite(
+    unittest.defaultTestLoader.loadTestsFromModule(module)
+    for module in modules
+)
 result = unittest.TextTestRunner(verbosity=2).run(suite)
 if result.skipped:
     fail(f"{len(result.skipped)} integration test(s) were skipped", status=1)
 if result.testsRun != EXPECTED_CASES:
     fail(
-        f"expected {EXPECTED_CASES} two-home cases, ran {result.testsRun}",
+        f"expected {EXPECTED_CASES} integration cases, ran {result.testsRun}",
         status=1,
     )
 if not result.wasSuccessful():
