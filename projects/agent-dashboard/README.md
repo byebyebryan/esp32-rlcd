@@ -4,7 +4,7 @@
 
 Keep running and recently active Codex conversations visible across Starship and
 Snap. Active membership is independent of the 72-hour recent window; recent
-parked and runtime-unknown sessions remain visible with terminal, neutral or unknown
+parked and runtime-unknown sessions remain visible with neutral or unknown
 markers. Active blocked rows flash slowly, waiting rows stay inverse, and
 working rows remain normal. When evidence expires, current work styling and ages
 clear while uncertain identity context remains. Healthy hosts remain useful
@@ -21,10 +21,10 @@ collision handling. Confirmed child and system rows are excluded. Recent parked
 and runtime-unknown rows count as recent, never as attention, waiting or working.
 The header shows attention, ready, working and uncertain counts; recent threads
 stay in the list without a separate recent counter.
-For an unloaded recent thread, a current completed latest turn shows the ready
-check, and a current failed latest turn shows the error cross. These describe
-the last turn, not a running thread. Unproved or interrupted results keep the
-neutral dash; expired evidence clears the result.
+An unloaded recent thread shows a neutral dash, regardless of its last turn
+result. The ready check requires a currently running session with a current
+waiting phase. Unknown runtime shows `?`; a completed historical turn cannot
+establish readiness.
 
 Ages mean source-sampled time since conversation activity. They do not measure
 how long a conversation has been blocked or waiting. PARTIAL and FEED OFFLINE
@@ -65,8 +65,8 @@ the observed title-helper rows and model-capacity failure presentation. Its
 [acceptance receipt](../../docs/evidence/2026-10-14-failure-refinement/REPORT.md)
 records independent producer and paired device rollout. Known
 current failed turns in active sessions use an error cross and contribute to `!`
-attention counts. Recent-only terminal failures keep the cross without adding
-to active attention counts.
+attention counts. Unloaded recent sessions keep the neutral dash, including
+those whose last turn failed.
 A fresh active turn clears the preceding failure; unsupported observations keep `?`.
 
 The [owned admission checkpoint](../../docs/evidence/2026-10-15-owned-admission/REPORT.md)
@@ -91,10 +91,12 @@ records its later move to the same verified host bundle and firmware components.
 Both devices now use wire 3. Whole-producer and manual panel/reboot acceptance
 remain distinct from these scoped deployments.
 
-The latest Snap refinements show admitted [terminal results for unloaded threads](../../docs/evidence/2026-10-19-recent-status/REPORT.md),
-restore [readable header numbers](../../docs/evidence/2026-10-19-header-readability/REPORT.md),
-and [remove the separate recent counter](../../docs/evidence/2026-10-19-remove-recent-count/REPORT.md)
-while retaining recent conversations in the list. Each receipt preserves its
+An earlier Snap refinement showed [terminal results for unloaded threads](../../docs/evidence/2026-10-19-recent-status/REPORT.md),
+restored [readable header numbers](../../docs/evidence/2026-10-19-header-readability/REPORT.md),
+and [removed the separate recent counter](../../docs/evidence/2026-10-19-remove-recent-count/REPORT.md)
+while retaining recent conversations in the list. Unloaded rows now use the
+neutral dash so their last completed turn is not mistaken for current readiness.
+Each receipt preserves its
 original source, firmware and deployment evidence.
 
 ## Build and check

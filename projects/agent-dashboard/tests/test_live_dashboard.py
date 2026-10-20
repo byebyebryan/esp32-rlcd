@@ -596,7 +596,7 @@ class NativeAdmission(unittest.TestCase):
         self.assertEqual([(r["category"], r["work"]) for r in state["entries"]],
                          [(1, 6), (1, 5)])
 
-    def test_recent_terminal_glyphs_keep_recent_counts_and_expire(self):
+    def test_recent_terminal_results_stay_neutral_on_device_and_expire(self):
         rows = []
         for status in ("completed", "failed"):
             item = row(status, runtime="parked")
@@ -614,7 +614,7 @@ class NativeAdmission(unittest.TestCase):
         state = self.send(encode(view, "0" * 16, 1, "1" * 16, 1))
         self.assertEqual(state["totals"], [0, 0, 0, 2, 0])
         self.assertEqual([(r["category"], r["work"]) for r in state["entries"]],
-                         [(1, 2), (1, 4)])
+                         [(1, 6), (1, 6)])
         self.assertFalse(state["flashing"])
         expired = self.at(3000)
         self.assertTrue(all(r["work"] == 5 for r in expired["entries"]))

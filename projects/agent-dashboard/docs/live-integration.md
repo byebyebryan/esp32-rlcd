@@ -47,11 +47,11 @@ Rows are prioritized as active attention, waiting, working, then active unknown;
 recent rows follow, newest activity first; retained uncertain context comes
 last. Recent-only rows always count as recent, including known parked and
 runtime-unknown rows. Recent rows never count as attention, waiting or working.
-Known parked rows use the ready check when current outcome and latest-turn
-evidence agree on completion, or the error cross when both agree on failure.
-These are terminal results, not a live phase: category and totals remain recent,
-without active highlighting. Missing, stale, conflicting or interrupted results
-keep the neutral horizontal marker. Unknown runtime remains `?`.
+Known parked rows always use the neutral horizontal marker, including when
+their last turn completed or failed. Historical results cannot establish a
+current work phase. The ready check requires current running runtime and a
+current waiting phase. Category and totals remain recent without active
+highlighting. Unknown runtime remains `?`.
 Whole-roster totals are computed before transport truncation. Only then are the
 first 32 rows sent; 11 complete rows fit the display, and overflow remains
 explicit. Therefore a recent row cannot displace an active row at the device
