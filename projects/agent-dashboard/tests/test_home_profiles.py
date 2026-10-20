@@ -190,6 +190,14 @@ class HomeBinding(unittest.TestCase):
             {"hostId": "snap", "owner": None},
         ]}), [source])
         self.assertEqual(output.getvalue(), "")
+        # One host may already be ready while the other's owner is absent.
+        # Host-level scope summaries do not make that missing owner a mismatch.
+        for status in ("current", "partial"):
+            result, = fleet._bound_sources([Source("snap", status)], {"hosts": [
+                {"hostId": "snap", "owner": None},
+            ]})
+            self.assertEqual(result.status, "warming")
+        self.assertEqual(output.getvalue(), "")
 
     @unittest.skipUnless(__import__("importlib").util.find_spec("agent_observer"), "optional Observer")
     def test_one_wrong_home_does_not_hide_another_host(self):

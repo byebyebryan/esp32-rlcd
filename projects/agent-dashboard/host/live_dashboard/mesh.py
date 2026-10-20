@@ -138,7 +138,7 @@ class Fleet:
                 continue
             try:
                 if not self._check_configured_homes(context, expected_host=source.host):
-                    raise ValueError("profile_home_binding")
+                    source = Source(source.host, "warming")
             except (ValueError, KeyError, TypeError):
                 self.events.emit("mesh_profile_unavailable", interval=30,
                                  host=source.host, reason="profile_home_binding")
