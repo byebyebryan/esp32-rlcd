@@ -2,29 +2,23 @@
 
 ![Native dashboard render with fictional conversations, ST and SN host badges and sampled activity ages](docs/media/dashboard.png)
 
-Keep running and recently active Codex conversations visible across Starship and
-Snap. Active membership is independent of the 72-hour recent window; recent
-parked and runtime-unknown sessions remain visible with neutral or unknown
-markers. Active blocked rows flash slowly, waiting rows stay inverse, and
-working rows remain normal. When evidence expires, current work styling and ages
-clear while uncertain identity context remains. Healthy hosts remain useful
-during a sibling outage.
+Show loaded Codex conversations across Starship and Snap. Only sessions with
+current running-runtime evidence enter the list, including loaded idle/ready
+sessions. Unloaded recent history is excluded. Blocked rows flash slowly,
+waiting rows stay inverse, and working rows remain normal. When evidence expires,
+work styling and ages clear while uncertain context for previously loaded
+sessions remains. Healthy hosts stay useful during a sibling outage.
 
 [Operate the live feed](docs/operations.md) · [Integration contract](docs/live-integration.md) · [Presentation media](docs/media/README.md)
 
 ## Display behavior
 
 The 400 × 300 monochrome view has eleven 24-pixel rows. Whole-roster counts include
-hidden conversations; the bridge transports up to 32 rows after placing active
-rows ahead of recent rows. Titles use project/cwd fallbacks and rendered
-collision handling. Confirmed child and system rows are excluded. Recent parked
-and runtime-unknown rows count as recent, never as attention, waiting or working.
-The header shows attention, ready, working and uncertain counts; recent threads
-stay in the list without a separate recent counter.
-An unloaded recent thread shows a neutral dash, regardless of its last turn
-result. The ready check requires a currently running session with a current
-waiting phase. Unknown runtime shows `?`; a completed historical turn cannot
-establish readiness.
+hidden loaded conversations; the bridge transports up to 32 rows. Titles use
+project/cwd fallbacks and rendered collision handling. Confirmed child, system
+and unloaded rows are excluded. The header shows attention, ready, working and
+uncertain counts. A current running session with a current waiting phase gets
+the ready check; a completed historical turn cannot establish readiness.
 
 Ages mean source-sampled time since conversation activity. They do not measure
 how long a conversation has been blocked or waiting. PARTIAL and FEED OFFLINE
@@ -65,8 +59,8 @@ the observed title-helper rows and model-capacity failure presentation. Its
 [acceptance receipt](../../docs/evidence/2026-10-14-failure-refinement/REPORT.md)
 records independent producer and paired device rollout. Known
 current failed turns in active sessions use an error cross and contribute to `!`
-attention counts. Unloaded recent sessions keep the neutral dash, including
-those whose last turn failed.
+attention counts. Unloaded sessions are excluded, including those whose last
+turn failed.
 A fresh active turn clears the preceding failure; unsupported observations keep `?`.
 
 The [owned admission checkpoint](../../docs/evidence/2026-10-15-owned-admission/REPORT.md)
@@ -74,8 +68,8 @@ adopts Observer a6/Mesh a22 with selected current bodies and complete membership
 summaries. Strict admission, per-row expiry, diagnostics and display policy remain.
 The [active-session feed plan](docs/active-feed-plan.md) records the earlier
 active-only contract. The current bridge default uses Observer a7 / Mesh a23's
-explicit working-set profile and public membership leases; full history remains
-an explicit diagnostic. The [active-feed receipt](../../docs/evidence/2026-10-16-active-feed/REPORT.md)
+explicit working-set profile and public membership leases, with a loaded-only
+consumer filter; full history remains an explicit diagnostic. The [active-feed receipt](../../docs/evidence/2026-10-16-active-feed/REPORT.md)
 records the prior wire 2 rollout and paired rollback. Physical
 ACK/readability/reboot gates remain separate.
 The [Snap synchronization receipt](../../docs/evidence/2026-10-19-snap-sync/REPORT.md)
@@ -94,9 +88,9 @@ remain distinct from these scoped deployments.
 An earlier Snap refinement showed [terminal results for unloaded threads](../../docs/evidence/2026-10-19-recent-status/REPORT.md),
 restored [readable header numbers](../../docs/evidence/2026-10-19-header-readability/REPORT.md),
 and [removed the separate recent counter](../../docs/evidence/2026-10-19-remove-recent-count/REPORT.md)
-while retaining recent conversations in the list. Unloaded rows now use the
-[neutral dash](../../docs/evidence/2026-10-19-inactive-status/REPORT.md) so their
-last completed turn is not mistaken for current readiness.
+while retaining recent conversations in the list at that time. The subsequent
+[neutral-status correction](../../docs/evidence/2026-10-19-inactive-status/REPORT.md)
+preceded the current loaded-only selection, which excludes unloaded history.
 Each receipt preserves its
 original source, firmware and deployment evidence.
 

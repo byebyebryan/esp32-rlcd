@@ -68,23 +68,21 @@ def project_label(row):
     return project_name(row) or ("Codex #" + token(row["identity"])[0][:5])
 
 
-def exclusion(row, *, working_set=False):
+def exclusion(row):
     if row["kind"] in {"child", "system"}:
         return row["kind"]
     runtime = row["runtime"]
-    if not working_set and runtime["health"] == "current" and runtime["value"] == "parked":
+    if runtime["health"] == "current" and runtime["value"] == "parked":
         return "parked"
     return None
 
 
-def selection_reason(row, *, working_set=False):
+def selection_reason(row):
     if row["identity"]["provider"] != "codex":
         return "provider_excluded"
-    excluded = exclusion(row, working_set=working_set)
+    excluded = exclusion(row)
     if excluded:
         return excluded
-    if working_set:
-        return "selected"
     if row["runtime"]["health"] != "current":
         return "runtime_unavailable"
     if row["runtime"]["value"] != "running":
@@ -225,24 +223,16 @@ class Projector:
                 excluded_ids.update(
                     token(r["identity"])[0]
                     for r in source.rows
-                    if exclusion(r, working_set=source.working_set)
+                    if exclusion(r)
                 )
             for row in source.rows if row_ready else []:
-                if selection_reason(row, working_set=source.working_set) != "selected":
+                if selection_reason(row) != "selected":
                     continue
                 identifier, key = token(row["identity"])
                 if identifier in self.keys and self.keys[identifier] != key:
                     raise ValueError("identity_collision")
                 self.keys[identifier] = key
                 state, health = presentation(row)
-                if source.working_set:
-                    runtime = row["runtime"]
-                    if runtime.get("health") == "current" and runtime.get("value") == "parked":
-                        # A historical result cannot establish a current work phase.
-                        state, health = "parked", "current"
-                    elif runtime.get("health") != "current" or runtime.get("value") not in {"running", "parked"}:
-                        state = "unknown"
-                        health = "current" if runtime.get("health") == "current" else runtime.get("health", "unavailable")
                 activity = row["activity"]
                 at = activity.get("at") if activity["health"] == "current" else None
                 sampled = source.sampled_by_id.get(identifier, source.sampled_at)
@@ -261,7 +251,9 @@ class Projector:
                     state, health, at = "unknown", "stale", None
                     category = "uncertain"
                 else:
-                    category = source.row_categories.get(identifier, "active")
+                    # Working-set recency grants feed membership, not a place
+                    # in the loaded-session dashboard. Runtime was checked above.
+                    category = "active"
                 selected[identifier] = {
                     "id": identifier,
                     "host": index,
@@ -384,7 +376,7 @@ class Projector:
         for source in sources:
             for row in source.rows:
                 identifier, _ = token(row["identity"])
-                reason = selection_reason(row, working_set=source.working_set)
+                reason = selection_reason(row)
                 match = selected.get(identifier)
                 if reason == "selected" and match is None:
                     reason = "source_unavailable"

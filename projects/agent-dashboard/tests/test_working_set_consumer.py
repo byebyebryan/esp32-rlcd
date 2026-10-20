@@ -108,7 +108,7 @@ class InstalledProfile(unittest.TestCase):
 
 
 class WorkingSetAdapter(unittest.TestCase):
-    def test_parked_terminal_result_never_becomes_current_work(self):
+    def test_unloaded_terminal_results_are_excluded_from_loaded_view(self):
         row = session("completed", runtime="parked", phase="unknown")
         row["phase"] = None
         row["outcome"] = {"health": "current", "value": "completed"}
@@ -117,17 +117,15 @@ class WorkingSetAdapter(unittest.TestCase):
         lease["fieldExpiresAtMs"].update(outcome=12000, latestTurn=13000)
         source, = adapter(public_read([row], [lease]), hosts=("starship",))
         view = Projector(["starship"]).project([source])
-        self.assertEqual(view["rows"][0]["state"], "parked")
-        self.assertEqual(view["rows"][0]["category"], "recent")
-        self.assertEqual(view["rows"][0]["valid_ms"], 1900)
-        self.assertEqual(view["hosts"][0]["totals"], [0, 0, 0, 1, 0])
+        self.assertEqual(view["rows"], [])
+        self.assertEqual(view["hosts"][0]["totals"], [0, 0, 0, 0, 0])
 
         row["outcome"]["value"] = "failed"
         row["latestTurn"]["value"]["status"] = "failed"
         source, = adapter(public_read([row], [lease]), hosts=("starship",))
         view = Projector(["starship"]).project([source])
-        self.assertEqual(view["rows"][0]["state"], "parked")
-        self.assertEqual(view["hosts"][0]["totals"], [0, 0, 0, 1, 0])
+        self.assertEqual(view["rows"], [])
+        self.assertEqual(view["hosts"][0]["totals"], [0, 0, 0, 0, 0])
 
     def test_parked_runtime_overrides_prior_phase_and_turn_result(self):
         for outcome_health, turn_health, outcome, status in (
@@ -147,10 +145,10 @@ class WorkingSetAdapter(unittest.TestCase):
                                 row_categories={token(row["identity"])[0]: "recent"},
                                 working_set=True)
                 view = Projector(["starship"]).project([source])
-                self.assertEqual(view["rows"][0]["state"], "parked")
-                self.assertEqual(view["hosts"][0]["totals"], [0, 0, 0, 1, 0])
+                self.assertEqual(view["rows"], [])
+                self.assertEqual(view["hosts"][0]["totals"], [0, 0, 0, 0, 0])
 
-    def test_ready_clears_when_same_session_unloads_without_hiding_recent_row(self):
+    def test_unloading_removes_exact_session_despite_positive_recent_membership(self):
         row = session("transition", phase="waiting")
         row["outcome"] = {"health": "current", "value": "completed"}
         row["latestTurn"] = {"health": "current", "value": {"status": "completed"}}
@@ -162,21 +160,17 @@ class WorkingSetAdapter(unittest.TestCase):
         view = projector.project([source])
         self.assertEqual(view["rows"][0]["state"], "waiting")
         self.assertEqual(view["hosts"][0]["totals"], [0, 1, 0, 0, 0])
-        identifier = view["rows"][0]["id"]
-
         row["runtime"]["value"] = "parked"
         lease["activeExpiresAtMs"] = None
         source, = adapter(public_read([row], [lease]), hosts=("starship",))
         view = projector.project([source])
-        self.assertEqual(view["rows"][0]["id"], identifier)
-        self.assertEqual(view["rows"][0]["state"], "parked")
-        self.assertEqual(view["rows"][0]["category"], "recent")
-        self.assertEqual(view["hosts"][0]["totals"], [0, 0, 0, 1, 0])
+        self.assertEqual(view["rows"], [])
+        self.assertEqual(view["hosts"][0]["totals"], [0, 0, 0, 0, 0])
 
         row["runtime"]["value"] = "unknown"
         source, = adapter(public_read([row], [lease]), hosts=("starship",))
         view = projector.project([source])
-        self.assertEqual(view["rows"][0]["state"], "unknown")
+        self.assertEqual(view["rows"], [])
 
     def test_exact_member_lease_uses_independent_branch_and_field_deadlines(self):
         old_active = session("old-active", phase="blocked", at=1000)
@@ -202,10 +196,10 @@ class WorkingSetAdapter(unittest.TestCase):
         self.assertEqual(source.sampled_by_id[active_id], 10000)
 
         view = Projector(["starship"]).project([source])
-        self.assertEqual(view["hosts"][0]["totals"], [1, 0, 0, 2, 0])
+        self.assertEqual(view["hosts"][0]["totals"], [1, 0, 0, 0, 0])
         by_id = {r["id"]: r for r in view["rows"]}
-        self.assertEqual(by_id[token(recent_parked["identity"])[0]]["state"], "parked")
-        self.assertEqual(by_id[token(recent_unknown["identity"])[0]]["state"], "unknown")
+        self.assertNotIn(token(recent_parked["identity"])[0], by_id)
+        self.assertNotIn(token(recent_unknown["identity"])[0], by_id)
         self.assertEqual(by_id[active_id]["state"], "blocked")
 
     def test_expired_or_missing_display_field_deadlines_fail_closed(self):
@@ -316,7 +310,7 @@ class WorkingSetAdapter(unittest.TestCase):
 
 
 class WorkingSetPriority(unittest.TestCase):
-    def test_active_priority_precedes_newest_recent_and_totals_precede_usb_cap(self):
+    def test_recent_history_never_fills_loaded_device_capacity(self):
         active = [session("active-blocked", phase="blocked", at=1000),
                   session("active-working", at=2000)]
         recent = [session(f"recent-{i}", runtime="parked", phase="unknown", at=3000 + i)
@@ -330,15 +324,14 @@ class WorkingSetPriority(unittest.TestCase):
                         {i: 10000 for i in ids}, categories, True)
         p = Projector(["starship"])
         view = p.project([source])
-        self.assertEqual(view["hosts"][0]["totals"], [1, 0, 1, 40, 0])
-        self.assertEqual(len(view["rows"]), 32)
-        self.assertEqual([r["id"] for r in view["rows"][:2]],
+        self.assertEqual(view["hosts"][0]["totals"], [1, 0, 1, 0, 0])
+        self.assertEqual(len(view["rows"]), 2)
+        self.assertEqual([r["id"] for r in view["rows"]],
                          [token(r["identity"])[0] for r in active])
-        self.assertTrue(all(r["category"] == "recent" for r in view["rows"][2:]))
-        self.assertGreater(view["rows"][2]["activity"], view["rows"][3]["activity"])
+        self.assertTrue(all(r["category"] == "active" for r in view["rows"]))
         report = p.explain([source], view)
-        self.assertEqual(sum(r["sent_to_device"] for r in report["rows"]), 32)
-        self.assertEqual(sum(r["visible"] for r in report["rows"]), 11)
+        self.assertEqual(sum(r["sent_to_device"] for r in report["rows"]), 2)
+        self.assertEqual(sum(r["visible"] for r in report["rows"]), 2)
 
 
 if __name__ == "__main__":

@@ -2,11 +2,13 @@
 
 The bridge's default source is Observer's explicit 72-hour working-set profile,
 `agent-observer.mesh-working-set.v1`, delivered by Mesh as
-`agent_working_set` from `mesh-plus-agent-working-set/read.sock`. The selected
+`agent_working_set` from `mesh-plus-agent-working-set/read.sock`. The source
 membership rule is eligibility AND (active OR recent): an active member remains
 included even when its activity is older than 72 hours, while the independent
 recent branch includes eligible parked or runtime-unknown conversations within
-the window. Confirmed child and system rows are excluded. A missing or
+the window. This is feed membership, not display membership: the dashboard
+requires current running-runtime evidence and excludes unloaded history, children
+and system rows. A missing or
 unsupported working-set route fails closed; it never falls back to another
 source.
 
@@ -29,11 +31,11 @@ client performs no provider actions.
 
 An admitted row must have a current positive active or recent lease, eligible
 kind and Codex provider. Active and recent deadlines remain independent. When a
-row is emitted as active, its row deadline includes the active-branch deadline;
-when emitted as recent, it includes the recent-branch deadline. If the selected
-branch expires before the next read, that row's current category expires with
-it, even if the other branch remains positive. A fresh read can then reclassify
-the row under that branch.
+source row is admitted under the active branch, its lease includes that deadline;
+a source row admitted under the recent branch uses the recent deadline. This
+source lease never bypasses the additional current-runtime display filter. If
+the supporting branch expires before the next read, the display claim expires
+with it, even if the other branch remains positive.
 
 Each row lease is the minimum of its positive membership/category authority and
 the exported deadlines for its currently displayed runtime, phase, outcome,
@@ -43,22 +45,21 @@ work. Phase and activity age continue to use their original Observer support.
 Age is time since conversation activity at the runtime's source-sampled
 `observedAt`; reads, delivery proofs and bridge heartbeats cannot advance it.
 
-Rows are prioritized as active attention, waiting, working, then active unknown;
-recent rows follow, newest activity first; retained uncertain context comes
-last. Recent-only rows always count as recent, including known parked and
-runtime-unknown rows. Recent rows never count as attention, waiting or working.
-Known parked rows always use the neutral horizontal marker, including when
-their last turn completed or failed. Historical results cannot establish a
-current work phase. The ready check requires current running runtime and a
-current waiting phase. Category and totals remain recent without active
-highlighting. Unknown runtime remains `?`.
-Whole-roster totals are computed before transport truncation. Only then are the
-first 32 rows sent; 11 complete rows fit the display, and overflow remains
-explicit. Therefore a recent row cannot displace an active row at the device
-capacity boundary.
+Rows are selected only with current running-runtime evidence, independently of
+last-turn outcome or recent-history membership. Loaded idle/waiting sessions are
+included. Positively parked rows retire their prior display identity immediately;
+new rows with unknown runtime are not introduced. Previously loaded rows whose
+runtime becomes uncertain retain context with `?`, without a current work claim.
+
+Rows are prioritized as attention, waiting, working, then unknown. Whole loaded
+roster totals are computed before the first 32 rows are sent; 11 complete rows fit
+the display and overflow remains explicit. Every current row has active display
+category; the source's recent branch is not a display category. Historical
+completion cannot establish readiness.
 
 The five per-host totals are attention (blocked plus known current failures),
-waiting, working, recent, and uncertain. Active rows with unknown or expired
+waiting, working, recent, and uncertain. The retained wire field for recent is
+zero in this loaded-only view. Loaded rows with unknown or expired
 display state and retained context count as uncertain. Host-total validity is
 capped by the earliest membership, selected-category or current displayed-field
 deadline across the whole counted roster, including rows beyond the 32-row USB
@@ -69,8 +70,8 @@ partial.
 Header counts use the same 24-pixel font as the title and conversation rows.
 Counts above 99 use `99+`; overflow uses `+99+`. The title abbreviates when
 needed so the four visible totals and overflow fit without shrinking the numbers.
-The header shows attention, ready, working and uncertain; recent-only threads
-remain in the list and feed accounting, without a separate clock or recent count.
+The header shows attention, ready, working and uncertain; unloaded recent-only
+threads are excluded from the list and totals.
 
 Fresh complete coverage may retire absent members only in its exact host,
 provider and namespace. A current exact child/system or other positive

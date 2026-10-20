@@ -578,7 +578,7 @@ class NativeAdmission(unittest.TestCase):
         self.assertFalse(state["flashing"])
         self.assertEqual(state["entries"][0]["id"], "b" * 64)
 
-    def test_recent_parked_and_unknown_rows_share_recent_total_without_attention(self):
+    def test_parked_and_unproved_recent_rows_do_not_enter_device_list(self):
         parked, unknown = row("parked", runtime="parked"), row("unknown", runtime="unknown")
         rows = [parked, unknown]
         ids = {token(r["identity"])[0] for r in rows}
@@ -588,15 +588,14 @@ class NativeAdmission(unittest.TestCase):
                         {("codex", "store")}, {identifier: 5000 for identifier in ids},
                         {identifier: 10000 for identifier in ids}, categories, True)
         view = Projector(["starship"]).project([source])
-        self.assertEqual(view["hosts"][0]["totals"], [0, 0, 0, 2, 0])
+        self.assertEqual(view["hosts"][0]["totals"], [0, 0, 0, 0, 0])
         self.request(0)
         state = self.send(encode(view, "0" * 16, 1, "1" * 16, 1))
-        self.assertEqual(state["totals"], [0, 0, 0, 2, 0])
+        self.assertEqual(state["totals"], [0, 0, 0, 0, 0])
         self.assertFalse(state["flashing"])
-        self.assertEqual([(r["category"], r["work"]) for r in state["entries"]],
-                         [(1, 6), (1, 5)])
+        self.assertEqual(state["entries"], [])
 
-    def test_recent_terminal_results_stay_neutral_on_device_and_expire(self):
+    def test_unloading_removes_device_rows_even_with_terminal_recent_history(self):
         rows = []
         for status in ("completed", "failed"):
             item = row(status, runtime="parked")
@@ -609,15 +608,19 @@ class NativeAdmission(unittest.TestCase):
                      {("codex", "store")}, {identifier: 3000 for identifier in ids},
                      {identifier: 10000 for identifier in ids},
                      {identifier: "recent" for identifier in ids}, True)
-        view = Projector(["starship"]).project([src])
+        p = Projector(["starship"])
+        for item in rows:
+            item["runtime"]["value"] = "running"
         self.request(0)
-        state = self.send(encode(view, "0" * 16, 1, "1" * 16, 1))
-        self.assertEqual(state["totals"], [0, 0, 0, 2, 0])
-        self.assertEqual([(r["category"], r["work"]) for r in state["entries"]],
-                         [(1, 6), (1, 6)])
+        initial = self.send(encode(p.project([src]), "0" * 16, 1, "1" * 16, 1))
+        self.assertEqual(len(initial["entries"]), 2)
+        for item in rows:
+            item["runtime"]["value"] = "parked"
+        self.request(100)
+        state = self.send(encode(p.project([src]), "0" * 16, 2, "1" * 16, 2))
+        self.assertEqual(state["totals"], [0, 0, 0, 0, 0])
+        self.assertEqual(state["entries"], [])
         self.assertFalse(state["flashing"])
-        expired = self.at(3000)
-        self.assertTrue(all(r["work"] == 5 for r in expired["entries"]))
 
     def test_row_positive_lease_survives_expired_whole_roster_totals(self):
         rows = [{"id": "a" * 64, "host": 0, "category": "active",

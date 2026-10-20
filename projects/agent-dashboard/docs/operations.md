@@ -3,8 +3,9 @@
 The bridge's default reads the explicit Observer 72-hour working-set profile
 through Mesh on Starship and Snap. A member is eligible and either currently
 active or recently active; the active branch remains independent of the
-72-hour recent window. Recent parked and runtime-unknown rows remain visible
-without counting as working or waiting. The full-history `--roster` route is
+72-hour recent window. The display adds a loaded-only filter: current running
+runtime is required; unloaded recent history is excluded. Lost evidence for a
+previously loaded session retains uncertain context instead of inventing an unload. The full-history `--roster` route is
 explicit and has no role in normal USB ticks. ST and SN identify hosts. Age is
 source-sampled time since conversation activity. Known system helpers and
 children are excluded. Current failed turns use an error cross and join blocked
@@ -207,8 +208,8 @@ source success alone does not verify an installed bundle.
 
 The current device protocol is wire 3. Its `attention` diagnostic and `!` header
 count blocked plus known failed rows. Per-host totals also report waiting,
-working, recent and uncertain; recent parked and runtime-unknown members are
-included in recent but never in attention, waiting or working. Bundle manifests
+working, recent and uncertain; recent stays zero because unloaded history is
+excluded from this view. Bundle manifests
 record `deviceWire` and exact wheel archive hashes. The bridge rejects a mismatched
 capability or artifact digest.
 
