@@ -81,7 +81,8 @@ Each project owns its generated `sdkconfig` and `build/` output.
 - [Bring-up diagnostics](projects/bringup/README.md): panel orientation, pixel packing, memory and USB checks.
 - [Shared display component](components/display_rlcd/README.md): packing, transport and upstream provenance.
 - [Presentation media](docs/media/README.md): gallery sources, regeneration and capture guidance.
-- [Dashboard release](docs/evidence/2026-10-13-release-refinement/REPORT.md): current host runtime, source publication and acceptance.
+- [Dashboard operation](projects/agent-dashboard/docs/operations.md): managed services, runtime selection and rollback.
+- [Latest host rollout](projects/agent-dashboard/docs/evidence/2026-10-20-restart-context/REPORT.md): restart recovery and both-device checks; firmware and installed package identities are retained separately.
 - [Workspace history](docs/workspace-origin.md): earlier layout and migration context.
 
 Dated [evidence records](docs/evidence/) retain the source paths, artifacts and

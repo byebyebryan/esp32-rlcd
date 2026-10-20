@@ -48,13 +48,17 @@ its bounded host feed; render-bench measures drawing and completed SPI writes;
 bring-up supplies the diagnostic pattern. Buttons and other peripherals are not
 configured by these applications. See the [project gallery](../README.md#project-gallery).
 
-The local RLCD USB serial is `94:A9:90:F3:43:74`. It was identified from the
+The Starship RLCD USB serial is `94:A9:90:F3:43:74`; Snap's is
+`94:A9:90:DE:D0:04`. The Starship board was identified from the
 factory app's logs, memory specifications and peripheral startup. The other
 connected board, `28:84:85:92:C2:20`, is the active ESP32-349 device.
 
-The [bring-up receipt](bringup.md) retains its original scope. Current dashboard
-runtime and deferred manual checks are recorded in the
-[release receipt](evidence/2026-10-13-release-refinement/REPORT.md).
+The [bring-up receipt](bringup.md) retains its original scope. Follow
+[dashboard operation](../projects/agent-dashboard/docs/operations.md) for runtime
+selection and rollback. The latest
+[host rollout](../projects/agent-dashboard/docs/evidence/2026-10-20-restart-context/REPORT.md)
+records both-device checks and the retained firmware identity; manual panel and
+reboot acceptance remain separate.
 
 ## Primary references
 
