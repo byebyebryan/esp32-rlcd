@@ -90,7 +90,8 @@ restored [readable header numbers](../../docs/evidence/2026-10-19-header-readabi
 and [removed the separate recent counter](../../docs/evidence/2026-10-19-remove-recent-count/REPORT.md)
 while retaining recent conversations in the list at that time. The subsequent
 [neutral-status correction](../../docs/evidence/2026-10-19-inactive-status/REPORT.md)
-preceded the current loaded-only selection, which excludes unloaded history.
+preceded the current [loaded-only selection](../../docs/evidence/2026-10-19-loaded-only/REPORT.md),
+which excludes unloaded history.
 Each receipt preserves its
 original source, firmware and deployment evidence.
 

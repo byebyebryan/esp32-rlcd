@@ -1,0 +1,78 @@
+{
+  "sourceRevision": "11e54f2ed05ef8615fb7622deeb9949bf8e23ae4",
+  "bundleManifestSha256": "1ad6ef316f2aba74b93d1c12ebb95b02b4bd134cbb4ca092c3b95ede15fe7197",
+  "previousBundleManifestSha256": "271ef152d3c4e15534895af2fd82b1d9a2be1726ed891a20e5e0c0e4aa442472",
+  "displaySelection": "current running-runtime user sessions only; positively unloaded rows removed, uncertain prior context retained",
+  "liveSelection": {
+    "pass": true,
+    "loadedSelected": 6,
+    "parkedExcluded": 5,
+    "codexExcluded": true,
+    "meshPlusExcluded": true,
+    "rowsMatchExactCurrentUserRuntimeSet": true,
+    "recentCount": 0
+  },
+  "checks": {
+    "python314": {
+      "passed": 72,
+      "skipped": 0
+    },
+    "python311": {
+      "passed": 72,
+      "skipped": 0
+    },
+    "managedSelectionAndArtifacts": "pass",
+    "documentationAndPresentationHashes": "pass"
+  },
+  "deployments": {
+    "starship": {
+      "invocation": "129d566c3a7d4a3b8f06b16c8682cb13",
+      "deviceHealth": {
+        "event": "device_health",
+        "health": 0,
+        "partial": 0,
+        "rows": 6,
+        "attention": 0,
+        "waiting": 5,
+        "working": 1,
+        "recent": 0,
+        "uncertain": 0,
+        "frame_us": 16267,
+        "miss": 0,
+        "heap": 291003,
+        "stack": 4776
+      },
+      "protectedServicesUnchanged": true
+    },
+    "snap": {
+      "invocation": "42b19cf948864d2fac404ac376302856",
+      "deviceHealth": {
+        "event": "device_health",
+        "health": 0,
+        "partial": 0,
+        "rows": 6,
+        "attention": 0,
+        "waiting": 5,
+        "working": 1,
+        "recent": 0,
+        "uncertain": 0,
+        "frame_us": 18093,
+        "miss": 0,
+        "heap": 291003,
+        "stack": 4776
+      },
+      "protectedServicesUnchanged": true
+    }
+  },
+  "firmwareChanged": false,
+  "producerPackagesChanged": false,
+  "providerActions": false,
+  "evidenceHashes": {
+    "tests-314.log": "6eabe72eebc88bd81300ac73d0c595bcffc35e07d191fde5d0bb0c0de6e24aca",
+    "tests-311.log": "9bfd83bb903c1ce3735dbe40ee6834f0777160c01d42b81dffae4a3efcb78bd3",
+    "selection-check.json": "2e6e9a20da51bf9bcb3c46aa0f0ba8266cff95ead78c1cd22c355aa6f0aa765c",
+    "before.json": "5844a65528eca6987937240d2abc546c8e2c873d9e4b472862f0f1a341784d11",
+    "after.json": "377f60676974b4444860419f05cc7413a8abc306772ea6b57c87815dc3edfbdc",
+    "snap-after.json": "223e816fda12491b67d1ad71bdf44c815250dd59732ee29bb19e50491c36d31f"
+  }
+}

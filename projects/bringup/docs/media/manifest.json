@@ -1,6 +1,6 @@
 {
   "description": "Native initial rlcd_frame_draw_test pattern used by bring-up; no hardware access.",
-  "source_revision": "e118bd2e1db385b08119d0e59ecb85c82de181a0",
+  "source_revision": "11e54f2ed05ef8615fb7622deeb9949bf8e23ae4",
   "source_sha256": {
     "components/display_rlcd/include/rlcd_frame.h": "96ca04c42f8983a44b8c362bbedbd05f85e400ce617f4daebe80ba25ce4a155a",
     "components/display_rlcd/include/rlcd_panel.h": "638c1f9c89c7abda86e0e5c369db32125ff198986c205b4ee7733627f921fbfb",
@@ -15,7 +15,7 @@
     "projects/agent-dashboard/components/agent_dashboard/include/fusion_font.h": "623bf5a77e946acc82ce664e9602a9890d392809faff9824b85ca797c0d38b48",
     "projects/agent-dashboard/components/agent_dashboard/include/fusion_font_12.h": "ff7f1fe7d6bdf6e583ca38f58c1df92037cafedd535eb419625fcb05fc0c9bee",
     "projects/agent-dashboard/docs/media/story.json": "70ba46ba0e3306e99f97d7a225648dfb00c853374ff731ad096c0a393830582f",
-    "projects/agent-dashboard/host/live_dashboard/projection.py": "0dc78853a97a6db6ea90a01a1957ebb005bf14c485fb50de1a9ba7295ef9b038",
+    "projects/agent-dashboard/host/live_dashboard/projection.py": "a3a1b36eece4428ef98cbffbd145d196d382fe856a8b5652a59a312f1742fcc4",
     "projects/agent-dashboard/host/live_dashboard/wire.py": "f6f42ac69a130d83aafb68a62c858c7cc3b5beca45e77a77bc60ff556ebea219",
     "projects/bringup/main/main.c": "219295cbc2770f574a5e87ff699771e11e9fb69dc34484a065de16f31780683c",
     "projects/render-bench/main/main.c": "56bd04289188a45f66329c49a021d19c33b7f3abb0011fcd9e2d383d62ba05ed",
