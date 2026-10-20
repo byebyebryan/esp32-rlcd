@@ -1,0 +1,412 @@
+{
+  "scope": "Plain session titles and ST/SN/SW row badges; paired wire-4 dashboard and device application",
+  "date": "2026-10-19",
+  "consumerSource": "883f77f99d470efb42d5c0a7cf701ac7c3488991",
+  "opsSource": "1dc7cae1b64cb37c1806abd9cabb4542370c3c2c",
+  "hostBundle": "95ecb5378a248111",
+  "manifestSha256": "95ecb5378a24811182e43d112ed35b96dc841947208bc8e455d5df999c650047",
+  "installedArtifacts": {
+    "meshWheelSha256": "4f5987191b8d1113f3aa0afced15c5179f458fa0f9b9044352f1fefd418736bd",
+    "observerWheelSha256": "a3983afc12cee4aec84dd53d2ec9e60edd1e97dd4250543d77344bcde0878ac5"
+  },
+  "deviceWire": 4,
+  "rowBadges": {
+    "starship.default": "ST",
+    "snap.default": "SN",
+    "snap.work": "SW"
+  },
+  "physicalHosts": [
+    "starship",
+    "snap"
+  ],
+  "validation": {
+    "dashboardTests": 90,
+    "motionAndNativeRendering": true,
+    "cleanEspIdfBuild": "5.5.3",
+    "hostFramesCrcMatchedToDeviceAck": true,
+    "sixSecondSilenceThenRecovery": true,
+    "bothManagedServicesHealthy": true
+  },
+  "boards": {
+    "starship": {
+      "update": {
+        "host": "starship",
+        "boardMac": "94:a9:90:f3:43:74",
+        "imageSha256": "6c17962f1c30bfa0866879647eb3b5e0110757a36c80df7c742940756045e1d1",
+        "imageBytes": 1243904,
+        "readbackSha256": "6c17962f1c30bfa0866879647eb3b5e0110757a36c80df7c742940756045e1d1",
+        "bootloaderUnchanged": true,
+        "partitionUnchanged": true,
+        "onlyApplicationWritten": true,
+        "initial": {
+          "sent": 12,
+          "healthyAcknowledged": 12,
+          "lastAccepted": {
+            "request": 12,
+            "sequence": 12,
+            "crc": "c340d829",
+            "rows": 4,
+            "badges": {
+              "ST": 3,
+              "SW": 1
+            }
+          }
+        },
+        "silence": {
+          "windowSeconds": 6,
+          "expired": {
+            "health": 2,
+            "partial": 1,
+            "rows": 4,
+            "attention": 0,
+            "waiting": 0,
+            "working": 0,
+            "recent": 0,
+            "uncertain": 4,
+            "frame_us": 14559,
+            "miss": 0,
+            "heap": 291003,
+            "stack": 4776
+          }
+        },
+        "recovery": {
+          "sent": 12,
+          "healthyAcknowledged": 12,
+          "lastAccepted": {
+            "request": 30,
+            "sequence": 12,
+            "crc": "e930658f",
+            "rows": 4,
+            "badges": {
+              "ST": 3,
+              "SW": 1
+            }
+          }
+        },
+        "passed": true
+      },
+      "managed": {
+        "host": "starship",
+        "deviceWire": 4,
+        "bundle": ".local/share/rlcd-agent-dashboard/95ecb5378a248111",
+        "manifestSha256": "95ecb5378a24811182e43d112ed35b96dc841947208bc8e455d5df999c650047",
+        "selectionSha256": "bf4482fdcfb408b4f8a2ccaec354a8a92f38aff2ebb715dc55c4be51adcac708",
+        "state": "active",
+        "restarts": 0,
+        "invocationId": "8322be5a4cb9430b883e52deb0c5d921",
+        "lastHealthyAck": {
+          "event": "device_ack_recovered",
+          "request": 303,
+          "sequence": 73,
+          "rows": 4,
+          "source_admitted": true
+        },
+        "lastHealthyDeviceReport": {
+          "event": "device_health",
+          "health": 0,
+          "partial": 0,
+          "rows": 4,
+          "attention": 0,
+          "waiting": 1,
+          "working": 3,
+          "recent": 0,
+          "uncertain": 0,
+          "frame_us": 15632,
+          "miss": 0,
+          "heap": 291003,
+          "stack": 4776
+        },
+        "selectedRowBadges": [
+          "ST",
+          "SW",
+          "ST",
+          "ST"
+        ],
+        "swNativeHostUnchanged": true,
+        "scopedManagedDrift": false
+      },
+      "backup": {
+        "host": "starship",
+        "mac": "94:a9:90:f3:43:74",
+        "backupBytes": 2162688,
+        "backupSha256": "620b7277a857deb1ea40033bf936ee8bb475d8d7e65fb17ca204807e8e5311c9",
+        "backupArchive": "/home/bryan/.cache/rlcd-sw-wire4-20261019/starship-before-application-and-layout.bin",
+        "bootloaderRegionSha256": "485bf53e193b7e41c86a7f04c2f18bb572d91de2553d00722365c741724e8586",
+        "partitionRegionSha256": "1028e62176495136a0180a3f49c291dddec8d4fa7cab5cda72edabafa466013b",
+        "oldAppPartitionSha256": "519b5b2e9601bcc547b1f3f698a4b6aa4b6d6ea8a82105c163061ff78d8b3aa4"
+      }
+    },
+    "snap": {
+      "update": {
+        "host": "snap",
+        "boardMac": "94:a9:90:de:d0:04",
+        "imageSha256": "6c17962f1c30bfa0866879647eb3b5e0110757a36c80df7c742940756045e1d1",
+        "imageBytes": 1243904,
+        "readbackSha256": "6c17962f1c30bfa0866879647eb3b5e0110757a36c80df7c742940756045e1d1",
+        "bootloaderUnchanged": true,
+        "partitionUnchanged": true,
+        "onlyApplicationWritten": true,
+        "initial": {
+          "sent": 12,
+          "healthyAcknowledged": 12,
+          "lastAccepted": {
+            "request": 12,
+            "sequence": 12,
+            "crc": "dcc8ab3a",
+            "rows": 4,
+            "badges": {
+              "ST": 3,
+              "SW": 1
+            }
+          }
+        },
+        "silence": {
+          "windowSeconds": 6,
+          "expired": {
+            "health": 2,
+            "partial": 1,
+            "rows": 4,
+            "attention": 0,
+            "waiting": 0,
+            "working": 0,
+            "recent": 0,
+            "uncertain": 4,
+            "frame_us": 14559,
+            "miss": 0,
+            "heap": 291003,
+            "stack": 4776
+          }
+        },
+        "recovery": {
+          "sent": 12,
+          "healthyAcknowledged": 12,
+          "lastAccepted": {
+            "request": 30,
+            "sequence": 12,
+            "crc": "334734c2",
+            "rows": 4,
+            "badges": {
+              "ST": 3,
+              "SW": 1
+            }
+          }
+        },
+        "passed": true
+      },
+      "managed": {
+        "host": "snap",
+        "deviceWire": 4,
+        "bundle": ".local/share/rlcd-agent-dashboard/95ecb5378a248111",
+        "manifestSha256": "95ecb5378a24811182e43d112ed35b96dc841947208bc8e455d5df999c650047",
+        "selectionSha256": "fb8bb9b67e90286eb33d5627e578b24cd08ebfb6858f0e5a3b7ff648dc541091",
+        "state": "active",
+        "restarts": 0,
+        "invocationId": "57c40051cd22406686df3d30062199f5",
+        "lastHealthyAck": {
+          "event": "device_ack_recovered",
+          "request": 105,
+          "sequence": 72,
+          "rows": 4,
+          "source_admitted": true
+        },
+        "lastHealthyDeviceReport": {
+          "event": "device_health",
+          "health": 0,
+          "partial": 0,
+          "rows": 4,
+          "attention": 0,
+          "waiting": 1,
+          "working": 3,
+          "recent": 0,
+          "uncertain": 0,
+          "frame_us": 15551,
+          "miss": 0,
+          "heap": 291003,
+          "stack": 4776
+        },
+        "selectedRowBadges": [
+          "ST",
+          "SW",
+          "ST",
+          "ST"
+        ],
+        "swNativeHostUnchanged": true,
+        "scopedManagedDrift": false
+      },
+      "backup": {
+        "host": "snap",
+        "mac": "94:a9:90:de:d0:04",
+        "backupBytes": 2162688,
+        "backupSha256": "3901ba978be32601d0d5d4363e02329df05afe31ca30a264f3320c0ce5dab5c5",
+        "backupArchive": "/home/bryan/.cache/rlcd-sw-wire4-20261019/snap-before-application-and-layout.bin",
+        "bootloaderRegionSha256": "485bf53e193b7e41c86a7f04c2f18bb572d91de2553d00722365c741724e8586",
+        "partitionRegionSha256": "1028e62176495136a0180a3f49c291dddec8d4fa7cab5cda72edabafa466013b",
+        "oldAppPartitionSha256": "519b5b2e9601bcc547b1f3f698a4b6aa4b6d6ea8a82105c163061ff78d8b3aa4"
+      }
+    }
+  },
+  "rollback": {
+    "hostBundle": "bcc1077fe14d738d",
+    "deviceWire": 3,
+    "applicationPartitionSha256": "519b5b2e9601bcc547b1f3f698a4b6aa4b6d6ea8a82105c163061ff78d8b3aa4",
+    "privateArchiveRoot": ".cache/rlcd-sw-wire4-20261019",
+    "bothHostApplicationAndLayoutBackupsRetained": true
+  },
+  "privateEvidence": {
+    ".cache/observer-home-profiles-20261019/sw-wire4-final-tests.log": {
+      "bytes": 13845,
+      "sha256": "f41ad44aa4860278426ec361d3df44e88da417b2eab51968641b45e24051f4bc"
+    },
+    ".cache/observer-home-profiles-20261019/sw-motion-tests.log": {
+      "bytes": 348,
+      "sha256": "7e42cdce2077772becdc3faf686c8a7450b93cdfcd48098dfbe503ad23b034d7"
+    },
+    ".cache/observer-home-profiles-20261019/sw-media.log": {
+      "bytes": 110,
+      "sha256": "58c035230962ce36d7b06fc544569c35f7f12b4008cda1b9933d7952dbf9ca4c"
+    },
+    ".cache/observer-home-profiles-20261019/sw-idf-clean-build.log": {
+      "bytes": 14531,
+      "sha256": "224326eff9b041a9bc4d3bb6da597b2ddfba461022fa57d65d7091a2e48c5674"
+    },
+    ".cache/rlcd-sw-wire4-20261019/capture_installed.py": {
+      "bytes": 1057,
+      "sha256": "0843794036657dfb6a98d66e07cd9e5c41e76ecf09723ea8b38d8f8c2e0188e8"
+    },
+    ".cache/rlcd-sw-wire4-20261019/capture_usb_original.py": {
+      "bytes": 6026,
+      "sha256": "64e8c5e29db3d41d6b7fea95b4a4cbe333c88e43cf6f5a6f64dba1829a39c7bf"
+    },
+    ".cache/rlcd-sw-wire4-20261019/update_board.py": {
+      "bytes": 5255,
+      "sha256": "b740498d2af49c056d6b26ab413e7052762184d9c67a9699c340f328d01ba6b9"
+    },
+    ".cache/rlcd-sw-wire4-20261019/update_board_v1.py": {
+      "bytes": 5164,
+      "sha256": "d32658c2dd6363b9ec40d64991ffe07432bf15f8cdec2de173f55c298030ef00"
+    },
+    ".cache/rlcd-sw-wire4-20261019/verify_managed.py": {
+      "bytes": 2812,
+      "sha256": "574b6fd34258b64d0de0dc6071cd9dcf22335a61c2522de1edbc605e1e769084"
+    },
+    ".cache/rlcd-sw-wire4-20261019/verify_managed_v1.py": {
+      "bytes": 2807,
+      "sha256": "f25f8a63842838dff0cfe4965e2fe0fbed414eeead7887c7ee6cc807fbfd7745"
+    },
+    ".cache/rlcd-sw-wire4-20261019/ops-artifact-gate.log": {
+      "bytes": 510,
+      "sha256": "c6a9b0021ae58d5bf11aa0bd373633432a0892602f84c378521a772dfd8ecf79"
+    },
+    ".cache/rlcd-sw-wire4-20261019/snap-ops-artifact-gate.log": {
+      "bytes": 510,
+      "sha256": "c6a9b0021ae58d5bf11aa0bd373633432a0892602f84c378521a772dfd8ecf79"
+    },
+    ".cache/rlcd-sw-wire4-20261019/starship-update.json": {
+      "bytes": 1160,
+      "sha256": "756c7000b507c4c8b23a2386dd38074671047fb644e071512c089ea62248cf4b"
+    },
+    ".cache/rlcd-sw-wire4-20261019/starship-managed-final.json": {
+      "bytes": 944,
+      "sha256": "fbcc29fe1c3d996653d6a3c8624acd4123565ef3342602990c0418e1f1f4b23d"
+    },
+    ".cache/rlcd-sw-wire4-20261019/starship-managed-journal.jsonl": {
+      "bytes": 21245,
+      "sha256": "6d492f871094a092ebbf3affa7b70b1d13e0e1eda96fa014b2c46e0c7e566c13"
+    },
+    ".cache/rlcd-sw-wire4-20261019/starship-managed-diff.log": {
+      "bytes": 4940,
+      "sha256": "b9b84a9008d1f981368d0a08708e3c679c732ac4180beb03aafc472fa93d37da"
+    },
+    ".cache/rlcd-sw-wire4-20261019/starship-managed-dry-run.log": {
+      "bytes": 4940,
+      "sha256": "b9b84a9008d1f981368d0a08708e3c679c732ac4180beb03aafc472fa93d37da"
+    },
+    ".cache/rlcd-sw-wire4-20261019/starship-initial.log": {
+      "bytes": 6141,
+      "sha256": "9bba2ae5bbffcec1fb3c5a59f88bec7f72d7597f60c879f9504c268abe17951f"
+    },
+    ".cache/rlcd-sw-wire4-20261019/starship-initial-sent-audit.json": {
+      "bytes": 1629,
+      "sha256": "c621e5eb3090990fbdb099d819b6a074dbff84246efa876c9bb4b093a78836d5"
+    },
+    ".cache/rlcd-sw-wire4-20261019/starship-recovery.log": {
+      "bytes": 5814,
+      "sha256": "c4f61228083a5c0579262f8f708715ec7216e5ed14e912408ccbd6f2fe2eea4c"
+    },
+    ".cache/rlcd-sw-wire4-20261019/starship-recovery-sent-audit.json": {
+      "bytes": 1638,
+      "sha256": "9b95c13ff6840d1e17c1523366225d2576204fff0d6e3bbb017691d1824eb41d"
+    },
+    ".cache/rlcd-sw-wire4-20261019/starship-app-write.log": {
+      "bytes": 2025,
+      "sha256": "5a404b9138c94c02644d9f68f7a7df45bdc19ed5264be1a2fea11a51ae6c8cda"
+    },
+    ".cache/rlcd-sw-wire4-20261019/starship-app-readback.log": {
+      "bytes": 8410,
+      "sha256": "c3743ef4139f991bf09bc22159015ffed3a179eeda5ef9e52e9b6f4bb0d3d269"
+    },
+    ".cache/rlcd-sw-wire4-20261019/starship-layout-readback.log": {
+      "bytes": 707,
+      "sha256": "86e6c8dec8265f006dc500be251b0aee70826620bdebacea94d2df21be425efd"
+    },
+    ".cache/rlcd-sw-wire4-20261019/snap-update.json": {
+      "bytes": 1156,
+      "sha256": "53c7c23d5f45799b7b2ca968623243cf3999fc239a9a3c8b9f74c414c986715d"
+    },
+    ".cache/rlcd-sw-wire4-20261019/snap-managed-final.json": {
+      "bytes": 940,
+      "sha256": "ecd72c7e824bbda483399dac4c59f815a9ff035e31e861fea591490d57f364f2"
+    },
+    ".cache/rlcd-sw-wire4-20261019/snap-managed-journal.jsonl": {
+      "bytes": 19614,
+      "sha256": "e04ac02d7a439499dbd216840a3ca5087c23c72d706d9b52c56ce9d6f9030f7c"
+    },
+    ".cache/rlcd-sw-wire4-20261019/snap-managed-diff.log": {
+      "bytes": 4936,
+      "sha256": "5c315d607cf6dc9dcf1e206ef2c03a4773b8a9ac4884afbce0ddba1cdf805c93"
+    },
+    ".cache/rlcd-sw-wire4-20261019/snap-managed-dry-run.log": {
+      "bytes": 4936,
+      "sha256": "5c315d607cf6dc9dcf1e206ef2c03a4773b8a9ac4884afbce0ddba1cdf805c93"
+    },
+    ".cache/rlcd-sw-wire4-20261019/snap-initial.log": {
+      "bytes": 6141,
+      "sha256": "45acaf9872b148739006b455d7223e5ed889c6c849a84ab67e0183e31a25ecb2"
+    },
+    ".cache/rlcd-sw-wire4-20261019/snap-initial-sent-audit.json": {
+      "bytes": 1629,
+      "sha256": "5f5e02cac328edae75a3aa267e34ae3e06d784a32db5137fcfc25600e2e900ce"
+    },
+    ".cache/rlcd-sw-wire4-20261019/snap-recovery.log": {
+      "bytes": 5814,
+      "sha256": "54427355ffd850a6eb9c027a4df29ba60a558d56afe7e8eaaf1daf4f3ae9965e"
+    },
+    ".cache/rlcd-sw-wire4-20261019/snap-recovery-sent-audit.json": {
+      "bytes": 1638,
+      "sha256": "a59921db94a421ce1acde664dc12a9b00061be3f051478507a28e20e2d443536"
+    },
+    ".cache/rlcd-sw-wire4-20261019/snap-app-write.log": {
+      "bytes": 2025,
+      "sha256": "e234ef266d19e2a3997ab753b2df0e94df926fff0f1e2b6364f33f04343b9055"
+    },
+    ".cache/rlcd-sw-wire4-20261019/snap-app-readback.log": {
+      "bytes": 8410,
+      "sha256": "1a74a3671476fd6b051b7ebde083c0eb96a4e3da6578a6941f9c63d1687739d8"
+    },
+    ".cache/rlcd-sw-wire4-20261019/snap-layout-readback.log": {
+      "bytes": 707,
+      "sha256": "d55b5764b8a22fb9e64496623ae8c98dafe244e89a8a82c1b0eeff2c7f42fafa"
+    }
+  },
+  "diagnostics": [
+    "Initial dashboard-test TTL/UTF8 corruption offsets were updated for the added row field; final 90 tests pass.",
+    "Aborted full-flash backup was replaced by boot/layout plus complete application-partition backups; no flash write occurred in that aborted read.",
+    "Snap capture initially imposed exact row count during partial warm-up; the intended retained-context behavior caused its assertion. Automatic app rollback was readback-verified; final corrected capture and reapplication pass. Prior attempt evidence is retained on Snap under snap-attempt1-capture-assertion.",
+    "Managed audit initially used host rather than the public hostScope identity key; corrected audit passes with no runtime change."
+  ],
+  "limits": [
+    "Live rows at capture were ST and SW; native tests also exercise ST/SN/SW simultaneously.",
+    "USB acknowledgements and native preview were checked; no physical photograph, cold power-cycle or unplug/replug result is claimed.",
+    "No Observer/Mesh/provider restart, package change or delta feature adoption is part of this display update."
+  ]
+}
