@@ -180,6 +180,17 @@ class Composition(unittest.TestCase):
 
 
 class HomeBinding(unittest.TestCase):
+    def test_warming_owner_does_not_report_a_false_home_mismatch(self):
+        fleet = Fleet.__new__(Fleet)
+        fleet.expected_homes = {"snap": "/fixture/work"}
+        output = io.StringIO()
+        fleet.events = Events(output)
+        source = Source("snap", "warming")
+        self.assertEqual(fleet._bound_sources([source], {"hosts": [
+            {"hostId": "snap", "owner": None},
+        ]}), [source])
+        self.assertEqual(output.getvalue(), "")
+
     @unittest.skipUnless(__import__("importlib").util.find_spec("agent_observer"), "optional Observer")
     def test_one_wrong_home_does_not_hide_another_host(self):
         from agent_observer.public import store_namespace

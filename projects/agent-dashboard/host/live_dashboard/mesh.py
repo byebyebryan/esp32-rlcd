@@ -131,6 +131,11 @@ class Fleet:
     def _bound_sources(self, sources, context):
         result = []
         for source in sources:
+            # A not-yet-admitted owner is ordinary startup, not a mismatched
+            # home. These states carry no current rows or coverage claims.
+            if source.status not in {"current", "partial"}:
+                result.append(source)
+                continue
             try:
                 if not self._check_configured_homes(context, expected_host=source.host):
                     raise ValueError("profile_home_binding")
