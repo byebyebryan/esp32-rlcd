@@ -16,5 +16,5 @@ mkdir -p "$RLCD_OUTPUT_DIR"
     "$RLCD_APP_ROOT/components/agent_dashboard/fusion_pixel_12_zh_hans.c" \
     "$RLCD_REPO_ROOT/components/display_rlcd/rlcd_frame.c" \
     -o "$RLCD_OUTPUT_DIR/feed"
-RLCD_FEED_TEST="$RLCD_OUTPUT_DIR/feed" "$RLCD_PYTHON" -m unittest discover \
-    -s "$RLCD_APP_ROOT/tests" -p 'test_*.py' -v
+RLCD_FEED_TEST="$RLCD_OUTPUT_DIR/feed" "$RLCD_PYTHON" \
+    "$RLCD_SCRIPT_DIR/test-dashboard-suite.py"

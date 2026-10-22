@@ -69,9 +69,11 @@ The [owned admission checkpoint](../../docs/evidence/2026-10-15-owned-admission/
 adopts Observer a6/Mesh a22 with selected current bodies and complete membership
 summaries. Strict admission, per-row expiry, diagnostics and display policy remain.
 The [active-session feed plan](docs/active-feed-plan.md) records the earlier
-active-only contract. The current bridge default uses Observer a7 / Mesh a23's
+active-only contract. The current bridge default uses Observer a8 / Mesh a24's
 explicit working-set profile and public membership leases, with a loaded-only
-consumer filter; full history remains an explicit diagnostic. The [active-feed receipt](../../docs/evidence/2026-10-16-active-feed/REPORT.md)
+consumer filter; full history remains an explicit diagnostic. Hosted SDK
+qualification installs the exact public wheels recorded in
+[`sdk-release-lock.json`](sdk-release-lock.json). The [active-feed receipt](../../docs/evidence/2026-10-16-active-feed/REPORT.md)
 records the prior wire 2 rollout and paired rollback. Physical
 ACK/readability/reboot gates remain separate.
 

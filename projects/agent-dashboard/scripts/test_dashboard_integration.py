@@ -3,6 +3,7 @@
 
 import importlib.util
 import os
+import subprocess
 import sys
 import unittest
 from pathlib import Path
@@ -60,6 +61,22 @@ for package, path in package_paths.items():
             f"{package} resolved outside the selected interpreter prefix: {path}; "
             "remove source checkouts from PYTHONPATH"
         )
+
+try:
+    locked_sdk = subprocess.run(
+        [sys.executable, str(APP_ROOT / "scripts" / "verify-sdk.py")],
+        capture_output=True,
+        text=True,
+        timeout=30,
+    )
+except (OSError, subprocess.SubprocessError):
+    fail("could not verify the selected interpreter against the committed SDK lock")
+if locked_sdk.returncode != 0:
+    fail(
+        "the selected Observer/Mesh versions or wheel hashes do not match "
+        "sdk-release-lock.json"
+    )
+print(locked_sdk.stdout, end="")
 
 if not callable(getattr(Reader, "watch_admitted", None)):
     fail("Mesh Reader.watch_admitted is unavailable")

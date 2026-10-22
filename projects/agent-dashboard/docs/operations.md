@@ -38,9 +38,11 @@ Live acquisition needs the accepted Observer/Mesh Python environment. On the
 RLCD host it is:
 
 ```sh
-RLCD_OBSERVER_PYTHON="$HOME/.local/share/agent-observer/0.7.0a7-a3983afc-ws72-m4f598719/bin/python"
+RLCD_OBSERVER_PYTHON="$HOME/.local/share/agent-observer/0.7.0a8-d9608720-ws72-m9bca5b55/bin/python"
 mkdir -p projects/agent-dashboard/build/live-preview
 "$RLCD_OBSERVER_PYTHON" projects/agent-dashboard/scripts/live-dashboard.py \
+    --hosts starship snap \
+    --profiles-config "$HOME/.config/rlcd-agent-dashboard/profiles.json" \
     --preview projects/agent-dashboard/build/live-preview/frame.txt
 projects/agent-dashboard/build/native-live/feed \
     projects/agent-dashboard/build/live-preview/frame.txt \
@@ -56,8 +58,8 @@ Mesh Agent v1 does not admit this endpoint. Use the matching installed Observer
 and Mesh wheel artifacts selected by the host bundle, not a same-version
 substitute.
 
-The bridge uses Observer a7's working-set read and member-lease interfaces and
-Mesh a23 preparation/admission. Reader and helper share a
+The bridge uses released Observer a8's working-set read and member-lease
+interfaces and Mesh a24 preparation/admission. Reader and helper share a
 `WorkingSetAgentProfile`. Normal ticks inspect member bodies, exact scoped
 coverage and public lease exports. Each row's current membership/category and
 display claims follow their independent deadlines; a response heartbeat cannot
@@ -66,6 +68,8 @@ as uncertain; only an admitted negative or current complete census retires it.
 Bundle verification pins the profile, 72-hour window, read interfaces and exact
 Observer/Mesh wheel archive hashes. Both hosts need the working-set collector
 and source/publisher; a reader-only upgrade cannot enable the route.
+Delivery uses ordinary complete selected views. Semantic delta and Mesh view-feed
+remain disabled; installing their containing package grants no route selection.
 
 Run the strict public integration gate with that installed Python:
 
@@ -168,8 +172,13 @@ checks source, wheel contents and repository parity. Update the host selection
 and validate scoped chezmoi targets before service replacement; retain the
 previous bundle and exact selection for rollback.
 
-The working-set rollout selects the a7 collector and separately configured
-working-set source/publisher on both hosts. Rollback restores that paired role
+The a8/a24 host-client upgrade retains the original wire-4 firmware and profile
+configuration. Its separate dependency-upgrade record retains the exact a7/a23
+host bundle and managed-file preimages for rollback; a client-only rollback
+does not restart producers or change firmware.
+
+The earlier initial working-set rollout selected the a7 collector and separately
+configured working-set source/publisher on both hosts. Its rollback restores that paired role
 tuple and the prior bridge/firmware bundle; application-only rollback does not
 restore the earlier collector route. Preserve the full `agent` source, Tmux
 factories and reader/writer links. Chezmoi's last-applied state can differ after

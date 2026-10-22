@@ -338,6 +338,12 @@ class WorkingSetReconnect(unittest.IsolatedAsyncioTestCase):
 
         async def configured(*_args, **kwargs):
             self.assertEqual(kwargs["source"], "agent_working_set")
+            self.assertEqual(kwargs["scope"], "hosts")
+            self.assertTrue(
+                kwargs["socket"].endswith(
+                    "mesh-plus-agent-working-set/read.sock"
+                )
+            )
             self.assertEqual(
                 kwargs["profile"].descriptor.profile_id,
                 "agent-observer.mesh-working-set.v1",
@@ -347,6 +353,21 @@ class WorkingSetReconnect(unittest.IsolatedAsyncioTestCase):
             number = len(guards)
 
             async def stream(request):
+                self.assertEqual(
+                    request,
+                    {
+                        "meshProtocol": 1,
+                        "requestId": request["requestId"],
+                        "operation": "watch",
+                        "profile": "agent-observer.mesh-working-set.v1",
+                        "access": "cached",
+                        "selection": {
+                            "mode": "hosts",
+                            "hostIds": ["starship", "snap"],
+                        },
+                        "extensions": {},
+                    },
+                )
                 requests.append(request["requestId"])
                 frame = response(
                     frames,

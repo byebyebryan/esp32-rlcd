@@ -14,11 +14,31 @@ jobs:
       - run: ./scripts/check-frame.sh
       - name: Run dependency-free dashboard checks
         run: ./projects/agent-dashboard/scripts/test-live-dashboard.sh
-      # The strict installed Observer/Mesh gate is documented in
-      # projects/agent-dashboard/docs/testing.md. Hosted SDK qualification waits
-      # for a publicly reachable compatible Mesh source revision.
       - run: ./projects/agent-dashboard/scripts/test-dashboard-motion.sh
       - run: python3 scripts/check-docs.py
+
+  sdk:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.11', '3.14']
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install exact public Observer/Mesh release pair
+        run: python projects/agent-dashboard/scripts/install-sdk.py --wheelhouse "$RUNNER_TEMP/dashboard-sdk-wheels"
+      - name: Verify SDK versions, wheel hashes, and public APIs
+        run: python projects/agent-dashboard/scripts/verify-sdk.py
+      - name: Run strict twelve-case installed SDK gate
+        run: PYTHON="$(command -v python)" ./projects/agent-dashboard/scripts/test-dashboard-integration.sh
+      - name: Run complete dashboard client suite
+        env:
+          RLCD_RUN_PUBLIC_INTEGRATION: '1'
+          RLCD_REQUIRE_ZERO_SKIPS: '1'
+        run: PYTHON="$(command -v python)" ./projects/agent-dashboard/scripts/test-live-dashboard.sh
 
   presentation:
     runs-on: ubuntu-latest

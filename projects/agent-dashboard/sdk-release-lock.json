@@ -1,0 +1,141 @@
+{
+  "lockVersion": 1,
+  "python": {
+    "implementation": "CPython",
+    "requires": ">=3.11",
+    "qualified": [
+      "3.11",
+      "3.14"
+    ],
+    "platform": "Linux x86_64"
+  },
+  "releases": [
+    {
+      "distribution": "agent-observer",
+      "version": "0.7.0a8",
+      "releasePage": "https://github.com/byebyebryan/agent-observer/releases/tag/v0.7.0a8",
+      "releaseTag": "v0.7.0a8",
+      "releaseTagCommit": "6340bc8aa6442bc8081a69c659d16d6f2657e527",
+      "runtimeSource": "aade4826c785af6dc98842dfb662a090828dda17",
+      "wheel": {
+        "filename": "agent_observer-0.7.0a8-py3-none-any.whl",
+        "url": "https://github.com/byebyebryan/agent-observer/releases/download/v0.7.0a8/agent_observer-0.7.0a8-py3-none-any.whl",
+        "sha256": "d960872074f8586d2bb56ea97678096a25525ff34796dbf390c94627fd949928"
+      }
+    },
+    {
+      "distribution": "mesh-plus",
+      "version": "0.1.0a24",
+      "releasePage": "https://github.com/byebyebryan/mesh-plus/releases/tag/v0.1.0a24",
+      "releaseTag": "v0.1.0a24",
+      "releaseTagCommit": "bb0c45399e5b8264c9936ca48457cc9a442431df",
+      "runtimeSource": "7e152d22fa57fc45049438b50877433d8c96f6d8",
+      "wheel": {
+        "filename": "mesh_plus-0.1.0a24-py3-none-any.whl",
+        "url": "https://github.com/byebyebryan/mesh-plus/releases/download/v0.1.0a24/mesh_plus-0.1.0a24-py3-none-any.whl",
+        "sha256": "9bca5b554babfa59ba56b1a4ac5e8e5c66a85e63709731ee1fe7d4f0ed6a18a6"
+      }
+    }
+  ],
+  "dependencies": [
+    {
+      "distribution": "attrs",
+      "version": "26.1.0",
+      "wheels": {
+        "any": {
+          "filename": "attrs-26.1.0-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/64/b4/17d4b0b2a2dc85a6df63d1157e028ed19f90d4cd97c36717afef2bc2f395/attrs-26.1.0-py3-none-any.whl",
+          "sha256": "c647aa4a12dfbad9333ca4e71fe62ddc36f4e63b2d260a37a8b83d2f043ac309"
+        }
+      }
+    },
+    {
+      "distribution": "jsonschema",
+      "version": "4.26.0",
+      "wheels": {
+        "any": {
+          "filename": "jsonschema-4.26.0-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/69/90/f63fb5873511e014207a475e2bb4e8b2e570d655b00ac19a9a0ca0a385ee/jsonschema-4.26.0-py3-none-any.whl",
+          "sha256": "d489f15263b8d200f8387e64b4c3a75f06629559fb73deb8fdfb525f2dab50ce"
+        }
+      }
+    },
+    {
+      "distribution": "jsonschema-specifications",
+      "version": "2025.9.1",
+      "wheels": {
+        "any": {
+          "filename": "jsonschema_specifications-2025.9.1-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/41/45/1a4ed80516f02155c51f51e8cedb3c1902296743db0bbc66608a0db2814f/jsonschema_specifications-2025.9.1-py3-none-any.whl",
+          "sha256": "98802fee3a11ee76ecaca44429fda8a41bff98b00a0f2838151b113f210cc6fe"
+        }
+      }
+    },
+    {
+      "distribution": "referencing",
+      "version": "0.37.0",
+      "wheels": {
+        "any": {
+          "filename": "referencing-0.37.0-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/2c/58/ca301544e1fa93ed4f80d724bf5b194f6e4b945841c5bfd555878eea9fcb/referencing-0.37.0-py3-none-any.whl",
+          "sha256": "381329a9f99628c9069361716891d34ad94af76e461dcb0335825aecc7692231"
+        }
+      }
+    },
+    {
+      "distribution": "rpds-py",
+      "version": "2026.9.1",
+      "wheels": {
+        "3.11": {
+          "filename": "rpds_py-2026.9.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+          "url": "https://files.pythonhosted.org/packages/2d/5c/aac3b960fd55d37b49f77c0eebbe043eaf36762ebd48e7b46951e59c1c05/rpds_py-2026.9.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+          "sha256": "136a1c3fe4402b7008bc81cb62ee538481795b61a7e83df88dff3b3f02b726ff"
+        },
+        "3.14": {
+          "filename": "rpds_py-2026.9.1-cp314-cp314-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+          "url": "https://files.pythonhosted.org/packages/22/9d/d08a1128ab199b2f0cf25bfeb0639bd05119fff4b7c47bec24ef9a8ec23f/rpds_py-2026.9.1-cp314-cp314-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+          "sha256": "eac2f5dbafd585dfe31f86a23ebf0d3ba480a9d49ebc87947267b5608d4ea0cd"
+        }
+      }
+    },
+    {
+      "distribution": "typing-extensions",
+      "version": "4.16.0",
+      "marker": "python_version < '3.13'",
+      "wheels": {
+        "any": {
+          "filename": "typing_extensions-4.16.0-py3-none-any.whl",
+          "url": "https://files.pythonhosted.org/packages/49/d3/b8441a820a491ddfc024b0b0cf0393375b75ea13866d9c66727e54c2fc80/typing_extensions-4.16.0-py3-none-any.whl",
+          "sha256": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8"
+        }
+      }
+    }
+  ],
+  "interfaces": {
+    "profile": {
+      "id": "agent-observer.mesh-working-set.v1",
+      "nativeVersion": 1,
+      "sdkVersion": 1,
+      "windowMs": 259200000
+    },
+    "observer": {
+      "api": 4,
+      "service": 4,
+      "read": 2,
+      "workingSetRead": 1,
+      "memberLease": 1,
+      "scopeLease": 1
+    },
+    "mesh": {
+      "sdk": 1,
+      "read": 1,
+      "delivery": 1,
+      "preparation": 1,
+      "admission": 1,
+      "selection": 1,
+      "viewFeed": 1,
+      "viewFeedSelected": false,
+      "semanticDeltaSelected": false
+    }
+  }
+}
