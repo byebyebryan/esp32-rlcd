@@ -1,5 +1,7 @@
 # Live agent dashboard
 
+The [recent-first trial](docs/evidence/2026-10-21-recent-first-trial/REPORT.md) is live on both displays.
+
 ![Native dashboard render with fictional conversations, ST and SN host badges and sampled activity ages](docs/media/dashboard.png)
 
 Show loaded Codex conversations across Starship and Snap. Only sessions with

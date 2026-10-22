@@ -120,6 +120,9 @@ change.
 
 ## Managed service
 
+The [recent-first trial receipt](evidence/2026-10-21-recent-first-trial/REPORT.md)
+records the current paired wire-5 host and firmware rollout on both displays.
+
 The reliability pass installs a versioned host bundle and a user service
 `rlcd-agent-dashboard.service`. Chezmoi owns the host selection, launcher, unit and
 startup link. Host-specific selection binds each physical host to its exact RLCD

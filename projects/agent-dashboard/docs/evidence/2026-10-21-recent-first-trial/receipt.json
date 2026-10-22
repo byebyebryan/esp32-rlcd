@@ -1,0 +1,397 @@
+{
+  "manifestVersion": 1,
+  "status": "live-trial-on-both-hosts",
+  "recordedAt": "2026-10-22T03:15:09.086062+00:00",
+  "sourceRevision": "388a774558cd3c03167b806001f4c7b4c93a7f65",
+  "dotfilesSelectionRevision": "670c7dbe191fba32278353f37a4720b8c46b68b2",
+  "deviceWire": 5,
+  "ordering": {
+    "attention": "first, source-sampled newest activity first",
+    "readyAndWorking": "mixed, exact source-sampled activity age ascending",
+    "uncertain": "last, prior order",
+    "ties": "prior rank then deterministic identity",
+    "unknownAge": "after known ages within its current tier"
+  },
+  "bundle": {
+    "bundle": "/home/bryan/.local/share/rlcd-agent-dashboard/0908c9dc1e5a3090",
+    "manifestSha256": "0908c9dc1e5a3090a691e3196b83c6ba00a7b534c3954cd617325079bbbe6edf",
+    "sourceRevision": "388a774558cd3c03167b806001f4c7b4c93a7f65",
+    "sourceDirty": false
+  },
+  "firmware": {
+    "applicationSha256": "9ebbe8709f541318b368f159509c3262a1f51f002c8a20f111a843850c5d6cec",
+    "applicationBytes": 1243920,
+    "applicationArchive": "/home/bryan/.local/share/rlcd-agent-dashboard-firmware/9ebbe8709f541318",
+    "idfVersion": "5.5.3",
+    "sourceDirty": false
+  },
+  "dependencies": {
+    "admission": 1,
+    "api": 4,
+    "memberLease": 1,
+    "mesh": "0.1.0a24",
+    "nativeVersion": 1,
+    "observer": "0.7.0a8",
+    "preparation": 1,
+    "profile": "agent-observer.mesh-working-set.v1",
+    "read": 2,
+    "scopeLease": 1,
+    "sdk": 1,
+    "selection": 1,
+    "service": 4,
+    "windowMs": 259200000,
+    "workingSetRead": 1
+  },
+  "delivery": {
+    "semanticDelta": false,
+    "viewFeed": false
+  },
+  "validation": {
+    "fullInstalledSuite": {
+      "python3.11": {
+        "tests": 124,
+        "skips": 0,
+        "result": "pass"
+      },
+      "python3.14": {
+        "tests": 124,
+        "skips": 0,
+        "result": "pass"
+      },
+      "localExecution": "Luna worker; transcript-retained stdout, no local raw test logs",
+      "hostedExecution": "exact source CI, raw logs downloaded to private evidence"
+    },
+    "strictSDKGate": {
+      "python3.11": {
+        "tests": 12,
+        "skips": 0,
+        "result": "pass"
+      },
+      "python3.14": {
+        "tests": 12,
+        "skips": 0,
+        "result": "pass"
+      }
+    },
+    "independentClockTranslationCases": 25,
+    "independentArrivalPermutationCases": 25,
+    "nativeSanitizers": "feed, motion and frame pass",
+    "deploymentPolicyControls": {
+      "positive": 1,
+      "rejections": 11
+    },
+    "dotfilesFullCheck": "pass",
+    "newWire4RequestPacketBundleRejections": "pass",
+    "expiryOrderingRegression": {
+      "before": "newly expired attention ordered below preexisting uncertain context; expected failing order assertion",
+      "after": "both uncertain rows preserve original relative order; current ready/working remain interleaved"
+    },
+    "originalFullReferenceClockFixtures": "retained all scenarios, updated reference sources to their supported per-row sample anchors"
+  },
+  "hostedCI": {
+    "url": "https://github.com/byebyebryan/esp32-rlcd/actions/runs/39713957878",
+    "headSha": "388a774558cd3c03167b806001f4c7b4c93a7f65",
+    "jobs": 10,
+    "conclusion": "success"
+  },
+  "hosts": {
+    "starship": {
+      "boardMac": "94:a9:90:f3:43:74",
+      "readbackSha256": "9ebbe8709f541318b368f159509c3262a1f51f002c8a20f111a843850c5d6cec",
+      "beforeFlashBytes": 16777216,
+      "beforeFlashSha256": "a7be463d36489adfc90b8efd6f4c34a5996ec6d028ebe2ac86970e0dd16336db",
+      "backup": "/home/bryan/.local/state/rlcd-recent-first-trial/20261022T023619Z/starship/flash-before.bin",
+      "bootloaderUnchanged": true,
+      "partitionUnchanged": true,
+      "deviceDataUnchanged": true,
+      "onlyApplicationWritten": true,
+      "initialCapture": {
+        "sent": 10,
+        "acknowledged": 10,
+        "healthyConfirmed": 9,
+        "maxFrameUs": 18512,
+        "deadlineMisses": 0,
+        "minInternalHeap": 291003,
+        "minStackWatermark": 4648
+      },
+      "silence": {
+        "windowSeconds": 6,
+        "expired": {
+          "health": 2,
+          "partial": 1,
+          "rows": 9,
+          "attention": 0,
+          "waiting": 0,
+          "working": 0,
+          "recent": 0,
+          "uncertain": 9,
+          "frame_us": 16621,
+          "miss": 0,
+          "heap": 291003,
+          "stack": 4648
+        }
+      },
+      "recoveryCapture": {
+        "sent": 10,
+        "acknowledged": 10,
+        "healthyConfirmed": 9,
+        "maxFrameUs": 18367,
+        "deadlineMisses": 0,
+        "minInternalHeap": 291003,
+        "minStackWatermark": 4648
+      },
+      "managedConverged": true,
+      "profiles": {
+        "starship": {
+          "default": "current"
+        },
+        "snap": {
+          "default": "current",
+          "work": "current"
+        }
+      },
+      "finalClient": {
+        "ActiveState": "active",
+        "ExecMainStartTimestampMonotonic": "729133949083",
+        "Id": "rlcd-agent-dashboard.service",
+        "InvocationID": "bf5a48f480744c1f91258a05d7c8a169",
+        "MainPID": "2692217",
+        "NRestarts": "0",
+        "SubState": "running"
+      },
+      "finalHealth": {
+        "attention": 0,
+        "event": "device_health",
+        "frame_us": 18243,
+        "health": 0,
+        "heap": 291003,
+        "miss": 0,
+        "partial": 0,
+        "recent": 0,
+        "rows": 9,
+        "stack": 4648,
+        "uncertain": 0,
+        "waiting": 4,
+        "working": 5
+      },
+      "liveOrdering": {
+        "orderValid": true,
+        "rows": 9,
+        "states": [
+          "working",
+          "waiting",
+          "working",
+          "working",
+          "waiting",
+          "working",
+          "waiting",
+          "working",
+          "waiting"
+        ],
+        "ages": [
+          "42s",
+          "1m",
+          "2m",
+          "5m",
+          "5m",
+          "10m",
+          "34m",
+          "38m",
+          "3h"
+        ],
+        "ageMilliseconds": [
+          42056,
+          105055,
+          121375,
+          318056,
+          336057,
+          602456,
+          2086054,
+          2326054,
+          14130374
+        ]
+      },
+      "nativeDaemonIdentitiesPreserved": 3,
+      "otherServiceIdentitiesPreserved": 8
+    },
+    "snap": {
+      "boardMac": "94:a9:90:de:d0:04",
+      "readbackSha256": "9ebbe8709f541318b368f159509c3262a1f51f002c8a20f111a843850c5d6cec",
+      "beforeFlashBytes": 16777216,
+      "beforeFlashSha256": "3fe004bb77d0134abf684e0de030c312fc5837ba4a86be0b5f5a09b098b5e6cd",
+      "backup": "/home/bryan/.local/state/rlcd-recent-first-trial/20261022T023619Z/snap/flash-before.bin",
+      "bootloaderUnchanged": true,
+      "partitionUnchanged": true,
+      "deviceDataUnchanged": true,
+      "onlyApplicationWritten": true,
+      "initialCapture": {
+        "sent": 10,
+        "acknowledged": 10,
+        "healthyConfirmed": 9,
+        "maxFrameUs": 18349,
+        "deadlineMisses": 0,
+        "minInternalHeap": 291003,
+        "minStackWatermark": 4648
+      },
+      "silence": {
+        "windowSeconds": 6,
+        "expired": {
+          "health": 2,
+          "partial": 1,
+          "rows": 9,
+          "attention": 0,
+          "waiting": 0,
+          "working": 0,
+          "recent": 0,
+          "uncertain": 9,
+          "frame_us": 16648,
+          "miss": 0,
+          "heap": 291003,
+          "stack": 4648
+        }
+      },
+      "recoveryCapture": {
+        "sent": 10,
+        "acknowledged": 10,
+        "healthyConfirmed": 9,
+        "maxFrameUs": 18335,
+        "deadlineMisses": 0,
+        "minInternalHeap": 291003,
+        "minStackWatermark": 4648
+      },
+      "managedConverged": true,
+      "profiles": {
+        "starship": {
+          "default": "current"
+        },
+        "snap": {
+          "default": "current",
+          "work": "current"
+        }
+      },
+      "finalClient": {
+        "ActiveState": "active",
+        "ExecMainStartTimestampMonotonic": "729348729232",
+        "Id": "rlcd-agent-dashboard.service",
+        "InvocationID": "7363b57fa3344acdbb5e4aa133917d8a",
+        "MainPID": "1270824",
+        "NRestarts": "0",
+        "SubState": "running"
+      },
+      "finalHealth": {
+        "attention": 0,
+        "event": "device_health",
+        "frame_us": 18218,
+        "health": 0,
+        "heap": 291003,
+        "miss": 0,
+        "partial": 0,
+        "recent": 0,
+        "rows": 9,
+        "stack": 4648,
+        "uncertain": 0,
+        "waiting": 4,
+        "working": 5
+      },
+      "liveOrdering": {
+        "orderValid": true,
+        "rows": 9,
+        "states": [
+          "working",
+          "waiting",
+          "working",
+          "working",
+          "waiting",
+          "working",
+          "waiting",
+          "working",
+          "waiting"
+        ],
+        "ages": [
+          "42s",
+          "1m",
+          "2m",
+          "5m",
+          "5m",
+          "10m",
+          "34m",
+          "38m",
+          "3h"
+        ],
+        "ageMilliseconds": [
+          42056,
+          105055,
+          121375,
+          318056,
+          336057,
+          602456,
+          2086054,
+          2326054,
+          14130374
+        ]
+      },
+      "nativeDaemonIdentitiesPreserved": 4,
+      "otherServiceIdentitiesPreserved": 10
+    }
+  },
+  "rollback": {
+    "hostBundle": "d4304a1ff7e07ac4",
+    "manifestSha256": "d4304a1ff7e07ac4aa99ed5244f2b571f274860926a11c8bcfafaecc2f2c7b9d",
+    "deviceWire": 4,
+    "firmwareSha256": "094ecc7be6e6b735c03e3b140a6228b40af65b2dea60a3bdb328ebb8dc52556a",
+    "firmwareSourceRevision": "3ff27e5f6e8f08930b8097a29b2c10b0f91eac79",
+    "boundary": "restore exact per-host managed preimages and matching old application together; no producer restart"
+  },
+  "privateEvidenceRoot": "/home/bryan/.local/state/rlcd-recent-first-trial/20261022T023619Z",
+  "limits": [
+    "Physical readability/user preference not automatically accepted by serial checks.",
+    "No host reboot or unplug trial; boards reset by flashing.",
+    "No new producer CPU/RSS/capacity/recovery acceptance, schema/SDK selection or provider/session action."
+  ],
+  "evidenceSha256": {
+    "bundle-manifest.json": "0908c9dc1e5a3090a691e3196b83c6ba00a7b534c3954cd617325079bbbe6edf",
+    "build.json": "617de245123bb69627a9f56da65f9e8ae947656fa0c17c920970ee5829df0277",
+    "implementation.diff": "94e469e4d3b6b69be6257febfb18cf53be5fd229fed388c2f2a205abf470f655",
+    "implementation-ci.json": "67b40d8e9a9a0a23a6947a0f5fd006e21feb6184c9cd014f3a7e2356cfc2d627",
+    "implementation-ci-logs.zip": "12b6b360f33e941849eb8c61ffc29daa537a0db03e0437cd91349b7cca574667",
+    "deployment-negative-controls.json": "b455051b4c020f839343c1c64d09dec24f65bf0c7594179c01f156b6ac1e03ac",
+    "final-preservation-and-order.json": "aa81075acf40b1588193981fd85b859d557eba43016b3a15a4a994392dbc6bb3",
+    "dotfiles-full-check.log": "39e83245e6490b2efee4d88a426c93a66e1b75999f773d813634124d2bce93cc",
+    "dotfiles-metadata-reconciliation.json": "2a4f5d894efce256fa1978e6d7c517034736f5fa68fdc38ae73569733dc325b6",
+    "concurrent-source-preservation.json": "ae454fea3e97d0dd36c0a79dd4a7a9127f03a2b150a0ca16fa5ee1c046e0e97e"
+  },
+  "concurrentSourceWork": {
+    "starship": {
+      "originalDirtyFilesPreservedExactly": 45,
+      "concurrentOtherSourceChanges": [],
+      "concurrentNewSourceFiles": [],
+      "currentDirtyEntries": 0
+    },
+    "snap": {
+      "originalDirtyFilesPreservedExactly": 3,
+      "concurrentOtherSourceChanges": [
+        ".chezmoidata/desktop.yaml",
+        ".chezmoidata/packages.yaml",
+        ".chezmoiignore",
+        ".chezmoitemplates/niri-binds.kdl.tmpl",
+        "AGENTS.md",
+        "docs/desktop-deployment.md",
+        "docs/dms-removal-plan.md",
+        "dot_local/bin/executable_notify-volume",
+        "run_onchange_after_20-install-arch-packages.sh.tmpl",
+        "run_onchange_after_31-reload-minimal-desktop.sh.tmpl",
+        "scripts/check-desktop-profile",
+        "scripts/check-desktop-session"
+      ],
+      "concurrentNewSourceFiles": [
+        ".chezmoitemplates/desktop-notifier.tmpl",
+        "dot_config/swaync/config.json",
+        "dot_config/swaync/style.css",
+        "dot_config/systemd/user/niri.service.wants/symlink_swaync.service",
+        "dot_config/systemd/user/swaync.service.d/session.conf",
+        "run_onchange_after_31-reload-desktop-notifications.sh.tmpl"
+      ],
+      "currentDirtyEntries": 21
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "artifacts": {
+    "meshWheelSha256": "9bca5b554babfa59ba56b1a4ac5e8e5c66a85e63709731ee1fe7d4f0ed6a18a6",
+    "observerWheelSha256": "d960872074f8586d2bb56ea97678096a25525ff34796dbf390c94627fd949928"
+  },
+  "dependencies": {
+    "admission": 1,
+    "api": 4,
+    "memberLease": 1,
+    "mesh": "0.1.0a24",
+    "nativeVersion": 1,
+    "observer": "0.7.0a8",
+    "preparation": 1,
+    "profile": "agent-observer.mesh-working-set.v1",
+    "read": 2,
+    "scopeLease": 1,
+    "sdk": 1,
+    "selection": 1,
+    "service": 4,
+    "windowMs": 259200000,
+    "workingSetRead": 1
+  },
+  "deviceWire": 5,
+  "files": {
+    "components/agent_dashboard/fusion_pixel_12_zh_hans.c": "0dd98e8d9c1236f9de9a201f942c04c7e36cedf7c27a82c1d3aade94574778f3",
+    "host/live_dashboard/__init__.py": "152f3619f26ed65bb895372a3b540bccbabec3c3bbbc40f990b2d97eb622ef34",
+    "host/live_dashboard/context.py": "813b9547f19753a3368d642a55313a339fb581e719ca8fe6f991201e09c05abe",
+    "host/live_dashboard/mesh.py": "8612e0aeb45814aee0bfe7d9952d83f2b6a5ec278e19e7067020cf47314bf735",
+    "host/live_dashboard/profiles.py": "490878341f515d55a0169afd888df492517b12717032fb9744224e15797d608d",
+    "host/live_dashboard/projection.py": "9c03cd3683fdc19404601830c86655f51b6de682bde0c941181942de7e1e09cb",
+    "host/live_dashboard/runtime.py": "e6f9f7ddb81337950933fba31f88dd715630dbd177547c8251896b28ba59ae2f",
+    "host/live_dashboard/serial.py": "91f763778d9b6dd34eb8f1a69ac3709c24e486da5364ced633cc4e6196792590",
+    "host/live_dashboard/wire.py": "ca1645a755903026fa2e5ec234d88d06bf66e67f957cd13f1f144b19002c5287",
+    "scripts/dashboard-bundle.py": "10de4ee384735d0d517b8e99d5ffb74e2bb0382be828bfd172262e3ca059d702",
+    "scripts/live-dashboard.py": "0777582d4345a63a446dd71e77c02d60116816ce7617c2eae6090aefba68a3f5",
+    "sdk-release-lock.json": "7bc39972b4ee6e7ecb77334bdb8007516fb2c04f6534ddc1d764a7269225b933"
+  },
+  "manifestVersion": 1,
+  "python": "/home/bryan/.local/share/agent-observer/0.7.0a8-d9608720-ws72-m9bca5b55/bin/python",
+  "sourceDirty": false,
+  "sourceRevision": "388a774558cd3c03167b806001f4c7b4c93a7f65"
+}
