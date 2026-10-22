@@ -130,8 +130,10 @@ reconnection uses fresh framing and bridge identity. Unexpected worker terminati
 fails the owner visibly, and normal service stop releases its owned resources.
 
 After installation, inspect the cached roster with `rlcd-agent-dashboard --roster`.
-The [restart recovery receipt](evidence/2026-10-20-restart-context/REPORT.md)
+The [published SDK adoption receipt](evidence/2026-10-21-a8-a24-adoption/REPORT.md)
 records the latest host bundle and both-device rollout checks. The earlier
+[restart recovery receipt](evidence/2026-10-20-restart-context/REPORT.md) retains
+the original partial-startup and persistence evidence. The
 [release and logging receipt](../../../docs/evidence/2026-10-13-release-refinement/REPORT.md)
 retains the original quiet-logging and source-publication evidence.
 Use `systemctl --user status rlcd-agent-dashboard.service` and

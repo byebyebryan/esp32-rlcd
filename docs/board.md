@@ -56,7 +56,7 @@ connected board, `28:84:85:92:C2:20`, is the active ESP32-349 device.
 The [bring-up receipt](bringup.md) retains its original scope. Follow
 [dashboard operation](../projects/agent-dashboard/docs/operations.md) for runtime
 selection and rollback. The latest
-[host rollout](../projects/agent-dashboard/docs/evidence/2026-10-20-restart-context/REPORT.md)
+[host rollout](../projects/agent-dashboard/docs/evidence/2026-10-21-a8-a24-adoption/REPORT.md)
 records both-device checks and the retained firmware identity; manual panel and
 reboot acceptance remain separate.
 

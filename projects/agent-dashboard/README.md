@@ -76,6 +76,9 @@ qualification installs the exact public wheels recorded in
 [`sdk-release-lock.json`](sdk-release-lock.json). The [active-feed receipt](../../docs/evidence/2026-10-16-active-feed/REPORT.md)
 records the prior wire 2 rollout and paired rollback. Physical
 ACK/readability/reboot gates remain separate.
+The [published SDK adoption receipt](docs/evidence/2026-10-21-a8-a24-adoption/REPORT.md)
+records the current immutable host bundle, hosted qualification and scoped
+Starship/Snap deployment with the original wire-4 firmware.
 
 The optional [Codex home profile routes](docs/home-profiles.md) combine separately
 admitted Default and Work feeds without changing native identities. The wire-4

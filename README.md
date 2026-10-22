@@ -82,7 +82,7 @@ Each project owns its generated `sdkconfig` and `build/` output.
 - [Shared display component](components/display_rlcd/README.md): packing, transport and upstream provenance.
 - [Presentation media](docs/media/README.md): gallery sources, regeneration and capture guidance.
 - [Dashboard operation](projects/agent-dashboard/docs/operations.md): managed services, runtime selection and rollback.
-- [Latest host rollout](projects/agent-dashboard/docs/evidence/2026-10-20-restart-context/REPORT.md): restart recovery and both-device checks; firmware and installed package identities are retained separately.
+- [Latest host rollout](projects/agent-dashboard/docs/evidence/2026-10-21-a8-a24-adoption/REPORT.md): published a8/a24 SDK, immutable bundle and both-device checks; firmware identity is retained separately.
 - [Workspace history](docs/workspace-origin.md): earlier layout and migration context.
 
 Dated [evidence records](docs/evidence/) retain the source paths, artifacts and

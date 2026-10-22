@@ -1,0 +1,264 @@
+{
+  "manifestVersion": 1,
+  "status": "scoped RLCD a8/a24 software deployment and USB admission verified",
+  "sourceRevision": "c4db92f1b8c7c7c609975c20fc2d1dc114570547",
+  "dotfilesSelectionRevision": "ca24f65344a556d8601db777a1435746d6832038",
+  "bundle": {
+    "path": ".local/share/rlcd-agent-dashboard/d4304a1ff7e07ac4",
+    "manifestSha256": "d4304a1ff7e07ac4aa99ed5244f2b571f274860926a11c8bcfafaecc2f2c7b9d",
+    "sourceDirty": false,
+    "deviceWire": 4,
+    "inputs": 12,
+    "releaseLockSha256": "7bc39972b4ee6e7ecb77334bdb8007516fb2c04f6534ddc1d764a7269225b933"
+  },
+  "dependencies": {
+    "admission": 1,
+    "api": 4,
+    "memberLease": 1,
+    "mesh": "0.1.0a24",
+    "nativeVersion": 1,
+    "observer": "0.7.0a8",
+    "preparation": 1,
+    "profile": "agent-observer.mesh-working-set.v1",
+    "read": 2,
+    "scopeLease": 1,
+    "sdk": 1,
+    "selection": 1,
+    "service": 4,
+    "windowMs": 259200000,
+    "workingSetRead": 1
+  },
+  "publicArtifacts": {
+    "observer": {
+      "wheel": "agent_observer-0.7.0a8-py3-none-any.whl",
+      "wheelSha256": "d960872074f8586d2bb56ea97678096a25525ff34796dbf390c94627fd949928",
+      "manifestSha256": "91ee4c19325ae324dfa93f601f41f7d18c62504b7bcfc7d6916ab2507132f793",
+      "sourceRevision": "aade4826c785af6dc98842dfb662a090828dda17"
+    },
+    "mesh": {
+      "wheel": "mesh_plus-0.1.0a24-py3-none-any.whl",
+      "wheelSha256": "9bca5b554babfa59ba56b1a4ac5e8e5c66a85e63709731ee1fe7d4f0ed6a18a6",
+      "manifestSha256": "8f725bd48555755ffa373c792631d147b2656adb94cc2209122eab60885fa0f0",
+      "sourceRevision": "7e152d22fa57fc45049438b50877433d8c96f6d8"
+    }
+  },
+  "delivery": {
+    "ordinaryCompleteSelectedViews": true,
+    "semanticDeltaSelected": false,
+    "viewFeedSelected": false,
+    "windowHours": 72,
+    "loadedOnly": true,
+    "alwaysOn": true,
+    "rowBadges": {
+      "starship.default": "ST",
+      "snap.default": "SN",
+      "snap.work": "SW"
+    }
+  },
+  "hosts": {
+    "starship": {
+      "clientInvocation": "d752237d624246c9ae87654832605a2b",
+      "serviceActive": true,
+      "automaticRestarts": 0,
+      "healthyDeviceFrame": {
+        "event": "device_health",
+        "health": 0,
+        "partial": 0,
+        "rows": 10,
+        "attention": 0,
+        "waiting": 5,
+        "working": 5,
+        "recent": 0,
+        "uncertain": 0,
+        "frame_us": 18609,
+        "miss": 0,
+        "heap": 291003,
+        "stack": 4776
+      },
+      "portPresent": true,
+      "profiles": {
+        "starship": {
+          "default": "current"
+        },
+        "snap": {
+          "default": "current",
+          "work": "current"
+        }
+      },
+      "latestSoftwareViewRows": 11,
+      "nativeDaemonIdentitiesUnchanged": 2,
+      "protectedCoreServicesUnchanged": 6,
+      "protectedPreapplyServicesUnchanged": true,
+      "externalDesktopChangesDuringPreparation": [
+        "tmux-observer-desktop.service",
+        "tmux-observer-fleet@51730cbc2d9e93b6a6cc13c7ce209c64.service",
+        "tmux-observer-fleet@8c1d28c9c12d0b2bbff36ffd607863dd.service"
+      ],
+      "profileConfigUnchanged": true,
+      "managedConverged": true
+    },
+    "snap": {
+      "clientInvocation": "da39deed03704737b72d7e4aaf27e589",
+      "serviceActive": true,
+      "automaticRestarts": 0,
+      "healthyDeviceFrame": {
+        "event": "device_health",
+        "health": 0,
+        "partial": 0,
+        "rows": 11,
+        "attention": 0,
+        "waiting": 6,
+        "working": 5,
+        "recent": 0,
+        "uncertain": 0,
+        "frame_us": 19122,
+        "miss": 0,
+        "heap": 291003,
+        "stack": 4776
+      },
+      "portPresent": true,
+      "profiles": {
+        "starship": {
+          "default": "current"
+        },
+        "snap": {
+          "default": "current",
+          "work": "current"
+        }
+      },
+      "latestSoftwareViewRows": 11,
+      "nativeDaemonIdentitiesUnchanged": 4,
+      "protectedCoreServicesUnchanged": 8,
+      "protectedPreapplyServicesUnchanged": true,
+      "externalDesktopChangesDuringPreparation": [],
+      "profileConfigUnchanged": true,
+      "managedConverged": true
+    }
+  },
+  "validation": {
+    "full-314": {
+      "tests": 112,
+      "skips": 0,
+      "logSha256": "d30724feb36ab40e07e2f52482f79e46639acfc08257d8a1c8236c68f861d2a2"
+    },
+    "full-311": {
+      "tests": 112,
+      "skips": 0,
+      "logSha256": "466a93d89b1ebe65808fbe3fde308173a0721c39d7f99c16da24b330e0900c8d"
+    },
+    "strict-314": {
+      "tests": 12,
+      "skips": 0,
+      "logSha256": "90426976733237da38717b1f0b6ab2e08596538a47af6d9a2e31f40d85733ce0"
+    },
+    "strict-311": {
+      "tests": 12,
+      "skips": 0,
+      "logSha256": "8ff1e037f28d4f2ccffeb193f34a69bcc06ea239a63447351f7fa7af16d0b019"
+    },
+    "core-314": {
+      "tests": 112,
+      "skips": 21,
+      "meaning": "91 passes; installed SDK cases explicitly skipped"
+    },
+    "chezmoiFullLocalCheck": {
+      "status": "pass",
+      "scope": "current worktree including concurrent uncommitted desktop changes; read-only validation"
+    }
+  },
+  "hostedCI": {
+    "headSha": "c4db92f1b8c7c7c609975c20fc2d1dc114570547",
+    "url": "https://github.com/byebyebryan/esp32-rlcd/actions/runs/39700693244",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "name": "native",
+        "conclusion": "success"
+      },
+      {
+        "name": "presentation (Release)",
+        "conclusion": "success"
+      },
+      {
+        "name": "firmware (dashboard-static)",
+        "conclusion": "success"
+      },
+      {
+        "name": "sdk (3.14)",
+        "conclusion": "success"
+      },
+      {
+        "name": "sdk (3.11)",
+        "conclusion": "success"
+      },
+      {
+        "name": "firmware (dashboard-motion)",
+        "conclusion": "success"
+      },
+      {
+        "name": "firmware (render-bench)",
+        "conclusion": "success"
+      },
+      {
+        "name": "presentation (Debug)",
+        "conclusion": "success"
+      },
+      {
+        "name": "firmware (bringup)",
+        "conclusion": "success"
+      },
+      {
+        "name": "firmware (dashboard-live)",
+        "conclusion": "success"
+      }
+    ]
+  },
+  "rollback": {
+    "oldBundle": ".local/share/rlcd-agent-dashboard/de0a8ee7744e9fc9",
+    "oldManifestSha256": "de0a8ee7744e9fc9d9452aedd7c8124e2e0f18ab173a3014e3823b7d2781c734",
+    "oldVersions": {
+      "observer": "0.7.0a7",
+      "mesh": "0.1.0a23"
+    },
+    "oldBundlesVerified": true,
+    "exactManagedPreimages": ".local/state/rlcd-a8-a24-20261021/before.json",
+    "rollbackExercisedThisRun": false,
+    "firmwareChanged": false,
+    "originalFirmwareSourceRevision": "883f77f99d470efb42d5c0a7cf701ac7c3488991",
+    "originalFirmwareApplicationSha256": "6c17962f1c30bfa0866879647eb3b5e0110757a36c80df7c742940756045e1d1"
+  },
+  "applicationRuntimeInputs": {
+    "unchangedComparedToPriorBundle": 10,
+    "changed": "bundle verifier plus added SDK release lock; application runtime/font bytes unchanged"
+  },
+  "privateEvidenceHashes": {
+    "frame.log": "a8734aa81c69e715f1d0f8b74072592312371f5b131796e5333b72e5e2b0686e",
+    "motion.log": "7e42cdce2077772becdc3faf686c8a7450b93cdfcd48098dfbe503ad23b034d7",
+    "deployment-gate.log": "50054254346c81069b17bd5a37234714f2eee48cf26403bddf73254589c4774e",
+    "starship-final-artifacts.log": "50054254346c81069b17bd5a37234714f2eee48cf26403bddf73254589c4774e",
+    "snap-final-artifacts.log": "50054254346c81069b17bd5a37234714f2eee48cf26403bddf73254589c4774e",
+    "reject-old-sdk.log": "b41f8ede5758ff3be52bf33bf793021a0c300e6938c9dfd35a5fed553c8b74f6",
+    "reject-missing-sdk.log": "c3ebe432cce41742f217f9a9981a8ac94fab4506df269db5f74635a64926cbd6",
+    "starship-installed-pair.json": "3907c859a2fb485a35fe2daaf3dbe6b328a89ab32f3c5bd7ac90577f306950ac",
+    "snap-installed-pair.json": "3907c859a2fb485a35fe2daaf3dbe6b328a89ab32f3c5bd7ac90577f306950ac",
+    "starship-transitives.json": "9b51d6d06deafbcfdb734b5ea3f07ad08a5a9aadc94a1571a119218cee7acbae",
+    "snap-transitives.json": "9b51d6d06deafbcfdb734b5ea3f07ad08a5a9aadc94a1571a119218cee7acbae",
+    "public-artifacts.json": "1a6422fc86408c671ee7e3b5f6cebac0bd9654386a09ed033f283f3d0c8ec265",
+    "preservation-summary.json": "1e162226bd356dfc2785cca55c9cdd03849404548e2836e92da4f0dc7f818fbe",
+    "source-reads-summary.json": "b0090ebf670cf7eb29b829a498ac6338bc835eb3535ba09633186ba009d2fca8",
+    "starship-managed.diff": "a331e3dc7be685824960c80e20558d560c1a5008a63aba86758221fc06a82092",
+    "snap-managed.diff": "5656f198a79dd65e93e4bd72188a6971b2b6812f5814b55af386aa061b860bdd",
+    "starship-dry-run.log": "a331e3dc7be685824960c80e20558d560c1a5008a63aba86758221fc06a82092",
+    "snap-dry-run.log": "5656f198a79dd65e93e4bd72188a6971b2b6812f5814b55af386aa061b860bdd",
+    "starship-convergence.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "snap-convergence.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "code-ci.json": "9d1f088ba9666f5c9bf60cf5e63ffb5ec864a6c20670e2127d0ca76b7d9f6827",
+    "chezmoi-full-check.log": "a92277b7116715ddc1613d924c2de4ca7550843648317d0a0349faa356326554"
+  },
+  "limits": [
+    "USB acknowledgements and HEALTH diagnostics establish bounded device admission, not visual readability, panel contrast, reboot or unplug acceptance.",
+    "No firmware flash, provider/session lifecycle action, independent role adoption, semantic-delta or view-feed enablement.",
+    "No new CPU/RSS/dense-capacity/recovery or whole-producer qualification campaign.",
+    "Concurrent desktop source edits were preserved and not included in scoped commits. A Starship Tmux desktop/fleet refresh during preparation is separately recorded; core services/native daemons remained exact."
+  ]
+}
