@@ -1,0 +1,186 @@
+{
+  "sourceRevision": "629af3721b9ffc6218060c839d22472cf1b808e0",
+  "deviceWire": 6,
+  "bundle": {
+    "name": "164b7f99c40e7676",
+    "manifestSha256": "164b7f99c40e767655c94ee907d34b7b8825bb6433a9a70e11be940f8788eb59"
+  },
+  "firmware": {
+    "sourceRevision": "629af3721b9ffc6218060c839d22472cf1b808e0",
+    "sourceDirty": false,
+    "idfVersion": "5.5.3",
+    "variant": "dashboard-live",
+    "deviceWire": 6,
+    "applicationArchive": "/home/bryan/.local/share/rlcd-agent-dashboard-firmware/d437fae37d179816",
+    "files": {
+      "rlcd-dashboard.bin": {
+        "offset": 65536,
+        "bytes": 1244816,
+        "sha256": "d437fae37d179816e4bdf665ef4457c10ba50fe87a3a0f79bfe003d66b81f943"
+      },
+      "bootloader/bootloader.bin": {
+        "offset": 0,
+        "bytes": 20832,
+        "sha256": "76934113a775f000e1c2007fed3772040b3e95553e939100725d626cd52cd864"
+      },
+      "partition_table/partition-table.bin": {
+        "offset": 32768,
+        "bytes": 3072,
+        "sha256": "5e71c3c890e04714daa03b21a0d23953a2dadf9fdf15eec02b886f7b6e9f8c81"
+      }
+    },
+    "onlyApplicationWritten": true
+  },
+  "tests": {
+    "fullInstalledEachPython": {
+      "versions": [
+        "3.11",
+        "3.14"
+      ],
+      "tests": 131,
+      "skips": 0
+    },
+    "strictSDKEachPython": {
+      "tests": 12,
+      "skips": 0
+    },
+    "nativeSanitizers": "feed and motion passed; frame passed in CI",
+    "deploymentPolicy": {
+      "positive": 1,
+      "negative": 9
+    },
+    "dotfiles": "full and installed artifact checks passed"
+  },
+  "hosts": {
+    "starship": {
+      "boardMac": "94:a9:90:f3:43:74",
+      "applicationReadbackSha256": "d437fae37d179816e4bdf665ef4457c10ba50fe87a3a0f79bfe003d66b81f943",
+      "fullBackupSha256": "1e210c9212185164fa8d93065decccda101ea0995ca9d1e433366b9418f5d2ca",
+      "fullBackupBytes": 16777216,
+      "onlyApplicationWritten": true,
+      "bootloaderUnchanged": true,
+      "partitionUnchanged": true,
+      "deviceDataUnchanged": true,
+      "initialConfirmed": 10,
+      "recoveryConfirmed": 9,
+      "silenceSeconds": 6,
+      "service": {
+        "Id": "rlcd-agent-dashboard.service",
+        "ActiveState": "active",
+        "InvocationID": "72ee12dfb8304ff59f1fd5d5df0b0e7b",
+        "MainPID": "2821001",
+        "NRestarts": "0"
+      },
+      "health": {
+        "event": "device_health",
+        "health": 0,
+        "partial": 0,
+        "rows": 9,
+        "attention": 0,
+        "waiting": 2,
+        "working": 7,
+        "recent": 0,
+        "uncertain": 0,
+        "frame_us": 18818,
+        "miss": 0,
+        "heap": 285627,
+        "stack": 5176
+      },
+      "nativeDaemonsPreserved": 3,
+      "otherServicesPreserved": 8,
+      "dotfilesCommittedPaths": [
+        "deployments/rlcd-age-ticker-v6.json",
+        "deployments/rlcd-agent-dashboard.json",
+        "scripts/check-rlcd-dashboard"
+      ],
+      "concurrentSourcePathsChangedDuringRun": [
+        ".chezmoidata/packages.yaml",
+        ".chezmoiignore",
+        "AGENTS.md",
+        "run_onchange_after_20-install-arch-packages.sh.tmpl",
+        "scripts/check-desktop-profile",
+        "scripts/check-desktop-session"
+      ],
+      "concurrentDirtyWorkRetained": true,
+      "managedConverged": true
+    },
+    "snap": {
+      "boardMac": "94:a9:90:de:d0:04",
+      "applicationReadbackSha256": "d437fae37d179816e4bdf665ef4457c10ba50fe87a3a0f79bfe003d66b81f943",
+      "fullBackupSha256": "89bd2ce0211851d65f6626269d5e3f1b21a1ae5caa999d894f0bfbdcdc529c10",
+      "fullBackupBytes": 16777216,
+      "onlyApplicationWritten": true,
+      "bootloaderUnchanged": true,
+      "partitionUnchanged": true,
+      "deviceDataUnchanged": true,
+      "initialConfirmed": 9,
+      "recoveryConfirmed": 9,
+      "silenceSeconds": 6,
+      "service": {
+        "Id": "rlcd-agent-dashboard.service",
+        "ActiveState": "active",
+        "InvocationID": "dbeb6ec59b68421db9cbc75a32f72d24",
+        "MainPID": "1752328",
+        "NRestarts": "0"
+      },
+      "health": {
+        "event": "device_health",
+        "health": 0,
+        "partial": 0,
+        "rows": 9,
+        "attention": 0,
+        "waiting": 2,
+        "working": 7,
+        "recent": 0,
+        "uncertain": 0,
+        "frame_us": 18764,
+        "miss": 0,
+        "heap": 285627,
+        "stack": 5144
+      },
+      "nativeDaemonsPreserved": 4,
+      "otherServicesPreserved": 10,
+      "dotfilesCommittedPaths": [
+        "deployments/rlcd-age-ticker-v6.json",
+        "deployments/rlcd-agent-dashboard.json",
+        "scripts/check-rlcd-dashboard"
+      ],
+      "concurrentSourcePathsChangedDuringRun": [
+        ".chezmoidata/packages.yaml",
+        ".chezmoiignore",
+        "AGENTS.md",
+        "docs/desktop-deployment.md",
+        "docs/swaync-starship-trial-2026-10-21.md",
+        "run_onchange_after_20-install-arch-packages.sh.tmpl",
+        "scripts/check",
+        "scripts/check-desktop-profile",
+        "scripts/check-desktop-session"
+      ],
+      "concurrentDirtyWorkRetained": true,
+      "managedConverged": true
+    }
+  },
+  "limitations": [
+    "Elapsed age is presentation, never fresh status or evidence that newer activity cannot exist.",
+    "Initial source sampling and transport lag is not reconstructed.",
+    "Bridge/device restart starts a new local anchor; numeric sample and unknown/stale handling remain authoritative.",
+    "Readback and serial acceptance are verified; physical readability remains separate."
+  ],
+  "producerSamplingChanged": false,
+  "orderingChanged": false,
+  "deltaEnabled": false,
+  "viewFeedEnabled": false,
+  "rollback": {
+    "bundle": "0908c9dc1e5a3090",
+    "applicationSha256": "9ebbe8709f541318b368f159509c3262a1f51f002c8a20f111a843850c5d6cec",
+    "deviceWire": 5,
+    "restoreMatchedPair": true
+  },
+  "implementationCI": {
+    "url": "https://github.com/byebyebryan/esp32-rlcd/actions/runs/39718185065",
+    "jobs": 10,
+    "conclusion": "success"
+  },
+  "sourceInventorySha256": "2946c23de5bfb7a939194422599cd4496d34562638120c1778fe055fc4c532a3",
+  "privateEvidenceRoot": "/home/bryan/.local/state/rlcd-age-ticker/20261022T033608Z"
+}

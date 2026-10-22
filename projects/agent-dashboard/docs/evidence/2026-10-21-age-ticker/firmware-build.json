@@ -1,0 +1,26 @@
+{
+  "sourceRevision": "629af3721b9ffc6218060c839d22472cf1b808e0",
+  "sourceDirty": false,
+  "idfVersion": "5.5.3",
+  "variant": "dashboard-live",
+  "deviceWire": 6,
+  "applicationArchive": "/home/bryan/.local/share/rlcd-agent-dashboard-firmware/d437fae37d179816",
+  "files": {
+    "rlcd-dashboard.bin": {
+      "offset": 65536,
+      "bytes": 1244816,
+      "sha256": "d437fae37d179816e4bdf665ef4457c10ba50fe87a3a0f79bfe003d66b81f943"
+    },
+    "bootloader/bootloader.bin": {
+      "offset": 0,
+      "bytes": 20832,
+      "sha256": "76934113a775f000e1c2007fed3772040b3e95553e939100725d626cd52cd864"
+    },
+    "partition_table/partition-table.bin": {
+      "offset": 32768,
+      "bytes": 3072,
+      "sha256": "5e71c3c890e04714daa03b21a0d23953a2dadf9fdf15eec02b886f7b6e9f8c81"
+    }
+  },
+  "onlyApplicationWritten": true
+}

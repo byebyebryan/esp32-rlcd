@@ -120,8 +120,10 @@ change.
 
 ## Managed service
 
-The [recent-first trial receipt](evidence/2026-10-21-recent-first-trial/REPORT.md)
-records the current paired wire-6 host and firmware rollout on both displays.
+The [local age ticker receipt](evidence/2026-10-21-age-ticker/REPORT.md) records
+the current paired wire-6 host and firmware rollout on both displays. The earlier
+[recent-first trial](evidence/2026-10-21-recent-first-trial/REPORT.md) retains its
+original wire-5 pair and rollback evidence.
 
 The reliability pass installs a versioned host bundle and a user service
 `rlcd-agent-dashboard.service`. Chezmoi owns the host selection, launcher, unit and
