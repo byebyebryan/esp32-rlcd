@@ -177,7 +177,7 @@ def freeze(source, output, python, revision, *, source_dirty=False):
         "manifestVersion": 1,
         "sourceRevision": revision,
         "sourceDirty": source_dirty,
-        "deviceWire": 5,
+        "deviceWire": 6,
         "python": str(python),
         "dependencies": observed["dependencies"],
         "artifacts": observed["artifacts"],
@@ -228,7 +228,7 @@ def verify(bundle, checksum=None, *, dependencies=True):
     expected, expected_artifacts = lock_values(bundle / LOCK_INPUT)
     if (
         manifest["manifestVersion"] != 1
-        or manifest.get("deviceWire") != 5
+        or manifest.get("deviceWire") != 6
         or manifest["dependencies"] != expected
         or manifest.get("artifacts") != expected_artifacts
         or not _valid_artifacts(manifest.get("artifacts"))

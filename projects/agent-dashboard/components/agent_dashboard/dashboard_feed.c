@@ -7,6 +7,8 @@
 typedef struct { const char *next, *end; } cursor_t;
 typedef struct { const char *data; size_t size; } field_t;
 
+#define MAX_AGE_MS UINT64_C(8640000000)
+
 static bool take(cursor_t *cursor, field_t *field)
 {
     if (cursor->next >= cursor->end) return false;
@@ -75,19 +77,43 @@ static bool utf8_label(const char *text, size_t size)
     return true;
 }
 
-static bool age(field_t field, char output[4])
+static bool age(cursor_t *cursor, dashboard_feed_row_t *row)
 {
-    if (field.size > 3) return false;
-    bool valid = (field.size == 1 && field.data[0] == '?') ||
-                 (field.size == 3 && memcmp(field.data, "+++", 3) == 0);
-    if (field.size == 2 || field.size == 3) {
-        valid |= field.data[0] >= '0' && field.data[0] <= '9' &&
-                 (field.size == 2 || (field.data[1] >= '0' && field.data[1] <= '9')) &&
-                 strchr("smhd", field.data[field.size - 1]) != NULL;
+    field_t value, key;
+    if (!take(cursor, &value) || !take(cursor, &key)) return false;
+    if (value.size == 1 && value.data[0] == '?')
+        return key.size == 1 && key.data[0] == '?';
+    if (value.size > 10 || (value.size > 1 && value.data[0] == '0') ||
+        !hex_string(key, row->age_key, 64, false)) return false;
+    uint64_t result = 0;
+    for (size_t i = 0; i < value.size; ++i) {
+        unsigned digit = (unsigned)(value.data[i] - '0');
+        if (digit > 9 || result > (MAX_AGE_MS - digit) / 10) return false;
+        result = result * 10 + digit;
     }
-    if (!valid) return false;
-    memcpy(output, field.data, field.size); output[field.size] = '\0';
+    row->age_known = true; row->age_ms = result;
     return true;
+}
+
+static uint64_t elapsed_age(const dashboard_feed_row_t *row, uint64_t now_ms)
+{
+    const uint64_t elapsed = now_ms >= row->age_anchor_ms ? now_ms - row->age_anchor_ms : 0;
+    return row->age_ms + (elapsed < MAX_AGE_MS - row->age_ms ? elapsed : MAX_AGE_MS - row->age_ms);
+}
+
+static void format_age(char output[4], uint64_t milliseconds)
+{
+    const uint64_t seconds = milliseconds / 1000;
+    unsigned value; char unit;
+    if (seconds < 60) { value = (unsigned)seconds; unit = 's'; }
+    else if (seconds < 3600) { value = (unsigned)(seconds / 60); unit = 'm'; }
+    else if (seconds < 86400) { value = (unsigned)(seconds / 3600); unit = 'h'; }
+    else if (seconds < 8640000) { value = (unsigned)(seconds / 86400); unit = 'd'; }
+    else { memcpy(output, "+++", 4); return; }
+    // Every branch above bounds value to two decimal digits.
+    if (value < 10) { output[0] = (char)('0' + value); output[1] = unit; output[2] = '\0'; }
+    else { output[0] = (char)('0' + value / 10); output[1] = (char)('0' + value % 10);
+           output[2] = unit; output[3] = '\0'; }
 }
 
 static uint32_t crc32(const char *data, size_t size)
@@ -131,7 +157,7 @@ int dashboard_feed_request(dashboard_feed_t *feed, uint64_t now_ms,
 {
     if (feed->request == UINT32_MAX) return -1;
     ++feed->request; feed->requested_ms = now_ms; feed->pending = true;
-    return snprintf(output, capacity, "RLCD?5 %s %u\n", feed->boot, (unsigned)feed->request);
+    return snprintf(output, capacity, "RLCD?6 %s %u\n", feed->boot, (unsigned)feed->request);
 }
 
 bool dashboard_feed_accept(dashboard_feed_t *feed, const char *line,
@@ -152,7 +178,7 @@ bool dashboard_feed_accept(dashboard_feed_t *feed, const char *line,
     field_t field; char boot[17]; uint32_t request, hosts, rows;
     dashboard_feed_view_t *view = &feed->candidate;
     memset(view, 0, sizeof(*view));
-    if (!take(&cursor, &field) || field.size != 6 || memcmp(field.data, "RLCD!5", 6) ||
+    if (!take(&cursor, &field) || field.size != 6 || memcmp(field.data, "RLCD!6", 6) ||
         !take(&cursor, &field) || !hex_string(field, boot, 16, false) || strcmp(boot, feed->boot) ||
         !number(&cursor, UINT32_MAX, &request) || request != feed->request ||
         !take(&cursor, &field) || !hex_string(field, view->bridge, 16, false) ||
@@ -199,18 +225,18 @@ bool dashboard_feed_accept(dashboard_feed_t *feed, const char *line,
             (row->valid_ms && view->hosts[row->host].status >= 2) ||
             !take(&cursor, &field) || field.size > DASH_FEED_LABEL_BYTES * 2 || field.size % 2 ||
             !hex_string(field, row->label, field.size / 2, true) || !utf8_label(row->label, field.size / 2) ||
-            !take(&cursor, &field) || !age(field, row->age)) return false;
+            !age(&cursor, row)) return false;
         if (row->work == DASH_PARKED && (row->category != DASH_CATEGORY_RECENT || row->health != DASH_CURRENT || !row->valid_ms)) return false;
         if (row->work != DASH_WORKING && row->work != DASH_NEEDS_INPUT &&
             row->work != DASH_SETTLED && row->work != DASH_ERROR &&
             row->work != DASH_UNKNOWN && row->work != DASH_PARKED) return false;
         if ((row->health != DASH_CURRENT || !row->valid_ms) && row->work != DASH_UNKNOWN) return false;
-        if (row->health != DASH_CURRENT && strcmp(row->age, "?")) return false;
+        if (row->age_known && (row->health != DASH_CURRENT || !row->valid_ms)) return false;
         if (row->category == DASH_CATEGORY_UNCERTAIN &&
-            (row->valid_ms || row->health == DASH_CURRENT || row->work != DASH_UNKNOWN || strcmp(row->age, "?"))) return false;
+            (row->valid_ms || row->health == DASH_CURRENT || row->work != DASH_UNKNOWN || row->age_known)) return false;
         for (size_t j = 0; j < i; ++j) if (!strcmp(row->identity, view->rows[j].identity)) return false;
         const unsigned ordered_tier = row_order_tier(row);
-        const bool age_unknown = strcmp(row->age, "?") == 0;
+        const bool age_unknown = !row->age_known;
         if (i && (ordered_tier < previous_tier ||
                   (ordered_tier == previous_tier && ordered_tier < 2 &&
                    previous_age_unknown && !age_unknown))) return false;
@@ -235,7 +261,7 @@ bool dashboard_feed_accept(dashboard_feed_t *feed, const char *line,
                 *row = feed->view.rows[j]; row->host = (uint32_t)i;
                 row->category = DASH_CATEGORY_UNCERTAIN;
                 row->work = DASH_UNKNOWN; row->health = DASH_UNAVAILABLE;
-                row->valid_ms = 0; memcpy(row->age, "?\0\0\0", 4);
+                row->valid_ms = 0; row->age_known = false;
             }
             break;
         }
@@ -243,6 +269,21 @@ bool dashboard_feed_accept(dashboard_feed_t *feed, const char *line,
     for (size_t i = 0; i < view->row_count; ++i)
         for (size_t j = 0; j < i; ++j)
             if (!strcmp(view->rows[i].identity, view->rows[j].identity)) return false;
+    // Only admitted packets may update presentation anchors. Repeated samples
+    // of the same activity must not reset the local clock or its fractional ms.
+    for (size_t i = 0; i < view->row_count; ++i) {
+        dashboard_feed_row_t *row = &view->rows[i];
+        row->age_anchor_ms = now_ms;
+        if (!row->age_known || !feed->has_view || strcmp(view->bridge, feed->view.bridge)) continue;
+        for (size_t j = 0; j < feed->view.row_count; ++j) {
+            const dashboard_feed_row_t *old = &feed->view.rows[j];
+            if (old->age_known && !strcmp(row->identity, old->identity) &&
+                !strcmp(row->age_key, old->age_key) && elapsed_age(old, now_ms) >= row->age_ms) {
+                row->age_ms = old->age_ms; row->age_anchor_ms = old->age_anchor_ms;
+                break;
+            }
+        }
+    }
     feed->view = *view; feed->accepted_request_ms = feed->requested_ms;
     feed->has_view = true; feed->pending = false; feed->dirty = true;
     return true;
@@ -310,14 +351,18 @@ bool dashboard_feed_tick(dashboard_feed_t *feed, dashboard_motion_t *motion, uin
         }
         memcpy(motion->live_totals, totals, sizeof(totals));
         motion->live_total = total; motion->live_partial = partial;
-        for (size_t i = 0; i < DASHBOARD_MOTION_TRACK_CAPACITY; ++i) {
-            dashboard_motion_track_t *track = &motion->tracks[i];
-            if (!track->active) continue;
+    }
+    // Age-only changes redraw without reapplying layout or changing authority.
+    for (size_t i = 0; i < DASHBOARD_MOTION_TRACK_CAPACITY; ++i) {
+        dashboard_motion_track_t *track = &motion->tracks[i];
+        if (!track->used) continue;
+        char label[4] = "?";
+        if (track->active && track->health == DASH_CURRENT)
             for (size_t j = 0; j < view->row_count; ++j)
-                if (!strcmp(track->logical_id, view->rows[j].identity))
-                    snprintf(track->supplied_age, sizeof(track->supplied_age), "%s",
-                             track->health == DASH_CURRENT ? view->rows[j].age : "?");
-        }
+                if (view->rows[j].age_known && !strcmp(track->logical_id, view->rows[j].identity))
+                    format_age(label, elapsed_age(&view->rows[j], now_ms));
+        if (strcmp(track->supplied_age, label)) changed = true;
+        memcpy(track->supplied_age, label, sizeof(label));
     }
     if (!healthy) {
         if (motion->feed_health != DASH_UNAVAILABLE) changed = true;

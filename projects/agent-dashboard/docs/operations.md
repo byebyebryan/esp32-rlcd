@@ -11,7 +11,7 @@ source-sampled time since conversation activity. Known system helpers and
 children are excluded. Current failed turns use an error cross and join blocked
 rows in attention; current phases or a fresh in-progress turn clear a preceding
 failure. The [live integration contract](live-integration.md) defines membership,
-recent-first ordering, five totals, wire 5 and expiry.
+recent-first ordering, five totals, wire 6 and expiry.
 
 The live bridge keeps bounded restart context in a private per-device file under
 `~/.local/state/rlcd-agent-dashboard`. The cache preserves identity, label/project,
@@ -121,7 +121,7 @@ change.
 ## Managed service
 
 The [recent-first trial receipt](evidence/2026-10-21-recent-first-trial/REPORT.md)
-records the current paired wire-5 host and firmware rollout on both displays.
+records the current paired wire-6 host and firmware rollout on both displays.
 
 The reliability pass installs a versioned host bundle and a user service
 `rlcd-agent-dashboard.service`. Chezmoi owns the host selection, launcher, unit and
@@ -237,7 +237,7 @@ Pass the managed `--profiles-config` explicitly when qualifying Default and Work
 routes; omitting it captures the default two-host route only.
 
 
-The current device protocol is wire 5. Its `attention` diagnostic and `!` header
+The current device protocol is wire 6. Its `attention` diagnostic and `!` header
 count blocked plus known failed rows. Per-host totals also report waiting,
 working, recent and uncertain; recent stays zero because unloaded history is
 excluded from this view. Bundle manifests

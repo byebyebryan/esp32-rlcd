@@ -11,7 +11,9 @@ typedef struct {
 } dashboard_feed_host_t;
 
 typedef struct {
-    char identity[65], label[DASH_FEED_LABEL_BYTES + 1], age[4], badge[3];
+    char identity[65], label[DASH_FEED_LABEL_BYTES + 1], age_key[65], badge[3];
+    bool age_known;
+    uint64_t age_ms, age_anchor_ms;
     uint32_t host, category, work, health, valid_ms;
 } dashboard_feed_row_t;
 

@@ -42,8 +42,12 @@ the exported deadlines for its currently displayed runtime, phase, outcome,
 latest turn, activity and workspace. Informational title and cwd labels may be
 retained with uncertain context; they do not establish freshness or current
 work. Phase and activity age continue to use their original Observer support.
-Age is time since conversation activity at the runtime's source-sampled
-`observedAt`; reads, delivery proofs and bridge heartbeats cannot advance it.
+Age starts from conversation activity at the runtime's source-sampled
+`observedAt`. The display advances that numeric age using its own monotonic
+clock while the row remains current. This is elapsed time since the last known
+activity, not proof that no newer activity occurred. Initial sampling/delivery
+lag is not reconstructed. Reads and heartbeats cannot create a new activity
+anchor or renew the underlying evidence.
 
 Rows are selected only with current running-runtime evidence, independently of
 last-turn outcome or recent-history membership. Loaded idle/waiting sessions are
@@ -60,7 +64,7 @@ Prior order breaks exact-age ties; new ties use a deterministic identity key.
 Each age is computed in milliseconds as that identity's source sample time minus
 its supported `activity.at`; the bridge never compares absolute timestamps from
 different host clocks. Display age labels are rounded for reading and do not
-control order. Reads and heartbeats do not refresh the sampled age. Whole loaded
+control order. Local ticking does not change the order between packets. Whole loaded
 roster totals are computed before the first 32 rows are sent; 11 complete rows fit
 the display and overflow remains explicit. Every current row has active display
 category; the source's recent branch is not a display category. Historical
@@ -90,27 +94,43 @@ uncertain. There is no context timeout or fallback negative inference. Healthy
 hosts remain useful when a sibling fails, and a missing host cannot make the
 whole fleet appear complete.
 
-## Device wire 5
+## Local age ticker
+
+The bridge exports a numeric source-sampled age and a SHA256 equality key for
+that identity's activity clock and timestamp. The ESP32 anchors it at acceptance
+on its monotonic clock. Repeated packets for the same identity/key/bridge keep
+the existing anchor and fractional milliseconds; a larger source age catches up
+without moving backward. New activity resets the age. Unknown activity, bridge
+restart or a newly admitted identity starts a new anchor. These anchors are
+fixed-capacity, volatile presentation state, never durable context or authority.
+The age label changes only at visible second/minute/hour/day boundaries and
+saturates at `+++` at 100 days. Row expiry still suppresses work and age to `?`
+at the original request-anchored deadline, even during packet silence. Ticking
+never renews a lease, changes status, re-sorts rows or increases collection rate.
+
+## Device wire 6
 
 USB carries ASCII LF-delimited protocol records alongside boot and diagnostic
 logs. Only tagged records enter the protocol. A device request is:
 
 ```text
-RLCD?5 <16 lowercase hex boot nonce> <positive request number>
+RLCD?6 <16 lowercase hex boot nonce> <positive request number>
 ```
 
 Responses are tab-separated ASCII with this field order:
 
 ```text
-RLCD!5 boot request bridge sequence host_count row_count
+RLCD!6 boot request bridge sequence host_count row_count
   [alias_hex status valid_ms attention waiting working recent uncertain total] per host
-  [identity_sha256 host_index badge_hex category work health valid_ms label_hex age] per row
+  [identity_sha256 host_index badge_hex category work health valid_ms label_hex age_ms age_key] per row
   crc32
 ```
 
 Each response is one physical line. CRC32 covers all bytes before the final
-tab/checksum. Text fields are lowercase hex UTF-8 bytes; ages are `?`, `+++`, or
-a bounded number with s/m/h/d. Category codes are 0 active, 1 recent and 2
+tab/checksum. Text fields are lowercase hex UTF-8 bytes. `age_ms` is a canonical
+decimal integer in 0..8640000000 (100 days), paired with a lowercase 64-hex
+`age_key`; unknown age uses `?` for both. Noncurrent or zero-validity rows cannot
+carry a known age. The equality key never supplies freshness or ordering. Category codes are 0 active, 1 recent and 2
 uncertain. Work codes are 0 working, 1 blocked, 2 waiting, 4 derived error,
 5 unknown and 6 parked. Health codes are 0 current, 1 stale, 2 unavailable,
 3 ambiguous and 4 unsupported. Host status is 0 current, 1 partial, 2 offline
@@ -119,9 +139,9 @@ and 3 warming.
 Limits are 16 KiB per response, 32 rows, two configured hosts, 63 UTF-8 label
 bytes and 65,535 selected identities per host. All fields, counts, enums,
 encodings, duplicate identities and checksums validate before mutation.
-Truncated, excessive or malformed lines are discarded. Wire 2, wire 3 and wire 4
-records are rejected by the wire 5 firmware and bridge. Wire 5 preserves the
-wire 4 fields and limits; it changes row ordering to the source-age tiers above.
+Truncated, excessive or malformed lines are discarded. Wire 5 and older records
+are rejected by the wire 6 firmware and bridge. Wire 6 adds numeric age and event
+key fields; the wire-5 ordering, request and resource limits remain unchanged.
 
 The per-row badge is normally its physical host alias (`ST` or `SN`). `SW` is
 allowed only for a Snap row and denotes the trusted `work` profile. It changes
@@ -170,7 +190,7 @@ identity, configured host routes, bundle installation, device ACK/silence /
 recovery, and physical readability are separate acceptance gates. Preview,
 serial ACK and readback do not establish physical readability.
 
-The current bridge and firmware require the paired wire 5 contract. Archived
+The current bridge and firmware require the paired wire 6 contract. Archived
 wire 2, wire 3 and wire 4 bundles and firmware remain immutable; rollback must
 select a matching bridge/firmware pair and its source/client selections. Do not
 mix wire versions. A rollback to the wire-4 badge release does not require a

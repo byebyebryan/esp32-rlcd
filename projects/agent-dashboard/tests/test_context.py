@@ -63,7 +63,7 @@ class NativeFeed:
         self.process.stdin.write(f"REQ {now}\n".encode())
         self.process.stdin.flush()
         request = self.process.stdout.readline()
-        if not request.startswith(b"REQUEST RLCD?5 "):
+        if not request.startswith(b"REQUEST RLCD?6 "):
             raise AssertionError(request)
         self.process.stdin.write(encode(view, "0" * 16, sequence, "1" * 16, sequence))
         self.process.stdin.flush()
@@ -76,7 +76,7 @@ class NativeFeed:
         self.process.stdin.write(f"REQ {now}\n".encode())
         self.process.stdin.flush()
         request = self.process.stdout.readline()
-        if not request.startswith(b"REQUEST RLCD?5 "):
+        if not request.startswith(b"REQUEST RLCD?6 "):
             raise AssertionError(request)
         return request.removeprefix(b"REQUEST ")
 
@@ -416,7 +416,7 @@ class SerialDurability(unittest.IsolatedAsyncioTestCase):
                 if self.read_once:
                     return b""
                 self.read_once = True
-                return b"RLCD?5 " + b"0" * 16 + b" 1\n"
+                return b"RLCD?6 " + b"0" * 16 + b" 1\n"
 
             def write(self, data):
                 self.writes.append(data)

@@ -50,7 +50,7 @@ for live serial operation and is not used by `--preview`, `--inspect` or
 Stopping the bridge closes all owned watches; ordinary route failures retry
 independently. Failure to clean up an owned worker reaches the supervisor. The
 default invocation without `--profiles-config` retains its previous route and
-projection. The `SW` badge uses the paired wire-5 bridge/firmware extension;
+projection. The `SW` badge uses the paired wire-6 bridge/firmware extension;
 no generic Mesh API or native Observer wire contract changes are required.
 
 Validation includes the existing native wire/serial/supervisor/bundle suite,

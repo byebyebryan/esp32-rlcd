@@ -14,14 +14,16 @@ static char line[DASH_FEED_BYTES * 2 + 2];
 
 static void state(uint64_t now)
 {
-    dashboard_feed_tick(&feed, &motion, now);
+    bool changed = dashboard_feed_tick(&feed, &motion, now);
     memset(guarded, 0x5b, sizeof(guarded));
     dashboard_motion_render(&motion, guarded + 1);
     assert(guarded[0] == 0x5b && guarded[RLCD_FRAME_BYTES + 1] == 0x5b);
     printf("{\"health\":%d,\"partial\":%s,\"rows\":%zu,\"visible\":%zu,\"total\":%zu,"
+           "\"changed\":%s,"
            "\"totals\":[%u,%u,%u,%u,%u],\"flashing\":%s,\"entries\":[",
            motion.feed_health, motion.live_partial ? "true" : "false", motion.count,
            motion.visible_count, motion.live_total,
+           changed ? "true" : "false",
            (unsigned)motion.live_totals[0], (unsigned)motion.live_totals[1],
            (unsigned)motion.live_totals[2], (unsigned)motion.live_totals[3],
            (unsigned)motion.live_totals[4],

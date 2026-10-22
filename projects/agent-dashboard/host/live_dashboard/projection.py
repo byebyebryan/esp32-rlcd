@@ -15,6 +15,7 @@ ALIASES = {"starship": "ST", "snap": "SN"}
 CAPACITY = 32
 MAX_ROSTER = 65535
 MAX_VALID_MS = 3000
+MAX_AGE_MS = 100 * 86400000  # The display saturates at +++ after 99 days.
 MARGIN_MS = 100
 GROUP = {"blocked": 0, "error": 0, "waiting": 1, "working": 2, "unknown": 3, "parked": 4}
 WORK = {"blocked": 1, "error": 4, "waiting": 2, "working": 0, "unknown": 5, "parked": 6}
@@ -376,6 +377,11 @@ class Projector:
                     "valid_ms": row_valid,
                     "label": project_label(row),
                     "age": age_label(age_ms) if health == "current" else "?",
+                    "age_ms": min(age_ms, MAX_AGE_MS) if age_ms is not None and health == "current" else None,
+                    # Opaque equality only: never compare clocks from two hosts.
+                    "age_key": hashlib.sha256(json.dumps(
+                        [identifier, activity.get("clock"), at], separators=(",", ":")
+                    ).encode()).hexdigest() if age_ms is not None and health == "current" else None,
                     "activity": at,
                     "activity_age_ms": age_ms if health == "current" else None,
                     "project": project_name(row),
@@ -402,6 +408,8 @@ class Projector:
                         "health": 1,
                         "valid_ms": 0,
                         "age": "?",
+                        "age_ms": None,
+                        "age_key": None,
                         "activity": None,
                         "activity_age_ms": None,
                     }

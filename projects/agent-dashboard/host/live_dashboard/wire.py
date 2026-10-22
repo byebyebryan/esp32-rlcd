@@ -1,12 +1,12 @@
-"""Device wire 5: bounded tagged ASCII, recent-first order and CRC32."""
+"""Device wire 6: numeric activity age, opaque event key and CRC32."""
 
 import binascii
 import re
 
-from .projection import CATEGORY, WORK
+from .projection import CATEGORY, MAX_AGE_MS, WORK
 
 MAX_BYTES = 16384
-REQUEST = re.compile(rb"RLCD\?5 ([0-9a-f]{16}) ([1-9][0-9]{0,9})\Z")
+REQUEST = re.compile(rb"RLCD\?6 ([0-9a-f]{16}) ([1-9][0-9]{0,9})\Z")
 
 
 def parse_request(line):
@@ -19,7 +19,7 @@ def parse_request(line):
 
 def encode(view, boot, request, bridge, sequence):
     fields = [
-        "RLCD!5",
+        "RLCD!6",
         boot,
         str(request),
         bridge,
@@ -38,6 +38,15 @@ def encode(view, boot, request, bridge, sequence):
             ]
         )
     for row in view["rows"]:
+        age_ms, age_key = row.get("age_ms"), row.get("age_key")
+        if age_ms is None:
+            if age_key is not None:
+                raise ValueError("device_row_age")
+        elif (type(age_ms) is not int or not 0 <= age_ms <= MAX_AGE_MS
+              or row["health"] != 0 or row["valid_ms"] <= 0
+              or not isinstance(age_key, str)
+              or re.fullmatch(r"[0-9a-f]{64}", age_key) is None):
+            raise ValueError("device_row_age")
         host_alias = view["hosts"][row["host"]]["alias"]
         badge = row.get("badge", host_alias)
         if badge != host_alias and not (host_alias == "SN" and badge == "SW"):
@@ -52,7 +61,8 @@ def encode(view, boot, request, bridge, sequence):
                 str(row["health"]),
                 str(row["valid_ms"]),
                 row["label"].encode().hex(),
-                row["age"],
+                str(age_ms) if age_ms is not None else "?",
+                age_key if age_ms is not None else "?",
             ]
         )
     payload = "\t".join(fields).encode("ascii")

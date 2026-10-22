@@ -70,7 +70,7 @@ class Bundle(unittest.TestCase):
         )
         manifest = bundle.verify(self.target, self.checksum, dependencies=False)
         self.assertEqual(manifest["sourceRevision"], "fixture")
-        self.assertEqual(manifest["deviceWire"], 5)
+        self.assertEqual(manifest["deviceWire"], 6)
         self.assertEqual(manifest["artifacts"], OBSERVED["artifacts"])
         self.assertEqual(manifest["dependencies"], EXPECTED_DEPENDENCIES)
         self.assertEqual(
@@ -132,11 +132,11 @@ class Bundle(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "bundle_manifest_invalid"):
             bundle.verify(self.target, dependencies=False)
 
-    def test_wire4_bundle_is_rejected(self):
+    def test_wire5_bundle_is_rejected(self):
         path = self.target / "manifest.json"
         path.chmod(0o644)
         manifest = json.loads(path.read_text())
-        manifest["deviceWire"] = 4
+        manifest["deviceWire"] = 5
         path.write_text(json.dumps(manifest))
         with self.assertRaisesRegex(ValueError, "bundle_manifest_invalid"):
             bundle.verify(self.target, dependencies=False)

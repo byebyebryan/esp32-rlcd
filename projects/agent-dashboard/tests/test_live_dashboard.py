@@ -85,6 +85,14 @@ def frame(rows=None, hosts=None, sequence=1, request=1, bridge="1" * 16, boot="0
                 "total": 1,
             }
         ]
+    # Legacy label fixtures get exact numeric anchors here, never in production.
+    rows = copy.deepcopy(rows)
+    for item in rows:
+        if "age_ms" not in item:
+            label = item["age"]
+            item["age_ms"] = (None if label == "?" else 8640000000 if label == "+++"
+                              else int(label[:-1]) * {"s": 1000, "m": 60000, "h": 3600000, "d": 86400000}[label[-1]])
+            item["age_key"] = item["id"] if item["age_ms"] is not None else None
     return encode({"rows": rows, "hosts": hosts}, boot, request, bridge, sequence)
 
 
@@ -109,6 +117,22 @@ def capacity_sources(case):
 
 
 class Projection(unittest.TestCase):
+    def test_numeric_age_key_tracks_activity_not_delivery_or_source_sample(self):
+        p = Projector(["starship"])
+        item = row("same", at=1000)
+        first = p.project([source([item], sampled=10500)])["rows"][0]
+        later = p.project([source([item], sampled=11500)])["rows"][0]
+        self.assertEqual((first["age_ms"], later["age_ms"]), (9500, 10500))
+        self.assertEqual(first["age_key"], later["age_key"])
+        item["activity"]["at"] = 11000
+        fresh = p.project([source([item], sampled=11500)])["rows"][0]
+        self.assertNotEqual(first["age_key"], fresh["age_key"])
+        self.assertEqual(fresh["age_ms"], 500)
+        item["activity"]["health"] = "unsupported"
+        unknown = p.project([source([item], sampled=11500)])["rows"][0]
+        self.assertIsNone(unknown["age_ms"])
+        self.assertIsNone(unknown["age_key"])
+
     def test_capacity_failures_and_title_helpers(self):
         view = Projector().project(capacity_sources(capacity_case()))
         self.assertEqual([r["state"] for r in view["rows"]], ["error"] * 3)
@@ -548,13 +572,14 @@ class Projection(unittest.TestCase):
         c["identity"]["namespace"] = "other"
         self.assertEqual(len({token(r["identity"])[0] for r in (a, b, c)}), 3)
         self.assertEqual(
-            parse_request(b"RLCD?5 " + b"0" * 16 + b" 1\r\n"), ("0" * 16, 1)
+            parse_request(b"RLCD?6 " + b"0" * 16 + b" 1\r\n"), ("0" * 16, 1)
         )
+        self.assertIsNone(parse_request(b"RLCD?5 " + b"0" * 16 + b" 1\n"))
         self.assertIsNone(parse_request(b"RLCD?4 " + b"0" * 16 + b" 1\n"))
         self.assertIsNone(parse_request(b"RLCD?2 " + b"0" * 16 + b" 1\n"))
         self.assertIsNone(parse_request(b"RLCD?3 " + b"0" * 16 + b" 1\n"))
         for number in (b"0", b"01", b"4294967296", b"-1"):
-            self.assertIsNone(parse_request(b"RLCD?5 " + b"0" * 16 + b" " + number))
+            self.assertIsNone(parse_request(b"RLCD?6 " + b"0" * 16 + b" " + number))
 
     def test_suffix_cannot_collide_with_an_existing_label(self):
         a, b = row("a"), row("b")
@@ -565,6 +590,80 @@ class Projection(unittest.TestCase):
 
 
 class NativeAdmission(unittest.TestCase):
+    def tick_frame(self, age_ms=500, key="a", **kwargs):
+        item = {"id": "a" * 64, "host": 0, "category": "active", "state": "waiting",
+                "health": 0, "valid_ms": 2900, "label": "ticker", "age": "?",
+                "age_ms": age_ms, "age_key": key * 64 if key is not None else None}
+        host = {"alias": "ST", "status": 0, "valid_ms": 2900,
+                "totals": [0, 1, 0, 0, 0], "total": 1}
+        return frame([item], [host], **kwargs)
+
+    def test_local_ticker_changes_only_on_visible_boundary_without_packet(self):
+        self.request(0)
+        self.send(self.tick_frame())
+        unchanged = self.at(499, with_changed=True)
+        self.assertEqual(unchanged["entries"][0]["age"], "0s")
+        self.assertFalse(unchanged["changed"])
+        ticking = self.at(500, with_changed=True)
+        self.assertEqual(ticking["entries"][0]["age"], "1s")
+        self.assertTrue(ticking["changed"])
+        self.assertEqual(ticking["totals"], unchanged["totals"])
+        self.assertEqual(ticking["entries"][0]["work"], 2)
+        self.assertFalse(self.at(501, with_changed=True)["changed"])
+
+    def test_repeated_and_new_samples_preserve_fraction_and_never_go_backwards(self):
+        self.request(0)
+        self.send(self.tick_frame())
+        for sequence, now in enumerate((400, 800, 1200, 1600, 2000), 2):
+            self.request(now)
+            state = self.send(self.tick_frame(request=sequence, sequence=sequence))
+            self.assertEqual(state["entries"][0]["age"], age_label(now + 500))
+        self.assertEqual(self.at(2500)["entries"][0]["age"], "3s")
+        self.request(2600)
+        self.assertEqual(self.send(self.tick_frame(10500, request=7, sequence=7))["entries"][0]["age"], "10s")
+        self.assertEqual(self.at(3100)["entries"][0]["age"], "11s")
+
+    def test_new_activity_resets_age_but_rejected_packets_cannot_reset_or_renew(self):
+        self.request(0)
+        self.send(self.tick_frame(50000))
+        self.request(1000)
+        payload = self.tick_frame(100, "b", request=2, sequence=2)
+        self.send(alter(payload, 25, b"bad"), False)
+        self.assertEqual(self.at(1000)["entries"][0]["age"], "51s")
+        self.assertEqual(self.send(payload)["entries"][0]["age"], "0s")
+        self.assertEqual(self.at(1900)["entries"][0]["age"], "1s")
+        self.assertEqual(self.at(3900)["entries"][0]["age"], "?")
+        self.assertFalse(self.at(4900, with_changed=True)["changed"])
+
+    def test_ticker_unit_boundaries_and_saturation(self):
+        for sequence, (start, expected) in enumerate(((59500, "1m"), (3599500, "1h"),
+                (86399500, "1d"), (8639999500, "+++"), (8640000000, "+++")), 1):
+            now = sequence * 4000
+            self.request(now)
+            self.send(self.tick_frame(start, str(sequence), request=sequence, sequence=sequence))
+            self.assertEqual(self.at(now + 500)["entries"][0]["age"], expected)
+
+    def test_unknown_and_bridge_restart_do_not_restore_old_ticker_anchor(self):
+        self.request(0)
+        self.send(self.tick_frame(5000))
+        self.request(1000)
+        self.assertEqual(self.send(self.tick_frame(None, None, request=2, sequence=2))["entries"][0]["age"], "?")
+        self.request(1500)
+        self.assertEqual(self.send(self.tick_frame(100, request=3, sequence=3))["entries"][0]["age"], "0s")
+        self.request(2500)
+        self.assertEqual(self.send(self.tick_frame(100, request=4, sequence=1, bridge="2" * 16))["entries"][0]["age"], "0s")
+
+    def test_numeric_age_and_event_key_are_bounded_atomic_and_versioned(self):
+        self.request(0)
+        base = self.tick_frame()
+        for malformed in (b"-1", b"01", b"8640000001", b"18446744073709551615", b"5s"):
+            self.send(alter(base, 24, malformed), False)
+        for malformed in (b"?", b"a" * 63, b"A" * 64, b"g" * 64):
+            self.send(alter(base, 25, malformed), False)
+        self.send(alter(base, 0, b"RLCD!5"), False)
+        self.send(alter(base, 24, b"?"), False)
+        self.send(base)
+
     def setUp(self):
         self.process = subprocess.Popen(
             [os.environ["RLCD_FEED_TEST"]],
@@ -582,10 +681,13 @@ class NativeAdmission(unittest.TestCase):
         self.process.stdin.flush()
         return self.process.stdout.readline()
 
-    def at(self, now):
+    def at(self, now, *, with_changed=False):
         self.process.stdin.write(f"AT {now}\n".encode())
         self.process.stdin.flush()
-        return json.loads(self.process.stdout.readline())
+        state = json.loads(self.process.stdout.readline())
+        if not with_changed:
+            state.pop("changed")
+        return state
 
     def send(self, payload, accepted=True):
         self.process.stdin.write(payload)
@@ -593,9 +695,11 @@ class NativeAdmission(unittest.TestCase):
         self.assertEqual(
             self.process.stdout.readline(), b"ACCEPT 1\n" if accepted else b"ACCEPT 0\n"
         )
-        return json.loads(self.process.stdout.readline())
+        state = json.loads(self.process.stdout.readline())
+        state.pop("changed")
+        return state
 
-    def test_expiry_during_silence_and_sampled_age(self):
+    def test_expiry_during_silence_and_local_age(self):
         self.request(100)
         state = self.send(frame())
         self.assertTrue(state["flashing"])
@@ -629,7 +733,7 @@ class NativeAdmission(unittest.TestCase):
     def test_capacity_case_error_admission_retry_and_expiry(self):
         case = capacity_case()
         p = Projector()
-        self.assertIn(b"RLCD?5 ", self.request(0))
+        self.assertIn(b"RLCD?6 ", self.request(0))
         view = p.project(capacity_sources(case))
         failed = self.send(encode(view, "0" * 16, 1, "1" * 16, 1))
         self.assertEqual(failed["totals"], [3, 0, 0, 0, 0])
@@ -685,7 +789,7 @@ class NativeAdmission(unittest.TestCase):
         hosts = [{"alias": "ST", "status": 0, "valid_ms": 2900,
                   "totals": [1, 1, 2, 0, 0], "total": 4}]
         request = self.request(0)
-        self.assertIn(b"RLCD?5 ", request)
+        self.assertIn(b"RLCD?6 ", request)
         accepted = self.send(frame(rows, hosts))
         self.assertEqual([r["id"] for r in accepted["entries"]], ["a" * 64, "b" * 64, "c" * 64, "d" * 64])
         self.assertEqual(accepted["totals"], [1, 1, 2, 0, 0])
@@ -936,7 +1040,7 @@ class NativeAdmission(unittest.TestCase):
             alter(base, 24, b"1\x00"),
             alter(base, 14, b"4294967296"),
             alter(base, 0, b"RLCD!4"),
-            base.replace(b"RLCD!5", b"OTHER1"),
+            base.replace(b"RLCD!6", b"OTHER1"),
             alter(base, 0, b"RLCD!3"),
         ]
         for payload in cases:
