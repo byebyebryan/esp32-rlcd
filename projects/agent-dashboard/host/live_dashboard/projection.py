@@ -90,6 +90,31 @@ def selection_reason(row):
     return "selected"
 
 
+def order_tier(row):
+    """Return the live roster tier without comparing source clock values."""
+    if (
+        row["category"] != "active"
+        or row["health"] != HEALTH["current"]
+        or row["state"] in {"unknown", "parked"}
+    ):
+        return 2
+    if row["state"] in {"blocked", "error"}:
+        return 0
+    return 1
+
+
+def order_key(row, prior_ranks):
+    tier = order_tier(row)
+    age_ms = row["activity_age_ms"]
+    return (
+        tier,
+        age_ms is None if tier < 2 else False,
+        age_ms if tier < 2 and age_ms is not None else 0,
+        prior_ranks.get(row["id"], 2**32),
+        row["id"],
+    )
+
+
 def presentation(row):
     """Derive a display failure without adding a provider phase or lease."""
     phase = row.get("phase") or {}
@@ -317,8 +342,13 @@ class Projector:
                 self.keys[identifier] = key
                 state, health = presentation(row)
                 activity = row["activity"]
-                at = activity.get("at") if activity["health"] == "current" else None
                 sampled = source.sampled_by_id.get(identifier, source.sampled_at)
+                at = activity.get("at") if activity["health"] == "current" else None
+                age_ms = (
+                    sampled - at
+                    if type(sampled) is int and type(at) is int and at <= sampled
+                    else None
+                )
                 row_remaining = max(
                     0,
                     source.row_remaining_ms.get(identifier, source.remaining_ms)
@@ -331,7 +361,7 @@ class Projector:
                 if at is not None and (sampled is None or at > sampled):
                     at = None
                 if row_valid <= 0:
-                    state, health, at = "unknown", "stale", None
+                    state, health, at, age_ms = "unknown", "stale", None, None
                     category = "uncertain"
                 else:
                     # Working-set recency grants feed membership, not a place
@@ -345,10 +375,9 @@ class Projector:
                     "health": HEALTH[health],
                     "valid_ms": row_valid,
                     "label": project_label(row),
-                    "age": age_label(sampled - at if at is not None else None)
-                    if health == "current"
-                    else "?",
+                    "age": age_label(age_ms) if health == "current" else "?",
                     "activity": at,
+                    "activity_age_ms": age_ms if health == "current" else None,
                     "project": project_name(row),
                 }
             # Previously active rows are context only when missing/uncertain.
@@ -374,6 +403,7 @@ class Projector:
                         "valid_ms": 0,
                         "age": "?",
                         "activity": None,
+                        "activity_age_ms": None,
                     }
             if len(selected) > MAX_ROSTER:
                 raise ValueError("roster_capacity")
@@ -397,16 +427,7 @@ class Projector:
                 }
             )
             candidates.extend(selected.values())
-        candidates.sort(
-            key=lambda r: (
-                CATEGORY[r["category"]],
-                GROUP[r["state"]] if r["category"] == "active" else 0,
-                r["activity"] is None if r["category"] != "recent" else False,
-                -(r["activity"] or 0) if r["category"] == "recent" else (r["activity"] or 0),
-                self.ranks.get(r["id"], 2**32),
-                r["id"],
-            )
-        )
+        candidates.sort(key=lambda r: order_key(r, self.ranks))
         originals = {r["id"]: r["label"] for r in candidates}
         for row in candidates:
             row["label"] = fit_label(row["label"])
@@ -441,7 +462,10 @@ class Projector:
                     )
         if len({visual_key(r["label"]) for r in candidates}) != len(candidates):
             raise ValueError("display_label_collision")
-        rows = candidates[:CAPACITY]
+        rows = [
+            {k: v for k, v in row.items() if k != "activity_age_ms"}
+            for row in candidates[:CAPACITY]
+        ]
         self.roster = [dict(r) for r in candidates]
         self.ranks = {r["id"]: i for i, r in enumerate(candidates)}
         # Whole-roster membership is independent of the USB/display prefix.
@@ -491,6 +515,7 @@ class Projector:
                         else reason,
                         "display_label": displayed["label"] if displayed else None,
                         "display_age": displayed["age"] if displayed else None,
+                        "display_age_ms": displayed["activity_age_ms"] if displayed else None,
                         "display_state": displayed["state"] if displayed else None,
                         "display_category": displayed["category"] if displayed else None,
                         "display_position": index + 1 if index is not None else None,
@@ -520,6 +545,7 @@ class Projector:
                         "project": row.get("project"),
                         "selection": "retained_uncertain",
                         "display_age": "?",
+                        "display_age_ms": None,
                         "display_position": index + 1,
                         "sent_to_device": index < CAPACITY,
                         "visible": index < 11,

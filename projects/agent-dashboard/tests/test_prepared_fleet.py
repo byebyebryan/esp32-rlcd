@@ -10,7 +10,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "host"))
-from live_dashboard.mesh import Fleet
+from live_dashboard.mesh import Fleet, _runtime_sample_at
 from live_dashboard.projection import Projector, selection_reason
 
 AVAILABLE = importlib.util.find_spec("mesh_plus") is not None
@@ -53,10 +53,17 @@ class PreparedFleet(unittest.TestCase):
                 if snapshot and status == "current" and (snapshot["sourceHealth"] != "current" or
                         any(s["coverage"]["runtime"]["status"] != "complete" for s in snapshot["sources"])):
                     status = "partial"
-                result.append(Source(host["hostId"], status, max(0, remaining),
+                sampled_by_id = {
+                    token(row["identity"])[0]: _runtime_sample_at(row)
+                    for row in rows
+                }
+                result.append(Source(
+                    host["hostId"], status, max(0, remaining),
                     None if snapshot is None else snapshot["collectedAt"], rows,
-                    {token(r["identity"])[0] for r in rows},
-                    {token(r["identity"])[0] for r in rows if exclusion(r)}))
+                    {token(row["identity"])[0] for row in rows},
+                    {token(row["identity"])[0] for row in rows if exclusion(row)},
+                    sampled_by_id=sampled_by_id,
+                ))
             return result
         finally:
             guard.disconnect()

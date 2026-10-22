@@ -11,7 +11,7 @@ source-sampled time since conversation activity. Known system helpers and
 children are excluded. Current failed turns use an error cross and join blocked
 rows in attention; current phases or a fresh in-progress turn clear a preceding
 failure. The [live integration contract](live-integration.md) defines membership,
-priority, five totals, wire 4 and expiry.
+recent-first ordering, five totals, wire 5 and expiry.
 
 The live bridge keeps bounded restart context in a private per-device file under
 `~/.local/state/rlcd-agent-dashboard`. The cache preserves identity, label/project,
@@ -174,8 +174,8 @@ checks source, wheel contents and repository parity. Update the host selection
 and validate scoped chezmoi targets before service replacement; retain the
 previous bundle and exact selection for rollback.
 
-The a8/a24 host-client upgrade retains the original wire-4 firmware and profile
-configuration. Its separate dependency-upgrade record retains the exact a7/a23
+The published a8/a24 host-client upgrade retained the original wire-4 firmware
+and profile configuration. Its separate dependency-upgrade record retains the exact a7/a23
 host bundle and managed-file preimages for rollback; a client-only rollback
 does not restart producers or change firmware.
 
@@ -215,6 +215,7 @@ To capture a bounded live run, silence expiry and a bridge restart:
 ```sh
 python3 projects/agent-dashboard/scripts/capture-live-dashboard.py \
     --python "$RLCD_OBSERVER_PYTHON" --port "$RLCD_PORT" --seconds 25 \
+    --profiles-config "$HOME/.config/rlcd-agent-dashboard/profiles.json" \
     --output projects/agent-dashboard/build/live-device-NEW
 ```
 
@@ -229,9 +230,11 @@ For installed-artifact acceptance, add `--bridge` with the selected bundle's
 `scripts/live-dashboard.py` and use its selected Python. Without that option the
 capture runs the source sibling. Both paths run with isolated Python imports;
 source success alone does not verify an installed bundle.
+Pass the managed `--profiles-config` explicitly when qualifying Default and Work
+routes; omitting it captures the default two-host route only.
 
 
-The current device protocol is wire 4. Its `attention` diagnostic and `!` header
+The current device protocol is wire 5. Its `attention` diagnostic and `!` header
 count blocked plus known failed rows. Per-host totals also report waiting,
 working, recent and uncertain; recent stays zero because unloaded history is
 excluded from this view. Bundle manifests

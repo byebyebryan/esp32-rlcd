@@ -28,7 +28,7 @@ qualify source loss, and expired observations cannot retain current work claims.
 
 The generic native active demo uses fictional records and virtual time. It shows
 answered waits, row movement, one-host loss, feed expiry and recovery. Its
-current wire 4 images exercise admission and rendering, but contain no
+current wire 5 images exercise admission and rendering, but contain no
 recent-only members; the working-set behavior is defined in the
 [integration contract](docs/live-integration.md).
 
@@ -40,7 +40,7 @@ recent-only members; the working-set behavior is defined in the
 flowchart LR
     Observer[Observer 72-hour working-set profile] --> Mesh[Mesh working-set Agent profile]
     Mesh --> Bridge[Host bridge]
-    Bridge -->|USB wire 4| RLCD[RLCD firmware]
+    Bridge -->|USB wire 5| RLCD[RLCD firmware]
 ```
 
 Observer owns native discovery and classification. Mesh owns validated delivery
@@ -77,11 +77,11 @@ qualification installs the exact public wheels recorded in
 records the prior wire 2 rollout and paired rollback. Physical
 ACK/readability/reboot gates remain separate.
 The [published SDK adoption receipt](docs/evidence/2026-10-21-a8-a24-adoption/REPORT.md)
-records the current immutable host bundle, hosted qualification and scoped
-Starship/Snap deployment with the original wire-4 firmware.
+records the immutable host bundle, hosted qualification and prior scoped
+Starship/Snap deployment with wire-4 firmware.
 
 The optional [Codex home profile routes](docs/home-profiles.md) combine separately
-admitted Default and Work feeds without changing native identities. The wire-4
+admitted Default and Work feeds without changing native identities. The wire-5
 row badge shows Snap Work as `SW`, with plain session titles.
 The configured union is the default; a startup profile filter is available.
 The [restart recovery receipt](docs/evidence/2026-10-20-restart-context/REPORT.md)

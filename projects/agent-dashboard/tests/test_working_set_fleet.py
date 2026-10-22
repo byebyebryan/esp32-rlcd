@@ -17,7 +17,7 @@ APP = TESTS.parent
 sys.path.insert(0, str(TESTS))
 sys.path.insert(0, str(APP / "host"))
 
-from live_dashboard.mesh import Fleet
+from live_dashboard.mesh import Fleet, _runtime_sample_at
 from live_dashboard.projection import Projector, token
 from live_dashboard.runtime import Events
 
@@ -102,6 +102,17 @@ class WorkingSetFleet(unittest.TestCase):
             {host: 100 for host in states},
         )
         self.assertEqual(len(full.guard.snapshot()["sessions"]), 200)
+        for source in [*sources, *full_sources]:
+            for row in source.rows:
+                row_id = token(row["identity"])[0]
+                self.assertIn(row_id, source.sampled_by_id)
+                self.assertEqual(
+                    source.sampled_by_id[row_id], _runtime_sample_at(row)
+                )
+        # The envelope collection time can differ from the row's own runtime
+        # sample; both adapters must retain identical activity-age ordering.
+        for source in full_sources:
+            source.sampled_at += 60000
         self.assertEqual(Projector().project(sources), Projector().project(full_sources))
 
         sources[0].rows.clear()

@@ -10,6 +10,7 @@ from unittest.mock import patch
 
 APP = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(APP / "host"))
+from live_dashboard.mesh import _runtime_sample_at
 from live_dashboard.projection import (
     Projector,
     Source,
@@ -160,9 +161,11 @@ class Projection(unittest.TestCase):
         original = capacity_case()["normalizedFailedRows"][0]
         failed = {**original, "identity": {**original["identity"], "hostScope": "starship"},
                   "activity": {"health": "current", "at": 500}}
-        rows = [row("blocked", state="blocked", at=1000), failed, row("waiting", state="waiting"), row("working")]
+        rows = [row("blocked", state="blocked", at=1000), failed,
+                row("waiting", state="waiting", at=8000),
+                row("working", at=9000)]
         view = Projector(["starship"]).project([source(rows)])
-        self.assertEqual([r["state"] for r in view["rows"]], ["error", "blocked", "waiting", "working"])
+        self.assertEqual([r["state"] for r in view["rows"]], ["blocked", "error", "working", "waiting"])
         self.assertEqual(view["hosts"][0]["totals"], [2, 1, 1, 0, 0])
         for activity in ({"health": "stale", "at": 500}, {"health": "current", "at": 20000}):
             view = Projector(["starship"]).project([source([{**failed, "activity": activity}])])
@@ -175,26 +178,163 @@ class Projection(unittest.TestCase):
         self.assertEqual(view["hosts"][0]["totals"], [0, 0, 0, 0, 39])
         self.assertNotIn(token(many[-1]["identity"])[0], p.previous)
 
-    def test_urgency_oldest_activity_and_stable_ties(self):
-        p = Projector(["starship"])
+    def test_recent_first_attention_and_mixed_working_ready_rows(self):
+        error = row("error", at=9000)
+        error["phase"] = {
+            "health": "unsupported",
+            "value": "unknown",
+            "reason": "native_runtime_error",
+        }
+        error["outcome"] = {"health": "current", "value": "failed"}
         rows = [
-            row("young", at=4000),
-            row("old", at=1000),
-            row("wait", state="waiting"),
-            row("block", state="blocked"),
+            row("working-old", at=8500),
+            row("blocked-old", state="blocked", at=8000),
+            row("waiting-new", state="waiting", at=9200),
+            error,
+            row("blocked-new", state="blocked", at=9900),
+            row("working-new", at=9700),
         ]
-        view = p.project([source(rows)])
+        view = Projector(["starship"]).project([source(rows, sampled=10000)])
+        self.assertEqual(
+            [r["id"] for r in view["rows"]],
+            [token(r["identity"])[0] for r in (
+                rows[4], error, rows[1], rows[5], rows[2], rows[0]
+            )],
+        )
         self.assertEqual(
             [r["state"] for r in view["rows"]],
-            ["blocked", "waiting", "working", "working"],
+            ["blocked", "error", "blocked", "working", "waiting", "working"],
         )
-        self.assertEqual(view["rows"][2]["id"], token(rows[1]["identity"])[0])
-        for r in rows:
-            r["activity"]["at"] = 1000
+
+    def test_source_local_sample_age_orders_across_host_clocks(self):
+        starship = row("starship", at=9500)
+        snap = row("snap", host="snap", state="waiting", at=19000)
+        starship_id = token(starship["identity"])[0]
+        snap_id = token(snap["identity"])[0]
+        starship_source = source([starship], sampled=100000)
+        starship_source.sampled_by_id[starship_id] = 10000
+        snap_source = source([snap], host="snap", sampled=200000)
+        snap_source.sampled_by_id[snap_id] = 20000
+
+        view = Projector().project([snap_source, starship_source])
+        self.assertEqual([r["id"] for r in view["rows"]], [starship_id, snap_id])
+        self.assertEqual([r["age"] for r in view["rows"]], ["0s", "1s"])
+
+    def test_unsupported_runtime_clock_does_not_fall_back_to_envelope_age(self):
         self.assertEqual(
-            [r["id"] for r in p.project([source(list(reversed(rows)))])["rows"]],
-            [r["id"] for r in view["rows"]],
+            _runtime_sample_at({"runtime": {"clock": "sample", "observedAt": 10000}}),
+            10000,
         )
+        self.assertIsNone(
+            _runtime_sample_at({"runtime": {"clock": "host", "observedAt": 99999}})
+        )
+        unsupported = row("unsupported", at=9000)
+        unsupported_id = token(unsupported["identity"])[0]
+        unsupported_source = source([unsupported], sampled=100000)
+        unsupported_source.sampled_by_id[unsupported_id] = _runtime_sample_at(
+            {"runtime": {"clock": "host", "observedAt": 99999}}
+        )
+        projector = Projector(["starship"])
+        view = projector.project([unsupported_source])
+        self.assertEqual(view["rows"][0]["age"], "?")
+        report = projector.explain([unsupported_source], view)
+        self.assertIsNone(report["rows"][0]["display_age_ms"])
+
+    def test_exact_millisecond_order_with_equal_display_age(self):
+        older = row("older", at=8100)
+        newer = row("newer", state="waiting", at=8500)
+        view = Projector(["starship"]).project(
+            [source([older, newer], sampled=10000)]
+        )
+        self.assertEqual([r["age"] for r in view["rows"]], ["1s", "1s"])
+        self.assertEqual(
+            [r["id"] for r in view["rows"]],
+            [token(newer["identity"])[0], token(older["identity"])[0]],
+        )
+
+    def test_unknown_activity_age_follows_known_age(self):
+        known = row("known", at=9000)
+        missing = row("missing")
+        missing["activity"] = {"health": "current"}
+        stale = row("stale", state="waiting")
+        stale["activity"] = {"health": "stale", "at": 9500}
+        future = row("future", at=10001)
+        p = Projector(["starship"])
+        view = p.project([source([future, stale, missing, known], sampled=10000)])
+        self.assertEqual(view["rows"][0]["id"], token(known["identity"])[0])
+        self.assertEqual([r["age"] for r in view["rows"][1:]], ["?", "?", "?"])
+        expected_unknown = [r["id"] for r in view["rows"][1:]]
+        shuffled = p.project(
+            [source([known, missing, future, stale], sampled=10000)]
+        )
+        self.assertEqual([r["id"] for r in shuffled["rows"][1:]], expected_unknown)
+
+    def test_exact_ties_keep_prior_order_and_newcomers_use_identity_fallback(self):
+        rows = [row("prior-a", at=9000), row("prior-b", at=9000)]
+        p = Projector(["starship"])
+        first = p.project([source(rows, sampled=10000)])
+        prior_order = [r["id"] for r in first["rows"]]
+        newcomer = row("newcomer", at=9000)
+        next_view = p.project(
+            [source([newcomer, *reversed(rows)], sampled=10000)]
+        )
+        self.assertEqual([r["id"] for r in next_view["rows"][:2]], prior_order)
+
+        left = [row("fresh-a", at=9000), row("fresh-b", at=9000)]
+        right = list(reversed(copy.deepcopy(left)))
+        left_order = [r["id"] for r in Projector(["starship"]).project(
+            [source(left, sampled=10000)]
+        )["rows"]]
+        right_order = [r["id"] for r in Projector(["starship"]).project(
+            [source(right, sampled=10000)]
+        )["rows"]]
+        self.assertEqual(left_order, right_order)
+
+    def test_cap_uses_sorted_full_roster_and_keeps_whole_roster_totals(self):
+        ordinary = [
+            row(
+                f"ordinary-{index:02d}",
+                state="waiting" if index % 2 else "working",
+                at=99000 - index * 10,
+            )
+            for index in range(36)
+        ]
+        attention = [
+            row(f"attention-{index:02d}", state="blocked", at=80000 + index * 1000)
+            for index in range(4)
+        ]
+        view = Projector(["starship"]).project(
+            [source(ordinary + attention, sampled=100000)]
+        )
+        expected = [r for r in reversed(attention)] + ordinary[:28]
+        self.assertEqual(
+            [r["id"] for r in view["rows"]],
+            [token(r["identity"])[0] for r in expected],
+        )
+        self.assertEqual(view["hosts"][0]["totals"], [4, 18, 18, 0, 0])
+        self.assertEqual(view["hosts"][0]["total"], 40)
+
+    def test_context_restore_preserves_ties_and_uncertain_status_totals(self):
+        rows = [row("tie-a", at=9000), row("tie-b", at=9000), row("tie-c", at=9000)]
+        original = Projector(["starship"])
+        first = original.project([source(rows, sampled=10000)])
+        ids = [r["id"] for r in first["rows"]]
+        initialized, context_rows = original.context_state()
+
+        restarted = Projector(["starship"])
+        restored_rows = [
+            {**record, "identity": tuple(record["identity"])}
+            for record in context_rows
+        ]
+        restarted.restore_context(restored_rows, initialized)
+        offline = restarted.project(
+            [source([], status="offline", remaining=0, sampled=10000)]
+        )
+        self.assertEqual([r["id"] for r in offline["rows"]], ids)
+        self.assertEqual(offline["hosts"][0]["totals"], [0, 0, 0, 0, 3])
+        current = restarted.project([source(list(reversed(rows)), sampled=10000)])
+        self.assertEqual([r["id"] for r in current["rows"]], ids)
+        self.assertEqual(current["hosts"][0]["totals"], [0, 0, 3, 0, 0])
 
     def test_current_phase_not_outcome_and_source_sample_age(self):
         p = Projector(["starship"])
@@ -294,6 +434,7 @@ class Projection(unittest.TestCase):
         self.assertEqual(sum(r["sent_to_device"] for r in report["rows"]), 32)
         self.assertTrue(all("identity" in r for r in report["rows"]))
         self.assertEqual(report["rows"][0]["display_id"], view["rows"][0]["id"])
+        self.assertEqual(report["rows"][0]["display_age_ms"], 9000)
         self.assertEqual(len(p.explain(inputs, view, include_all=True)["rows"]), 42)
 
     def test_failure_retains_context_and_positive_recovery_removes(self):
@@ -407,12 +548,13 @@ class Projection(unittest.TestCase):
         c["identity"]["namespace"] = "other"
         self.assertEqual(len({token(r["identity"])[0] for r in (a, b, c)}), 3)
         self.assertEqual(
-            parse_request(b"RLCD?4 " + b"0" * 16 + b" 1\r\n"), ("0" * 16, 1)
+            parse_request(b"RLCD?5 " + b"0" * 16 + b" 1\r\n"), ("0" * 16, 1)
         )
+        self.assertIsNone(parse_request(b"RLCD?4 " + b"0" * 16 + b" 1\n"))
         self.assertIsNone(parse_request(b"RLCD?2 " + b"0" * 16 + b" 1\n"))
         self.assertIsNone(parse_request(b"RLCD?3 " + b"0" * 16 + b" 1\n"))
         for number in (b"0", b"01", b"4294967296", b"-1"):
-            self.assertIsNone(parse_request(b"RLCD?4 " + b"0" * 16 + b" " + number))
+            self.assertIsNone(parse_request(b"RLCD?5 " + b"0" * 16 + b" " + number))
 
     def test_suffix_cannot_collide_with_an_existing_label(self):
         a, b = row("a"), row("b")
@@ -487,7 +629,7 @@ class NativeAdmission(unittest.TestCase):
     def test_capacity_case_error_admission_retry_and_expiry(self):
         case = capacity_case()
         p = Projector()
-        self.assertIn(b"RLCD?4 ", self.request(0))
+        self.assertIn(b"RLCD?5 ", self.request(0))
         view = p.project(capacity_sources(case))
         failed = self.send(encode(view, "0" * 16, 1, "1" * 16, 1))
         self.assertEqual(failed["totals"], [3, 0, 0, 0, 0])
@@ -514,6 +656,7 @@ class NativeAdmission(unittest.TestCase):
         payload = encode(view, "0" * 16, 1, "1" * 16, 1)
         for bad in (
             alter(payload, 0, b"RLCD!2"),
+            alter(payload, 0, b"RLCD!4"),
             alter(payload, 18, b"3001"),
             alter(payload, 17, b"2"),
             alter(payload, 30, b"5"),
@@ -527,6 +670,114 @@ class NativeAdmission(unittest.TestCase):
         self.assertEqual(expired["totals"], [0, 0, 1, 0, 1])
         self.assertFalse(expired["flashing"])
         self.assertEqual([r["work"] for r in expired["entries"]], [0, 5])
+
+    def test_live_c_path_preserves_interleaved_host_order_and_status_totals(self):
+        rows = [
+            {"id": "a" * 64, "host": 0, "category": "active", "state": "blocked",
+             "health": 0, "valid_ms": 2900, "label": "blocked", "age": "1s"},
+            {"id": "b" * 64, "host": 0, "category": "active", "state": "working",
+             "health": 0, "valid_ms": 2900, "label": "working newest", "age": "0s"},
+            {"id": "c" * 64, "host": 0, "category": "active", "state": "waiting",
+             "health": 0, "valid_ms": 2900, "label": "ready", "age": "1s"},
+            {"id": "d" * 64, "host": 0, "category": "active", "state": "working",
+             "health": 0, "valid_ms": 2900, "label": "working older", "age": "2s"},
+        ]
+        hosts = [{"alias": "ST", "status": 0, "valid_ms": 2900,
+                  "totals": [1, 1, 2, 0, 0], "total": 4}]
+        request = self.request(0)
+        self.assertIn(b"RLCD?5 ", request)
+        accepted = self.send(frame(rows, hosts))
+        self.assertEqual([r["id"] for r in accepted["entries"]], ["a" * 64, "b" * 64, "c" * 64, "d" * 64])
+        self.assertEqual(accepted["totals"], [1, 1, 2, 0, 0])
+
+    def test_expired_rows_move_to_uncertain_tail_without_regrouping(self):
+        rows = [
+            {"id": "a" * 64, "host": 0, "category": "active", "state": "blocked",
+             "health": 0, "valid_ms": 900, "label": "expires", "age": "1s"},
+            {"id": "b" * 64, "host": 0, "category": "active", "state": "working",
+             "health": 0, "valid_ms": 2900, "label": "working", "age": "0s"},
+            {"id": "c" * 64, "host": 0, "category": "active", "state": "waiting",
+             "health": 0, "valid_ms": 2900, "label": "ready", "age": "1s"},
+            {"id": "d" * 64, "host": 0, "category": "active", "state": "working",
+             "health": 0, "valid_ms": 2900, "label": "working older", "age": "2s"},
+        ]
+        hosts = [{"alias": "ST", "status": 0, "valid_ms": 2900,
+                  "totals": [1, 1, 2, 0, 0], "total": 4}]
+        self.request(0)
+        self.send(frame(rows, hosts))
+        expired = self.at(900)
+        self.assertEqual(
+            [r["id"] for r in expired["entries"]],
+            ["b" * 64, "c" * 64, "d" * 64, "a" * 64],
+        )
+        self.assertEqual(
+            [r["category"] for r in expired["entries"]], [0, 0, 0, 2]
+        )
+        self.assertEqual(expired["totals"], [1, 1, 2, 0, 0])
+
+    def test_expired_attention_stays_ahead_of_existing_uncertain_context(self):
+        rows = [
+            {"id": "a" * 64, "host": 0, "category": "active", "state": "blocked",
+             "health": 0, "valid_ms": 900, "label": "expired attention", "age": "1s"},
+            {"id": "b" * 64, "host": 0, "category": "active", "state": "working",
+             "health": 0, "valid_ms": 2900, "label": "working newest", "age": "0s"},
+            {"id": "c" * 64, "host": 0, "category": "active", "state": "waiting",
+             "health": 0, "valid_ms": 2900, "label": "ready", "age": "1s"},
+            {"id": "d" * 64, "host": 0, "category": "active", "state": "working",
+             "health": 0, "valid_ms": 2900, "label": "working older", "age": "2s"},
+            {"id": "e" * 64, "host": 0, "category": "uncertain", "state": "unknown",
+             "health": 1, "valid_ms": 0, "label": "old context", "age": "?"},
+        ]
+        hosts = [{"alias": "ST", "status": 0, "valid_ms": 2900,
+                  "totals": [1, 1, 2, 0, 1], "total": 5}]
+        self.request(0)
+        accepted = self.send(frame(rows, hosts))
+        self.assertEqual(
+            [row["id"] for row in accepted["entries"]],
+            ["a" * 64, "b" * 64, "c" * 64, "d" * 64, "e" * 64],
+        )
+
+        expired = self.at(900)
+        self.assertEqual(
+            [row["id"] for row in expired["entries"]],
+            ["b" * 64, "c" * 64, "d" * 64, "a" * 64, "e" * 64],
+        )
+        self.assertEqual(
+            [row["category"] for row in expired["entries"]],
+            [0, 0, 0, 2, 2],
+        )
+        self.assertEqual(
+            [row["work"] for row in expired["entries"]],
+            [0, 2, 0, 5, 5],
+        )
+        self.assertEqual(expired["totals"], [1, 1, 2, 0, 1])
+
+    def test_wire5_rejects_tier_and_unknown_age_inversions(self):
+        def packet(rows, totals):
+            count = sum(totals)
+            host = {"alias": "ST", "status": 0, "valid_ms": 2900,
+                    "totals": totals, "total": count}
+            return frame(rows, [host])
+
+        working = {"id": "a" * 64, "host": 0, "category": "active", "state": "working",
+                   "health": 0, "valid_ms": 2900, "label": "working", "age": "1s"}
+        attention = {"id": "b" * 64, "host": 0, "category": "active", "state": "blocked",
+                     "health": 0, "valid_ms": 2900, "label": "blocked", "age": "2s"}
+        uncertain = {"id": "c" * 64, "host": 0, "category": "uncertain", "state": "unknown",
+                     "health": 1, "valid_ms": 0, "label": "context", "age": "?"}
+        waiting = {"id": "d" * 64, "host": 0, "category": "active", "state": "waiting",
+                   "health": 0, "valid_ms": 2900, "label": "ready", "age": "1s"}
+        no_age = {"id": "e" * 64, "host": 0, "category": "active", "state": "working",
+                  "health": 0, "valid_ms": 2900, "label": "unknown age", "age": "?"}
+        self.request(0)
+        for malformed in (
+            packet([working, attention], [1, 0, 1, 0, 0]),
+            packet([uncertain, working], [0, 0, 1, 0, 1]),
+            packet([no_age, waiting], [0, 1, 1, 0, 0]),
+        ):
+            self.send(malformed, False)
+        accepted = self.send(frame())
+        self.assertEqual(accepted["entries"][0]["id"], "a" * 64)
 
     def test_request_anchor_shortens_delayed_response(self):
         payload = alter(alter(frame(), 9, b"1000"), 22, b"1000")
@@ -684,7 +935,8 @@ class NativeAdmission(unittest.TestCase):
             alter(base, 23, b"41" * 64),
             alter(base, 24, b"1\x00"),
             alter(base, 14, b"4294967296"),
-            base.replace(b"RLCD!4", b"OTHER1"),
+            alter(base, 0, b"RLCD!4"),
+            base.replace(b"RLCD!5", b"OTHER1"),
             alter(base, 0, b"RLCD!3"),
         ]
         for payload in cases:

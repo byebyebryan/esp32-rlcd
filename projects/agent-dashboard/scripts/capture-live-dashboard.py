@@ -32,6 +32,8 @@ def live(args, phase):
         str(args.seconds),
         "--verbose",
     ]
+    if args.profiles_config is not None:
+        command.extend(["--profiles-config", str(args.profiles_config)])
     result = subprocess.run(
         command, capture_output=True, text=True, timeout=args.seconds + 30, check=False
     )
@@ -135,6 +137,8 @@ def main():
                         default=Path(__file__).with_name("live-dashboard.py"),
                         help="Explicit installed bridge; defaults to the source sibling")
     parser.add_argument("--port", type=Path, required=True)
+    parser.add_argument("--profiles-config", type=Path,
+                        help="Explicit configured homes to qualify, matching the managed service")
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--seconds", type=float, default=25)
     args = parser.parse_args()

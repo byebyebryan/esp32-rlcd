@@ -1,4 +1,4 @@
-"""Device wire 4: bounded tagged ASCII, per-row badges and CRC32."""
+"""Device wire 5: bounded tagged ASCII, recent-first order and CRC32."""
 
 import binascii
 import re
@@ -6,7 +6,7 @@ import re
 from .projection import CATEGORY, WORK
 
 MAX_BYTES = 16384
-REQUEST = re.compile(rb"RLCD\?4 ([0-9a-f]{16}) ([1-9][0-9]{0,9})\Z")
+REQUEST = re.compile(rb"RLCD\?5 ([0-9a-f]{16}) ([1-9][0-9]{0,9})\Z")
 
 
 def parse_request(line):
@@ -19,7 +19,7 @@ def parse_request(line):
 
 def encode(view, boot, request, bridge, sequence):
     fields = [
-        "RLCD!4",
+        "RLCD!5",
         boot,
         str(request),
         bridge,

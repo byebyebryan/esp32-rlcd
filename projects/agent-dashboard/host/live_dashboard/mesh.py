@@ -15,6 +15,15 @@ from .projection import (
 from .runtime import Events, Failure
 
 
+def _runtime_sample_at(row):
+    runtime = row.get("runtime")
+    return (
+        runtime.get("observedAt")
+        if isinstance(runtime, dict) and runtime.get("clock") == "sample"
+        else None
+    )
+
+
 class Fleet:
     def __init__(self, hosts, events=None, *, full_roster=False, source=None,
                  socket=None, expected_homes=None):
@@ -115,6 +124,10 @@ class Fleet:
             ):
                 status = "partial"
             known, excluded = membership[identifier]
+            sampled_by_id = {}
+            for row in rows:
+                row_id, _ = token(row["identity"])
+                sampled_by_id[row_id] = _runtime_sample_at(row)
             result.append(
                 Source(
                     identifier,
@@ -124,6 +137,7 @@ class Fleet:
                     rows,
                     known,
                     excluded,
+                    sampled_by_id=sampled_by_id,
                 )
             )
         return self._bound_sources(result, context)
@@ -279,11 +293,7 @@ class Fleet:
                     if isinstance(value, dict) and value.get("health") == "current":
                         deadline = min(deadline, field_expiry[name])
                 remaining_by_id[identifier] = max(0, deadline - now)
-                sampled_by_id[identifier] = (
-                    row["runtime"].get("observedAt")
-                    if row["runtime"].get("clock") == "sample"
-                    else None
-                )
+                sampled_by_id[identifier] = _runtime_sample_at(row)
                 categories[identifier] = category
                 rows.append(row)
 

@@ -171,7 +171,7 @@ def main():
                 assert duration == count * SAMPLE_MS
         manifest = {
             "description": {
-                "agent-dashboard": "Fictional active-demo records through production projection, wire 4 admission and C motion/rendering; virtual time.",
+                "agent-dashboard": "Fictional active-demo records through production projection, wire 5 admission and C motion/rendering; virtual time.",
                 "render-bench": "Unchanged benchmark draw_animation scene compiled with native board stubs; virtual time.",
                 "bringup": "Native initial rlcd_frame_draw_test pattern used by bring-up; no hardware access.",
             }[project],
