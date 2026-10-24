@@ -40,9 +40,10 @@ Agent Observer dependency. The presentation structs are local study inputs;
 they do not define the shared component's API. The renderer and fixtures are
 shared by the native previews and this firmware.
 Agent Observer research remains separate: see its
-[source study](https://github.com/byebyebryan/agent-observer/blob/main/docs/agent-session-study.md)
-and [spike plan](https://github.com/byebyebryan/agent-observer/blob/main/docs/agent-session-spike-plan.md)
-for current provider and runtime work.
+[source study](https://github.com/byebyebryan/agent-observer/blob/9c0636c7ac286d965a4c66452f26c47e1f4886b5/docs/history/providers/agent-session-study.md)
+and [spike plan](https://github.com/byebyebryan/agent-observer/blob/9c0636c7ac286d965a4c66452f26c47e1f4886b5/docs/history/providers/agent-session-spike-plan.md)
+for the earlier research checkpoint. Current provider/runtime semantics are in
+the [observation reference](https://github.com/byebyebryan/agent-observer/blob/main/docs/reference/observation.md).
 
 ## Preview without a board
 
